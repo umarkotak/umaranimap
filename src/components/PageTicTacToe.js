@@ -1,23 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-
-class Square extends React.Component {
-  render() {
-    return (
-      <button
-        className="square"
-        onClick={() => this.props.onClick()}
-      >
-        {this.props.value}
-      </button>
-    );
-  }
-}
 
 function Square(props) {
   return (
-    <button className="square" onClick={props.onClick}>
+    <button className="btn btn-outline-primary btn-lg" onClick={props.onClick}>
       {props.value}
     </button>
   )
@@ -44,18 +29,17 @@ class Board extends React.Component {
   render() {
     return (
       <div>
-        {/* <div className="status">{status}</div> */}
-        <div className="board-row">
+        <div>
           {this.renderSquare(0)}
           {this.renderSquare(1)}
           {this.renderSquare(2)}
         </div>
-        <div className="board-row">
+        <div>
           {this.renderSquare(3)}
           {this.renderSquare(4)}
           {this.renderSquare(5)}
         </div>
-        <div className="board-row">
+        <div>
           {this.renderSquare(6)}
           {this.renderSquare(7)}
           {this.renderSquare(8)}
@@ -113,7 +97,7 @@ class Game extends React.Component {
         'Go to game start';
       return(
         <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>{desc}</button>
+          <button className="my-1 btn btn-primary btn-sm btn-block" onClick={() => this.jumpTo(move)}>{desc}</button>
         </li>
       )
     });
@@ -126,17 +110,33 @@ class Game extends React.Component {
     }
 
     return (
-      <div className="game">
-        <div className="game-board">
-          <Board
-            squares={current.squares}
-            onClick={(i) => this.handleClick(i)}
-          />
+      <div className="row">
+        <div className="col-sm-4"></div>
+        <div className="col-sm-4">
+          <div className="container">
+            <div className="card-deck mb-3 text-center">
+              <div className="card mb-4 shadow-sm">
+                <div className="card-header">
+                  <h4 className="my-0 font-weight-normal">Tic Tac Toe Game</h4>
+                </div>
+                <div className="card-body">
+                  <Board
+                    squares={current.squares}
+                    onClick={(i) => this.handleClick(i)}
+                  />
+
+                  <ul className="list-unstyled mt-3 mb-4">
+                    <li>{status}</li>
+                  </ul>
+                  <ul className="list-unstyled mt-3 mb-4">
+                    {moves}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="game-info">
-          <div>{status}</div>
-          <ol>{moves}</ol>
-        </div>
+        <div className="col-sm-4"></div>
       </div>
     );
   }
@@ -162,9 +162,10 @@ function calculateWinner(squares) {
   return null;
 }
 
-// ========================================
+function TicTacToe() {
+  return (
+    <Game />
+  )
+}
 
-ReactDOM.render(
-  <Game />,
-  document.getElementById('root')
-);
+export default TicTacToe

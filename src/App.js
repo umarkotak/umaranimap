@@ -2,10 +2,10 @@ import React from "react"
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom"
 
 import Nav from "./components/Nav"
-import Home from "./components/Home"
-import About from "./components/About"
-import AboutDetail from "./components/AboutDetail"
-import Profile from "./components/Profile"
+import PageHome from "./components/PageHome"
+import PageTicTacToe from "./components/PageTicTacToe"
+import PageLearnReact from "./components/PageLearnReact"
+import PageTopAnimes from "./components/PageTopAnimes"
 
 function App() {
   return (
@@ -13,10 +13,11 @@ function App() {
       <div className="App">
         <Nav />
         <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/about" exact component={About} />
-          <Route path="/about/:id" component={AboutDetail} />
-          <Route path="/profile" component={Profile} />
+          <Route path="/" exact component={PageHome} />
+          <Route path="/tic-tac-toe" exact component={PageTicTacToe} />
+          <Route path="/learn-react" exact component={PageLearnReact} />
+          <Route path="/top-animes/:id" exact component={PageTopAnimes} />
+          <Route path="/top-animes" exact component={PageTopAnimes} />
         </Switch>
       </div>
     </Router>

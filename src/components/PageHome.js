@@ -1,6 +1,6 @@
 import React from "react"
 
-function Home() {
+function PageHome() {
   return (
     <div>
       <div className="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
@@ -13,4 +13,4 @@ function Home() {
   )
 }
 
-export default Home
+export default PageHome

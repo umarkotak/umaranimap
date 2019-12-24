@@ -9,7 +9,7 @@ function Nav() {
         <Link to="/" className="p-2 text-dark">Home</Link>
         <Link to="/tic-tac-toe" className="p-2 text-dark">Tic Tac Toe</Link>
         <Link to="/learn-react" className="p-2 text-dark">Learn React</Link>
-        <Link to="/top-anime" className="p-2 text-dark">Top Anime</Link>
+        <Link to="/top-animes" className="p-2 text-dark">Top Animes</Link>
       </nav>
     </div>
   )
