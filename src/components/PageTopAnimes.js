@@ -15,7 +15,7 @@ function PageTopAnimes({match}) {
   const [item, setItem] = useState({})
 
   const fetchItems = async () => {
-    const response = await fetch("https://api.jikan.moe/v3/top/anime/1/upcoming")
+    const response = await fetch("https://api.jikan.moe/v3/top/anime/1/airing")
     const results = await response.json()
     console.log({fetchItems: results})
     setItems(results.top)
