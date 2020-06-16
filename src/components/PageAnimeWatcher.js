@@ -35,7 +35,7 @@ function PageAnimeWatcher() {
     <div>
       <div className="row">
         <div className="col-md-4">
-          <div className="card ml-4 overflow-auto" style={{height: "100vh"}}>
+          <div className="card ml-4 overflow-auto" style={{height: "90vh"}}>
             <div className="card-header">Top Upcoming Animes</div>
             <div className="card-body">
               {items.map(item => (
@@ -43,7 +43,7 @@ function PageAnimeWatcher() {
                   <div className="col p-2 d-flex flex-column position-static">
                     <strong className="d-inline-block text-primary">{item.title}</strong>
                     <p className="mb-0">Rank : #{item.rank} | Score : {item.score}</p>
-                    <button onClick={() => some_function(item.mal_id)} class="btn btn-info">
+                    <button onClick={() => some_function(item.mal_id)} className="btn btn-info">
                       See detail
                     </button>
                   </div>
@@ -64,27 +64,25 @@ function PageAnimeWatcher() {
   )
 }
 
-
-
 class DetailAnime extends React.Component {
   render() {
     console.log({DetailAnime: this.props})
     const anime = this.props.anime
 
     return (
-      <div className="card mr-4">
+      <div className="card mr-4 overflow-auto" style={{height: "90vh"}}>
         <div className="card-header">Info</div>
         <div className="card-body">
           <div className="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" key={anime.mal_id}>
-            <div className="col p-4 d-flex flex-column position-static">
-              <h3 className="mb-0">{`[${anime.type}]`} {anime.title}</h3>
-              <a href={anime.url}>Go to My Anime List</a>
-              <p>{anime.synopsis}</p>
-            </div>
-            <div className="col-auto d-none d-lg-block">
-              <iframe width="420" height="315" title={anime.mal_id} key={anime.mal_id}
+            <div className="col-12">
+              <iframe width="100%" height="720" title={anime.mal_id} key={anime.mal_id}
                 src={anime.trailer_url}>
               </iframe>
+            </div>
+            <div className="col p-4 d-flex flex-column position-static">
+              <h3 className="mb-0">{`[${anime.type}]`} {anime.title}</h3>
+              <a href={anime.url} target="_blank" rel="noopener noreferrer">Go to My Anime List</a>
+              <p>{anime.synopsis}</p>
             </div>
           </div>
         </div>
