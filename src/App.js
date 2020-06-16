@@ -6,6 +6,7 @@ import PageHome from "./components/PageHome"
 import PageTicTacToe from "./components/PageTicTacToe"
 import PageLearnReact from "./components/PageLearnReact"
 import PageTopAnimes from "./components/PageTopAnimes"
+import PageAnimeWatcher from "./components/PageAnimeWatcher"
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/learn-react" exact component={PageLearnReact} />
           <Route path="/top-animes/:id" exact component={PageTopAnimes} />
           <Route path="/top-animes" exact component={PageTopAnimes} />
+          <Route path="/anime-watcher" exact component={PageAnimeWatcher} />
         </Switch>
       </div>
     </Router>
