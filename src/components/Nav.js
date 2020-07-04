@@ -26,6 +26,7 @@ function Nav() {
           <Link to="/airing-anime-v2" className="p-2 m-1 text-muted">Airing Anime V2</Link>
           <Link to="/airing-anime-v3" className="p-2 m-1 text-muted">Airing Anime V3</Link>
           <Link to="/airing-anime-v4" className="p-2 m-1 text-muted">Airing Anime V4</Link>
+          <Link to="/airing-anime-v5" className="p-2 m-1 text-muted">Airing Anime V5</Link>
         </nav>
       </div>
     </div>
