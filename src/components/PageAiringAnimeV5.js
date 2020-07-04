@@ -143,26 +143,26 @@ function PageAiringAnimeV5() {
         <div className="nav-scroller py-1 mb-3">
           <nav className="nav d-flex justify-content-between">
             <button className="btn btn-sm btn-outline-secondary mx-1 px-2" onClick={() => getPreviousSeason()}>
-              Previous
+              Prev
             </button>
 
-            <button className="btn btn-sm btn-outline-secondary mx-1 disabled">Year :</button>
+            {/* <button className="btn btn-sm btn-outline-secondary mx-1 disabled">Year :</button> */}
             <select className="custom-select mx-1" name="selectedYear" onChange={(e) => handleYearChange(e.target.value)}>
               {valid_years.map(year => (
                 <option key={year} selected={year === selected_year} value={year}> {year} </option>
               ))}
             </select>
 
-            <button className="btn btn-sm btn-outline-secondary mx-1 disabled">Season :</button>
+            {/* <button className="btn btn-sm btn-outline-secondary mx-1 disabled">Season :</button> */}
             <select className="custom-select mx-1" name="selectedSeason" onChange={(e) => handleSeasonChange(e.target.value)}>
               {valid_seasons.map(season => (
                 <option key={season} selected={season === selected_season} value={season}> {season} </option>
               ))}
             </select>
 
-            <button onClick={() => getByYearAndSeason()} className="btn btn-sm btn-outline-secondary mx-1">
+            {/* <button onClick={() => getByYearAndSeason()} className="btn btn-sm btn-outline-secondary mx-1">
               Go!
-            </button>
+            </button> */}
 
             <button className="btn btn-sm btn-outline-secondary mx-1 px-2" onClick={() => getNextSeason()}>
               Next
