@@ -1,8 +1,8 @@
 import React, {useState} from "react"
 
 let manga_db = new Map([
-  ["kingdom", { "manga_last_chapter": 646, "average_page": 25 }],
-  ["one-piece", { "manga_last_chapter": 983, "average_page": 25 }]
+  ["kingdom", { "manga_last_chapter": 646, "average_page": 30 }],
+  ["one-piece", { "manga_last_chapter": 984, "average_page": 30 }]
 ]);
 
 var cdn_host = "https://img.mghubcdn.com/file/imghub"
@@ -18,7 +18,7 @@ function PageReadMangaV1() {
 
   return (
     <div>
-      <div className="sticky-top bg-dark" style={{  marginLeft: "-12px", marginRight: "-12px" }}>
+      <div className="sticky-top bg-light">
         <RenderHead />
       </div>
 
@@ -34,7 +34,7 @@ function PageReadMangaV1() {
         ))}
       </div>
 
-      <div className="container fixed-bottom bg-dark">
+      <div className="container fixed-bottom bg-light">
         <RenderFoot />
       </div>
     </div>
@@ -62,7 +62,7 @@ function PageReadMangaV1() {
             Prev
           </button>
 
-          <button className="btn btn-light btn-sm btn-outline-secondary mx-1">Chapter :</button>
+          <button className="btn btn-light btn-sm btn-outline-secondary mx-1 disabled">Chapter :</button>
           <select className="custom-select mx-1" name="selectedMangaTitle" onChange={(e) => handleSelectedMangaChapter(e.target.value)}>
             {manga_chapter_list.map(chapter => (
               <option key={chapter} value={chapter} selected={parseInt(chapter) === parseInt(manga_chapter)}> {chapter} </option>
