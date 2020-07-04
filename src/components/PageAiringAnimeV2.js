@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react"
 
-function PageAnimeWatcher() {
+function PageAiringAnimeV2() {
   const [items, setItems] = useState([])
   const [item, setItem] = useState({})
   const [anime_id, setAnimeId] = useState(null)
@@ -91,4 +91,4 @@ class DetailAnime extends React.Component {
   }
 }
 
-export default PageAnimeWatcher
+export default PageAiringAnimeV2

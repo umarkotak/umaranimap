@@ -4,15 +4,30 @@ import {Link} from "react-router-dom"
 function Nav() {
   return (
     <div>
-      <nav className="navbar navbar-light bg-light">
-        <h5 className="my-0 mr-md-auto font-weight-normal">UMARANIMAP</h5>
-        <Link to="/" className="p-2 badge badge-primary">Home</Link>
-        <Link to="/tic-tac-toe" className="p-2 m-1 badge badge-primary">Tic Tac Toe</Link>
-        <Link to="/learn-react" className="p-2 m-1 badge badge-primary">Learn React</Link>
-        <Link to="/top-animes" className="p-2 m-1 badge badge-primary">Top Animes</Link>
-        <Link to="/anime-watcher" className="p-2 m-1 badge badge-primary">Anime Watcher</Link>
-        <Link to="/anime-watcher-v2" className="p-2 m-1 badge badge-primary">Anime Watcher V2</Link>
-      </nav>
+      <header class="blog-header py-3">
+        <div class="row flex-nowrap justify-content-between align-items-center">
+          <div class="col-4 pt-1">
+            <Link to="/" className="text-muted">UMARANIMAP</Link>
+          </div>
+          {/* <div class="col-4 text-center">
+            <Link to="/" className="blog-header-logo text-dark">UMARANIMAP</Link>
+          </div> */}
+          <div class="col-4 d-flex justify-content-end align-items-center">
+            <Link to="/" className="btn btn-sm btn-outline-secondary">Hello World!</Link>
+          </div>
+        </div>
+      </header>
+      <div class="nav-scroller py-1 mb-2">
+        <nav class="nav d-flex justify-content-between">
+          <Link to="/" className="p-2 m-1 text-muted">Home</Link>
+          <Link to="/tic-tac-toe" className="p-2 m-1 text-muted">Tic Tac Toe</Link>
+          <Link to="/learn-react" className="p-2 m-1 text-muted">Learn React</Link>
+          <Link to="/airing-anime-v1" className="p-2 m-1 text-muted">Airing Anime V1</Link>
+          <Link to="/airing-anime-v2" className="p-2 m-1 text-muted">Airing Anime V2</Link>
+          <Link to="/airing-anime-v3" className="p-2 m-1 text-muted">Airing Anime V3</Link>
+          <Link to="/airing-anime-v4" className="p-2 m-1 text-muted">Airing Anime V4</Link>
+        </nav>
+      </div>
     </div>
   )
 }

@@ -3,11 +3,12 @@ import React from "react"
 function PageHome() {
   return (
     <div>
-      <div className="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-        <h1 className="display-4">UMARANIMAP</h1>
-        <p className="lead">
-          This website is dedicated for learning purpose
-        </p>
+      <div class="jumbotron p-3 p-md-5 text-white rounded bg-dark">
+        <div class="col-md-6 px-0">
+          <h1 class="display-4 font-italic">UMARANIMAP</h1>
+          <p class="lead my-3">This website is dedicated for learning purpose</p>
+          <p class="lead mb-0"><a href="#" class="text-white font-weight-bold">Hello There</a></p>
+        </div>
       </div>
     </div>
   )

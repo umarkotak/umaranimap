@@ -5,23 +5,25 @@ import Nav from "./components/Nav"
 import PageHome from "./components/PageHome"
 import PageTicTacToe from "./components/PageTicTacToe"
 import PageLearnReact from "./components/PageLearnReact"
-import PageTopAnimes from "./components/PageTopAnimes"
-import PageAnimeWatcher from "./components/PageAnimeWatcher"
-import PageAnimeWatcherV2 from "./components/PageAnimeWatcherV2"
+import PageAiringAnimeV1 from "./components/PageAiringAnimeV1"
+import PageAiringAnimeV2 from "./components/PageAiringAnimeV2"
+import PageAiringAnimeV3 from "./components/PageAiringAnimeV3"
+import PageAiringAnimeV4 from "./components/PageAiringAnimeV4"
 
 function App() {
   return (
     <Router>
-      <div className="App">
+      <div className="App container">
         <Nav />
         <Switch>
           <Route path="/" exact component={PageHome} />
           <Route path="/tic-tac-toe" exact component={PageTicTacToe} />
           <Route path="/learn-react" exact component={PageLearnReact} />
-          <Route path="/top-animes/:id" exact component={PageTopAnimes} />
-          <Route path="/top-animes" exact component={PageTopAnimes} />
-          <Route path="/anime-watcher" exact component={PageAnimeWatcher} />
-          <Route path="/anime-watcher-v2" exact component={PageAnimeWatcherV2} />
+          <Route path="/airing-anime-v1/:id" exact component={PageAiringAnimeV1} />
+          <Route path="/airing-anime-v1" exact component={PageAiringAnimeV1} />
+          <Route path="/airing-anime-v2" exact component={PageAiringAnimeV2} />
+          <Route path="/airing-anime-v3" exact component={PageAiringAnimeV3} />
+          <Route path="/airing-anime-v4" exact component={PageAiringAnimeV4} />
         </Switch>
       </div>
     </Router>

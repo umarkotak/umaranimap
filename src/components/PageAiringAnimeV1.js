@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react"
 
-function PageTopAnimes({match}) {
+function PageAiringAnimeV1({match}) {
   console.log({match: match})
   const id = match.params.id
 
@@ -59,7 +59,7 @@ function PageTopAnimes({match}) {
                   <div className="col p-2 d-flex flex-column position-static">
                     <strong className="d-inline-block text-primary">{item.title}</strong>
                     <p className="mb-0">Rank : #{item.rank} | Score : {item.score}</p>
-                    <a href={`/top-animes/${item.mal_id}`} className="stretched-link">See detail</a>
+                    <a href={`/airing-anime-v1/${item.mal_id}`} className="stretched-link">See detail</a>
                   </div>
                   <div className="col-auto d-none d-lg-block">
                     <img src={item.image_url} className="bd-placeholder-img" width="100" height="125" alt="" />
@@ -105,4 +105,4 @@ class DetailAnime extends React.Component {
   }
 }
 
-export default PageTopAnimes
+export default PageAiringAnimeV1

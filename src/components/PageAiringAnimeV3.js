@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react"
 import ReactPlayer from 'react-player'
 
-function PageAnimeWatcherV2() {
+function PageAiringAnimeV3() {
   const [items, setItems] = useState([])
   const [item, setItem] = useState({})
   const [anime_id, setAnimeId] = useState(null)
@@ -85,4 +85,4 @@ function RenderYouTube(props) {
   )
 }
 
-export default PageAnimeWatcherV2
+export default PageAiringAnimeV3
