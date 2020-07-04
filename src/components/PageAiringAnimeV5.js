@@ -42,11 +42,6 @@ function PageAiringAnimeV5() {
     setAnimeId(mal_id)
   }
 
-  function getByYearAndSeason() {
-    console.log("YEAR HANDLER " + selected_year)
-    console.log("SEASON HANDLER " + selected_season)
-  }
-
   function handleYearChange(year) {
     setSelectedYear(year)
   }
@@ -73,6 +68,7 @@ function PageAiringAnimeV5() {
         default:
       }
     }
+    window.scrollTo(0, 0)
   }
 
   function getNextSeason() {
@@ -93,6 +89,7 @@ function PageAiringAnimeV5() {
         default:
       }
     }
+    window.scrollTo(0, 0)
   }
 
   console.log("items")
@@ -100,19 +97,17 @@ function PageAiringAnimeV5() {
 
   return (
     <div>
-      <div className="container bg-dark sticky-top">
-        <div style={ { width: "100%" } }>
+      <div className="bg-dark sticky-top">
           <RenderYouTube anime={item} />
-        </div>
       </div>
 
-      <div className="container overflow-auto bg-light" style={{height: "150px"}}>
+      <div className="container overflow-auto bg-light" style={{maxHeight: "150px"}}>
         <h3 className="mb-0">{`[${item.type}]`} {item.title}</h3>
         <a href={item.url} target="_blank" rel="noopener noreferrer">Go to My Anime List</a>
         <p>{item.synopsis}</p>
       </div>
 
-      <div className="container">
+      <div className="container pb-5 pt-1">
         <div className="row">
           {items.map(item => (
             <div className="col-md-3" key={item.mal_id}>
