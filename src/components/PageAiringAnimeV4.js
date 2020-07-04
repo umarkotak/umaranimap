@@ -50,18 +50,22 @@ function PageAiringAnimeV4() {
       <div className="container">
         <div className="row">
           {items.map(item => (
-            <div className="col-md-3">
+            <div className="col-md-3" key={item.mal_id}>
               <div className="card mb-2 box-shadow">
-                <img className="card-img-top" src={item.image_url} className="bd-placeholder-img" alt="" style={ { height: "200px", width: "100%", display: "block" } } />
-                <div className="card-body">
-                  <p className="card-text">{item.title}</p>
-                  <div className="d-flex justify-content-between align-items-center">
-                    <div className="btn-group">
-                      <button onClick={() => some_function(item.mal_id)} className="btn btn-sm btn-outline-secondary">
-                        View
-                      </button>
-                    </div>
+                <div className="row">
+                  <div className="col-4">
+                    <img className="bd-placeholder-img" src={item.image_url} alt="" style={ { height: "100px", width: "100%", display: "block" } } />
+                  </div>
+                  <div className="col-8">
+                    <p className="card-text">{item.title}</p>
                     <small className="text-muted">Rank : #{item.rank} | Score : {item.score}</small>
+                    <div className="d-flex justify-content-between align-items-center">
+                      <div className="btn-group">
+                        <button onClick={() => some_function(item.mal_id)} className="btn btn-sm btn-outline-secondary">
+                          View
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -75,6 +79,7 @@ function PageAiringAnimeV4() {
 
 function RenderYouTube(props) {
   const videoId = props.anime.trailer_url
+  console.log("log: " + window.innerHeight)
 
   return (
     <ReactPlayer
@@ -83,6 +88,7 @@ function RenderYouTube(props) {
       url={videoId}
       playing={true}
       width={'100%'}
+      height={window.innerHeight / 3 + "px"}
       config={{
         youtube: {
           playerVars: {

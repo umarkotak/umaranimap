@@ -31,6 +31,12 @@ npm start
 npm test
 ```
 
+### Deploy Heroku
+
+```
+git push -f heroku master
+```
+
 ### Learning Process
 
 ### Good Read
