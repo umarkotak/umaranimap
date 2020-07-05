@@ -79,6 +79,7 @@ function PageReadMangaV1() {
     set_manga_title(title)
     var last_chapter = manga_db.get(title).manga_last_chapter
     set_manga_chapter(last_chapter)
+    set_manga_chapter_list(generateChapterListFromLastChapter(parseInt(last_chapter)))
   }
 
   function handleSelectedMangaChapter(chapter) {
