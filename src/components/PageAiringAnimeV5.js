@@ -117,14 +117,14 @@ function PageAiringAnimeV5() {
                     <img className="bd-placeholder-img" src={item.image_url} alt="" style={ { height: "100px", width: "100%", display: "block" } } />
                   </div>
                   <div className="col-8">
-                    <p className="card-text overflow-auto" style={ { height: "50px" } }>{item.title}</p>
+                    <div className="overflow-auto" style={ { height: "50px" } }>
+                      <small className="text-muted">{item.title}</small>
+                    </div>
                     <small className="text-muted">Rank : #{item.rank} | Score : {item.score}</small>
                     <div className="d-flex justify-content-between align-items-center">
-                      <div className="btn-group">
-                        <button onClick={() => getAnimeDetail(item.mal_id)} className="btn btn-sm btn-outline-secondary">
-                          View
-                        </button>
-                      </div>
+                      <button onClick={() => getAnimeDetail(item.mal_id)} className="btn btn-sm btn-block btn-outline-secondary">
+                        View
+                      </button>
                     </div>
                   </div>
                 </div>
