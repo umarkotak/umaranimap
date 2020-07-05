@@ -100,18 +100,40 @@ function PageReadMangaV2() {
     if (props.isShown !== '-') { return(<div></div>) }
 
     return(
-      <div className="row">
-        {manga_list.slice(1, manga_list.length).map(manga => (
-          <div className="col-4 col-md-2" key={manga}>
-            <div className="card mb-4 box-shadow">
-              <img className="card-img-top bg-dark" src={generateThumbnailFromTitle(manga)} style={{"height": "150px"}} alt="" />
-              <p className="card-text overflow-auto" style={{"height": "50px"}}>
-                <small className="text-muted">{generateMangaTitleText(manga)}</small>
-              </p>
-              <button type="button" className="btn btn-block btn-sm btn-outline-secondary" onClick={(e) => handleSelectedMangaTitle(e.target.value)} value={manga}>View</button>
-            </div>
+      <div>
+        <div>
+          <h4>History</h4>
+          <div className="row flex-row flex-nowrap overflow-auto">
+            {generateHistoriesSection().slice(0, 10).map(manga => (
+              <div className="col-4 col-md-2" key={manga}>
+                <div className="card mb-4 box-shadow">
+                  <img className="card-img-top bg-dark" src={generateThumbnailFromTitle(manga)} style={{"height": "150px"}} alt="" />
+                  <p className="card-text overflow-auto" style={{"height": "50px"}}>
+                    <small className="text-muted">{generateMangaTitleText(manga)}</small>
+                  </p>
+                  <button type="button" className="btn btn-block btn-sm btn-outline-secondary" onClick={(e) => handleSelectedMangaTitle(e.target.value)} value={manga}>View</button>
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
+
+        <hr/>
+
+        <h4>Manga List</h4>
+        <div className="row">
+          {manga_list.slice(1, manga_list.length).map(manga => (
+            <div className="col-4 col-md-2" key={manga}>
+              <div className="card mb-4 box-shadow">
+                <img className="card-img-top bg-dark" src={generateThumbnailFromTitle(manga)} style={{"height": "150px"}} alt="" />
+                <p className="card-text overflow-auto" style={{"height": "50px"}}>
+                  <small className="text-muted">{generateMangaTitleText(manga)}</small>
+                </p>
+                <button type="button" className="btn btn-block btn-sm btn-outline-secondary" onClick={(e) => handleSelectedMangaTitle(e.target.value)} value={manga}>View</button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     )
   }
@@ -121,6 +143,7 @@ function PageReadMangaV2() {
     var last_chapter = manga_db.get(title).manga_last_chapter
     set_manga_chapter_list(generateChapterListFromLastChapter(parseInt(last_chapter)))
     set_manga_chapter(findLatestMangaChapter(title))
+    setMangaHistores()
   }
 
   function handleSelectedMangaChapter(chapter) {
@@ -206,12 +229,41 @@ function PageReadMangaV2() {
     return `https://thumb.mghubcdn.com/mn/${title}.jpg`
   }
 
+  function generateHistoriesSection() {
+    var key = "last_manga_reads"
+    var last_manga_reads = cookies.get(key)
+    if (Array.isArray(last_manga_reads)) {
+      return last_manga_reads
+    } else {
+      return []
+    }
+  }
+
   function setCookies(chapter) {
     var key = `${manga_title}/last_read_chapter`
     var value = chapter
     let date = new Date(2030, 12)
     cookies.set(key, value, { path: "/", expires: date })
     console.log("COOKIES SET: " + cookies.get(key))
+    setMangaHistores()
+  }
+
+  function setMangaHistores() {
+    if (manga_title[0] === "-") return
+    var key = "last_manga_reads"
+    var last_manga_reads = cookies.get(key)
+    var value = manga_title
+    let date = new Date(2030, 12)
+
+    if (Array.isArray(last_manga_reads)) {
+      var index = last_manga_reads.indexOf(manga_title);
+      if (index !== -1) last_manga_reads.splice(index, 1);
+      last_manga_reads.unshift(manga_title)
+      cookies.set(key, last_manga_reads, { path: "/", expires: date })
+    } else {
+      cookies.set(key, [value], { path: "/", expires: date })
+    }
+    console.log("HISTORIES SET: " + cookies.get(key))
   }
 
   function beutifyChapterTitle(raw_title) {
