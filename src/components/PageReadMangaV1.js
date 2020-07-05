@@ -1,9 +1,7 @@
 import React, {useState} from "react"
+import mangaDB from "./MangaDB"
 
-let manga_db = new Map([
-  ["kingdom", { "manga_last_chapter": 646, "average_page": 30 }],
-  ["one-piece", { "manga_last_chapter": 984, "average_page": 30 }]
-]);
+let manga_db = mangaDB.GetMangaDB()
 
 var cdn_host = "https://img.mghubcdn.com/file/imghub"
 
@@ -13,12 +11,12 @@ function PageReadMangaV1() {
   const [manga_title, set_manga_title] = useState(manga_list[0])
   var manga_pages = generateMangaPages(manga_title)
 
-  var manga_chapter_list = generateChapterListFromTitle(manga_title)
+  const [manga_chapter_list, set_manga_chapter_list] = useState(generateChapterListFromTitle(manga_title))
   const [manga_chapter, set_manga_chapter] = useState(manga_chapter_list[manga_chapter_list.length - 1])
 
   return (
     <div>
-      <div className="sticky-top bg-light">
+      <div className="sticky-top bg-dark" style={{margin: "0px -14px 0px"}}>
         <RenderHead />
       </div>
 
@@ -34,7 +32,7 @@ function PageReadMangaV1() {
         ))}
       </div>
 
-      <div className="container fixed-bottom bg-light">
+      <div className="container fixed-bottom bg-dark">
         <RenderFoot />
       </div>
     </div>
@@ -46,7 +44,7 @@ function PageReadMangaV1() {
         <nav className="nav d-flex justify-content-center">
           <select className="custom-select mx-5 my-1" name="selectedMangaTitle" onChange={(e) => handleSelectedMangaTitle(e.target.value)}>
             {manga_list.map(manga => (
-              <option key={manga} value={manga} selected={manga === manga_title}> {manga} </option>
+              <option key={manga} value={manga} selected={manga === manga_title}> {beutifyChapterTitle(manga)} </option>
             ))}
           </select>
         </nav>
@@ -58,18 +56,18 @@ function PageReadMangaV1() {
     return(
       <div className="nav-scroller py-1 mb-3">
         <nav className="nav d-flex justify-content-between">
-          <button className="btn btn-light btn-sm btn-outline-secondary mx-1 px-2">
+          <button className="btn btn-light btn-sm btn-outline-secondary mx-1 px-2" onClick={() => handlePreviousPage()}>
             Prev
           </button>
 
-          <button className="btn btn-light btn-sm btn-outline-secondary mx-1 disabled">Chapter :</button>
+          <button className="btn btn-light btn-sm btn-outline-secondary mx-1">Chapter :</button>
           <select className="custom-select mx-1" name="selectedMangaTitle" onChange={(e) => handleSelectedMangaChapter(e.target.value)}>
             {manga_chapter_list.map(chapter => (
               <option key={chapter} value={chapter} selected={parseInt(chapter) === parseInt(manga_chapter)}> {chapter} </option>
             ))}
           </select>
 
-          <button className="btn btn-light btn-sm btn-outline-secondary mx-1 px-2">
+          <button className="btn btn-light btn-sm btn-outline-secondary mx-1 px-2" onClick={() => handleNextPage()}>
             Next
           </button>
         </nav>
@@ -85,6 +83,17 @@ function PageReadMangaV1() {
 
   function handleSelectedMangaChapter(chapter) {
     set_manga_chapter(chapter)
+  }
+
+  function handlePreviousPage() {
+    if (parseInt(manga_chapter) === 1) {return true}
+    set_manga_chapter_list(generateChapterListFromLastChapter(parseInt(manga_chapter) - 1))
+    set_manga_chapter(parseInt(manga_chapter) - 1)
+  }
+
+  function handleNextPage() {
+    set_manga_chapter_list(generateChapterListFromLastChapter(parseInt(manga_chapter) + 1))
+    set_manga_chapter(parseInt(manga_chapter) + 1)
   }
 
   function generateMangaPages(title) {
@@ -111,6 +120,24 @@ function PageReadMangaV1() {
     var chapters = []
     for (let i = 1; i <= last_chapter; i++) { chapters.push(i) }
     return chapters
+  }
+
+  function generateChapterListFromLastChapter(last_chapter) {
+    var chapters = []
+    for (let i = 1; i <= last_chapter; i++) { chapters.push(i) }
+    return chapters
+  }
+
+  function beutifyChapterTitle(raw_title) {
+    if (raw_title[0] === "-") { return raw_title }
+    console.log(raw_title);
+
+    var title = raw_title.replace(/-/g, " ")
+    title = title.toLowerCase().split(" ");
+    for (var i = 0; i < title.length; i++) {
+        title[i] = title[i].charAt(0).toUpperCase() + title[i].substring(1);
+    }
+    return title.join(" ")
   }
 }
 
