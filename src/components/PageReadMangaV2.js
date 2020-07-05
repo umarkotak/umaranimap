@@ -152,10 +152,11 @@ function PageReadMangaV2() {
     if (raw_title[0] === "-") { return raw_title }
 
     var title = beutifyChapterTitle(raw_title)
+    var last_read = findLatestMangaChapter(raw_title)
     var last_chapter = manga_db.get(raw_title).manga_last_chapter
     var status = manga_db.get(raw_title).status
 
-    return `${last_chapter} | ${status} | ${title}`
+    return `( ${last_read} / ${last_chapter} ) - ${title} - ${status}`
   }
 
   function setCookies(chapter) {
