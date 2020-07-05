@@ -22,6 +22,10 @@ function PageReadMangaV2() {
       </div>
 
       <div className="pb-5">
+        <div>
+          <RenderSuggestedManga isShown={manga_title[0]}/>
+        </div>
+
         {manga_pages.map(page_no => (
           <div className="bg-dark border border-dark rounded mx-n2" key={generateImageURL(page_no)}>
             <img
@@ -61,10 +65,10 @@ function PageReadMangaV2() {
             Prev
           </button>
 
-          <button className="btn btn-light btn-sm btn-outline-secondary mx-1">Chapter :</button>
+          <button className="btn btn-light btn-sm btn-outline-secondary mx-1" onClick={() => handleSelectedMangaTitle(manga_list[0])}>Menu</button>
           <select className="custom-select mx-1" name="selectedMangaTitle" onChange={(e) => handleSelectedMangaChapter(e.target.value)} defaultValue={manga_chapter}>
             {manga_chapter_list.map(chapter => (
-              <option key={chapter} value={chapter}> {chapter} </option>
+              <option key={chapter} value={chapter}> Chapter {chapter} </option>
             ))}
           </select>
 
@@ -72,6 +76,26 @@ function PageReadMangaV2() {
             Next
           </button>
         </nav>
+      </div>
+    )
+  }
+
+  function RenderSuggestedManga(props) {
+    if (props.isShown !== '-') { return(<div></div>) }
+
+    return(
+      <div className="row">
+        {manga_list.slice(1, manga_list.length).map(manga => (
+          <div className="col-4 col-md-2" key={manga}>
+            <div className="card mb-4 box-shadow">
+              <img className="card-img-top bg-dark" src={generateThumbnailFromTitle(manga)} style={{"height": "150px"}} alt="" />
+              <p className="card-text overflow-auto" style={{"height": "50px"}}>
+                <small className="text-muted">{generateMangaTitleText(manga)}</small>
+              </p>
+              <button type="button" className="btn btn-block btn-sm btn-outline-secondary" onClick={(e) => handleSelectedMangaTitle(e.target.value)} value={manga}>View</button>
+            </div>
+          </div>
+        ))}
       </div>
     )
   }
@@ -98,6 +122,7 @@ function PageReadMangaV2() {
 
   function handleNextPage() {
     var last_chapter = manga_db.get(manga_title).manga_last_chapter
+    if (parseInt(manga_chapter) === last_chapter) {return true}
     set_manga_chapter_list(generateChapterListFromLastChapter(last_chapter))
     set_manga_chapter(parseInt(manga_chapter) + 1)
     setCookies(parseInt(manga_chapter) + 1)
@@ -108,10 +133,10 @@ function PageReadMangaV2() {
     var chapter = cookies.get(key)
 
     if (typeof chapter !== "undefined") {
-      console.log(`not null ${title}: ${chapter}`)
+      // console.log(`not null ${title}: ${chapter}`)
       return parseInt(chapter)
     } else {
-      console.log(`null ${title}: ${chapter}`)
+      // console.log(`null ${title}: ${chapter}`)
       return manga_chapter_list[0]
     }
   }
@@ -157,6 +182,10 @@ function PageReadMangaV2() {
     var status = manga_db.get(raw_title).status
 
     return `( ${last_read} / ${last_chapter} ) - ${title} - ${status}`
+  }
+
+  function generateThumbnailFromTitle(title) {
+    return `https://thumb.mghubcdn.com/mn/${title}.jpg`
   }
 
   function setCookies(chapter) {
