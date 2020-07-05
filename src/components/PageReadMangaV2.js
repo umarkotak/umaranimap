@@ -161,7 +161,8 @@ function PageReadMangaV2() {
   function setCookies(chapter) {
     var key = `${manga_title}/last_read_chapter`
     var value = chapter
-    cookies.set(key, value, { path: "/" })
+    let date = new Date(2030, 12)
+    cookies.set(key, value, { path: "/", expires: date })
     console.log("COOKIES SET: " + cookies.get(key))
   }
 
