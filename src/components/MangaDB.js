@@ -12,6 +12,7 @@ let manga_db = new Map([
   ["detective-conan", { "manga_last_chapter": 1054, "average_page": 50, "status": "ongoing" }],
   ["domestic-na-kanojo", { "manga_last_chapter": 276, "average_page": 50, "status": "ongoing" }],
   ["dr-stone", { "manga_last_chapter": 156, "average_page": 50, "status": "ongoing" }],
+  ["eyeshield-21", { "manga_last_chapter": 333, "average_page": 50, "status": "ongoing" }],
   ["fairy-tail", { "manga_last_chapter": 545, "average_page": 50, "status": "ongoing" }],
   ["fire-brigade-of-flames", { "manga_last_chapter": 224, "average_page": 50, "status": "ongoing" }],
   ["go-toubun-no-hanayome", { "manga_last_chapter": 122, "average_page": 50, "status": "ongoing" }],
@@ -43,7 +44,9 @@ let manga_db = new Map([
   ["rebirth-of-the-urban-immortal-cultivator", { "manga_last_chapter": 339, "average_page": 50, "status": "ongoing" }],
   ["record-of-ragnarok", { "manga_last_chapter": 33, "average_page": 50, "status": "ongoing" }],
   ["relife", { "manga_last_chapter": 222, "average_page": 50, "status": "ongoing" }],
+  ["rurouni-kenshin", { "manga_last_chapter": 258, "average_page": 50, "status": "ongoing" }],
   ["shokugeki-no-soma", { "manga_last_chapter": 315, "average_page": 50, "status": "finished" }],
+  ["slam-dunk", { "manga_last_chapter": 276, "average_page": 50, "status": "ongoing" }],
   ["solo-leveling", { "manga_last_chapter": 110, "average_page": 50, "status": "ongoing" }],
   ["tate-no-yuusha-no-nariagari", { "manga_last_chapter": 65, "average_page": 50, "status": "ongoing" }],
   ["tensei-shitara-slime-datta-ken", { "manga_last_chapter": 72, "average_page": 50, "status": "ongoing" }],
@@ -54,7 +57,7 @@ let manga_db = new Map([
   ["versatile-mage", { "manga_last_chapter": 471, "average_page": 50, "status": "ongoing" }],
   ["yakusoku-no-neverland", { "manga_last_chapter": 181, "average_page": 50, "status": "finished" }],
   ["yong-heng-zhi-zun", { "manga_last_chapter": 232, "average_page": 50, "status": "ongoing" }],
-  ["yuragi-sou-no-yuuna-san", { "manga_last_chapter": 209, "average_page": 50, "status": "ongoing" }]
+  ["yuragi-sou-no-yuuna-san", { "manga_last_chapter": 209, "average_page": 50, "status": "ongoing" }],
 ]);
 
 class MangaDB {
