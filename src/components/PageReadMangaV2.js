@@ -93,14 +93,14 @@ function PageReadMangaV2() {
     var last_chapter = manga_db.get(manga_title).manga_last_chapter
     set_manga_chapter_list(generateChapterListFromLastChapter(last_chapter))
     set_manga_chapter(parseInt(manga_chapter) - 1)
-    setCookies(manga_chapter - 1)
+    setCookies(parseInt(manga_chapter) - 1)
   }
 
   function handleNextPage() {
     var last_chapter = manga_db.get(manga_title).manga_last_chapter
     set_manga_chapter_list(generateChapterListFromLastChapter(last_chapter))
     set_manga_chapter(parseInt(manga_chapter) + 1)
-    setCookies(manga_chapter + 1)
+    setCookies(parseInt(manga_chapter) + 1)
   }
 
   function findLatestMangaChapter(title) {
