@@ -21,14 +21,14 @@ function Nav() {
         <nav className="nav d-flex justify-content-between">
           <Link to="/" className="p-2 m-1 text-muted">Home</Link>
           <Link to="/tic-tac-toe" className="p-2 m-1 text-muted">Tic Tac Toe</Link>
-          <Link to="/learn-react" className="p-2 m-1 text-muted">Learn React</Link>
-          {/* <Link to="/airing-anime-v1" className="p-2 m-1 text-muted">Airing Anime V1</Link>
+          {/* <Link to="/learn-react" className="p-2 m-1 text-muted">Learn React</Link>
+          <Link to="/airing-anime-v1" className="p-2 m-1 text-muted">Airing Anime V1</Link>
           <Link to="/airing-anime-v2" className="p-2 m-1 text-muted">Airing Anime V2</Link>
           <Link to="/airing-anime-v3" className="p-2 m-1 text-muted">Airing Anime V3</Link>
           <Link to="/airing-anime-v4" className="p-2 m-1 text-muted">Airing Anime V4</Link>
           <Link to="/airing-anime-v5" className="p-2 m-1 text-muted">Airing Anime V5</Link> */}
-          <Link to="/airing-anime-v5" className="p-2 m-1 text-muted">Seasonal Animes</Link>
-          <Link to="/read-manga-v1" className="p-2 m-1 text-muted">Read Manga V1</Link>
+          <Link to="/airing-anime-v5" className="p-2 m-1 text-muted">Anime List</Link>
+          <Link to="/read-manga-v1" className="p-2 m-1 text-muted">Read Manga</Link>
         </nav>
       </div>
     </div>

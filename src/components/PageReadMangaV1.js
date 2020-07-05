@@ -44,7 +44,7 @@ function PageReadMangaV1() {
         <nav className="nav d-flex justify-content-center">
           <select className="custom-select mx-5 my-1" name="selectedMangaTitle" onChange={(e) => handleSelectedMangaTitle(e.target.value)}>
             {manga_list.map(manga => (
-              <option key={manga} value={manga} selected={manga === manga_title}> {beutifyChapterTitle(manga)} </option>
+              <option key={manga} value={manga} selected={manga === manga_title}> {generateMangaTitleText(manga)} </option>
             ))}
           </select>
         </nav>
@@ -129,10 +129,17 @@ function PageReadMangaV1() {
     return chapters
   }
 
-  function beutifyChapterTitle(raw_title) {
+  function generateMangaTitleText(raw_title) {
     if (raw_title[0] === "-") { return raw_title }
-    console.log(raw_title);
 
+    var title = beutifyChapterTitle(raw_title)
+    var last_chapter = manga_db.get(raw_title).manga_last_chapter
+    var status = manga_db.get(raw_title).status
+
+    return `${last_chapter} | ${status} | ${title}`
+  }
+
+  function beutifyChapterTitle(raw_title) {
     var title = raw_title.replace(/-/g, " ")
     title = title.toLowerCase().split(" ");
     for (var i = 0; i < title.length; i++) {
