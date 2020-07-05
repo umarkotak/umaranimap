@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useState, useCallback, useEffect} from "react"
 import mangaDB from "./MangaDB"
 import Cookies from 'universal-cookie';
 
@@ -14,6 +14,22 @@ function PageReadMangaV2() {
 
   const [manga_chapter_list, set_manga_chapter_list] = useState(generateChapterListFromTitle(manga_title))
   const [manga_chapter, set_manga_chapter] = useState(findLatestMangaChapter(manga_title))
+
+  const escFunction = useCallback((event) => {
+    console.log(event.keyCode)
+    if (event.keyCode === 39) {
+      handleNextPage()
+    } else if (event.keyCode === 37) {
+      handlePreviousPage()
+    }
+  }, [handlePreviousPage, handleNextPage])
+  useEffect(() => {
+    document.addEventListener("keydown", escFunction, false)
+
+    return () => {
+      document.removeEventListener("keydown", escFunction, false)
+    };
+  }, [escFunction]);
 
   return (
     <div>
@@ -112,6 +128,7 @@ function PageReadMangaV2() {
     setCookies(chapter)
   }
 
+  // eslint-disable-next-line
   function handlePreviousPage() {
     if (parseInt(manga_chapter) === 1) {return true}
     var last_chapter = manga_db.get(manga_title).manga_last_chapter
@@ -120,6 +137,7 @@ function PageReadMangaV2() {
     setCookies(parseInt(manga_chapter) - 1)
   }
 
+  // eslint-disable-next-line
   function handleNextPage() {
     var last_chapter = manga_db.get(manga_title).manga_last_chapter
     if (parseInt(manga_chapter) === last_chapter) {return true}
