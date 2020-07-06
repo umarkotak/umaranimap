@@ -15,20 +15,33 @@ function PageReadMangaV2() {
   const [manga_chapter_list, set_manga_chapter_list] = useState(generateChapterListFromTitle(manga_title))
   const [manga_chapter, set_manga_chapter] = useState(findLatestMangaChapter(manga_title))
   const [manga_histories, set_manga_histories] = useState(generateHistoriesSection())
+  const [bottom_nav, set_bottom_nav] = useState(true)
+  const [y_pos, set_y_pos] = useState(window.scrollY)
 
   const escFunction = useCallback((event) => {
-    console.log(event.keyCode)
     if (event.keyCode === 39) {
       handleNextPage()
     } else if (event.keyCode === 37) {
       handlePreviousPage()
     }
-  }, [handlePreviousPage, handleNextPage])
+
+    if (window.scrollY > y_pos + 75) {
+      set_bottom_nav(false)
+      set_y_pos(window.scrollY)
+    } else if (window.scrollY < y_pos) {
+      set_bottom_nav(true)
+      set_y_pos(window.scrollY)
+    }
+
+    // eslint-disable-next-line
+  }, [handlePreviousPage, handleNextPage, set_bottom_nav])
   useEffect(() => {
     document.addEventListener("keydown", escFunction, false)
+    document.addEventListener("scroll", escFunction, false)
 
     return () => {
       document.removeEventListener("keydown", escFunction, false)
+      document.removeEventListener("scroll", escFunction, false)
     };
   }, [escFunction]);
 
@@ -75,6 +88,7 @@ function PageReadMangaV2() {
   }
 
   function RenderFoot() {
+    if (bottom_nav === false) return(<div></div>)
     return(
       <div className="nav-scroller py-1 mb-3">
         <nav className="nav d-flex justify-content-between">
@@ -109,7 +123,7 @@ function PageReadMangaV2() {
           </div>
 
           <div className="row flex-row flex-nowrap overflow-auto">
-            {manga_histories.slice(0, 10).map(manga => (
+            {manga_histories.slice(0, 15).map(manga => (
               <div className="col-4 col-md-2" key={manga}>
                 <div className="card mb-4 box-shadow shadow">
                   <img className="card-img-top bg-dark" src={generateThumbnailFromTitle(manga)} style={{"height": "150px"}} alt="" />
@@ -137,7 +151,9 @@ function PageReadMangaV2() {
                 <p className="card-text overflow-auto" style={{"height": "50px"}}>
                   <small className="text-muted">{generateMangaTitleText(manga)}</small>
                 </p>
-                <button type="button" className="btn btn-block btn-sm btn-outline-secondary" onClick={(e) => handleSelectedMangaTitle(e.target.value)} value={manga}>View</button>
+                <div className="btn-group">
+                  <button type="button" className="btn btn-sm btn-outline-secondary" onClick={(e) => handleSelectedMangaTitle(e.target.value)} value={manga}>View</button>
+                </div>
               </div>
             </div>
           ))}
