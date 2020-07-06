@@ -36,11 +36,11 @@ function PageReadMangaV2() {
     // eslint-disable-next-line
   }, [handlePreviousPage, handleNextPage, set_bottom_nav])
   useEffect(() => {
-    document.addEventListener("keydown", escFunction, false)
+    document.addEventListener("keyup", escFunction, false)
     document.addEventListener("scroll", escFunction, false)
 
     return () => {
-      document.removeEventListener("keydown", escFunction, false)
+      document.removeEventListener("keyup", escFunction, false)
       document.removeEventListener("scroll", escFunction, false)
     };
   }, [escFunction]);
