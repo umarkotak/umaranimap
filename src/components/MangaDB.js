@@ -22,7 +22,7 @@ let manga_db = new Map([
   ["hardcore-leveling-warrior", { "manga_last_chapter": 231, "average_page": 50, "status": "ongoing", "image_url": "" }],
   ["horimiya", { "manga_last_chapter": 115, "average_page": 50, "status": "ongoing", "image_url": "" }],
   ["hunter-x-hunter", { "manga_last_chapter": 390, "average_page": 50, "status": "ongoing", "image_url": "" }],
-  ["i-am-the-sorcerer-king", { "manga_last_chapter": 97, "average_page": 50, "status": "ongoing", "image_url": "" }],
+  ["i-am-the-sorcerer-king", { "manga_last_chapter": 98, "average_page": 50, "status": "ongoing", "image_url": "" }],
   ["jagaaaaaan", { "manga_last_chapter": 109, "average_page": 50, "status": "ongoing", "image_url": "" }],
   ["jumyou-wo-kaitotte-moratta-ichinen-ni-tsuki-ichimanen-de", { "manga_last_chapter": 16, "average_page": 50, "status": "finished", "image_url": "" }],
   ["kaguya-sama-wa-kokurasetai-tensai-tachi-no-renai-zunousen", { "manga_last_chapter": 194, "average_page": 50, "status": "ongoing", "image_url": "" }],
@@ -41,7 +41,7 @@ let manga_db = new Map([
   ["out-makoto-mizuta", { "manga_last_chapter": 169, "average_page": 50, "status": "ongoing", "image_url": "" }],
   ["peerless-dad", { "manga_last_chapter": 129, "average_page": 50, "status": "ongoing", "image_url": "" }],
   ["player-reborn", { "manga_last_chapter": 167, "average_page": 50, "status": "ongoing", "image_url": "" }],
-  ["ranker-who-lives-a-second-time", { "manga_last_chapter": 67, "average_page": 50, "status": "ongoing", "image_url": "" }],
+  ["ranker-who-lives-a-second-time", { "manga_last_chapter": 68, "average_page": 50, "status": "ongoing", "image_url": "" }],
   ["rebirth-of-the-urban-immortal-cultivator", { "manga_last_chapter": 339, "average_page": 50, "status": "ongoing", "image_url": "" }],
   ["record-of-ragnarok", { "manga_last_chapter": 33, "average_page": 50, "status": "ongoing", "image_url": "" }],
   ["relife", { "manga_last_chapter": 222, "average_page": 50, "status": "finished", "image_url": "" }],
@@ -60,7 +60,7 @@ let manga_db = new Map([
   ["yong-heng-zhi-zun", { "manga_last_chapter": 232, "average_page": 50, "status": "ongoing", "image_url": "" }],
   ["yuragi-sou-no-yuuna-san", { "manga_last_chapter": 209, "average_page": 50, "status": "ongoing", "image_url": "" }],
 ]);
-// https://thumb.mghubcdn.com/mn/rurouni-kenshin.jpg
+
 class MangaDB {
   GetMangaDB() {
     return manga_db
