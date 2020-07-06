@@ -18,14 +18,27 @@ function PageReadMangaV2() {
   const [bottom_nav, set_bottom_nav] = useState(true)
   const [y_pos, set_y_pos] = useState(window.scrollY)
 
+  const windowHeight = window.innerHeight
+  const body = document.body
+  const html = document.documentElement
+  const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight)
+
   const escFunction = useCallback((event) => {
+    const windowBottom = windowHeight + window.pageYOffset
+
     if (event.keyCode === 39) {
       handleNextPage()
     } else if (event.keyCode === 37) {
       handlePreviousPage()
     }
 
-    if (window.scrollY > y_pos + 75) {
+    if (window.scrollY === 0) {
+      set_bottom_nav(true)
+      set_y_pos(window.scrollY)
+    } else if (windowBottom >= docHeight) {
+      set_bottom_nav(true)
+      set_y_pos(window.scrollY)
+    } else if (window.scrollY > y_pos + 75) {
       set_bottom_nav(false)
       set_y_pos(window.scrollY)
     } else if (window.scrollY < y_pos) {
@@ -74,6 +87,7 @@ function PageReadMangaV2() {
   )
 
   function RenderHead() {
+    if (bottom_nav === false) return(<div></div>)
     return(
       <div className="nav-scroller">
         <nav className="nav d-flex justify-content-center">
