@@ -37,6 +37,14 @@ npm test
 git push -f heroku master
 ```
 
+### Update Manga Chapter
+
+```
+ruby refresh.rb
+git commit -m "update manga chapter"
+git push heroku master
+```
+
 ### Learning Process
 
 ### Good Read
