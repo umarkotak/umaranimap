@@ -14,6 +14,7 @@ function PageReadMangaV2() {
 
   const [manga_chapter_list, set_manga_chapter_list] = useState(generateChapterListFromTitle(manga_title))
   const [manga_chapter, set_manga_chapter] = useState(findLatestMangaChapter(manga_title))
+  const [manga_histories, set_manga_histories] = useState(generateHistoriesSection())
 
   const escFunction = useCallback((event) => {
     console.log(event.keyCode)
@@ -102,16 +103,23 @@ function PageReadMangaV2() {
     return(
       <div>
         <div>
-          <h4>History</h4>
+          <div className="row">
+            <div className="col-6"><h4>History</h4></div>
+            <div className="col-6"><button className="float-right btn btn-sm btn-outline-secondary" onClick={() => handleClearHistory()} href="#">Clear History</button></div>
+          </div>
+
           <div className="row flex-row flex-nowrap overflow-auto">
-            {generateHistoriesSection().slice(0, 10).map(manga => (
+            {manga_histories.slice(0, 10).map(manga => (
               <div className="col-4 col-md-2" key={manga}>
-                <div className="card mb-4 box-shadow">
+                <div className="card mb-4 box-shadow shadow">
                   <img className="card-img-top bg-dark" src={generateThumbnailFromTitle(manga)} style={{"height": "150px"}} alt="" />
                   <p className="card-text overflow-auto" style={{"height": "50px"}}>
                     <small className="text-muted">{generateMangaTitleText(manga)}</small>
                   </p>
-                  <button type="button" className="btn btn-block btn-sm btn-outline-secondary" onClick={(e) => handleSelectedMangaTitle(e.target.value)} value={manga}>View</button>
+                  <div class="btn-group">
+                    <button type="button" className="btn btn-sm btn-outline-secondary" onClick={(e) => handleSelectedMangaTitle(e.target.value)} value={manga}>View</button>
+                    {/* <button type="button" className="btn btn-sm btn-outline-secondary" onClick={(e) => handleSelectedMangaTitle(e.target.value)} value={manga}>View</button> */}
+                  </div>
                 </div>
               </div>
             ))}
@@ -124,7 +132,7 @@ function PageReadMangaV2() {
         <div className="row">
           {manga_list.slice(1, manga_list.length).map(manga => (
             <div className="col-4 col-md-2" key={manga}>
-              <div className="card mb-4 box-shadow">
+              <div className="card mb-4 box-shadow shadow">
                 <img className="card-img-top bg-dark" src={generateThumbnailFromTitle(manga)} style={{"height": "150px"}} alt="" />
                 <p className="card-text overflow-auto" style={{"height": "50px"}}>
                   <small className="text-muted">{generateMangaTitleText(manga)}</small>
@@ -167,6 +175,13 @@ function PageReadMangaV2() {
     set_manga_chapter_list(generateChapterListFromLastChapter(last_chapter))
     set_manga_chapter(parseInt(manga_chapter) + 1)
     setCookies(parseInt(manga_chapter) + 1)
+  }
+
+  function handleClearHistory() {
+    var key = "last_manga_reads"
+    let date = new Date(2030, 12)
+    cookies.set(key, [], { path: "/", expires: date })
+    set_manga_histories([])
   }
 
   function findLatestMangaChapter(title) {
@@ -260,8 +275,10 @@ function PageReadMangaV2() {
       if (index !== -1) last_manga_reads.splice(index, 1);
       last_manga_reads.unshift(manga_title)
       cookies.set(key, last_manga_reads, { path: "/", expires: date })
+      set_manga_histories(last_manga_reads)
     } else {
       cookies.set(key, [value], { path: "/", expires: date })
+      set_manga_histories([value])
     }
     console.log("HISTORIES SET: " + cookies.get(key))
   }
