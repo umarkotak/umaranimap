@@ -56,9 +56,9 @@ class Refresh
 
       data["manga_db"][manga_title]["manga_last_chapter"] = next_target_chapter
       if updated
-        data["manga_db"][manga_title]["new_added"] += 1
-      elsif data["manga_db"][manga_title]["new_added"] >= MAX_NEW_MANGA_RETENTION
-        data["manga_db"][manga_title]["new_added"] = 0
+        data["manga_db"][manga_title]["new_added"] = 1
+      # elsif data["manga_db"][manga_title]["new_added"] >= MAX_NEW_MANGA_RETENTION
+      #   data["manga_db"][manga_title]["new_added"] = 0
       elsif data["manga_db"][manga_title]["new_added"] != 0
         data["manga_db"][manga_title]["new_added"] += 1
       end
