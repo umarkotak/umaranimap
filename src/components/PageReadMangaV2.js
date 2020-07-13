@@ -75,6 +75,7 @@ function PageReadMangaV2() {
               className="bd-placeholder-img mx-auto d-block img-fluid"
               src={generateImageURL(page_no)}
               alt=""
+              onError={(e)=>{e.target.onerror = null; e.target.src=generateImageErrorUrl(page_no)}}
             />
           </div>
         ))}
@@ -261,6 +262,10 @@ function PageReadMangaV2() {
 
   function generateImageURL(page_no) {
     return `${cdn_host}/${manga_title}/${manga_chapter}/${page_no}.jpg`
+  }
+
+  function generateImageErrorUrl(page_no) {
+    return `${cdn_host}/${manga_title}/${manga_chapter}/${page_no}.png`
   }
 
   function generateMangaListFromDB() {

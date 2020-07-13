@@ -79,6 +79,8 @@ class Refresh
     log_file.puts updated_manga_titles
     log_file.puts
 
+    puts updated_manga_titles
+
     puts "FINISH UPDATING DATA: #{Time.now}"
     log_file.puts "FINISH UPDATING DATA: #{Time.now}"
 
