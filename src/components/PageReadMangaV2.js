@@ -203,11 +203,13 @@ function PageReadMangaV2() {
     set_manga_chapter_list(generateChapterListFromLastChapter(parseInt(last_chapter)))
     set_manga_chapter(findLatestMangaChapter(title))
     setMangaHistores()
+    window.scrollTo(0, 0)
   }
 
   function handleSelectedMangaChapter(chapter) {
     set_manga_chapter(chapter)
     setCookies(chapter)
+    window.scrollTo(0, 0)
   }
 
   // eslint-disable-next-line
@@ -217,6 +219,7 @@ function PageReadMangaV2() {
     set_manga_chapter_list(generateChapterListFromLastChapter(last_chapter))
     set_manga_chapter(parseInt(manga_chapter) - 1)
     setCookies(parseInt(manga_chapter) - 1)
+    window.scrollTo(0, 0)
   }
 
   // eslint-disable-next-line
@@ -226,6 +229,7 @@ function PageReadMangaV2() {
     set_manga_chapter_list(generateChapterListFromLastChapter(last_chapter))
     set_manga_chapter(parseInt(manga_chapter) + 1)
     setCookies(parseInt(manga_chapter) + 1)
+    window.scrollTo(0, 0)
   }
 
   function handleClearHistory() {
