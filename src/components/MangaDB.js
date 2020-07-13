@@ -71,6 +71,20 @@ class MangaDB {
     return manga_db
   }
 
+  GetNewManga() {
+    var new_mangas = []
+
+    manga_db.forEach((num, key) => {
+      if (num.new_added > 0) {
+        new_mangas.push({title: key, order: num.new_added})
+      }
+    })
+
+    new_mangas.sort((a, b) => a.order - b.order)
+
+    return new_mangas.map( val => val.title)
+  }
+
   GetMangaByStatus(status) {
     return []
   }

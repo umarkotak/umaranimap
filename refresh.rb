@@ -4,6 +4,7 @@ require "net/http"
 class Refresh
   MAX_UPDATE_COUNT = 2.freeze
   MAX_MANGA_COUNT = -1.freeze
+  MAX_NEW_MANGA_RETENTION = 4.freeze
 
   def initialize
   end
@@ -54,6 +55,13 @@ class Refresh
       end
 
       data["manga_db"][manga_title]["manga_last_chapter"] = next_target_chapter
+      if updated
+        data["manga_db"][manga_title]["new_added"] += 1
+      elsif data["manga_db"][manga_title]["new_added"] >= MAX_NEW_MANGA_RETENTION
+        data["manga_db"][manga_title]["new_added"] = 0
+      elsif data["manga_db"][manga_title]["new_added"] != 0
+        data["manga_db"][manga_title]["new_added"] += 1
+      end
 
       updated_manga_titles << "#{manga_title.upcase}: #{next_target_chapter}".gsub("-", " ") if updated
       log_file.puts "UPDATED LATEST CHAPTER: #{next_target_chapter}"

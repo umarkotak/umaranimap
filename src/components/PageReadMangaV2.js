@@ -152,6 +152,27 @@ function PageReadMangaV2() {
               </div>
             ))}
           </div>
+
+          <div className="row">
+            <div className="col-6"><h4>New Manga</h4></div>
+          </div>
+
+          <div className="row flex-row flex-nowrap overflow-auto">
+            {mangaDB.GetNewManga().map(manga => (
+              <div className="col-4 col-md-2" key={manga}>
+                <div className="card mb-4 box-shadow shadow">
+                  <img className="card-img-top bg-dark" src={generateThumbnailFromTitle(manga)} style={{"height": "150px"}} alt="" />
+                  <p className="card-text overflow-auto" style={{"height": "50px"}}>
+                    <small className="text-muted">{generateMangaTitleText(manga)}</small>
+                  </p>
+                  <div class="btn-group">
+                    <button type="button" className="btn btn-sm btn-outline-secondary" onClick={(e) => handleSelectedMangaTitle(e.target.value)} value={manga}>View</button>
+                    {/* <button type="button" className="btn btn-sm btn-outline-secondary" onClick={(e) => handleSelectedMangaTitle(e.target.value)} value={manga}>View</button> */}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
         <hr/>
