@@ -3,7 +3,7 @@ require "net/http"
 
 class Refresh
   MAX_UPDATE_COUNT = 2.freeze
-  MAX_MANGA_COUNT = -1.freeze
+  MAX_MANGA_COUNT = 1.freeze
   MAX_NEW_MANGA_RETENTION = 10.freeze
 
   def initialize
@@ -34,12 +34,29 @@ class Refresh
 
       for i in 1..MAX_UPDATE_COUNT do
         manga_chapter_target = last_chapter + i
-        target_url = URI.parse("https://img.mghubcdn.com/file/imghub/#{manga_title}/#{manga_chapter_target}/1.jpg")
+        target_url = URI.parse("https://img.mghubcdn.com/file/imghub/#{manga_title}/#{manga_chapter_target}/#{rand(2..3)}.jpg")
         response = Net::HTTP.get(target_url)
+        other_target_url = URI.parse("https://img.mghubcdn.com/file/imghub/#{manga_title}/#{manga_chapter_target}/#{rand(2..3)}.png")
+        other_response = Net::HTTP.get(other_target_url)
 
         begin
           status = JSON.parse(response)["status"]
-          status_string = (status == 200) ? "FOUND" : "NOT_FOUND"
+          if (status == 200)
+            status_string = "FOUND"
+            updated = true
+
+          else
+            other_status = JSON.parse(response)["status"]
+            if (other_status == 200)
+              status_string = "FOUND"
+              updated = true
+
+            else
+              status_string = "NOT_FOUND"
+            end
+
+            status_string = "NOT_FOUND"
+          end
         rescue
           updated = true
           status_string = "FOUND"

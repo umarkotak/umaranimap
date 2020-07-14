@@ -1,1 +1,459 @@
-{"manga_db":{"-- select manga title --":{"manga_last_chapter":2,"average_page":1,"status":"ongoing","image_url":"","new_added":0},"a-returner-s-magic-should-be-special":{"manga_last_chapter":110,"average_page":4,"status":"ongoing","image_url":"","new_added":0},"attack-on-titan":{"manga_last_chapter":130,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"akame-ga-kill":{"manga_last_chapter":78,"average_page":50,"status":"finished","image_url":"","new_added":0},"baby-steps":{"manga_last_chapter":389,"average_page":50,"status":"ongoing","image_url":"","new_added":4},"black-clover":{"manga_last_chapter":257,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"bleach":{"manga_last_chapter":686,"average_page":50,"status":"finished","image_url":"","new_added":0},"boku-no-hero-academia":{"manga_last_chapter":277,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"bokutachi-wa-benkyou-ga-dekinai":{"manga_last_chapter":166,"average_page":50,"status":"ongoing","image_url":"","new_added":4},"boruto-naruto-next-generations":{"manga_last_chapter":47,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"bungou-stray-dogs":{"manga_last_chapter":84,"average_page":50,"status":"ongoing","image_url":"","new_added":4},"darwin-s-game":{"manga_last_chapter":85,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"detective-conan":{"manga_last_chapter":1055,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"domestic-na-kanojo":{"manga_last_chapter":276,"average_page":50,"status":"finished","image_url":"","new_added":0},"dr-stone":{"manga_last_chapter":158,"average_page":50,"status":"ongoing","image_url":"","new_added":4},"eyeshield-21":{"manga_last_chapter":333,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"fairy-tail":{"manga_last_chapter":545,"average_page":50,"status":"finished","image_url":"","new_added":0},"fire-brigade-of-flames":{"manga_last_chapter":226,"average_page":50,"status":"ongoing","image_url":"","new_added":4},"go-toubun-no-hanayome":{"manga_last_chapter":122,"average_page":50,"status":"finished","image_url":"","new_added":0},"gosu":{"manga_last_chapter":184,"average_page":50,"status":"ongoing","image_url":"","new_added":4},"haikyuu":{"manga_last_chapter":401,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"hardcore-leveling-warrior":{"manga_last_chapter":232,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"horimiya":{"manga_last_chapter":116,"average_page":50,"status":"ongoing","image_url":"","new_added":4},"hunter-x-hunter":{"manga_last_chapter":391,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"i-am-the-sorcerer-king":{"manga_last_chapter":99,"average_page":50,"status":"ongoing","image_url":"","new_added":4},"jagaaaaaan":{"manga_last_chapter":110,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"jumyou-wo-kaitotte-moratta-ichinen-ni-tsuki-ichimanen-de":{"manga_last_chapter":16,"average_page":50,"status":"finished","image_url":"","new_added":0},"kaguya-sama-wa-kokurasetai-tensai-tachi-no-renai-zunousen":{"manga_last_chapter":194,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"kanojo-okarishimasu":{"manga_last_chapter":147,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"karakai-jouzu-no-moto-takagi-san":{"manga_last_chapter":141,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"karakai-jouzu-no-takagi-san":{"manga_last_chapter":128,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"kekkaishi":{"manga_last_chapter":345,"average_page":50,"status":"finished","image_url":"","new_added":0},"kengan-ashua":{"manga_last_chapter":236,"average_page":50,"status":"finished","image_url":"","new_added":0},"kengan-omega":{"manga_last_chapter":68,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"kimetsu-no-yaiba":{"manga_last_chapter":205,"average_page":50,"status":"finished","image_url":"","new_added":0},"kingdom":{"manga_last_chapter":647,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"konjiki-no-moji-tsukai-yuusha-yonin-ni-makikomareta-unique-cheat":{"manga_last_chapter":64,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"kono-oto-tomare":{"manga_last_chapter":93,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"my-wife-is-a-demon-queen":{"manga_last_chapter":206,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"nanatsu-no-taizai":{"manga_last_chapter":346,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"naruto":{"manga_last_chapter":700,"average_page":50,"status":"finished","image_url":"","new_added":0},"omniscient-reader-s-viewpoint":{"manga_last_chapter":12,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"one-piece":{"manga_last_chapter":984,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"onepunch-man":{"manga_last_chapter":132,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"out-makoto-mizuta":{"manga_last_chapter":169,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"peerless-dad":{"manga_last_chapter":130,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"player-reborn":{"manga_last_chapter":170,"average_page":50,"status":"ongoing","image_url":"","new_added":4},"ranker-who-lives-a-second-time":{"manga_last_chapter":68,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"rebirth-of-the-urban-immortal-cultivator":{"manga_last_chapter":339,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"record-of-ragnarok":{"manga_last_chapter":33,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"relife":{"manga_last_chapter":222,"average_page":50,"status":"finished","image_url":"","new_added":0},"rurouni-kenshin":{"manga_last_chapter":258,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"shokugeki-no-soma":{"manga_last_chapter":315,"average_page":50,"status":"finished","image_url":"","new_added":0},"slam-dunk":{"manga_last_chapter":276,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"solo-leveling":{"manga_last_chapter":112,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"tate-no-yuusha-no-nariagari":{"manga_last_chapter":65,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"tensei-shitara-slime-datta-ken":{"manga_last_chapter":72,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"the-legendary-moonlight-sculptor":{"manga_last_chapter":141,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"tokyo-ghoul-re":{"manga_last_chapter":179,"average_page":50,"status":"finished","image_url":"","new_added":0},"tower-of-god":{"manga_last_chapter":485,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"tsuyokute-new-saga":{"manga_last_chapter":76,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"versatile-mage":{"manga_last_chapter":482,"average_page":50,"status":"ongoing","image_url":"","new_added":2},"yakusoku-no-neverland":{"manga_last_chapter":181,"average_page":50,"status":"finished","image_url":"","new_added":0},"yong-heng-zhi-zun":{"manga_last_chapter":232,"average_page":50,"status":"ongoing","image_url":"","new_added":0},"yuragi-sou-no-yuuna-san":{"manga_last_chapter":209,"average_page":50,"status":"ongoing","image_url":"","new_added":0}}}
+{
+    "manga_db": {
+        "-- select manga title --": {
+            "manga_last_chapter": 2,
+            "average_page": 1,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "a-returner-s-magic-should-be-special": {
+            "manga_last_chapter": 111,
+            "average_page": 4,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 1
+        },
+        "attack-on-titan": {
+            "manga_last_chapter": 130,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "akame-ga-kill": {
+            "manga_last_chapter": 78,
+            "average_page": 50,
+            "status": "finished",
+            "image_url": "",
+            "new_added": 0
+        },
+        "baby-steps": {
+            "manga_last_chapter": 389,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 6
+        },
+        "black-clover": {
+            "manga_last_chapter": 257,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "bleach": {
+            "manga_last_chapter": 686,
+            "average_page": 50,
+            "status": "finished",
+            "image_url": "",
+            "new_added": 0
+        },
+        "boku-no-hero-academia": {
+            "manga_last_chapter": 277,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "bokutachi-wa-benkyou-ga-dekinai": {
+            "manga_last_chapter": 166,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 6
+        },
+        "boruto-naruto-next-generations": {
+            "manga_last_chapter": 47,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "bungou-stray-dogs": {
+            "manga_last_chapter": 84,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 6
+        },
+        "darwin-s-game": {
+            "manga_last_chapter": 85,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "detective-conan": {
+            "manga_last_chapter": 1055,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "domestic-na-kanojo": {
+            "manga_last_chapter": 276,
+            "average_page": 50,
+            "status": "finished",
+            "image_url": "",
+            "new_added": 0
+        },
+        "dr-stone": {
+            "manga_last_chapter": 158,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 6
+        },
+        "eyeshield-21": {
+            "manga_last_chapter": 333,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "fairy-tail": {
+            "manga_last_chapter": 545,
+            "average_page": 50,
+            "status": "finished",
+            "image_url": "",
+            "new_added": 0
+        },
+        "fire-brigade-of-flames": {
+            "manga_last_chapter": 226,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 6
+        },
+        "go-toubun-no-hanayome": {
+            "manga_last_chapter": 122,
+            "average_page": 50,
+            "status": "finished",
+            "image_url": "",
+            "new_added": 0
+        },
+        "gosu": {
+            "manga_last_chapter": 184,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 6
+        },
+        "haikyuu": {
+            "manga_last_chapter": 401,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "hardcore-leveling-warrior": {
+            "manga_last_chapter": 232,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "horimiya": {
+            "manga_last_chapter": 116,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 6
+        },
+        "hunter-x-hunter": {
+            "manga_last_chapter": 391,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "i-am-the-sorcerer-king": {
+            "manga_last_chapter": 99,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 6
+        },
+        "jagaaaaaan": {
+            "manga_last_chapter": 110,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "jumyou-wo-kaitotte-moratta-ichinen-ni-tsuki-ichimanen-de": {
+            "manga_last_chapter": 16,
+            "average_page": 50,
+            "status": "finished",
+            "image_url": "",
+            "new_added": 0
+        },
+        "kaguya-sama-wa-kokurasetai-tensai-tachi-no-renai-zunousen": {
+            "manga_last_chapter": 194,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "kanojo-okarishimasu": {
+            "manga_last_chapter": 147,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "karakai-jouzu-no-moto-takagi-san": {
+            "manga_last_chapter": 141,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "karakai-jouzu-no-takagi-san": {
+            "manga_last_chapter": 128,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "kekkaishi": {
+            "manga_last_chapter": 345,
+            "average_page": 50,
+            "status": "finished",
+            "image_url": "",
+            "new_added": 0
+        },
+        "kengan-ashua": {
+            "manga_last_chapter": 236,
+            "average_page": 50,
+            "status": "finished",
+            "image_url": "",
+            "new_added": 0
+        },
+        "kengan-omega": {
+            "manga_last_chapter": 68,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "kimetsu-no-yaiba": {
+            "manga_last_chapter": 205,
+            "average_page": 50,
+            "status": "finished",
+            "image_url": "",
+            "new_added": 0
+        },
+        "kingdom": {
+            "manga_last_chapter": 647,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "konjiki-no-moji-tsukai-yuusha-yonin-ni-makikomareta-unique-cheat": {
+            "manga_last_chapter": 64,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "kono-oto-tomare": {
+            "manga_last_chapter": 93,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "my-wife-is-a-demon-queen": {
+            "manga_last_chapter": 206,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "nanatsu-no-taizai": {
+            "manga_last_chapter": 346,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "naruto": {
+            "manga_last_chapter": 700,
+            "average_page": 50,
+            "status": "finished",
+            "image_url": "",
+            "new_added": 0
+        },
+        "omniscient-reader-s-viewpoint": {
+            "manga_last_chapter": 12,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "one-piece": {
+            "manga_last_chapter": 984,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "onepunch-man": {
+            "manga_last_chapter": 132,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "out-makoto-mizuta": {
+            "manga_last_chapter": 169,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "peerless-dad": {
+            "manga_last_chapter": 130,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "player-reborn": {
+            "manga_last_chapter": 170,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 6
+        },
+        "ranker-who-lives-a-second-time": {
+            "manga_last_chapter": 68,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "rebirth-of-the-urban-immortal-cultivator": {
+            "manga_last_chapter": 339,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "record-of-ragnarok": {
+            "manga_last_chapter": 33,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "relife": {
+            "manga_last_chapter": 222,
+            "average_page": 50,
+            "status": "finished",
+            "image_url": "",
+            "new_added": 0
+        },
+        "rurouni-kenshin": {
+            "manga_last_chapter": 258,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "shokugeki-no-soma": {
+            "manga_last_chapter": 315,
+            "average_page": 50,
+            "status": "finished",
+            "image_url": "",
+            "new_added": 0
+        },
+        "slam-dunk": {
+            "manga_last_chapter": 276,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "solo-leveling": {
+            "manga_last_chapter": 112,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "tate-no-yuusha-no-nariagari": {
+            "manga_last_chapter": 65,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "tensei-shitara-slime-datta-ken": {
+            "manga_last_chapter": 72,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "the-legendary-moonlight-sculptor": {
+            "manga_last_chapter": 141,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "tokyo-ghoul-re": {
+            "manga_last_chapter": 179,
+            "average_page": 50,
+            "status": "finished",
+            "image_url": "",
+            "new_added": 0
+        },
+        "tower-of-god": {
+            "manga_last_chapter": 485,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "tsuyokute-new-saga": {
+            "manga_last_chapter": 76,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "versatile-mage": {
+            "manga_last_chapter": 482,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 4
+        },
+        "yakusoku-no-neverland": {
+            "manga_last_chapter": 181,
+            "average_page": 50,
+            "status": "finished",
+            "image_url": "",
+            "new_added": 0
+        },
+        "yong-heng-zhi-zun": {
+            "manga_last_chapter": 232,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "yuragi-sou-no-yuuna-san": {
+            "manga_last_chapter": 209,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        }
+    }
+}
