@@ -3,7 +3,7 @@ require "net/http"
 
 class Refresh
   MAX_UPDATE_COUNT = 2.freeze
-  MAX_MANGA_COUNT = 1.freeze
+  MAX_MANGA_COUNT = -1.freeze
   MAX_NEW_MANGA_RETENTION = 10.freeze
 
   def initialize
