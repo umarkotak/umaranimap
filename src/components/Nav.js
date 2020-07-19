@@ -7,10 +7,10 @@ function Nav() {
       <header className="blog-header py-3">
         <div className="row flex-nowrap justify-content-between align-items-center">
           <div className="col-4 pt-1">
-            <Link to="/" className="text-muted">ANIMAP</Link>
+            <Link to="/" className="text-muted">ANIMAPU</Link>
           </div>
           {/* <div className="col-4 text-center">
-            <Link to="/" className="blog-header-logo text-dark">ANIMAP</Link>
+            <Link to="/" className="blog-header-logo text-dark">ANIMAPU</Link>
           </div> */}
           <div className="col-4 d-flex justify-content-end align-items-center">
             <Link to="/" className="btn btn-sm btn-outline-secondary">Hello World!</Link>
