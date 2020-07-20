@@ -3,11 +3,6 @@ import React from "react"
 function PageHome() {
   return (
     <div>
-      <div className="carousel-item active">
-        <img className="first-slide" src={process.env.PUBLIC_URL + '/wallpaper.jpg'} alt="First slide"
-          style={{width: "100%"}}
-        />
-      </div>
       <div className="jumbotron p-3 p-md-5 text-white rounded bg-dark">
         <div className="col-md-6 px-0">
           <h1 className="display-4 font-italic text-dark">ANIMAPU</h1>
