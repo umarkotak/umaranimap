@@ -14,10 +14,10 @@
             "image_url": "",
             "new_added": 1
         },
-        "attack-on-titan": {
-            "manga_last_chapter": 130,
+        "akagami-no-shirayukihime": {
+            "manga_last_chapter": 117,
             "average_page": 50,
-            "status": "ongoing",
+            "status": "finished",
             "image_url": "",
             "new_added": 0
         },
@@ -28,8 +28,22 @@
             "image_url": "",
             "new_added": 0
         },
+        "attack-on-titan": {
+            "manga_last_chapter": 130,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
         "baby-steps": {
             "manga_last_chapter": 390,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 3
+        },
+        "ballroom-e-youkoso": {
+            "manga_last_chapter": 53,
             "average_page": 50,
             "status": "ongoing",
             "image_url": "",
@@ -56,6 +70,13 @@
             "image_url": "",
             "new_added": 2
         },
+        "bokura-wa-minna-kawaisou": {
+            "manga_last_chapter": 94,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 3
+        },
         "bokutachi-wa-benkyou-ga-dekinai": {
             "manga_last_chapter": 167,
             "average_page": 50,
@@ -74,6 +95,13 @@
             "manga_last_chapter": 84,
             "average_page": 50,
             "status": "ongoing",
+            "image_url": "",
+            "new_added": 14
+        },
+        "claymore": {
+            "manga_last_chapter": 155,
+            "average_page": 50,
+            "status": "finished",
             "image_url": "",
             "new_added": 14
         },
@@ -101,6 +129,13 @@
         "dr-stone": {
             "manga_last_chapter": 159,
             "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 2
+        },
+        "dungeon-ni-deai-o-motomeru-no-wa-machigatte-iru-darou-ka": {
+            "manga_last_chapter": 90,
+            "average_page": 60,
             "status": "ongoing",
             "image_url": "",
             "new_added": 2
@@ -151,6 +186,13 @@
             "manga_last_chapter": 233,
             "average_page": 50,
             "status": "ongoing",
+            "image_url": "",
+            "new_added": 6
+        },
+        "hibi-chouchou": {
+            "manga_last_chapter": 76,
+            "average_page": 60,
+            "status": "finished",
             "image_url": "",
             "new_added": 6
         },
@@ -273,8 +315,50 @@
             "image_url": "",
             "new_added": 0
         },
+        "last-game": {
+            "manga_last_chapter": 56,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "made-in-abyss": {
+            "manga_last_chapter": 55,
+            "average_page": 60,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "magi-labyrinth-of-magic": {
+            "manga_last_chapter": 369,
+            "average_page": 60,
+            "status": "finished",
+            "image_url": "",
+            "new_added": 0
+        },
+        "mahou-sensei-negima": {
+            "manga_last_chapter": 355,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "mahou-tsukai-no-yome": {
+            "manga_last_chapter": 66,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
         "my-wife-is-a-demon-queen": {
             "manga_last_chapter": 206,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "namaikizakari": {
+            "manga_last_chapter": 115,
             "average_page": 50,
             "status": "ongoing",
             "image_url": "",
@@ -294,12 +378,26 @@
             "image_url": "",
             "new_added": 0
         },
+        "noragami": {
+            "manga_last_chapter": 89,
+            "average_page": 50,
+            "status": "finished",
+            "image_url": "",
+            "new_added": 0
+        },
         "omniscient-reader-s-viewpoint": {
             "manga_last_chapter": 13,
             "average_page": 50,
             "status": "ongoing",
             "image_url": "",
             "new_added": 8
+        },
+        "one-outs": {
+            "manga_last_chapter": 168,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 6
         },
         "one-piece": {
             "manga_last_chapter": 985,
@@ -371,6 +469,20 @@
             "image_url": "",
             "new_added": 0
         },
+        "senryuu-shoujo": {
+            "manga_last_chapter": 167,
+            "average_page": 25,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "shigatsu-wa-kimi-no-uso": {
+            "manga_last_chapter": 44,
+            "average_page": 60,
+            "status": "finished",
+            "image_url": "",
+            "new_added": 0
+        },
         "shokugeki-no-soma": {
             "manga_last_chapter": 315,
             "average_page": 50,
@@ -420,6 +532,13 @@
             "image_url": "",
             "new_added": 0
         },
+        "the-world-god-only-knows": {
+            "manga_last_chapter": 268,
+            "average_page": 50,
+            "status": "finished",
+            "image_url": "",
+            "new_added": 0
+        },
         "tokyo-ghoul-re": {
             "manga_last_chapter": 179,
             "average_page": 50,
@@ -431,6 +550,13 @@
             "manga_last_chapter": 485,
             "average_page": 50,
             "status": "ongoing",
+            "image_url": "",
+            "new_added": 0
+        },
+        "tsubaki-chou-lonely-planet": {
+            "manga_last_chapter": 77,
+            "average_page": 60,
+            "status": "finished",
             "image_url": "",
             "new_added": 0
         },
@@ -448,8 +574,22 @@
             "image_url": "",
             "new_added": 1
         },
+        "wotaku-ni-koi-wa-muzukashii": {
+            "manga_last_chapter": 50,
+            "average_page": 50,
+            "status": "ongoing",
+            "image_url": "",
+            "new_added": 1
+        },
         "yakusoku-no-neverland": {
             "manga_last_chapter": 181,
+            "average_page": 50,
+            "status": "finished",
+            "image_url": "",
+            "new_added": 0
+        },
+        "yamada-kun-to-7-nin-no-majo": {
+            "manga_last_chapter": 244,
             "average_page": 50,
             "status": "finished",
             "image_url": "",
@@ -468,13 +608,6 @@
             "status": "ongoing",
             "image_url": "",
             "new_added": 3
-        },
-        "yuragi-sou-no-yuuna-san": {
-            "manga_last_chapter": 209,
-            "average_page": 50,
-            "status": "ongoing",
-            "image_url": "",
-            "new_added": 0
         }
     }
 }
