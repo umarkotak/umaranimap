@@ -30,6 +30,7 @@ function Nav() {
           <Link to="/airing-anime-v5" className="p-2 m-1 text-muted">Anime List</Link>
           {/* <Link to="/read-manga-v1" className="p-2 m-1 text-muted">Read Manga</Link> */}
           <Link to="/read-manga-v2" className="p-2 m-1 text-muted">Read Manga</Link>
+          <Link to="/watch-anime-v1" className="p-2 m-1 text-muted">Watch Anime</Link>
         </nav>
       </div>
     </div>
