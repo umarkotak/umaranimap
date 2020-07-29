@@ -32,6 +32,7 @@ class Refresh
       log_file.puts "START UPDATING: #{manga_title.upcase}"
       log_file.puts "EXISTING CHAPTER: #{last_chapter}"
 
+      print '.'
       for i in 1..MAX_UPDATE_COUNT do
         manga_chapter_target = last_chapter + i
         target_url = URI.parse("https://img.mghubcdn.com/file/imghub/#{manga_title}/#{manga_chapter_target}/#{rand(2..3)}.jpg")
