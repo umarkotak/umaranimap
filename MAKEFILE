@@ -1,3 +1,9 @@
 deploy-force:
 	git push -f origin master
 	git push -f heroku master
+
+update-and-push:
+	ruby refresh.rb
+	git add .
+	git commit -m "update manga list and status"
+	git push heroku master
