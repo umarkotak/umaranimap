@@ -23,7 +23,8 @@ class Refresh
     manga_titles = manga_db_hash.keys.drop(1)[0...MAX_MANGA_COUNT]
     updated_manga_titles = []
 
-    manga_titles.each do |manga_title|
+    total_mangas = manga_titles.size
+    manga_titles.each_with_index do |manga_title, i|
       manga = manga_db_hash[manga_title]
       last_chapter = manga["manga_last_chapter"].to_i
       next_target_chapter = last_chapter
@@ -32,7 +33,7 @@ class Refresh
       log_file.puts "START UPDATING: #{manga_title.upcase}"
       log_file.puts "EXISTING CHAPTER: #{last_chapter}"
 
-      print '.'
+      puts "#{i}/#{total_mangas} : #{manga_title}"
       for i in 1..MAX_UPDATE_COUNT do
         manga_chapter_target = last_chapter + i
         target_url = URI.parse("https://img.mghubcdn.com/file/imghub/#{manga_title}/#{manga_chapter_target}/#{rand(2..3)}.jpg")
@@ -97,6 +98,7 @@ class Refresh
     log_file.puts updated_manga_titles
     log_file.puts
 
+    puts
     puts updated_manga_titles
 
     puts "FINISH UPDATING DATA: #{Time.now}"
