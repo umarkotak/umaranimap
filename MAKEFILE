@@ -7,3 +7,4 @@ update-and-push:
 	git add .
 	git commit -m "update manga list and status"
 	git push heroku master
+	git push origin master
