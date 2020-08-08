@@ -1,22 +1,34 @@
 import React, {useState, useCallback, useEffect} from "react"
 import mangaDB from "./MangaDB"
 import Cookies from 'universal-cookie';
+import MetaTags from 'react-meta-tags';
 
 let manga_db = mangaDB.GetMangaDB()
 const cookies = new Cookies();
 var cdn_host = "https://img.mghubcdn.com/file/imghub"
 
+var qs = require('qs');
+function query_title() {
+  return qs.parse(window.location.search, { ignoreQueryPrefix: true }).title
+}
+function query_chapter() {
+  return qs.parse(window.location.search, { ignoreQueryPrefix: true }).chapter
+}
+
 function PageReadMangaV2() {
+  console.log(query_title(), query_chapter());
+
   var manga_list = generateMangaListFromDB()
 
-  const [manga_title, set_manga_title] = useState(manga_list[0])
+  const [manga_title, set_manga_title] = useState(query_title() || manga_list[0])
   var manga_pages = generateMangaPages(manga_title)
 
   const [manga_chapter_list, set_manga_chapter_list] = useState(generateChapterListFromTitle(manga_title))
-  const [manga_chapter, set_manga_chapter] = useState(findLatestMangaChapter(manga_title))
+  const [manga_chapter, set_manga_chapter] = useState(query_chapter() || findLatestMangaChapter(manga_title))
   const [manga_histories, set_manga_histories] = useState(generateHistoriesSection())
   const [bottom_nav, set_bottom_nav] = useState(true)
   const [y_pos, set_y_pos] = useState(window.scrollY)
+  const [button_share, set_button_share] = useState("Share");
 
   const windowHeight = window.innerHeight
   const body = document.body
@@ -60,6 +72,9 @@ function PageReadMangaV2() {
 
   return (
     <div>
+      <div>
+        <RenderMeta />
+      </div>
       <div className="sticky-top bg-dark" style={{margin: "0px -14px 0px"}}>
         <RenderHead />
       </div>
@@ -75,7 +90,11 @@ function PageReadMangaV2() {
               className="bd-placeholder-img mx-auto d-block img-fluid"
               src={generateImageURL(page_no)}
               alt=""
-              onError={(e)=>{e.target.onerror = null; e.target.src=generateImageErrorUrl(page_no)}}
+            />
+            <img
+              className="bd-placeholder-img mx-auto d-block img-fluid"
+              src={generateImageErrorUrl(page_no)}
+              alt=""
             />
           </div>
         ))}
@@ -91,8 +110,9 @@ function PageReadMangaV2() {
     if (bottom_nav === false) return(<div></div>)
     return(
       <div className="nav-scroller">
-        <nav className="nav d-flex justify-content-center">
-          <select className="custom-select mx-5 my-1" name="selectedMangaTitle" onChange={(e) => handleSelectedMangaTitle(e.target.value)} defaultValue={manga_title}>
+        <nav className="nav d-flex justify-content-between">
+          <button className="btn btn-light btn-sm btn-outline-secondary mx-1 my-1" onClick={copyToClipboard}>{button_share}</button>
+          <select className="custom-select mx-1 my-1" name="selectedMangaTitle" onChange={(e) => handleSelectedMangaTitle(e.target.value)} defaultValue={manga_title}>
             {manga_list.map(manga => (
               <option key={manga} value={manga}> {generateMangaTitleText(manga)} </option>
             ))}
@@ -145,9 +165,8 @@ function PageReadMangaV2() {
                   <p className="card-text overflow-auto" style={{"height": "50px"}}>
                     <small className="text-muted">{generateMangaTitleText(manga)}</small>
                   </p>
-                  <div class="btn-group">
+                  <div className="btn-group">
                     <button type="button" className="btn btn-sm btn-outline-secondary" onClick={(e) => handleSelectedMangaTitle(e.target.value)} value={manga}>View</button>
-                    {/* <button type="button" className="btn btn-sm btn-outline-secondary" onClick={(e) => handleSelectedMangaTitle(e.target.value)} value={manga}>View</button> */}
                   </div>
                 </div>
               </div>
@@ -166,7 +185,7 @@ function PageReadMangaV2() {
                   <p className="card-text overflow-auto" style={{"height": "50px"}}>
                     <small className="text-muted">{generateMangaTitleText(manga)}</small>
                   </p>
-                  <div class="btn-group">
+                  <div className="btn-group">
                     <button type="button" className="btn btn-sm btn-outline-secondary" onClick={(e) => handleSelectedMangaTitle(e.target.value)} value={manga}>View</button>
                     {/* <button type="button" className="btn btn-sm btn-outline-secondary" onClick={(e) => handleSelectedMangaTitle(e.target.value)} value={manga}>View</button> */}
                   </div>
@@ -196,6 +215,27 @@ function PageReadMangaV2() {
         </div>
       </div>
     )
+  }
+
+  function RenderMeta() {
+    if (manga_title[0] === '-') return(<div></div>)
+    return(
+      <div>
+        <MetaTags>
+          <title>Animapu - {generateMangaTitleText(manga_title)}</title>
+          <meta id="meta-description" name="description" content={generateMangaTitleText(manga_title)} />
+          <meta id="og-title" property="og:title" content={generateMangaTitleText(manga_title)} />
+        </MetaTags>
+      </div>
+    )
+  }
+
+  function copyToClipboard(e) {
+    console.log(window.location)
+    var shareable = window.location.origin + "/read-manga-v2?title=" + manga_title + "&chapter=" + manga_chapter;
+    console.log(shareable)
+    set_button_share("Copied")
+    navigator.clipboard.writeText(shareable)
   }
 
   function handleSelectedMangaTitle(title) {
