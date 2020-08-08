@@ -246,6 +246,7 @@ function PageReadMangaV2() {
         <MetaTags>
           <title>Animapu - {generateMangaTitleText(manga_title)}</title>
           <meta id="meta-description" name="description" content={generateMangaTitleText(manga_title)} />
+          <meta property="og:description" content={generateMangaTitleText(manga_title)} />
         </MetaTags>
       </div>
     )
