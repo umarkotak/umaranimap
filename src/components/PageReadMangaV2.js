@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useEffect} from "react"
+import React, {useState, useCallback, useEffect, useRef} from "react"
 import mangaDB from "./MangaDB"
 import Cookies from 'universal-cookie';
 import MetaTags from 'react-meta-tags';
@@ -29,6 +29,8 @@ function PageReadMangaV2() {
   const [bottom_nav, set_bottom_nav] = useState(true)
   const [y_pos, set_y_pos] = useState(window.scrollY)
   const [button_share, set_button_share] = useState("Share");
+
+  const [shareable_link, set_shareable_link] = useState(reconstruct_shareable)
 
   const windowHeight = window.innerHeight
   const body = document.body
@@ -70,6 +72,8 @@ function PageReadMangaV2() {
     };
   }, [escFunction]);
 
+  const textAreaRef = useRef(null);
+
   return (
     <div>
       <div>
@@ -82,6 +86,18 @@ function PageReadMangaV2() {
       <div className="pb-5">
         <div>
           <RenderSuggestedManga isShown={manga_title[0]}/>
+        </div>
+
+        <div>
+          <form>
+            <textarea
+              style={{"display": "none"}}
+              rows="10"
+              display='none'
+              ref={textAreaRef}
+              defaultValue={shareable_link}
+            />
+          </form>
         </div>
 
         {manga_pages.map(page_no => (
@@ -230,13 +246,20 @@ function PageReadMangaV2() {
     )
   }
 
+  function reconstruct_shareable() {
+    return "http://animapu.herokuapp.com/read-manga-v2?title=" + manga_title + "&chapter=" + manga_chapter;
+  }
+
   function copyToClipboard(e) {
+    console.log(textAreaRef.current.value)
     // console.log(window.location)
     // var shareable = window.location.origin + "/read-manga-v2?title=" + manga_title + "&chapter=" + manga_chapter;
-    var shareable = "http://animapu.herokuapp.com/read-manga-v2?title=" + manga_title + "&chapter=" + manga_chapter;
+    textAreaRef.current.value = reconstruct_shareable()
+    textAreaRef.current.select();
+    document.execCommand('copy');
 
-    console.log(shareable)
-    navigator.clipboard.writeText(shareable)
+    console.log(reconstruct_shareable())
+    // navigator.clipboard.writeText(shareable)
     set_button_share("Copied")
   }
 
@@ -280,6 +303,7 @@ function PageReadMangaV2() {
     let date = new Date(2030, 12)
     cookies.set(key, [], { path: "/", expires: date })
     set_manga_histories([])
+    set_shareable_link(reconstruct_shareable())
   }
 
   function findLatestMangaChapter(title) {
