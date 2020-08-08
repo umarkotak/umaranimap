@@ -2,6 +2,7 @@ import React, {useState, useCallback, useEffect, useRef} from "react"
 import mangaDB from "./MangaDB"
 import Cookies from 'universal-cookie';
 import MetaTags from 'react-meta-tags';
+import {WhatsappShareButton} from "react-share";
 
 let manga_db = mangaDB.GetMangaDB()
 const cookies = new Cookies();
@@ -88,18 +89,6 @@ function PageReadMangaV2() {
           <RenderSuggestedManga isShown={manga_title[0]}/>
         </div>
 
-        <div>
-          <form>
-            <textarea
-              style={{"display": "none"}}
-              rows="10"
-              display='none'
-              ref={textAreaRef}
-              defaultValue={shareable_link}
-            />
-          </form>
-        </div>
-
         {manga_pages.map(page_no => (
           <div className="bg-dark border border-dark rounded mx-n2" key={generateImageURL(page_no)}>
             <img
@@ -116,6 +105,21 @@ function PageReadMangaV2() {
         ))}
       </div>
 
+      <div className='form-group'>
+        <form>
+          <input
+            readOnly='true'
+            className='form-control'
+            type='text'
+            style={{"display": "block"}}
+            rows="10"
+            display='none'
+            ref={textAreaRef}
+            defaultValue={shareable_link}
+          />
+        </form>
+      </div>
+
       <div className="container fixed-bottom bg-dark">
         <RenderFoot />
       </div>
@@ -128,6 +132,9 @@ function PageReadMangaV2() {
       <div className="nav-scroller">
         <nav className="nav d-flex justify-content-between">
           <button className="btn btn-light btn-sm btn-outline-secondary mx-1 my-1" onClick={copyToClipboard}>{button_share}</button>
+          <div className="btn btn-light btn-sm btn-outline-secondary mx-1 my-1">
+            <WhatsappShareButton url={reconstruct_shareable()} children={"WA"} />
+          </div>
           <select className="custom-select mx-1 my-1" name="selectedMangaTitle" onChange={(e) => handleSelectedMangaTitle(e.target.value)} defaultValue={manga_title}>
             {manga_list.map(manga => (
               <option key={manga} value={manga}> {generateMangaTitleText(manga)} </option>
@@ -203,7 +210,6 @@ function PageReadMangaV2() {
                   </p>
                   <div className="btn-group">
                     <button type="button" className="btn btn-sm btn-outline-secondary" onClick={(e) => handleSelectedMangaTitle(e.target.value)} value={manga}>View</button>
-                    {/* <button type="button" className="btn btn-sm btn-outline-secondary" onClick={(e) => handleSelectedMangaTitle(e.target.value)} value={manga}>View</button> */}
                   </div>
                 </div>
               </div>
@@ -240,7 +246,6 @@ function PageReadMangaV2() {
         <MetaTags>
           <title>Animapu - {generateMangaTitleText(manga_title)}</title>
           <meta id="meta-description" name="description" content={generateMangaTitleText(manga_title)} />
-          <meta id="og-title" property="og:title" content={generateMangaTitleText(manga_title)} />
         </MetaTags>
       </div>
     )
