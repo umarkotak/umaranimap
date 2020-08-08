@@ -231,11 +231,13 @@ function PageReadMangaV2() {
   }
 
   function copyToClipboard(e) {
-    console.log(window.location)
-    var shareable = window.location.origin + "/read-manga-v2?title=" + manga_title + "&chapter=" + manga_chapter;
+    // console.log(window.location)
+    // var shareable = window.location.origin + "/read-manga-v2?title=" + manga_title + "&chapter=" + manga_chapter;
+    var shareable = "http://animapu.herokuapp.com/read-manga-v2?title=" + manga_title + "&chapter=" + manga_chapter;
+
     console.log(shareable)
-    set_button_share("Copied")
     navigator.clipboard.writeText(shareable)
+    set_button_share("Copied")
   }
 
   function handleSelectedMangaTitle(title) {
@@ -381,6 +383,7 @@ function PageReadMangaV2() {
       set_manga_histories([value])
     }
     console.log("HISTORIES SET: " + cookies.get(key))
+    set_button_share("Share")
   }
 
   function beutifyChapterTitle(raw_title) {
