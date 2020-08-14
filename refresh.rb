@@ -82,7 +82,7 @@ class Refresh
         data["manga_db"][manga_title]["new_added"] += 1
       end
 
-      updated_manga_titles << "#{manga_title.upcase.gsub("-", " ")}: #{next_target_chapter}: http://animapu.herokuapp.com/read-manga-v2/#{manga_title}/#{next_target_chapter}" if updated
+      updated_manga_titles << "#{manga_title.upcase.gsub("-", " ")}: #{next_target_chapter}: http://animapu.herokuapp.com/read-manga-v2?title=#{manga_title}&chapter#{next_target_chapter}" if updated
       log_file.puts "UPDATED LATEST CHAPTER: #{next_target_chapter}"
       log_file.puts "-----------------------------------------------------------"
       log_file.puts
