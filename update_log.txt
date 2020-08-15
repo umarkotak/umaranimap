@@ -1,4 +1,4 @@
-START UPDATING DATA: 2020-08-14 19:11:15 +0700
+START UPDATING DATA: 2020-08-15 17:06:12 +0700
 -----------------------------------------------------------
 
 START UPDATING: A-RETURNER-S-MAGIC-SHOULD-BE-SPECIAL
@@ -152,8 +152,7 @@ UPDATED LATEST CHAPTER: 402
 -----------------------------------------------------------
 
 START UPDATING: HARDCORE-LEVELING-WARRIOR
-EXISTING CHAPTER: 236
-FINDING CHAPTER: 237, STATUS: FOUND
+EXISTING CHAPTER: 237
 FINDING CHAPTER: 238, STATUS: NOT_FOUND
 UPDATED LATEST CHAPTER: 237
 -----------------------------------------------------------
@@ -327,8 +326,7 @@ UPDATED LATEST CHAPTER: 89
 -----------------------------------------------------------
 
 START UPDATING: OMNISCIENT-READER-S-VIEWPOINT
-EXISTING CHAPTER: 14
-FINDING CHAPTER: 15, STATUS: FOUND
+EXISTING CHAPTER: 15
 FINDING CHAPTER: 16, STATUS: NOT_FOUND
 UPDATED LATEST CHAPTER: 15
 -----------------------------------------------------------
@@ -352,8 +350,7 @@ UPDATED LATEST CHAPTER: 133
 -----------------------------------------------------------
 
 START UPDATING: OUT-MAKOTO-MIZUTA
-EXISTING CHAPTER: 174
-FINDING CHAPTER: 175, STATUS: FOUND
+EXISTING CHAPTER: 175
 FINDING CHAPTER: 176, STATUS: NOT_FOUND
 UPDATED LATEST CHAPTER: 175
 -----------------------------------------------------------
@@ -365,9 +362,8 @@ UPDATED LATEST CHAPTER: 135
 -----------------------------------------------------------
 
 START UPDATING: PLAYER-REBORN
-EXISTING CHAPTER: 176
-FINDING CHAPTER: 177, STATUS: FOUND
-FINDING CHAPTER: 178, STATUS: FOUND
+EXISTING CHAPTER: 178
+FINDING CHAPTER: 179, STATUS: NOT_FOUND
 UPDATED LATEST CHAPTER: 178
 -----------------------------------------------------------
 
@@ -378,10 +374,10 @@ UPDATED LATEST CHAPTER: 68
 -----------------------------------------------------------
 
 START UPDATING: REBIRTH-OF-THE-URBAN-IMMORTAL-CULTIVATOR
-EXISTING CHAPTER: 437
-FINDING CHAPTER: 438, STATUS: FOUND
-FINDING CHAPTER: 439, STATUS: FOUND
-UPDATED LATEST CHAPTER: 439
+EXISTING CHAPTER: 439
+FINDING CHAPTER: 440, STATUS: FOUND
+FINDING CHAPTER: 441, STATUS: FOUND
+UPDATED LATEST CHAPTER: 441
 -----------------------------------------------------------
 
 START UPDATING: RECORD-OF-RAGNAROK
@@ -445,8 +441,7 @@ UPDATED LATEST CHAPTER: 73
 -----------------------------------------------------------
 
 START UPDATING: THE-GOD-OF-HIGH-SCHOOL
-EXISTING CHAPTER: 476
-FINDING CHAPTER: 477, STATUS: FOUND
+EXISTING CHAPTER: 477
 FINDING CHAPTER: 478, STATUS: NOT_FOUND
 UPDATED LATEST CHAPTER: 477
 -----------------------------------------------------------
@@ -489,8 +484,9 @@ UPDATED LATEST CHAPTER: 77
 
 START UPDATING: VERSATILE-MAGE
 EXISTING CHAPTER: 516
-FINDING CHAPTER: 517, STATUS: NOT_FOUND
-UPDATED LATEST CHAPTER: 516
+FINDING CHAPTER: 517, STATUS: FOUND
+FINDING CHAPTER: 518, STATUS: FOUND
+UPDATED LATEST CHAPTER: 518
 -----------------------------------------------------------
 
 START UPDATING: WOTAKU-NI-KOI-WA-MUZUKASHII
@@ -520,11 +516,7 @@ UPDATED LATEST CHAPTER: 238
 UPDATING JSON DB - START
 UPDATING JSON DB - FINISHED
 
-HARDCORE LEVELING WARRIOR: 237: http://animapu.herokuapp.com/read-manga-v2?title=hardcore-leveling-warrior&chapter237
-OMNISCIENT READER S VIEWPOINT: 15: http://animapu.herokuapp.com/read-manga-v2?title=omniscient-reader-s-viewpoint&chapter15
-OUT MAKOTO MIZUTA: 175: http://animapu.herokuapp.com/read-manga-v2?title=out-makoto-mizuta&chapter175
-PLAYER REBORN: 178: http://animapu.herokuapp.com/read-manga-v2?title=player-reborn&chapter178
-REBIRTH OF THE URBAN IMMORTAL CULTIVATOR: 439: http://animapu.herokuapp.com/read-manga-v2?title=rebirth-of-the-urban-immortal-cultivator&chapter439
-THE GOD OF HIGH SCHOOL: 477: http://animapu.herokuapp.com/read-manga-v2?title=the-god-of-high-school&chapter477
+REBIRTH OF THE URBAN IMMORTAL CULTIVATOR: 441: http://animapu.herokuapp.com/read-manga-v2?title=rebirth-of-the-urban-immortal-cultivator&chapter=441
+VERSATILE MAGE: 518: http://animapu.herokuapp.com/read-manga-v2?title=versatile-mage&chapter=518
 
-FINISH UPDATING DATA: 2020-08-14 19:14:20 +0700
+FINISH UPDATING DATA: 2020-08-15 17:09:02 +0700
