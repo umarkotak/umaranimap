@@ -18,7 +18,7 @@ function query_chapter() {
 function PageReadMangaV3() {
   const [manga_db, set_manga_db] = useState(mangaDB.GetMangaDB())
   const [new_mangas, set_new_mangas] = useState(mangaDB.GetNewManga())
-  console.log(query_title(), query_chapter());
+  // console.log(query_title(), query_chapter());
 
   var manga_list = generateMangaListFromDB()
 
@@ -79,7 +79,6 @@ function PageReadMangaV3() {
   useEffect(() => {
     async function fetchData() {
       var api = "http://go-animapu.herokuapp.com/mangas"
-      // var api = "http://localhost:3005/mangas"
       const response = await fetch(api)
       const results = await response.json()
       var converted_manga_db = new Map(Object.entries(results.manga_db))
@@ -91,8 +90,6 @@ function PageReadMangaV3() {
           new_mangas.push({title: key, order: num.new_added})
         }
       })
-      console.log(converted_manga_db)
-      console.log(new_mangas)
       new_mangas.sort((a, b) => a.order - b.order)
 
       set_new_mangas(new_mangas.map( val => val.title))
@@ -103,7 +100,6 @@ function PageReadMangaV3() {
   useEffect(() => {
     async function updateData() {
       var api = "http://go-animapu.herokuapp.com/mangas/update"
-      // var api = "http://localhost:3005/mangas/update"
       await fetch(api)
     }
     updateData();
@@ -142,7 +138,7 @@ function PageReadMangaV3() {
       <div className='form-group'>
         <form>
           <input
-            readOnly='true'
+            readOnly
             className='form-control'
             type='text'
             style={{"display": "block"}}
