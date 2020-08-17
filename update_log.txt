@@ -1,4 +1,4 @@
-START UPDATING DATA: 2020-08-16 15:40:53 +0700
+START UPDATING DATA: 2020-08-17 07:08:10 +0700
 -----------------------------------------------------------
 
 START UPDATING: A-RETURNER-S-MAGIC-SHOULD-BE-SPECIAL
@@ -212,8 +212,7 @@ UPDATED LATEST CHAPTER: 56
 -----------------------------------------------------------
 
 START UPDATING: GOSU
-EXISTING CHAPTER: 188
-FINDING CHAPTER: 189, STATUS: FOUND
+EXISTING CHAPTER: 189
 FINDING CHAPTER: 190, STATUS: NOT_FOUND
 UPDATED LATEST CHAPTER: 189
 -----------------------------------------------------------
@@ -256,8 +255,9 @@ UPDATED LATEST CHAPTER: 391
 
 START UPDATING: I-AM-THE-SORCERER-KING
 EXISTING CHAPTER: 103
-FINDING CHAPTER: 104, STATUS: NOT_FOUND
-UPDATED LATEST CHAPTER: 103
+FINDING CHAPTER: 104, STATUS: FOUND
+FINDING CHAPTER: 105, STATUS: NOT_FOUND
+UPDATED LATEST CHAPTER: 104
 -----------------------------------------------------------
 
 START UPDATING: I-WAS-TRASH
@@ -496,8 +496,9 @@ UPDATED LATEST CHAPTER: 133
 
 START UPDATING: OUT-MAKOTO-MIZUTA
 EXISTING CHAPTER: 176
-FINDING CHAPTER: 177, STATUS: NOT_FOUND
-UPDATED LATEST CHAPTER: 176
+FINDING CHAPTER: 177, STATUS: FOUND
+FINDING CHAPTER: 178, STATUS: NOT_FOUND
+UPDATED LATEST CHAPTER: 177
 -----------------------------------------------------------
 
 START UPDATING: PEERLESS-DAD
@@ -519,10 +520,10 @@ UPDATED LATEST CHAPTER: 68
 -----------------------------------------------------------
 
 START UPDATING: REBIRTH-OF-THE-URBAN-IMMORTAL-CULTIVATOR
-EXISTING CHAPTER: 443
-FINDING CHAPTER: 444, STATUS: FOUND
-FINDING CHAPTER: 445, STATUS: FOUND
-UPDATED LATEST CHAPTER: 445
+EXISTING CHAPTER: 445
+FINDING CHAPTER: 446, STATUS: FOUND
+FINDING CHAPTER: 447, STATUS: FOUND
+UPDATED LATEST CHAPTER: 447
 -----------------------------------------------------------
 
 START UPDATING: RECORD-OF-RAGNAROK
@@ -682,8 +683,7 @@ UPDATED LATEST CHAPTER: 77
 -----------------------------------------------------------
 
 START UPDATING: VERSATILE-MAGE
-EXISTING CHAPTER: 518
-FINDING CHAPTER: 519, STATUS: FOUND
+EXISTING CHAPTER: 519
 FINDING CHAPTER: 520, STATUS: NOT_FOUND
 UPDATED LATEST CHAPTER: 519
 -----------------------------------------------------------
@@ -695,17 +695,16 @@ UPDATED LATEST CHAPTER: 174
 -----------------------------------------------------------
 
 START UPDATING: VIRTUAL-WORLD-CLOSE-COMBAT-MAGE
-EXISTING CHAPTER: 96
-FINDING CHAPTER: 97, STATUS: FOUND
+EXISTING CHAPTER: 97
 FINDING CHAPTER: 98, STATUS: NOT_FOUND
 UPDATED LATEST CHAPTER: 97
 -----------------------------------------------------------
 
 START UPDATING: WOTAKU-NI-KOI-WA-MUZUKASHII
-EXISTING CHAPTER: 53
-FINDING CHAPTER: 54, STATUS: FOUND
-FINDING CHAPTER: 55, STATUS: FOUND
-UPDATED LATEST CHAPTER: 55
+EXISTING CHAPTER: 55
+FINDING CHAPTER: 56, STATUS: FOUND
+FINDING CHAPTER: 57, STATUS: FOUND
+UPDATED LATEST CHAPTER: 57
 -----------------------------------------------------------
 
 START UPDATING: YAGATE-KIMI-NI-NARU
@@ -741,10 +740,9 @@ UPDATED LATEST CHAPTER: 422
 UPDATING JSON DB - START
 UPDATING JSON DB - FINISHED
 
-GOSU: 189: http://animapu.herokuapp.com/read-manga-v2?title=gosu&chapter=189
-REBIRTH OF THE URBAN IMMORTAL CULTIVATOR: 445: http://animapu.herokuapp.com/read-manga-v2?title=rebirth-of-the-urban-immortal-cultivator&chapter=445
-VERSATILE MAGE: 519: http://animapu.herokuapp.com/read-manga-v2?title=versatile-mage&chapter=519
-VIRTUAL WORLD CLOSE COMBAT MAGE: 97: http://animapu.herokuapp.com/read-manga-v2?title=virtual-world-close-combat-mage&chapter=97
-WOTAKU NI KOI WA MUZUKASHII: 55: http://animapu.herokuapp.com/read-manga-v2?title=wotaku-ni-koi-wa-muzukashii&chapter=55
+I AM THE SORCERER KING: 104: http://animapu.herokuapp.com/read-manga-v2?title=i-am-the-sorcerer-king&chapter=104
+OUT MAKOTO MIZUTA: 177: http://animapu.herokuapp.com/read-manga-v2?title=out-makoto-mizuta&chapter=177
+REBIRTH OF THE URBAN IMMORTAL CULTIVATOR: 447: http://animapu.herokuapp.com/read-manga-v2?title=rebirth-of-the-urban-immortal-cultivator&chapter=447
+WOTAKU NI KOI WA MUZUKASHII: 57: http://animapu.herokuapp.com/read-manga-v2?title=wotaku-ni-koi-wa-muzukashii&chapter=57
 
-FINISH UPDATING DATA: 2020-08-16 15:44:41 +0700
+FINISH UPDATING DATA: 2020-08-17 07:10:09 +0700
