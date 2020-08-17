@@ -1,16 +1,18 @@
-START UPDATING DATA: 2020-08-17 07:08:10 +0700
+START UPDATING DATA: 2020-08-17 14:57:25 +0700
 -----------------------------------------------------------
 
 START UPDATING: A-RETURNER-S-MAGIC-SHOULD-BE-SPECIAL
 EXISTING CHAPTER: 115
-FINDING CHAPTER: 116, STATUS: NOT_FOUND
-UPDATED LATEST CHAPTER: 115
+FINDING CHAPTER: 116, STATUS: FOUND
+FINDING CHAPTER: 117, STATUS: NOT_FOUND
+UPDATED LATEST CHAPTER: 116
 -----------------------------------------------------------
 
 START UPDATING: AHIRU-NO-SORA
 EXISTING CHAPTER: 164
-FINDING CHAPTER: 165, STATUS: NOT_FOUND
-UPDATED LATEST CHAPTER: 164
+FINDING CHAPTER: 165, STATUS: FOUND
+FINDING CHAPTER: 166, STATUS: NOT_FOUND
+UPDATED LATEST CHAPTER: 165
 -----------------------------------------------------------
 
 START UPDATING: AKAGAMI-NO-SHIRAYUKIHIME
@@ -68,9 +70,10 @@ UPDATED LATEST CHAPTER: 686
 -----------------------------------------------------------
 
 START UPDATING: BLUE-LOCK
-EXISTING CHAPTER: 95
-FINDING CHAPTER: 96, STATUS: NOT_FOUND
-UPDATED LATEST CHAPTER: 95
+EXISTING CHAPTER: 90
+FINDING CHAPTER: 91, STATUS: FOUND
+FINDING CHAPTER: 92, STATUS: FOUND
+UPDATED LATEST CHAPTER: 92
 -----------------------------------------------------------
 
 START UPDATING: BOKU-GIRL
@@ -254,8 +257,7 @@ UPDATED LATEST CHAPTER: 391
 -----------------------------------------------------------
 
 START UPDATING: I-AM-THE-SORCERER-KING
-EXISTING CHAPTER: 103
-FINDING CHAPTER: 104, STATUS: FOUND
+EXISTING CHAPTER: 104
 FINDING CHAPTER: 105, STATUS: NOT_FOUND
 UPDATED LATEST CHAPTER: 104
 -----------------------------------------------------------
@@ -495,8 +497,7 @@ UPDATED LATEST CHAPTER: 133
 -----------------------------------------------------------
 
 START UPDATING: OUT-MAKOTO-MIZUTA
-EXISTING CHAPTER: 176
-FINDING CHAPTER: 177, STATUS: FOUND
+EXISTING CHAPTER: 177
 FINDING CHAPTER: 178, STATUS: NOT_FOUND
 UPDATED LATEST CHAPTER: 177
 -----------------------------------------------------------
@@ -520,10 +521,10 @@ UPDATED LATEST CHAPTER: 68
 -----------------------------------------------------------
 
 START UPDATING: REBIRTH-OF-THE-URBAN-IMMORTAL-CULTIVATOR
-EXISTING CHAPTER: 445
-FINDING CHAPTER: 446, STATUS: FOUND
-FINDING CHAPTER: 447, STATUS: FOUND
-UPDATED LATEST CHAPTER: 447
+EXISTING CHAPTER: 447
+FINDING CHAPTER: 448, STATUS: FOUND
+FINDING CHAPTER: 449, STATUS: NOT_FOUND
+UPDATED LATEST CHAPTER: 448
 -----------------------------------------------------------
 
 START UPDATING: RECORD-OF-RAGNAROK
@@ -701,10 +702,10 @@ UPDATED LATEST CHAPTER: 97
 -----------------------------------------------------------
 
 START UPDATING: WOTAKU-NI-KOI-WA-MUZUKASHII
-EXISTING CHAPTER: 55
-FINDING CHAPTER: 56, STATUS: FOUND
-FINDING CHAPTER: 57, STATUS: FOUND
-UPDATED LATEST CHAPTER: 57
+EXISTING CHAPTER: 57
+FINDING CHAPTER: 58, STATUS: FOUND
+FINDING CHAPTER: 59, STATUS: FOUND
+UPDATED LATEST CHAPTER: 59
 -----------------------------------------------------------
 
 START UPDATING: YAGATE-KIMI-NI-NARU
@@ -740,9 +741,10 @@ UPDATED LATEST CHAPTER: 422
 UPDATING JSON DB - START
 UPDATING JSON DB - FINISHED
 
-I AM THE SORCERER KING: 104: http://animapu.herokuapp.com/read-manga-v2?title=i-am-the-sorcerer-king&chapter=104
-OUT MAKOTO MIZUTA: 177: http://animapu.herokuapp.com/read-manga-v2?title=out-makoto-mizuta&chapter=177
-REBIRTH OF THE URBAN IMMORTAL CULTIVATOR: 447: http://animapu.herokuapp.com/read-manga-v2?title=rebirth-of-the-urban-immortal-cultivator&chapter=447
-WOTAKU NI KOI WA MUZUKASHII: 57: http://animapu.herokuapp.com/read-manga-v2?title=wotaku-ni-koi-wa-muzukashii&chapter=57
+A RETURNER S MAGIC SHOULD BE SPECIAL: 116: http://animapu.herokuapp.com/read-manga-v2?title=a-returner-s-magic-should-be-special&chapter=116
+AHIRU NO SORA: 165: http://animapu.herokuapp.com/read-manga-v2?title=ahiru-no-sora&chapter=165
+BLUE LOCK: 92: http://animapu.herokuapp.com/read-manga-v2?title=blue-lock&chapter=92
+REBIRTH OF THE URBAN IMMORTAL CULTIVATOR: 448: http://animapu.herokuapp.com/read-manga-v2?title=rebirth-of-the-urban-immortal-cultivator&chapter=448
+WOTAKU NI KOI WA MUZUKASHII: 59: http://animapu.herokuapp.com/read-manga-v2?title=wotaku-ni-koi-wa-muzukashii&chapter=59
 
-FINISH UPDATING DATA: 2020-08-17 07:10:09 +0700
+FINISH UPDATING DATA: 2020-08-17 14:59:21 +0700
