@@ -111,7 +111,6 @@ function PageReadMangaV4() {
 
   // get manga histories from firebases
   useEffect(() => {
-
     getUserDetailFromFirebase();
   }, []);
 
@@ -357,6 +356,15 @@ function PageReadMangaV4() {
     var key = `${title}/last_read_chapter`
     var chapter = cookies.get(key)
 
+    if (cookies.get("GO_ANIMAPU_LOGGED_IN") == "true") {
+      var key = `${title}/last_read_chapter_logged_in`
+      var firebase_chapter = cookies.get(key)
+
+      if (typeof chapter !== "undefined") {
+        return parseInt(firebase_chapter)
+      }
+    }
+
     if (typeof chapter !== "undefined") {
       // console.log(`not null ${title}: ${chapter}`)
       return parseInt(chapter)
@@ -442,6 +450,10 @@ function PageReadMangaV4() {
   }
 
   async function setHistoriesToFireBase(manga_title, chapter) {
+    if (cookies.get("GO_ANIMAPU_LOGGED_IN") != "true") {
+      return
+    }
+
     console.log("TRY STORE TO FIREBASE")
 
     try {
@@ -467,6 +479,10 @@ function PageReadMangaV4() {
   }
 
   async function getUserDetailFromFirebase() {
+    if (cookies.get("GO_ANIMAPU_LOGGED_IN") != "true") {
+      return
+    }
+
     const response = await fetch('https://go-animapu.herokuapp.com/users/detail', {
       method: 'GET',
       headers: {
@@ -482,9 +498,14 @@ function PageReadMangaV4() {
 
     var manga_title_histories = []
 
-    const hehe = new Map(Object.entries(results.read_histories));
-    hehe.forEach((num, key) => {
-      manga_title_histories.push(num)
+    const mapped_manga_histories = new Map(Object.entries(results.read_histories));
+    mapped_manga_histories.forEach((manga, key) => {
+      manga_title_histories.push(manga)
+      var manga_firebase_title = manga.manga_title
+      var key = `${manga_firebase_title}/last_read_chapter_logged_in`
+      var value = manga.last_chapter
+      let date = new Date(2030, 12)
+      cookies.set(key, value, { path: "/", expires: date })
     })
     manga_title_histories.sort((a, b) => b.last_read_time_i - a.last_read_time_i)
     console.log(manga_title_histories.map(val => val.manga_title))
