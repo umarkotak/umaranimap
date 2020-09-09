@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Switch, Route} from "react-router-dom"
 
 import Nav from "./components/Nav"
 import PageHome from "./components/PageHome"
+import PageLogin from "./components/PageLogin"
 import PageTicTacToe from "./components/PageTicTacToe"
 import PageLearnReact from "./components/PageLearnReact"
 import PageAiringAnimeV1 from "./components/PageAiringAnimeV1"
@@ -23,6 +24,7 @@ function App() {
         <Nav />
         <Switch>
           <Route path="/" exact component={PageHome} />
+          <Route path="/login" exact component={PageLogin} />
           <Route path="/tic-tac-toe" exact component={PageTicTacToe} />
           <Route path="/learn-react" exact component={PageLearnReact} />
           <Route path="/airing-anime-v1/:id" exact component={PageAiringAnimeV1} />

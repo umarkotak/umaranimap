@@ -15,10 +15,10 @@ function PageHome() {
       <div className="row">
         <div className="col-12">
           <div className="card">
-            <div class="card-header">
+            <div className="card-header">
               Other Pages
             </div>
-            <div class="card-body">
+            <div className="card-body">
               <Link to="/tic-tac-toe" className="btn btn-block btn-primary">Tic Tac Toe</Link>
               <Link to="/watch-anime-v1" className="btn btn-block btn-primary">Watch Anime</Link>
             </div>

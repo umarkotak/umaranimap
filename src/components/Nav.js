@@ -1,7 +1,13 @@
-import React from "react"
+import React, {useState} from "react"
 import {Link} from "react-router-dom"
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 function Nav() {
+  const [logged_in, set_logged_in] = useState(cookies.get("GO_ANIMAPU_LOGGED_IN"));
+  const [username, set_username] = useState(cookies.get("GO_ANIMAPU_USERNAME"));
+
   return (
     <div>
       <header className="blog-header py-3">
@@ -13,12 +19,8 @@ function Nav() {
             <Link to="/" className="blog-header-logo text-dark">ANIMAPU</Link>
           </div> */}
           <div className="col-4 d-flex justify-content-end align-items-center">
-            <Link to="/" className="btn btn-sm btn-outline-secondary mx-2">
-              Login
-            </Link>
-            <Link to="/" className="btn btn-sm btn-danger mx-2">
-              Logout
-            </Link>
+            <UserNav />
+
           </div>
         </div>
       </header>
@@ -42,6 +44,37 @@ function Nav() {
       </div>
     </div>
   )
+
+  function UserNav() {
+    if (logged_in == "true") {
+      return(
+        <div>
+          <Link to="#" className="btn btn-sm btn-outline-secondary mx-2">
+            Hello {username}
+          </Link>
+          <Link to="#" className="btn btn-sm btn-danger mx-2" onClick={handleLogout}>
+            Logout
+          </Link>
+        </div>
+      )
+    } else {
+      return(
+        <div>
+          <Link to="/login" className="btn btn-sm btn-outline-secondary mx-2">
+            Login
+          </Link>
+        </div>
+      )
+    }
+  }
+
+  function handleLogout() {
+    cookies.remove("GO_ANIMAPU_LOGGED_IN")
+    cookies.remove("GO_ANIMAPU_USERNAME")
+    cookies.remove("GO_ANIMAPU_LOGIN_TOKEN")
+    set_logged_in("false")
+    alert("logout success!")
+  }
 }
 
 export default Nav
