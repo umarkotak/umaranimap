@@ -11,9 +11,9 @@ function PageLogin() {
   return (
     <div>
       <div className="row">
-        <div className="col-12">
+        <div className="col-12 col-sm-6">
           <form onSubmit={handleLoginSubmit}>
-            <div className="card border-success">
+            <div className="card border-success tab-pane active" id="home" role="tabpanel" ariaLabelledby="home-tab">
               <div className="card-header">
                 Login
               </div>
@@ -31,7 +31,8 @@ function PageLogin() {
               </div>
             </div>
           </form>
-          <hr/>
+        </div>
+        <div className="col-12 col-sm-6">
           <form onSubmit={handleRegisterSubmit}>
             <div className="card border-success">
               <div className="card-header">
@@ -55,6 +56,8 @@ function PageLogin() {
               </div>
             </div>
           </form>
+        </div>
+        <div className="col-12">
           <hr/>
           <p>Chill this is only for learning that's why password is shown. do not put any personal data!</p>
         </div>

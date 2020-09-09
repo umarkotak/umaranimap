@@ -15,6 +15,7 @@ import PageReadMangaV1 from "./components/PageReadMangaV1"
 import PageReadMangaV2 from "./components/PageReadMangaV2"
 import PageReadMangaV3 from "./components/PageReadMangaV3"
 import PageReadMangaV4 from "./components/PageReadMangaV4"
+import PageReadMangaV5 from "./components/PageReadMangaV5"
 import PageWatchAnimeV1 from "./components/PageWatchAnimeV1"
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
           <Route path="/read-manga-v2" exact component={PageReadMangaV2} />
           <Route path="/read-manga-v3" exact component={PageReadMangaV3} />
           <Route path="/read-manga-v4" exact component={PageReadMangaV4} />
+          <Route path="/read-manga-v5" exact component={PageReadMangaV5} />
           <Route path="/watch-anime-v1" exact component={PageWatchAnimeV1} />
         </Switch>
       </div>
