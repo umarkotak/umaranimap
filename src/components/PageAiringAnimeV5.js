@@ -16,10 +16,8 @@ function PageAiringAnimeV5() {
   useEffect(() => {
     async function fetchData(selected_year, selected_season) {
       var api = "https://api.jikan.moe/v3/season/" + selected_year + "/" + selected_season
-      console.log(api)
       const response = await fetch(api)
       const results = await response.json()
-      console.log({fetchItems: results})
       setItems(results.anime)
       setAnimeId(results.anime[0].mal_id)
     }
@@ -31,14 +29,12 @@ function PageAiringAnimeV5() {
     async function fetchData(anime_id) {
       const response = await fetch(`https://api.jikan.moe/v3/anime/${anime_id}`);
       const result = await response.json();
-      console.log({fetchItem: result});
       setItem(result)
     }
     fetchData(anime_id);
   }, [anime_id]);
 
   function getAnimeDetail(mal_id) {
-    console.log(mal_id)
     setAnimeId(mal_id)
   }
 
@@ -92,9 +88,6 @@ function PageAiringAnimeV5() {
     window.scrollTo(0, 0)
   }
 
-  console.log("items")
-  console.log(items)
-
   return (
     <div>
       <div className="bg-dark sticky-top">
@@ -142,19 +135,21 @@ function PageAiringAnimeV5() {
             </button>
 
             {/* <button className="btn btn-sm btn-outline-secondary mx-1 disabled">Year :</button> */}
-            <select className="custom-select mx-1" name="selectedYear" onChange={(e) => handleYearChange(e.target.value)}>
+            <select className="custom-select mx-1" name="selectedYear" onChange={(e) => handleYearChange(e.target.value)} defaultValue={selected_year}>
               {valid_years.map(year => (
-                <option key={year} selected={year === selected_year} value={year}> {year} </option>
+                <option key={year} value={year}> {year} </option>
               ))}
             </select>
 
             {/* <button className="btn btn-sm btn-outline-secondary mx-1 disabled">Season :</button> */}
-            <select className="custom-select mx-1" name="selectedSeason" onChange={(e) => handleSeasonChange(e.target.value)}>
+            <select className="custom-select mx-1" name="selectedSeason" onChange={(e) => handleSeasonChange(e.target.value)} defaultValue={selected_season}>
               {valid_seasons.map(season => (
-                <option key={season} selected={season === selected_season} value={season}> {season} </option>
+                <option key={season} value={season}> {season} </option>
               ))}
             </select>
 
+            {/* <option key={year} selected={year === selected_year} value={year}> {year} </option>
+            <option key={season} selected={season === selected_season} value={season}> {season} </option> */}
             {/* <button onClick={() => getByYearAndSeason()} className="btn btn-sm btn-outline-secondary mx-1">
               Go!
             </button> */}
@@ -198,13 +193,11 @@ function getValiYears() {
   while ( startYear <= currentYear ) {
       years.push(startYear++)
   }
-  console.log("Years" + years)
   return years
 }
 
 function getSeason() {
   var month = new Date().getMonth()
-  console.log(month);
   var winter = 'dec,december,jan,january,feb,february,12,1,2,';
   var spring = 'mar,march,apr,april,may,3,4,5,';
   var summer = 'jun,june,jul,july,aug,august,6,7,8,';
