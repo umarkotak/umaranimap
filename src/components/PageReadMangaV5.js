@@ -357,7 +357,7 @@ function PageReadMangaV4() {
       var key = `${title}/last_read_chapter_logged_in`
       var firebase_chapter = cookies.get(key)
 
-      if (typeof chapter !== "undefined") {
+      if (typeof firebase_chapter !== "undefined") {
         return parseInt(firebase_chapter)
       }
     }
