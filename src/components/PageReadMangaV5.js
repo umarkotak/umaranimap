@@ -223,13 +223,12 @@ function PageReadMangaV4() {
             {manga_histories.slice(0, 25).map(manga => (
               <div className="col-4 col-md-2" key={manga}>
                 <div className="card mb-4 box-shadow shadow">
+                  <small>{generateMangaTitleTextChapter(manga)}</small>
                   <img className="card-img-top bg-dark" src={generateThumbnailFromTitle(manga)} style={{"height": "150px"}} alt="" />
-                  <p className="card-text overflow-auto" style={{"height": "50px"}}>
-                    <small className="text-muted">{generateMangaTitleText(manga)}</small>
+                  <p className="card-text overflow-auto" style={{"height": "35px"}}>
+                    <small>{generateMangaTitleTextTitle(manga)}</small>
                   </p>
-                  <div className="btn-group">
-                    <button type="button" className="btn btn-sm btn-outline-secondary" onClick={(e) => handleSelectedMangaTitle(e.target.value)} value={manga}>View</button>
-                  </div>
+                  <button type="button" className="btn btn-xs btn-outline-secondary" onClick={(e) => handleSelectedMangaTitle(e.target.value)} value={manga} style={{"margin-top": "-12px"}}>View</button>
                 </div>
               </div>
             ))}
@@ -243,13 +242,12 @@ function PageReadMangaV4() {
             {new_mangas.map(manga => (
               <div className="col-4 col-md-2" key={manga}>
                 <div className="card mb-4 box-shadow shadow">
+                  <small>{generateMangaTitleTextChapter(manga)}</small>
                   <img className="card-img-top bg-dark" src={generateThumbnailFromTitle(manga)} style={{"height": "150px"}} alt="" />
-                  <p className="card-text overflow-auto" style={{"height": "50px"}}>
-                    <small className="text-muted">{generateMangaTitleText(manga)}</small>
+                  <p className="card-text overflow-auto" style={{"height": "35px"}}>
+                    <small>{generateMangaTitleTextTitle(manga)}</small>
                   </p>
-                  <div className="btn-group">
-                    <button type="button" className="btn btn-sm btn-outline-secondary" onClick={(e) => handleSelectedMangaTitle(e.target.value)} value={manga}>View</button>
-                  </div>
+                  <button type="button" className="btn btn-xs btn-outline-secondary" onClick={(e) => handleSelectedMangaTitle(e.target.value)} value={manga} style={{"margin-top": "-12px"}}>View</button>
                 </div>
               </div>
             ))}
@@ -263,13 +261,12 @@ function PageReadMangaV4() {
           {manga_list.slice(1, manga_list.length).map(manga => (
             <div className="col-4 col-md-2" key={manga}>
               <div className="card mb-4 box-shadow shadow">
+                <small>{generateMangaTitleTextChapter(manga)}</small>
                 <img className="card-img-top bg-dark" src={generateThumbnailFromTitle(manga)} style={{"height": "150px"}} alt="" />
-                <p className="card-text overflow-auto" style={{"height": "50px"}}>
-                  <small className="text-muted">{generateMangaTitleText(manga)}</small>
+                <p className="card-text overflow-auto" style={{"height": "35px"}}>
+                  <small>{generateMangaTitleTextTitle(manga)}</small>
                 </p>
-                <div className="btn-group">
-                  <button type="button" className="btn btn-sm btn-outline-secondary" onClick={(e) => handleSelectedMangaTitle(e.target.value)} value={manga}>View</button>
-                </div>
+                <button type="button" className="btn btn-xs btn-outline-secondary" onClick={(e) => handleSelectedMangaTitle(e.target.value)} value={manga} style={{"margin-top": "-12px"}}>View</button>
               </div>
             </div>
           ))}
@@ -420,6 +417,32 @@ function PageReadMangaV4() {
       var status = manga_db.get(raw_title).status
 
       return `( ${last_read} / ${last_chapter} ) - ${title} - ${status}`
+    } catch (error) {
+      return `error rendering manga`
+    }
+  }
+
+  function generateMangaTitleTextChapter(raw_title) {
+    if (raw_title[0] === "-") { return raw_title }
+
+    try {
+      var last_read = findLatestMangaChapter(raw_title)
+      var last_chapter = manga_db.get(raw_title).manga_last_chapter
+      var status = manga_db.get(raw_title).status
+
+      return `( ${last_read} / ${last_chapter} ) - ${status}`
+    } catch (error) {
+      return `error rendering manga`
+    }
+  }
+
+  function generateMangaTitleTextTitle(raw_title) {
+    if (raw_title[0] === "-") { return raw_title }
+
+    try {
+      var title = beutifyChapterTitle(raw_title)
+
+      return `${title}`
     } catch (error) {
       return `error rendering manga`
     }
