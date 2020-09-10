@@ -15,7 +15,7 @@ function query_chapter() {
   return qs.parse(window.location.search, { ignoreQueryPrefix: true }).chapter
 }
 
-function PageReadMangaV4() {
+function PageReadMangaV5() {
   const [manga_db, set_manga_db] = useState(mangaDB.GetMangaDB())
   const [new_mangas, set_new_mangas] = useState(mangaDB.GetNewManga())
   // console.log(query_title(), query_chapter());
@@ -289,7 +289,7 @@ function PageReadMangaV4() {
   }
 
   function reconstruct_shareable() {
-    return "http://animapu.herokuapp.com/read-manga-v4?title=" + manga_title + "&chapter=" + manga_chapter;
+    return "http://animapu.herokuapp.com/read-manga-v5?title=" + manga_title + "&chapter=" + manga_chapter;
   }
 
   function copyToClipboard(e) {
@@ -571,4 +571,4 @@ function PageReadMangaV4() {
   }
 }
 
-export default PageReadMangaV4
+export default PageReadMangaV5
