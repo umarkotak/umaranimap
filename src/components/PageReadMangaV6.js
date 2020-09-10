@@ -15,10 +15,9 @@ function query_chapter() {
   return qs.parse(window.location.search, { ignoreQueryPrefix: true }).chapter
 }
 
-function PageReadMangaV5() {
+function PageReadMangaV6() {
   const [manga_db, set_manga_db] = useState(mangaDB.GetMangaDB())
   const [new_mangas, set_new_mangas] = useState(mangaDB.GetNewManga())
-  // console.log(query_title(), query_chapter());
 
   var manga_list = generateMangaListFromDB()
 
@@ -107,10 +106,12 @@ function PageReadMangaV5() {
       await fetch(api)
     }
     updateData();
-  });
+  }, []);
 
   // get manga histories from firebases
-  useEffect(() => {getUserDetailFromFirebase();});
+  useEffect(() => {
+    getUserDetailFromFirebase();
+  }, []);
 
   return (
     <div>
@@ -296,19 +297,14 @@ function PageReadMangaV5() {
   }
 
   function reconstruct_shareable() {
-    return "http://animapu.herokuapp.com/read-manga-v5?title=" + manga_title + "&chapter=" + manga_chapter;
+    return "http://animapu.herokuapp.com/read-manga-v6?title=" + manga_title + "&chapter=" + manga_chapter;
   }
 
   function copyToClipboard(e) {
-    console.log(textAreaRef.current.value)
-    // console.log(window.location)
-    // var shareable = window.location.origin + "/read-manga-v3?title=" + manga_title + "&chapter=" + manga_chapter;
     textAreaRef.current.value = reconstruct_shareable()
     textAreaRef.current.select();
     document.execCommand('copy');
 
-    console.log(reconstruct_shareable())
-    // navigator.clipboard.writeText(shareable)
     set_button_share("Copied")
   }
 
@@ -370,10 +366,8 @@ function PageReadMangaV5() {
     }
 
     if (typeof chapter !== "undefined") {
-      // console.log(`not null ${title}: ${chapter}`)
       return parseInt(chapter)
     } else {
-      // console.log(`null ${title}: ${chapter}`)
       return manga_chapter_list[0]
     }
   }
@@ -482,7 +476,6 @@ function PageReadMangaV5() {
     var value = chapter
     let date = new Date(2030, 12)
     cookies.set(key, value, { path: "/", expires: date })
-    console.log("COOKIES SET: " + cookies.get(key))
     setHistoriesToFireBase(manga_title, chapter)
     setMangaHistores()
   }
@@ -491,8 +484,6 @@ function PageReadMangaV5() {
     if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") {
       return
     }
-
-    console.log("TRY STORE TO FIREBASE")
 
     try {
       const response = await fetch('http://go-animapu.herokuapp.com/users/read_histories', {
@@ -506,13 +497,9 @@ function PageReadMangaV5() {
           manga_title: manga_title
         })
       })
-      const results = await response.json()
       const status = await response.status
-
-      console.log("STORE TO FIREBASE", status, results)
-
+      if (status === 200) {}
     } catch (e) {
-      console.log("STORE TO FIREBASE ERROR", e.message);
     }
   }
 
@@ -529,10 +516,6 @@ function PageReadMangaV5() {
       }
     })
     const results = await response.json()
-    const status = await response.status
-
-    console.log("FIREBASE HISTORY", status, results)
-    console.log(results.read_histories)
 
     var manga_title_histories = []
 
@@ -546,8 +529,6 @@ function PageReadMangaV5() {
       cookies.set(cache_key, value, { path: "/", expires: date })
     })
     manga_title_histories.sort((a, b) => b.last_read_time_i - a.last_read_time_i)
-    console.log(manga_title_histories.map(val => val.manga_title))
-    console.log(manga_histories)
     set_manga_histories(manga_title_histories.map(val => val.manga_title))
   }
 
@@ -568,7 +549,6 @@ function PageReadMangaV5() {
       cookies.set(key, [value], { path: "/", expires: date })
       set_manga_histories([value])
     }
-    console.log("HISTORIES SET: " + cookies.get(key))
     set_button_share("Share")
 
     var chapter_key = `${manga_title}/last_read_chapter`
@@ -586,4 +566,4 @@ function PageReadMangaV5() {
   }
 }
 
-export default PageReadMangaV5
+export default PageReadMangaV6

@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useEffect, useRef} from "react"
+import React, {useState} from "react"
 import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
@@ -82,7 +82,7 @@ function PageLogin() {
       const results = await response.json()
       const status = await response.status
 
-      if (status == 200) {
+      if (status === 200) {
         let date = new Date(2030, 12)
         cookies.set("GO_ANIMAPU_LOGGED_IN", "true", { path: "/", expires: date })
         cookies.set("GO_ANIMAPU_USERNAME", results.username, { path: "/", expires: date })
@@ -101,6 +101,10 @@ function PageLogin() {
   async function handleRegisterSubmit(event) {
     event.preventDefault();
 
+    if (password !== password_confirmation) {
+      alert("password confirmation is wrong")
+    }
+
     try {
       const response = await fetch('http://go-animapu.herokuapp.com/users/register', {
         method: 'POST',
@@ -115,7 +119,7 @@ function PageLogin() {
       const results = await response.json()
       const status = await response.status
 
-      if (status == 200) {
+      if (status === 200) {
         alert("user registration success!");
       } else {
         alert(results.message);
