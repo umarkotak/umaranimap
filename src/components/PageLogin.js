@@ -88,7 +88,8 @@ function PageLogin() {
         cookies.set("GO_ANIMAPU_USERNAME", results.username, { path: "/", expires: date })
         cookies.set("GO_ANIMAPU_LOGIN_TOKEN", results.login_token, { path: "/", expires: date })
         alert("login success");
-        window.location.reload(false);
+        // window.location.reload(false);
+        window.location.href = '/read-manga-v6';
       } else {
         alert(results.message);
       }

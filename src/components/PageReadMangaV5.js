@@ -221,7 +221,7 @@ function PageReadMangaV5() {
             {manga_histories.slice(0, 25).map(manga => (
               <div className="col-4 col-md-2" key={manga}>
                 <div className={`card mb-4 box-shadow shadow ${generateMangaTitleTextStatus(manga)}`}>
-                  <div style={{"height": "170px", "backgroundImage": `url(${generateThumbnailFromTitle(manga)})`, backgroundSize: 'cover', "justify-content": "space-between", "display": "flex", "flex-direction": "column"}}>
+                  <div style={{"height": "170px", "backgroundImage": `url(${generateThumbnailFromTitle(manga)})`, backgroundSize: 'cover', justifyContent: "space-between", "display": "flex", flexDirection: "column"}}>
                     <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
                       <small>{generateMangaTitleTextChapter(manga)}</small>
                     </div>
