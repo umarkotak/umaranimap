@@ -6,6 +6,7 @@ import {WhatsappShareButton} from "react-share";
 const cookies = new Cookies();
 var cdn_host = "https://img.mghubcdn.com/file/imghub"
 var go_animapu_host = "http://go-animapu.herokuapp.com"
+var animapu_host = "http://animapu.herokuapp.com"
 
 var qs = require('qs');
 function query_title() {
@@ -104,160 +105,12 @@ function PageReadMangaV7() {
     updateData();
   }, []);
 
-  return (
-    <div>
-      <div className="sticky-top bg-dark" style={{margin: "0px -14px 0px"}}>
-        <RenderHead />
-      </div>
-
-      <div className="pb-5">
-        <div>
-          <RenderSuggestedManga isShown={manga_title[0]}/>
-        </div>
-
-        {manga_pages.map(page_no => (
-          <div className="bg-dark border border-dark rounded mx-n2" key={generateImageURL(page_no)}>
-            <img
-              className="bd-placeholder-img mx-auto d-block img-fluid"
-              src={generateImageURL(page_no)}
-              alt=""
-            />
-            <img
-              className="bd-placeholder-img mx-auto d-block img-fluid"
-              src={generateImageErrorUrl(page_no)}
-              alt=""
-            />
-          </div>
-        ))}
-      </div>
-
-      <div className='form-group'>
-        <form>
-          <input
-            readOnly
-            className='form-control'
-            type='text'
-            style={{"display": "block"}}
-            rows="10"
-            display='none'
-            ref={textAreaRef}
-            defaultValue={shareable_link}
-          />
-        </form>
-      </div>
-
-      <div className="container fixed-bottom bg-dark">
-        <RenderFoot />
-      </div>
-    </div>
-  )
-
-  function RenderHead() {
-    if (bottom_nav === false) return(<div></div>)
-    return(
-      <div className="nav-scroller">
-        <nav className="nav d-flex justify-content-between">
-          <button className="btn btn-light btn-sm btn-outline-secondary mx-1 my-1" onClick={copyToClipboard}>{button_share}</button>
-          <div className="btn btn-light btn-sm btn-outline-secondary mx-1 my-1">
-            <WhatsappShareButton url={reconstruct_shareable()} children={"WA"} />
-          </div>
-          <select className="custom-select mx-1 my-1" name="selectedMangaTitle" onChange={(e) => handleSelectedMangaTitle(e.target.value)} defaultValue={manga_title}>
-            {manga_list.map(manga => (
-              <option key={manga} value={manga}> {generateMangaTitleText(manga)} </option>
-            ))}
-          </select>
-        </nav>
-      </div>
-    )
-  }
-
-  function RenderFoot() {
-    if (bottom_nav === false) return(<div></div>)
-    return(
-      <div className="nav-scroller py-1 mb-3">
-        <nav className="nav d-flex justify-content-between">
-          <button className="btn btn-light btn-sm btn-outline-secondary mx-1 px-2" onClick={() => handlePreviousPage()}>
-            Prev
-          </button>
-
-          <button className="btn btn-light btn-sm btn-outline-secondary mx-1" onClick={() => handleSelectedMangaTitle(manga_list[0])}>Menu</button>
-          <select className="custom-select mx-1" name="selectedMangaTitle" onChange={(e) => handleSelectedMangaChapter(e.target.value)} defaultValue={manga_chapter}>
-            {manga_chapter_list.map(chapter => (
-              <option key={chapter} value={chapter}> Chapter {chapter} </option>
-            ))}
-          </select>
-
-          <button className="btn btn-light btn-sm btn-outline-secondary mx-1 px-2" onClick={() => handleNextPage()}>
-            Next
-          </button>
-        </nav>
-      </div>
-    )
-  }
-
-  function RenderSuggestedManga(props) {
-    if (props.isShown !== '-') { return(<div></div>) }
-
-    return(
-      <div>
-        <div>
-          <div className="row">
-            <div className="col-6"><h4>History</h4></div>
-            <div className="col-6"><button className="float-right btn btn-sm btn-outline-secondary" onClick={() => handleClearHistory()} href="#">Clear History</button></div>
-          </div>
-
-          <div className="row flex-row flex-nowrap overflow-auto">
-            {manga_histories.slice(0, 15).map(manga_title => (
-              <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_history_list`} />
-            ))}
-          </div>
-
-          <div className="row">
-            <div className="col-6"><h4>New Manga</h4></div>
-          </div>
-
-          <div className="row flex-row flex-nowrap overflow-auto">
-            {new_mangas.map(manga_title => (
-              <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_new_list`} />
-            ))}
-          </div>
-        </div>
-
-        <h4>Manga List</h4>
-        <div className="row">
-          {manga_list.slice(1, manga_list.length).map(manga_title => (
-            <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_list`} />
-          ))}
-        </div>
-      </div>
-    )
-  }
-
-  function RenderMangaCard(props) {
-    if (props.manga_title[0] === "-") {return(<div></div>)}
-    return(
-      <div className="col-4 col-md-2">
-        <div className={`card mb-4 box-shadow shadow border-4 ${generate_manga_airing_status(props.manga_title)}`}>
-          <div style={{height: "170px", backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(props.manga_title)})`}}>
-            <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
-              <small>{`${findLatestMangaChapter(props.manga_title)}/${manga_db.get(props.manga_title).manga_last_chapter}`}</small>
-            </div>
-            <div className="text-white card-text overflow-auto" style={{"height": "35px", "width": "100%", backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
-              <small>{props.manga_title}</small>
-            </div>
-          </div>
-          <button type="button" className="btn btn-block btn-sm btn-outline-secondary" onClick={(e) => handleSelectedMangaTitle(e.target.value)} value={props.manga_title}>View</button>
-        </div>
-      </div>
-    )
-  }
-
   function generate_manga_airing_status(manga_title) {
     return (manga_db.get(manga_title).status === "ongoing") ? "border-primary" : "border-success"
   }
 
   function reconstruct_shareable() {
-    return `${go_animapu_host}/read-manga-v7?title=${manga_title}&chapter=${manga_chapter}`
+    return `${animapu_host}/read-manga-v7?title=${manga_title}&chapter=${manga_chapter}`
   }
 
   function copyToClipboard(e) {
@@ -419,6 +272,155 @@ function PageReadMangaV7() {
     }
     return title.join(" ")
   }
+
+  return (
+    <div>
+      <div className="sticky-top bg-dark" style={{margin: "0px -14px 0px"}}>
+        <RenderHead />
+      </div>
+
+      <div className="pb-5">
+        <div>
+          <RenderSuggestedManga isShown={manga_title[0]}/>
+        </div>
+
+        {manga_pages.map(page_no => (
+          <div className="bg-dark border border-dark rounded mx-n2" key={generateImageURL(page_no)}>
+            <img
+              className="bd-placeholder-img mx-auto d-block img-fluid"
+              src={generateImageURL(page_no)}
+              alt=""
+            />
+            <img
+              className="bd-placeholder-img mx-auto d-block img-fluid"
+              src={generateImageErrorUrl(page_no)}
+              alt=""
+            />
+          </div>
+        ))}
+      </div>
+
+      <div className='form-group'>
+        <form>
+          <input
+            readOnly
+            className='form-control'
+            type='text'
+            style={{"display": "block"}}
+            rows="10"
+            display='none'
+            ref={textAreaRef}
+            defaultValue={shareable_link}
+          />
+        </form>
+      </div>
+
+      <div className="container fixed-bottom bg-dark">
+        <RenderFoot />
+      </div>
+    </div>
+  )
+
+  function RenderHead() {
+    if (bottom_nav === false) return(<div></div>)
+    return(
+      <div className="nav-scroller">
+        <nav className="nav d-flex justify-content-between">
+          <button className="btn btn-light btn-sm btn-outline-secondary mx-1 my-1" onClick={copyToClipboard}>{button_share}</button>
+          <div className="btn btn-light btn-sm btn-outline-secondary mx-1 my-1">
+            <WhatsappShareButton url={reconstruct_shareable()} children={"WA"} />
+          </div>
+          <select className="custom-select mx-1 my-1" name="selectedMangaTitle" onChange={(e) => handleSelectedMangaTitle(e.target.value)} defaultValue={manga_title}>
+            {manga_list.map(manga => (
+              <option key={manga} value={manga}> {generateMangaTitleText(manga)} </option>
+            ))}
+          </select>
+        </nav>
+      </div>
+    )
+  }
+
+  function RenderFoot() {
+    if (bottom_nav === false) return(<div></div>)
+    return(
+      <div className="nav-scroller py-1 mb-3">
+        <nav className="nav d-flex justify-content-between">
+          <button className="btn btn-light btn-sm btn-outline-secondary mx-1 px-2" onClick={() => handlePreviousPage()}>
+            Prev
+          </button>
+
+          <button className="btn btn-light btn-sm btn-outline-secondary mx-1" onClick={() => handleSelectedMangaTitle(manga_list[0])}>Menu</button>
+          <select className="custom-select mx-1" name="selectedMangaTitle" onChange={(e) => handleSelectedMangaChapter(e.target.value)} defaultValue={manga_chapter}>
+            {manga_chapter_list.map(chapter => (
+              <option key={chapter} value={chapter}> Chapter {chapter} </option>
+            ))}
+          </select>
+
+          <button className="btn btn-light btn-sm btn-outline-secondary mx-1 px-2" onClick={() => handleNextPage()}>
+            Next
+          </button>
+        </nav>
+      </div>
+    )
+  }
+
+  function RenderSuggestedManga(props) {
+    if (props.isShown !== '-') { return(<div></div>) }
+
+    return(
+      <div>
+        <div>
+          <div className="row">
+            <div className="col-6"><h4>History</h4></div>
+            <div className="col-6"><button className="float-right btn btn-sm btn-outline-secondary" onClick={() => handleClearHistory()} href="#">Clear History</button></div>
+          </div>
+
+          <div className="row flex-row flex-nowrap overflow-auto">
+            {manga_histories.slice(0, 15).map(manga_title => (
+              <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_history_list`} />
+            ))}
+          </div>
+
+          <div className="row">
+            <div className="col-6"><h4>New Manga</h4></div>
+          </div>
+
+          <div className="row flex-row flex-nowrap overflow-auto">
+            {new_mangas.map(manga_title => (
+              <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_new_list`} />
+            ))}
+          </div>
+        </div>
+
+        <h4>Manga List</h4>
+        <div className="row">
+          {manga_list.slice(1, manga_list.length).map(manga_title => (
+            <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_list`} />
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  function RenderMangaCard(props) {
+    if (props.manga_title[0] === "-") {return(<div></div>)}
+    return(
+      <div className="col-4 col-md-2">
+        <div className={`card mb-4 box-shadow shadow border-4 ${generate_manga_airing_status(props.manga_title)}`}>
+          <div style={{height: "170px", backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(props.manga_title)})`}}>
+            <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
+              <small>{`${findLatestMangaChapter(props.manga_title)}/${manga_db.get(props.manga_title).manga_last_chapter}`}</small>
+            </div>
+            <div className="text-white card-text overflow-auto" style={{"height": "35px", "width": "100%", backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
+              <small>{props.manga_title}</small>
+            </div>
+          </div>
+          <button type="button" className="btn btn-block btn-sm btn-outline-secondary" onClick={(e) => handleSelectedMangaTitle(e.target.value)} value={props.manga_title}>View</button>
+        </div>
+      </div>
+    )
+  }
+
 }
 
 export default PageReadMangaV7

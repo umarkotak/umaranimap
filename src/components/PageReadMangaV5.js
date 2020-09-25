@@ -110,7 +110,10 @@ function PageReadMangaV5() {
   });
 
   // get manga histories from firebases
-  useEffect(() => {getUserDetailFromFirebase();});
+  useEffect(() => {
+    getUserDetailFromFirebase();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div>

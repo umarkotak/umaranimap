@@ -23,7 +23,10 @@ function PageReadMangaV6() {
 
   const text_area_ref = useRef(null);
 
-  useEffect(() => {get_manga_object_from_go_animapu_firebase()});
+  useEffect(() => {
+    get_manga_object_from_go_animapu_firebase()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   useEffect(() => {post_update_manga_object_to_go_animapu_firebase()}, []);
 
   async function get_manga_object_from_go_animapu_firebase() {
