@@ -25,6 +25,7 @@ function PageReadMangaV7() {
   const [manga_title, set_manga_title] = useState(query_title() || manga_list[0])
   var manga_pages = generateMangaPages(manga_title)
 
+  const [page_loading_state, set_page_loading_state] = useState("true")
   const [manga_chapter_list, set_manga_chapter_list] = useState(generateChapterListFromTitle(manga_title))
   const [manga_chapter, set_manga_chapter] = useState(query_chapter() || findLatestMangaChapter(manga_title))
   const [manga_histories, set_manga_histories] = useState(generateHistoriesSection())
@@ -93,6 +94,7 @@ function PageReadMangaV7() {
       new_mangas.sort((a, b) => a.order - b.order)
 
       set_new_mangas(new_mangas.map( val => val.title))
+      set_page_loading_state("false")
     }
     fetchData();
   }, []);
@@ -106,7 +108,12 @@ function PageReadMangaV7() {
   }, []);
 
   function generate_manga_airing_status(manga_title) {
-    return (manga_db.get(manga_title).status === "ongoing") ? "border-primary" : "border-success"
+    try {
+      return (manga_db.get(manga_title).status === "ongoing") ? "border-primary" : "border-success"
+    } catch (error) {
+      console.log("error:generate_manga_airing_status", error, manga_title)
+      return "border-primary"
+    }
   }
 
   function reconstruct_shareable() {
@@ -170,8 +177,10 @@ function PageReadMangaV7() {
 
     if (typeof chapter !== "undefined") {
       return parseInt(chapter)
+    } else if (typeof chapter === "NaN") {
+      return 1
     } else {
-      return manga_chapter_list[0]
+      return 1
     }
   }
 
@@ -385,11 +394,7 @@ function PageReadMangaV7() {
             <div className="col-6"><h4>New Manga</h4></div>
           </div>
 
-          <div className="row flex-row flex-nowrap overflow-auto">
-            {new_mangas.map(manga_title => (
-              <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_new_list`} />
-            ))}
-          </div>
+          <RenderLoadingBar />
         </div>
 
         <h4>Manga List</h4>
@@ -417,6 +422,23 @@ function PageReadMangaV7() {
           </div>
           <button type="button" className="btn btn-block btn-sm btn-outline-secondary" onClick={(e) => handleSelectedMangaTitle(e.target.value)} value={props.manga_title}>View</button>
         </div>
+      </div>
+    )
+  }
+
+  function RenderLoadingBar() {
+    if (page_loading_state === "false") {
+      return(
+        <div className="row flex-row flex-nowrap overflow-auto">
+          {new_mangas.map(manga_title => (
+            <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_new_list`} />
+          ))}
+        </div>
+      )
+    }
+    return(
+      <div>
+        <br/><div className="progress progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style={{width: "100%"}}></div><br/>
       </div>
     )
   }
