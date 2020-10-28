@@ -9,6 +9,7 @@
 1. Create react app on current directory
 
 ```
+npm install
 npx create-react-app my-app
 npm install react-router-dom
 ```
@@ -57,6 +58,9 @@ git push heroku master
 6. [Making a Progressive Web App](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 7. [Advanced Configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 8. [Deployment](https://facebook.github.io/create-react-app/docs/deployment)
+9. [React Setup](https://stackoverflow.com/questions/45853530/npm-install-error-not-foundram-files-nodejs-npm-3-mnt-c-program-files-nodejs)
+10. [Svelte](https://svelte.dev/)
+11. [Sapper](https://sapper.svelte.dev/)
 
 ---
 
