@@ -26,6 +26,7 @@ function PageReadMangaV7() {
   var manga_pages = generateMangaPages(manga_title)
 
   const [page_loading_state, set_page_loading_state] = useState("true")
+  const [new_manga_check_update, set_new_manga_check_update] = useState(" - finding new chapter . . .")
   const [manga_chapter_list, set_manga_chapter_list] = useState(generateChapterListFromTitle(manga_title))
   const [manga_chapter, set_manga_chapter] = useState(query_chapter() || findLatestMangaChapter(manga_title))
   const [manga_histories, set_manga_histories] = useState(generateHistoriesSection())
@@ -93,7 +94,7 @@ function PageReadMangaV7() {
       })
       new_mangas.sort((a, b) => a.order - b.order)
 
-      set_new_mangas(new_mangas.map( val => val.title))
+      set_new_mangas(new_mangas.map(val => val.title))
       set_page_loading_state("false")
     }
     fetchData();
@@ -102,7 +103,21 @@ function PageReadMangaV7() {
   useEffect(() => {
     async function updateData() {
       var api = `${go_animapu_host}/mangas/firebase/update`
-      await fetch(api)
+      const response = await fetch(api)
+      const results = await response.json()
+      var converted_manga_db = new Map(Object.entries(results.manga_db))
+      set_manga_db(converted_manga_db)
+
+      var new_mangas = []
+      converted_manga_db.forEach((num, key) => {
+        if (num.new_added > 0) {
+          new_mangas.push({title: key, order: num.new_added})
+        }
+      })
+      new_mangas.sort((a, b) => a.order - b.order)
+
+      set_new_mangas(new_mangas.map(val => val.title))
+      set_new_manga_check_update("")
     }
     updateData();
   }, []);
@@ -391,7 +406,7 @@ function PageReadMangaV7() {
           </div>
 
           <div className="row">
-            <div className="col-6"><h4>New Manga</h4></div>
+            <div className="col-6"><h4>New Manga{new_manga_check_update}</h4></div>
           </div>
 
           <RenderLoadingBar />
