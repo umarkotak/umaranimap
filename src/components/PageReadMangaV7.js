@@ -122,6 +122,25 @@ function PageReadMangaV7() {
     updateData();
   }, []);
 
+  async function postUserEvent() {
+    try {
+      const response = await fetch('http://go-animapu.herokuapp.com/users/analytic_v1', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          MangaPage: manga_chapter,
+          MangaTitle: manga_title,
+        })
+      })
+      console.log("RESULT: ", response.json(), response.status)
+
+    } catch (e) {
+      console.log("USER EVENT LOG: ", e.message);
+    }
+  }
+
   function generate_manga_airing_status(manga_title) {
     try {
       return (manga_db.get(manga_title).status === "ongoing") ? "border-primary" : "border-success"
@@ -274,6 +293,8 @@ function PageReadMangaV7() {
     var last_manga_reads = cookies.get(key)
     var value = manga_title
     let date = new Date(2030, 12)
+
+    postUserEvent()
 
     if (Array.isArray(last_manga_reads)) {
       var index = last_manga_reads.indexOf(manga_title);
