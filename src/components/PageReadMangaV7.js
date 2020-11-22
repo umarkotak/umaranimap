@@ -211,6 +211,7 @@ function PageReadMangaV7() {
 
     if (typeof chapter !== "undefined") {
       return parseInt(chapter)
+      // eslint-disable-next-line
     } else if (typeof chapter === "NaN") {
       return 1
     } else {

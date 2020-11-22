@@ -32,7 +32,7 @@ function PageReadMangaV8() {
   const [new_manga_check_update, set_new_manga_check_update] = useState(" - finding new chapter . . .")
   const [manga_chapter_list, set_manga_chapter_list] = useState(generateChapterListFromTitle(manga_title))
   const [manga_chapter, set_manga_chapter] = useState(query_chapter() || findLatestMangaChapter(manga_title))
-  const [custom_last_chapter, set_custom_last_chapter] = useState(query_custom_last_chapter())
+  var custom_last_chapter = useState(query_custom_last_chapter())
   const [manga_histories, set_manga_histories] = useState(generateHistoriesSection())
   const [bottom_nav, set_bottom_nav] = useState(true)
   const [y_pos, set_y_pos] = useState(window.scrollY)
@@ -249,10 +249,11 @@ function PageReadMangaV8() {
   }
 
   function generateMangaPages(title) {
+    var page_count
     try {
-      var page_count = manga_db.get(title).average_page
+      page_count = manga_db.get(title).average_page
     } catch (error) {
-      var page_count = 100
+      page_count = 100
     }
     var pages = []
     for (let i = 1; i <= page_count; i++) { pages.push(i) }
