@@ -150,7 +150,7 @@ function PageSearchManga() {
                     <small>{value}</small>
                   </div>
                 </div>
-                <Link to={`/read-manga-v8?title=${value}&page=1`} className="btn btn-block btn-sm btn-outline-secondary">Read Manga</Link>
+                <Link to={`/read-manga-v8?title=${value}&chapter=1`} className="btn btn-block btn-sm btn-outline-secondary">Read Manga</Link>
               </div>
             </div>
           ))}
@@ -175,7 +175,7 @@ function PageSearchManga() {
                       <small>{value}</small>
                     </div>
                   </div>
-                  <Link to={`/read-manga-v8?title=${value}&page=1`} className="btn btn-block btn-sm btn-outline-secondary">Read Manga</Link>
+                  <Link to={`/read-manga-v8?title=${value}&chapter=${todays_manga_db.get(value).manga_last_chapter}&custom_last_chapter=${todays_manga_db.get(value).manga_last_chapter}`} className="btn btn-block btn-sm btn-outline-secondary">Read Manga</Link>
                 </div>
               </div>
             ))}
