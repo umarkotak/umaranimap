@@ -21,6 +21,7 @@ function PageHome() {
             <div className="card-body">
               <Link to="/tic-tac-toe" className="btn btn-block btn-primary">Tic Tac Toe</Link>
               <Link to="/watch-anime-v1" className="btn btn-block btn-primary">Watch Anime</Link>
+              <Link to="/search-manga-v1" className="btn btn-block btn-primary">Search Manga</Link>
             </div>
           </div>
         </div>

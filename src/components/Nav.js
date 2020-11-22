@@ -41,7 +41,9 @@ function Nav() {
           <Link to="/read-manga-v4" className="p-2 m-1 text-muted">Read Manga</Link>
           <Link to="/read-manga-v5" className="p-2 m-1 text-muted">Read Manga</Link>
           <Link to="/read-manga-v6" className="p-2 m-1 text-muted">Read Manga</Link> */}
-          <Link to="/read-manga-v7" className="p-2 m-1 text-muted">Read Manga</Link>
+          {/* <Link to="/read-manga-v7" className="p-2 m-1 text-muted">Read Manga</Link> */}
+          <Link to="/read-manga-v8" className="p-2 m-1 text-muted">Read Manga</Link>
+          <Link to="/search-manga-v1" className="p-2 m-1 text-muted">Search Manga</Link>
           {/* <Link to="/watch-anime-v1" className="p-2 m-1 text-muted">Watch Anime</Link> */}
         </nav>
       </div>
