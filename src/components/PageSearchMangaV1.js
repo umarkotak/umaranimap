@@ -41,9 +41,13 @@ function PageSearchManga() {
   }
 
   function generateThumbnailFromTitle(title) {
-    if (todays_manga_db.get(title).image_url !== "") {
-      return todays_manga_db.get(title).image_url
-    } else {
+    try {
+      if (todays_manga_db.get(title).image_url !== "") {
+        return todays_manga_db.get(title).image_url
+      } else {
+        return `https://thumb.mghubcdn.com/mn/${title}.jpg`
+      }
+    } catch {
       return `https://thumb.mghubcdn.com/mn/${title}.jpg`
     }
   }
