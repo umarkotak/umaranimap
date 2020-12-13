@@ -41,7 +41,11 @@ function PageSearchManga() {
   }
 
   function generateThumbnailFromTitle(title) {
-    return `https://thumb.mghubcdn.com/mn/${title}.jpg`
+    if (todays_manga_db.get(title).image_url !== "") {
+      return todays_manga_db.get(title).image_url
+    } else {
+      return `https://thumb.mghubcdn.com/mn/${title}.jpg`
+    }
   }
 
   function generate_manga_airing_status(manga_title) {
@@ -175,7 +179,8 @@ function PageSearchManga() {
                       <small>{value}</small>
                     </div>
                   </div>
-                  <Link to={`/read-manga-v8?title=${value}&chapter=${todays_manga_db.get(value).manga_last_chapter}&custom_last_chapter=${todays_manga_db.get(value).manga_last_chapter}`} className="btn btn-block btn-sm btn-outline-secondary">Read Manga</Link>
+                  <Link to={`/read-manga-v8?title=${value}&chapter=1&custom_last_chapter=${todays_manga_db.get(value).manga_last_chapter}`} className="btn btn-sm btn-outline-secondary">First Ch</Link>
+                  <Link to={`/read-manga-v8?title=${value}&chapter=${todays_manga_db.get(value).manga_last_chapter}&custom_last_chapter=${todays_manga_db.get(value).manga_last_chapter}`} className="btn btn-sm btn-outline-secondary">Latest Ch</Link>
                 </div>
               </div>
             ))}
