@@ -443,12 +443,12 @@ function PageReadMangaV8() {
     return(
       <div>
         <div className="row my-2">
-          <div className="col-6"><h4>History</h4></div>
-          <div className="col-6">
-            <Link to="/todays-manga-v1" className="btn btn-outline-success btn-sm float-right"><span role="img" aria-label="book">📔</span> Today's Manga</Link>
-            <Link to="/search-manga-v1" className="btn btn-outline-success btn-sm float-right mx-3"><span role="img" aria-label="search">🔍</span> Search Manga</Link>
+          <div className="col-12">
+            <Link to="/todays-manga-v1" className="btn btn-outline-success btn-sm float-right"><span role="img" aria-label="book">📔</span> Latest</Link>
+            <Link to="/search-manga-v1" className="btn btn-outline-success btn-sm float-right mx-3"><span role="img" aria-label="search">🔍</span> Search</Link>
             <button className="float-right btn btn-sm btn-outline-danger" onClick={() => handleClearHistory()} href="#"><span role="img" aria-label="bin">🗑</span> Clear History</button>
           </div>
+          <div className="col-12"><h4>History</h4></div>
         </div>
 
         <div className="row flex-row flex-nowrap overflow-auto">

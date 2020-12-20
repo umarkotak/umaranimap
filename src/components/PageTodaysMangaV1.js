@@ -68,6 +68,10 @@ function PageSearchManga() {
       <hr/>
       <div className="row">
         <div className="col-12">
+          <Link to="/read-manga-v8" className="btn btn-outline-success btn-sm float-right"><span role="img" aria-label="library">📘</span> Library</Link>
+          <Link to="/search-manga-v1" className="btn btn-outline-success btn-sm float-right mx-3"><span role="img" aria-label="search">🔍</span> Search</Link>
+        </div>
+        <div className="col-12">
           <h4>Today's Manga</h4>
           <hr/>
         </div>

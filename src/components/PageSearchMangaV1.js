@@ -95,6 +95,10 @@ function PageSearchManga() {
     <div>
       <hr/>
       <div className="row">
+        <div className="col-12">
+          <Link to="/read-manga-v8" className="btn btn-outline-success btn-sm float-right"><span role="img" aria-label="library">📘</span> Library</Link>
+          <Link to="/todays-manga-v1" className="btn btn-outline-success btn-sm float-right mx-3"><span role="img" aria-label="book">📔</span> Latest</Link>
+        </div>
         <div className="col-12"><h4>Search</h4></div>
         <div className="col-12 col-lg-9"><input
           type="text" name="search_text" className="form-control"
