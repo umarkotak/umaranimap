@@ -12,15 +12,28 @@ function PageHome() {
           <p className="lead mb-0"><a href="/" className="font-weight-bold text-info">Hello There Have a Good Day!</a></p>
         </div>
       </div>
-      <div className="row">
-        <div className="col-12">
+      <div className="row mb-5">
+        <div className="col-6">
           <div className="card">
             <div className="card-header">
-              Other Pages
+              Menus
             </div>
             <div className="card-body">
               <Link to="/tic-tac-toe" className="btn btn-block btn-primary">Tic Tac Toe</Link>
-              <Link to="/watch-anime-v1" className="btn btn-block btn-primary">Watch Anime</Link>
+              <Link to="/airing-anime-v5" className="btn btn-block btn-primary">Seasonal Animes</Link>
+              <Link to="/watch-anime-v1" className="btn btn-block btn-primary">Watch Animes</Link>
+            </div>
+          </div>
+        </div>
+
+        <div className="col-6">
+          <div className="card">
+            <div className="card-header">
+              Menus
+            </div>
+            <div className="card-body">
+              <Link to="read-manga-v8" className="btn btn-block btn-primary">Manga Library</Link>
+              <Link to="/todays-manga-v1" className="btn btn-block btn-primary">Latest Manga</Link>
               <Link to="/search-manga-v1" className="btn btn-block btn-primary">Search Manga</Link>
             </div>
           </div>

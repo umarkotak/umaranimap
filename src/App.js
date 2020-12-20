@@ -21,34 +21,38 @@ import PageReadMangaV7 from "./components/PageReadMangaV7"
 import PageReadMangaV8 from "./components/PageReadMangaV8"
 import PageWatchAnimeV1 from "./components/PageWatchAnimeV1"
 import PageSearchMangaV1 from "./components/PageSearchMangaV1"
+import PageTodaysMangaV1 from "./components/PageTodaysMangaV1"
 
 function App() {
   return (
     <Router>
-      <div className="App container">
-        <Nav />
-        <Switch>
-          <Route path="/" exact component={PageHome} />
-          <Route path="/login" exact component={PageLogin} />
-          <Route path="/tic-tac-toe" exact component={PageTicTacToe} />
-          <Route path="/learn-react" exact component={PageLearnReact} />
-          <Route path="/airing-anime-v1/:id" exact component={PageAiringAnimeV1} />
-          <Route path="/airing-anime-v1" exact component={PageAiringAnimeV1} />
-          <Route path="/airing-anime-v2" exact component={PageAiringAnimeV2} />
-          <Route path="/airing-anime-v3" exact component={PageAiringAnimeV3} />
-          <Route path="/airing-anime-v4" exact component={PageAiringAnimeV4} />
-          <Route path="/airing-anime-v5" exact component={PageAiringAnimeV5} />
-          <Route path="/read-manga-v1" exact component={PageReadMangaV1} />
-          <Route path="/read-manga-v2" exact component={PageReadMangaV2} />
-          <Route path="/read-manga-v3" exact component={PageReadMangaV3} />
-          <Route path="/read-manga-v4" exact component={PageReadMangaV4} />
-          <Route path="/read-manga-v5" exact component={PageReadMangaV5} />
-          <Route path="/read-manga-v6" exact component={PageReadMangaV6} />
-          <Route path="/read-manga-v7" exact component={PageReadMangaV7} />
-          <Route path="/read-manga-v8" exact component={PageReadMangaV8} />
-          <Route path="/watch-anime-v1" exact component={PageWatchAnimeV1} />
-          <Route path="/search-manga-v1" exact component={PageSearchMangaV1} />
-        </Switch>
+      <div style={{backgroundColor: "#b3e7ff"}}>
+        <div className="App container border border-secondary" style={{backgroundColor: "#ffffff"}}>
+          <Nav />
+          <Switch>
+            <Route path="/" exact component={PageHome} />
+            <Route path="/login" exact component={PageLogin} />
+            <Route path="/tic-tac-toe" exact component={PageTicTacToe} />
+            <Route path="/learn-react" exact component={PageLearnReact} />
+            <Route path="/airing-anime-v1/:id" exact component={PageAiringAnimeV1} />
+            <Route path="/airing-anime-v1" exact component={PageAiringAnimeV1} />
+            <Route path="/airing-anime-v2" exact component={PageAiringAnimeV2} />
+            <Route path="/airing-anime-v3" exact component={PageAiringAnimeV3} />
+            <Route path="/airing-anime-v4" exact component={PageAiringAnimeV4} />
+            <Route path="/airing-anime-v5" exact component={PageAiringAnimeV5} />
+            <Route path="/read-manga-v1" exact component={PageReadMangaV1} />
+            <Route path="/read-manga-v2" exact component={PageReadMangaV2} />
+            <Route path="/read-manga-v3" exact component={PageReadMangaV3} />
+            <Route path="/read-manga-v4" exact component={PageReadMangaV4} />
+            <Route path="/read-manga-v5" exact component={PageReadMangaV5} />
+            <Route path="/read-manga-v6" exact component={PageReadMangaV6} />
+            <Route path="/read-manga-v7" exact component={PageReadMangaV7} />
+            <Route path="/read-manga-v8" exact component={PageReadMangaV8} />
+            <Route path="/watch-anime-v1" exact component={PageWatchAnimeV1} />
+            <Route path="/search-manga-v1" exact component={PageSearchMangaV1} />
+            <Route path="/todays-manga-v1" exact component={PageTodaysMangaV1} />
+          </Switch>
+        </div>
       </div>
     </Router>
   )

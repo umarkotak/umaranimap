@@ -26,7 +26,7 @@ function Nav() {
       </header>
       <div className="nav-scroller py-1 mb-2">
         <nav className="nav d-flex justify-content-between">
-          <Link to="/" className="p-2 m-1 text-muted">Home</Link>
+          <Link to="/" className="p-2 m-1 text-muted">Main Menu</Link>
           {/* <Link to="/tic-tac-toe" className="p-2 m-1 text-muted">Tic Tac Toe</Link>
           <Link to="/learn-react" className="p-2 m-1 text-muted">Learn React</Link>
           <Link to="/airing-anime-v1" className="p-2 m-1 text-muted">Airing Anime V1</Link>
@@ -34,7 +34,7 @@ function Nav() {
           <Link to="/airing-anime-v3" className="p-2 m-1 text-muted">Airing Anime V3</Link>
           <Link to="/airing-anime-v4" className="p-2 m-1 text-muted">Airing Anime V4</Link>
           <Link to="/airing-anime-v5" className="p-2 m-1 text-muted">Airing Anime V5</Link> */}
-          <Link to="/airing-anime-v5" className="p-2 m-1 text-muted">Seasonal Anime</Link>
+          <Link to="/airing-anime-v5" className="p-2 m-1 text-muted">Animes</Link>
           {/* <Link to="/read-manga-v1" className="p-2 m-1 text-muted">Read Manga</Link>
           <Link to="/read-manga-v2" className="p-2 m-1 text-muted">Read Manga</Link>
           <Link to="/read-manga-v3" className="p-2 m-1 text-muted">Read Manga</Link>
@@ -42,8 +42,8 @@ function Nav() {
           <Link to="/read-manga-v5" className="p-2 m-1 text-muted">Read Manga</Link>
           <Link to="/read-manga-v6" className="p-2 m-1 text-muted">Read Manga</Link> */}
           {/* <Link to="/read-manga-v7" className="p-2 m-1 text-muted">Read Manga</Link> */}
-          <Link to="/read-manga-v8" className="p-2 m-1 text-muted">Read Manga</Link>
-          <Link to="/search-manga-v1" className="p-2 m-1 text-muted">Search Manga</Link>
+          <Link to="/read-manga-v8" className="p-2 m-1 text-muted">Mangas</Link>
+          {/* <Link to="/search-manga-v1" className="p-2 m-1 text-muted">Search Manga</Link> */}
           {/* <Link to="/watch-anime-v1" className="p-2 m-1 text-muted">Watch Anime</Link> */}
         </nav>
       </div>

@@ -1,6 +1,7 @@
 import React, {useState, useCallback, useEffect, useRef} from "react"
 import mangaDB from "./MangaDB"
 import Cookies from 'universal-cookie';
+import {Link} from "react-router-dom"
 import {WhatsappShareButton} from "react-share";
 
 const cookies = new Cookies();
@@ -32,7 +33,6 @@ function PageReadMangaV8() {
   const [new_manga_check_update, set_new_manga_check_update] = useState(" - finding new chapter . . .")
   const [manga_chapter_list, set_manga_chapter_list] = useState(generateChapterListFromTitle(manga_title))
   const [manga_chapter, set_manga_chapter] = useState(query_chapter() || findLatestMangaChapter(manga_title))
-  var custom_last_chapter = useState(query_custom_last_chapter() || 150)
   const [manga_histories, set_manga_histories] = useState(generateHistoriesSection())
   const [bottom_nav, set_bottom_nav] = useState(true)
   const [y_pos, set_y_pos] = useState(window.scrollY)
@@ -442,9 +442,13 @@ function PageReadMangaV8() {
 
     return(
       <div>
-        <div className="row">
+        <div className="row my-2">
           <div className="col-6"><h4>History</h4></div>
-          <div className="col-6"><button className="float-right btn btn-sm btn-outline-secondary" onClick={() => handleClearHistory()} href="#">Clear History</button></div>
+          <div className="col-6">
+            <Link to="/todays-manga-v1" className="btn btn-outline-success btn-sm float-right"><span role="img" aria-label="book">📔</span> Today's Manga</Link>
+            <Link to="/search-manga-v1" className="btn btn-outline-success btn-sm float-right mx-3"><span role="img" aria-label="search">🔍</span> Search Manga</Link>
+            <button className="float-right btn btn-sm btn-outline-danger" onClick={() => handleClearHistory()} href="#"><span role="img" aria-label="bin">🗑</span> Clear History</button>
+          </div>
         </div>
 
         <div className="row flex-row flex-nowrap overflow-auto">

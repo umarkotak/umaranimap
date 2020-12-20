@@ -4,7 +4,7 @@
 import React, {useState, useEffect} from "react"
 import {Link} from "react-router-dom"
 
-function PageSearchManga() {
+function PageSearchNTodaysManga() {
   const [searching_state, set_searching_state] = useState("standby")
   const [fetch_todays_manga_state, set_fetch_todays_manga_state] = useState("finding")
   const [search_query, set_search_query] = useState("")
@@ -117,8 +117,17 @@ function PageSearchManga() {
         ></input></div>
       </div>
 
-      <div className="row mb-5">
+      <div className="row">
         <RenderSearchSection />
+      </div>
+
+      <div className="row">
+        <div className="col-12">
+          <hr/>
+          <h4>Today's Manga</h4>
+          <hr/>
+        </div>
+        <RenderTodaysMangaSection />
       </div>
     </div>
   )
@@ -159,6 +168,34 @@ function PageSearchManga() {
     )
   }
 
+  function RenderTodaysMangaSection() {
+    if (fetch_todays_manga_state === "finished") {
+      return(
+        <div className="col-12">
+          <div className="row">
+            {todays_manga_titles.map(value => (
+              <div className="col-4 col-md-2">
+                <div className={`card mb-4 box-shadow shadow border-4 ${generate_manga_airing_status(value)}`}>
+                  <div style={{height: "170px", backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(value)})`}}>
+                    <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
+                      <small>{`( ${todays_manga_db.get(value).manga_last_chapter} / ${todays_manga_db.get(value).manga_last_chapter} )`}</small>
+                    </div>
+                    <div className="text-white card-text overflow-auto" style={{"height": "35px", "width": "100%", backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
+                      <small>{value}</small>
+                    </div>
+                  </div>
+                  <Link to={`/read-manga-v8?title=${value}&chapter=1&custom_last_chapter=${todays_manga_db.get(value).manga_last_chapter}`} className="btn btn-sm btn-outline-secondary">First Ch</Link>
+                  <Link to={`/read-manga-v8?title=${value}&chapter=${todays_manga_db.get(value).manga_last_chapter}&custom_last_chapter=${todays_manga_db.get(value).manga_last_chapter}`} className="btn btn-sm btn-outline-secondary">Latest Ch</Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )
+    }
+    return(<RenderLoadingBar />)
+  }
+
   function RenderLoadingBar() {
     return(
       <div className="col-12">
@@ -176,4 +213,4 @@ function PageSearchManga() {
   }
 }
 
-export default PageSearchManga
+export default PageSearchNTodaysManga
