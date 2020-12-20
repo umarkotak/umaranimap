@@ -27,7 +27,7 @@ function App() {
   return (
     <Router>
       <div style={{backgroundColor: "#b3e7ff"}}>
-        <div className="App container border border-secondary" style={{backgroundColor: "#ffffff"}}>
+        <div className="App container border border-secondary shadow-lg" style={{backgroundColor: "#ffffff"}}>
           <Nav />
           <Switch>
             <Route path="/" exact component={PageHome} />
