@@ -12,24 +12,38 @@ function PageHome() {
           <p className="lead mb-0"><a href="/" className="font-weight-bold text-info">Hello There Have a Good Day!</a></p>
         </div>
       </div>
+
       <div className="row mb-5">
-        <div className="col-6">
+        <div className="col-12 col-sm-4">
           <div className="card">
             <div className="card-header">
               Menus
             </div>
             <div className="card-body">
               <Link to="/tic-tac-toe" className="btn btn-block btn-primary">Tic Tac Toe</Link>
+              <Link to="/global-clipboard-v1" className="btn btn-block btn-primary">Global Clipboard</Link>
+              <Link to="/chatto-v1" className="btn btn-block btn-primary">Chatto</Link>
+              <Link to="/statistics-v1" className="btn btn-block btn-primary">Statistics</Link>
+            </div>
+          </div>
+        </div>
+
+        <div className="col-12 col-sm-4">
+          <div className="card">
+            <div className="card-header">
+              Menus - Anime related
+            </div>
+            <div className="card-body">
               <Link to="/airing-anime-v5" className="btn btn-block btn-primary">Seasonal Animes</Link>
               <Link to="/watch-anime-v1" className="btn btn-block btn-primary">Watch Animes</Link>
             </div>
           </div>
         </div>
 
-        <div className="col-6">
+        <div className="col-12 col-sm-4">
           <div className="card">
             <div className="card-header">
-              Menus
+              Menus - Manga related
             </div>
             <div className="card-body">
               <Link to="read-manga-v8" className="btn btn-block btn-primary">Manga Library</Link>
@@ -38,6 +52,7 @@ function PageHome() {
             </div>
           </div>
         </div>
+
       </div>
     </div>
   )

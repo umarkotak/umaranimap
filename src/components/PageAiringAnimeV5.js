@@ -18,8 +18,12 @@ function PageAiringAnimeV5() {
       var api = "https://api.jikan.moe/v3/season/" + selected_year + "/" + selected_season
       const response = await fetch(api)
       const results = await response.json()
-      setItems(results.anime)
-      setAnimeId(results.anime[0].mal_id)
+      try {
+        setItems(results.anime)
+        setAnimeId(results.anime[0].mal_id)
+      } catch (error) {
+        setItems(results.anime)
+      }
     }
     fetchData(selected_year, selected_season);
   }, [selected_year, selected_season]);
@@ -47,9 +51,9 @@ function PageAiringAnimeV5() {
   }
 
   function getPreviousSeason() {
-    if(selected_season === "spring") {
+    if(selected_season === "winter") {
       setSelectedYear(selected_year - 1)
-      setSelectedSeason("winter")
+      setSelectedSeason("fall")
     } else {
       switch(selected_season) {
         case "summer":
@@ -58,8 +62,8 @@ function PageAiringAnimeV5() {
         case "fall":
           setSelectedSeason("summer")
           break;
-        case "winter":
-          setSelectedSeason("fall")
+        case "spring":
+          setSelectedSeason("winter")
           break;
         default:
       }
@@ -68,9 +72,9 @@ function PageAiringAnimeV5() {
   }
 
   function getNextSeason() {
-    if(selected_season === "winter") {
+    if(selected_season === "fall") {
       setSelectedYear(selected_year + 1)
-      setSelectedSeason("spring")
+      setSelectedSeason("winter")
     } else {
       switch(selected_season) {
         case "spring":
@@ -79,8 +83,8 @@ function PageAiringAnimeV5() {
         case "summer":
           setSelectedSeason("fall")
           break;
-        case "fall":
-          setSelectedSeason("winter")
+        case "winter":
+          setSelectedSeason("spring")
           break;
         default:
       }
@@ -133,6 +137,9 @@ function PageAiringAnimeV5() {
             <button className="btn btn-sm btn-outline-secondary mx-1 px-2" onClick={() => getPreviousSeason()}>
               Prev
             </button>
+            <button className="btn btn-sm btn-outline-secondary mx-1 px-2">
+              {selected_year}
+            </button>
 
             {/* <button className="btn btn-sm btn-outline-secondary mx-1 disabled">Year :</button> */}
             <select className="custom-select mx-1" name="selectedYear" onChange={(e) => handleYearChange(e.target.value)} defaultValue={selected_year}>
@@ -154,6 +161,9 @@ function PageAiringAnimeV5() {
               Go!
             </button> */}
 
+            <button className="btn btn-sm btn-outline-secondary mx-1 px-2">
+              {selected_season}
+            </button>
             <button className="btn btn-sm btn-outline-secondary mx-1 px-2" onClick={() => getNextSeason()}>
               Next
             </button>
@@ -190,7 +200,7 @@ function getValiYears() {
   var currentYear = new Date().getFullYear()
   var years = [];
   var startYear = 1980
-  while ( startYear <= currentYear ) {
+  while ( startYear <= currentYear + 1 ) {
       years.push(startYear++)
   }
   return years

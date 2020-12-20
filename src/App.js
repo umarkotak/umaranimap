@@ -22,6 +22,9 @@ import PageReadMangaV8 from "./components/PageReadMangaV8"
 import PageWatchAnimeV1 from "./components/PageWatchAnimeV1"
 import PageSearchMangaV1 from "./components/PageSearchMangaV1"
 import PageTodaysMangaV1 from "./components/PageTodaysMangaV1"
+import PageGlobalClipboardV1 from "./components/PageGlobalClipboardV1"
+import PageChattoV1 from "./components/PageChattoV1"
+import PageStatisticsV1 from "./components/PageStatisticsV1"
 
 function App() {
   return (
@@ -33,6 +36,9 @@ function App() {
             <Route path="/" exact component={PageHome} />
             <Route path="/login" exact component={PageLogin} />
             <Route path="/tic-tac-toe" exact component={PageTicTacToe} />
+            <Route path="/global-clipboard-v1" exact component={PageGlobalClipboardV1} />
+            <Route path="/chatto-v1" exact component={PageChattoV1} />
+            <Route path="/statistics-v1" exact component={PageStatisticsV1} />
             <Route path="/learn-react" exact component={PageLearnReact} />
             <Route path="/airing-anime-v1/:id" exact component={PageAiringAnimeV1} />
             <Route path="/airing-anime-v1" exact component={PageAiringAnimeV1} />
