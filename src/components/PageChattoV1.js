@@ -22,29 +22,31 @@ function PageChattoV1() {
     if (!ws.current) return;
 
     ws.current.onmessage = e => {
-        e.preventDefault();
+      e.preventDefault();
+      const updateArray = [...messages];
+      console.log(e.data)
 
-        var today = new Date();
-        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-
-        const resMessage = JSON.parse(e.data);
-        const updateArray = [...messages];
-        updateArray.push(
-          {
-            "key": uuidv4(),
-            "ts": date,
-            "name": resMessage.name,
-            "message": resMessage.message,
-          }
-        )
-        updateArray.reverse()
-        set_messages(updateArray)
-        console.log("e", messages, updateArray);
+      try {
+        const resMessage = JSON.parse(e.data)
+        updateArray.push(resMessage)
+      } catch {
+        const resMessagesRaw = e.data.split("\n")
+        resMessagesRaw.forEach( resMessageRaw => {
+          const resMessage = JSON.parse(resMessageRaw)
+          console.log(resMessage)
+          updateArray.push(resMessage)
+        } )
+      }
+      updateArray.sort((a, b) => b.timestamp_unix - a.timestamp_unix)
+      set_messages(updateArray)
     };
   }, [messages]);
 
   function sendToWebSocket() {
     console.log("clicked!")
+    if (chat_name === "animapu") {
+      return
+    }
     ws.current.send(
       `
         {
@@ -63,13 +65,13 @@ function PageChattoV1() {
         </div>
 
         <div className="row">
-          <div className="col-12 col-sm-6">
+          <div className="col-12 col-sm-4">
             <div className="form-group">
               <label>Name</label>
               <input className="form-control my-1" type="text" value={chat_name} onChange={(e) => set_chat_name(e.target.value)} />
             </div>
           </div>
-          <div className="col-12 col-sm-6">
+          <div className="col-12 col-sm-8">
             <div className="form-group">
               <label>Message</label>
               <input className="form-control my-1" type="text" value={chat_message} onChange={(e) => set_chat_message(e.target.value)} />
@@ -81,12 +83,12 @@ function PageChattoV1() {
 
         <ul className="timeline">
           {messages.map(message => (
-            <li key={message.key}>
-              <div className="timeline-badge"><i className="glyphicon glyphicon-check"></i></div>
+            <li key={uuidv4()} className={message.name === "animapu" ? "timeline-inverted" : "timeline"}>
+              <div className={message.name === "animapu" ? "timeline-badge success" : "timeline-badge info"}><i className="glyphicon glyphicon-asterisk"></i>{message.name[0]}</div>
               <div className="timeline-panel">
                 <div className="timeline-heading">
                   <h4 className="timeline-title">{message.name}</h4>
-                  <p><small className="text-muted"><i className="glyphicon glyphicon-time"></i> {message.ts}</small></p>
+                  <p><small className="text-muted"><i className="glyphicon glyphicon-time"></i> {message.timestamp_utc}</small></p>
                 </div>
                 <div className="timeline-body">
                   <p>{message.message}</p>
