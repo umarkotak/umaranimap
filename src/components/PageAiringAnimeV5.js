@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react"
 import ReactPlayer from 'react-player'
+import {Link} from "react-router-dom"
 
 function PageAiringAnimeV5() {
   var valid_seasons = ["spring", "summer", "fall", "winter"]
@@ -94,6 +95,11 @@ function PageAiringAnimeV5() {
 
   return (
     <div>
+      <div className="row my-2">
+        <div className="col-12">
+          <Link to="/watch-anime-v1" className="btn btn-outline-success btn-sm float-right"><span role="img" aria-label="book">🎬</span> Watch Anime</Link>
+        </div>
+      </div>
       <div className="bg-dark sticky-top">
           <RenderYouTube anime={item} />
       </div>
