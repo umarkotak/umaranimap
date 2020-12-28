@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useEffect, useRef} from "react"
+import React, {useState, useEffect, useRef} from "react"
 import { v4 as uuidv4 } from 'uuid';
 
 function PageChattoV1() {

@@ -14,10 +14,10 @@ function PageHome() {
       </div>
 
       <div className="row mb-5">
-        <div className="col-12 col-sm-4">
+        <div className="col-12 col-sm-4 my-1">
           <div className="card">
             <div className="card-header">
-              Menus
+              Menu
             </div>
             <div className="card-body">
               <Link to="/tic-tac-toe" className="btn btn-block btn-primary">Tic Tac Toe</Link>
@@ -28,10 +28,10 @@ function PageHome() {
           </div>
         </div>
 
-        <div className="col-12 col-sm-4">
+        <div className="col-12 col-sm-4 my-1">
           <div className="card">
             <div className="card-header">
-              Menus - Anime related
+              Menu - Anime
             </div>
             <div className="card-body">
               <Link to="/airing-anime-v5" className="btn btn-block btn-primary">Seasonal Animes</Link>
@@ -40,15 +40,26 @@ function PageHome() {
           </div>
         </div>
 
-        <div className="col-12 col-sm-4">
+        <div className="col-12 col-sm-4 my-1">
           <div className="card">
             <div className="card-header">
-              Menus - Manga related
+              Menu - Manga
             </div>
             <div className="card-body">
               <Link to="read-manga-v8" className="btn btn-block btn-primary">Manga Library</Link>
               <Link to="/todays-manga-v1" className="btn btn-block btn-primary">Latest Manga</Link>
               <Link to="/search-manga-v1" className="btn btn-block btn-primary">Search Manga</Link>
+            </div>
+          </div>
+        </div>
+
+        <div className="col-12 col-sm-4 my-1">
+          <div className="card">
+            <div className="card-header">
+              Subscribe Notification
+            </div>
+            <div className="card-body">
+              <div className='onesignal-customlink-container'></div>
             </div>
           </div>
         </div>

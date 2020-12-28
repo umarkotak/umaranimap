@@ -6,9 +6,6 @@ import {Link} from "react-router-dom"
 
 function PageSearchManga() {
   const [fetch_todays_manga_state, set_fetch_todays_manga_state] = useState("finding")
-  const [search_query, set_search_query] = useState("")
-  const [search_result_db, set_search_result_db] = useState(new Map())
-  const [result_titles, set_result_titles] = useState([])
   const [todays_manga_db, set_todays_manga_db] = useState(new Map())
   const [todays_manga_titles, set_todays_manga_titles] = useState([])
 
@@ -26,21 +23,11 @@ function PageSearchManga() {
 
   function generate_manga_airing_status(manga_title) {
     try {
-      return (search_result_db.get(manga_title).status === "ongoing") ? "border-primary" : "border-success"
+      return (todays_manga_db.get(manga_title).status === "ongoing") ? "border-primary" : "border-success"
     } catch (error) {
       return "border-primary"
     }
   }
-
-  useEffect(() => {
-    var manga_title_list = []
-    search_result_db.forEach((num, key) => {
-      manga_title_list.push({title: key, order: num.new_added, weight: num.weight})
-    })
-    manga_title_list.sort((a, b) => b.weight - a.weight)
-
-    set_result_titles(manga_title_list.map(val => val.title))
-  }, [search_result_db])
 
   useEffect(() => {
     async function fetchTodayMangaData() {
@@ -49,7 +36,7 @@ function PageSearchManga() {
       const results = await response.json()
       var converted_manga_db = new Map(Object.entries(results.manga_db))
       set_todays_manga_db(converted_manga_db)
-      console.log(converted_manga_db)
+      // console.log(converted_manga_db)
 
       var new_mangas = []
       converted_manga_db.forEach((num, key) => {
@@ -79,33 +66,6 @@ function PageSearchManga() {
       </div>
     </div>
   )
-
-  function RenderSearchResults() {
-    return(
-      <div>
-        <hr/>
-        <h4>Results</h4>
-        <hr/>
-        <div className="row">
-          {result_titles.map(value => (
-            <div className="col-4 col-md-2">
-              <div className={`card mb-4 box-shadow shadow border-4 ${generate_manga_airing_status(value)}`}>
-                <div style={{height: "170px", backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(value)})`}}>
-                  <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
-                    <small>{`( 1 / ${search_result_db.get(value).manga_last_chapter})`}</small>
-                  </div>
-                  <div className="text-white card-text overflow-auto" style={{"height": "35px", "width": "100%", backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
-                    <small>{value}</small>
-                  </div>
-                </div>
-                <Link to={`/read-manga-v8?title=${value}&chapter=1`} className="btn btn-block btn-sm btn-outline-secondary">Read Manga</Link>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    )
-  }
 
   function RenderTodaysMangaSection() {
     if (fetch_todays_manga_state === "finished") {

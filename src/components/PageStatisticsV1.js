@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useEffect, useRef} from "react"
+import React, {useState, useEffect} from "react"
 import {HorizontalBar} from 'react-chartjs-2';
 
 function PageStatisticsV1() {

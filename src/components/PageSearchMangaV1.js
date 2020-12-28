@@ -6,12 +6,9 @@ import {Link} from "react-router-dom"
 
 function PageSearchManga() {
   const [searching_state, set_searching_state] = useState("standby")
-  const [fetch_todays_manga_state, set_fetch_todays_manga_state] = useState("finding")
   const [search_query, set_search_query] = useState("")
   const [search_result_db, set_search_result_db] = useState(new Map())
   const [result_titles, set_result_titles] = useState([])
-  const [todays_manga_db, set_todays_manga_db] = useState(new Map())
-  const [todays_manga_titles, set_todays_manga_titles] = useState([])
 
   function handleSearchManga(event) {
     event.preventDefault()
@@ -41,15 +38,7 @@ function PageSearchManga() {
   }
 
   function generateThumbnailFromTitle(title) {
-    try {
-      if (todays_manga_db.get(title).image_url !== "") {
-        return todays_manga_db.get(title).image_url
-      } else {
-        return `https://thumb.mghubcdn.com/mn/${title}.jpg`
-      }
-    } catch {
-      return `https://thumb.mghubcdn.com/mn/${title}.jpg`
-    }
+    return `https://thumb.mghubcdn.com/mn/${title}.jpg`
   }
 
   function generate_manga_airing_status(manga_title) {
@@ -69,27 +58,6 @@ function PageSearchManga() {
 
     set_result_titles(manga_title_list.map(val => val.title))
   }, [search_result_db])
-
-  useEffect(() => {
-    async function fetchTodayMangaData() {
-      var api = "http://go-animapu.herokuapp.com/mangas/todays_v1"
-      const response = await fetch(api)
-      const results = await response.json()
-      var converted_manga_db = new Map(Object.entries(results.manga_db))
-      set_todays_manga_db(converted_manga_db)
-      console.log(converted_manga_db)
-
-      var new_mangas = []
-      converted_manga_db.forEach((num, key) => {
-        new_mangas.push({title: key, order: num.new_added, weight: num.weight})
-      })
-      new_mangas.sort((a, b) => b.weight - a.weight)
-
-      set_todays_manga_titles(new_mangas.map(val => val.title))
-      set_fetch_todays_manga_state("finished")
-    }
-    fetchTodayMangaData()
-  }, []);
 
   return (
     <div>

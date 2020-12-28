@@ -10,6 +10,7 @@ function PageWatchAnimeV1() {
         </div>
       </div>
       <iframe
+        title="animepahe"
         src="https://animepahe.com/"
         sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"
         allow="fullscreen"

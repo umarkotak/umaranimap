@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useEffect, useRef} from "react"
+import React, {useState, useEffect} from "react"
 
 function PageGlobalClipboardV1() {
   const [message, set_message] = useState("")
