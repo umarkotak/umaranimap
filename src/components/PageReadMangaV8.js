@@ -7,6 +7,7 @@ import {WhatsappShareButton} from "react-share";
 const cookies = new Cookies();
 var cdn_host = "https://img.mghubcdn.com/file/imghub"
 var go_animapu_host = "http://go-animapu.herokuapp.com"
+// var go_animapu_host = "http://localhost:3005"
 var animapu_host = "http://animapu.herokuapp.com"
 
 var qs = require('qs');
