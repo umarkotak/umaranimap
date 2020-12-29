@@ -61,13 +61,12 @@ function PageGlobalClipboardV1() {
           <div className="col-12 col-sm-9 col-md-10">
             <div className="form-group">
               <label>Content</label>
-              <input className="form-control my-1" type="text" value={message} onChange={(e) => set_message(e.target.value)} />
+              <textarea className="form-control" rows="5" value={message} onChange={(e) => set_message(e.target.value)} />
             </div>
           </div>
           <div className="col-12 col-sm-3 col-md-2">
             <div className="form-group">
-              <label>_</label>
-              <button className="btn btn-success btn-md btn-block my-1" onClick={sendClip}>send content</button>
+              <button className="btn btn-success btn-md btn-block" style={{align:"bottom"}} onClick={sendClip}>send content</button>
             </div>
           </div>
         </div>
