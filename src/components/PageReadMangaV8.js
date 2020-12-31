@@ -1,16 +1,16 @@
 import React, {useState, useCallback, useEffect, useRef} from "react"
 import mangaDB from "./MangaDB"
-import Cookies from 'universal-cookie';
+import Cookies from 'universal-cookie'
 import {Link} from "react-router-dom"
-import {WhatsappShareButton} from "react-share";
+import {WhatsappShareButton} from "react-share"
 
-const cookies = new Cookies();
+const cookies = new Cookies()
 var cdn_host = "https://img.mghubcdn.com/file/imghub"
 var go_animapu_host = "http://go-animapu.herokuapp.com"
 // var go_animapu_host = "http://localhost:3005"
 var animapu_host = "http://animapu.herokuapp.com"
 
-var qs = require('qs');
+var qs = require('qs')
 function query_title() {
   return qs.parse(window.location.search, { ignoreQueryPrefix: true }).title
 }
@@ -35,9 +35,10 @@ function PageReadMangaV8() {
   const [manga_chapter_list, set_manga_chapter_list] = useState(generateChapterListFromTitle(manga_title))
   const [manga_chapter, set_manga_chapter] = useState(query_chapter() || findLatestMangaChapter(manga_title))
   const [manga_histories, set_manga_histories] = useState(generateHistoriesSection())
+  const [logged_in_manga_histories, set_logged_in_manga_histories] = useState([])
   const [bottom_nav, set_bottom_nav] = useState(true)
   const [y_pos, set_y_pos] = useState(window.scrollY)
-  const [button_share, set_button_share] = useState("Share");
+  const [button_share, set_button_share] = useState("Share")
 
   const [shareable_link, set_shareable_link] = useState(reconstruct_shareable)
 
@@ -78,10 +79,10 @@ function PageReadMangaV8() {
     return () => {
       document.removeEventListener("keyup", escFunction, false)
       document.removeEventListener("scroll", escFunction, false)
-    };
-  }, [escFunction]);
+    }
+  }, [escFunction])
 
-  const textAreaRef = useRef(null);
+  const textAreaRef = useRef(null)
 
   useEffect(() => {
     async function fetchData() {
@@ -102,8 +103,9 @@ function PageReadMangaV8() {
       set_new_mangas(new_mangas.map(val => val.title))
       set_page_loading_state("false")
     }
-    fetchData();
-  }, []);
+    getUserDetailFromFirebase()
+    fetchData()
+  }, [])
 
   useEffect(() => {
     async function updateData() {
@@ -124,12 +126,12 @@ function PageReadMangaV8() {
       set_new_mangas(new_mangas.map(val => val.title))
       set_new_manga_check_update("")
     }
-    updateData();
-  }, []);
+    updateData()
+  }, [])
 
   useEffect(() => {
     set_manga_chapter_list(generateChapterListFromLastChapter(findLastMangaChapter(manga_title)))
-  }, [manga_title]);
+  }, [manga_title])
 
   async function postUserEvent() {
     try {
@@ -146,7 +148,7 @@ function PageReadMangaV8() {
       console.log("RESULT: ", response.json(), response.status)
 
     } catch (e) {
-      console.log("USER EVENT LOG: ", e.message);
+      console.log("USER EVENT LOG: ", e.message)
     }
   }
 
@@ -155,10 +157,8 @@ function PageReadMangaV8() {
       return
     }
 
-    console.log("TRY STORE TO FIREBASE", manga_title, chapter)
-
     try {
-      const response = await fetch(`${go_animapu_host}/users/read_histories`, {
+      await fetch(`${go_animapu_host}/users/read_histories`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -169,14 +169,43 @@ function PageReadMangaV8() {
           manga_title: manga_title
         })
       })
-      const results = await response.json()
-      const status = await response.status
-
-      console.log("STORE TO FIREBASE", status, results)
 
     } catch (e) {
-      console.log("STORE TO FIREBASE ERROR", e.message);
+      console.log("STORE TO FIREBASE ERROR", e.message)
     }
+  }
+
+  async function getUserDetailFromFirebase() {
+    if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") {
+      return
+    }
+
+    const response = await fetch('https://go-animapu.herokuapp.com/users/detail', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': cookies.get("GO_ANIMAPU_LOGIN_TOKEN")
+      }
+    })
+    const results = await response.json()
+
+    console.log(results.read_histories)
+
+    var manga_title_histories = []
+
+    const mapped_manga_histories = new Map(Object.entries(results.read_histories))
+    mapped_manga_histories.forEach((manga, key) => {
+      manga_title_histories.push(manga)
+      var manga_firebase_title = manga.manga_title
+      var cache_key = `${manga_firebase_title}/last_read_chapter_logged_in`
+      var value = manga.last_chapter
+      let date = new Date(2030, 12)
+      cookies.set(cache_key, value, { path: "/", expires: date })
+    })
+    manga_title_histories.sort((a, b) => b.last_read_time_i - a.last_read_time_i)
+    var mapped_title_histories = manga_title_histories.map(val => val.manga_title)
+    console.log(mapped_title_histories)
+    set_logged_in_manga_histories(mapped_title_histories)
   }
 
   function generate_manga_airing_status(manga_title) {
@@ -193,8 +222,8 @@ function PageReadMangaV8() {
 
   function copyToClipboard(e) {
     textAreaRef.current.value = reconstruct_shareable()
-    textAreaRef.current.select();
-    document.execCommand('copy');
+    textAreaRef.current.select()
+    document.execCommand('copy')
 
     set_button_share("Copied")
   }
@@ -356,8 +385,8 @@ function PageReadMangaV8() {
     postUserEvent()
 
     if (Array.isArray(last_manga_reads)) {
-      var index = last_manga_reads.indexOf(manga_title);
-      if (index !== -1) last_manga_reads.splice(index, 1);
+      var index = last_manga_reads.indexOf(manga_title)
+      if (index !== -1) last_manga_reads.splice(index, 1)
       last_manga_reads.unshift(manga_title)
       cookies.set(key, last_manga_reads, { path: "/", expires: date })
       set_manga_histories(last_manga_reads)
@@ -370,9 +399,9 @@ function PageReadMangaV8() {
 
   function beutifyChapterTitle(raw_title) {
     var title = raw_title.replace(/-/g, " ")
-    title = title.toLowerCase().split(" ");
+    title = title.toLowerCase().split(" ")
     for (var i = 0; i < title.length; i++) {
-        title[i] = title[i].charAt(0).toUpperCase() + title[i].substring(1);
+        title[i] = title[i].charAt(0).toUpperCase() + title[i].substring(1)
     }
     return title.join(" ")
   }
@@ -479,14 +508,22 @@ function PageReadMangaV8() {
             <Link to="/search-manga-v1" className="btn btn-outline-success btn-sm float-right mx-3"><span role="img" aria-label="search">🔍</span> Search</Link>
             <button className="float-right btn btn-sm btn-outline-danger" onClick={() => handleClearHistory()} href="#"><span role="img" aria-label="bin">🗑</span> Clear History</button>
           </div>
-          <div className="col-12"><h4>History</h4></div>
         </div>
+        <div><h4>History</h4></div>
 
         <div className="row flex-row flex-nowrap overflow-auto">
           {manga_histories.slice(0, 15).map(manga_title => (
             <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_history_list`} />
           ))}
         </div>
+
+        {/* <div className="row flex-row flex-nowrap overflow-auto">
+          {logged_in_manga_histories.slice(0, 15).map(manga_title => (
+            <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_history_list_logged_in`} />
+          ))}
+        </div> */}
+
+        {/* <RenderHistoriesSection /> */}
 
         <div className="row">
           <div className="col-6"><h4>New Manga{new_manga_check_update}</h4></div>
@@ -520,6 +557,32 @@ function PageReadMangaV8() {
         </div>
       </div>
     )
+  }
+
+  function RenderHistoriesSection() {
+    if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") {
+      return(
+        <div>
+          <h4>History Local</h4>
+          <div className="row flex-row flex-nowrap overflow-auto">
+            {manga_histories.slice(0, 15).map(manga_title => (
+              <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_history_list`} />
+            ))}
+          </div>
+        </div>
+      )
+    } else {
+      return(
+        <div>
+          <h4>History Logged In</h4>
+          <div className="row flex-row flex-nowrap overflow-auto">
+            {logged_in_manga_histories.slice(0, 15).map(manga_title => (
+              <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_history_list_logged_in`} />
+            ))}
+          </div>
+        </div>
+      )
+    }
   }
 
   function RenderLoadingBar() {
