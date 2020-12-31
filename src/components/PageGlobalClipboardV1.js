@@ -1,28 +1,25 @@
 import React, {useState, useEffect} from "react"
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 function PageGlobalClipboardV1() {
-  const [message, set_message] = useState("")
+  const [message, set_message] = useState('')
   const [clips, set_clips] = useState([])
   const [clip_keys, set_clip_keys] = useState([])
 
-  useEffect(() => {
+  async function fetchTodayMangaData() {
+    var api = "http://go-animapu.herokuapp.com/clips"
+    const response = await fetch(api)
+    const results = await response.json()
+    var temp_clips = new Map(Object.entries(results))
+    var temp_clip_keys = []
+    temp_clips.forEach((val, key) => temp_clip_keys.push(key))
+    temp_clip_keys.reverse()
+    set_clips(temp_clips)
+    set_clip_keys(temp_clip_keys)
+  }
 
-  }, [])
-
   useEffect(() => {
-    async function fetchTodayMangaData() {
-      var api = "http://go-animapu.herokuapp.com/clips"
-      const response = await fetch(api)
-      const results = await response.json()
-      var temp_clips = new Map(Object.entries(results))
-      console.log(temp_clips)
-      var temp_clip_keys = []
-      temp_clips.forEach((val, key) => temp_clip_keys.push(key))
-      temp_clip_keys.reverse()
-      console.log(temp_clip_keys)
-      set_clips(temp_clips)
-      set_clip_keys(temp_clip_keys)
-    }
     fetchTodayMangaData()
   }, [])
 
@@ -41,7 +38,8 @@ function PageGlobalClipboardV1() {
       const status = await response.status
 
       if (status === 200) {
-        window.location.reload();
+        fetchTodayMangaData()
+        // window.location.reload();
       } else {
         alert(results.message);
       }
@@ -58,15 +56,18 @@ function PageGlobalClipboardV1() {
         </div>
 
         <div className="row">
-          <div className="col-12 col-sm-9 col-md-10">
+          <div className="col-12">
             <div className="form-group">
               <label>Content</label>
-              <textarea className="form-control" rows="5" value={message} onChange={(e) => set_message(e.target.value)} />
+              {/* <textarea className="form-control" rows="5" value={message} onChange={(e) => set_message(e.target.value)} /> */}
+              <ReactQuill theme="snow" value={message} onChange={set_message} style={{height: "200px"}}/>
             </div>
           </div>
-          <div className="col-12 col-sm-3 col-md-2">
+          <div className="col-12">
             <div className="form-group">
-              <button className="btn btn-success btn-md btn-block" style={{align:"bottom"}} onClick={sendClip}>send content</button>
+              <br />
+              <br />
+              <button className="btn btn-success btn-md float-right" onClick={sendClip}>send content</button>
             </div>
           </div>
         </div>
@@ -79,9 +80,9 @@ function PageGlobalClipboardV1() {
                 <button className="btn btn-danger btn-sm float-right">delete</button>
 
                 <div className="overflow-auto py-1 border-top border-success" style={{maxHeight: "250px", textAlign: "justify", background: "#ffffff"}}>
-                  <code>
-                    {clips.get(clip_key).content}
-                  </code>
+                  <div>
+                    <ReactQuill theme="bubble" value={clips.get(clip_key).content} readOnly="true"/>
+                  </div>
                 </div>
               </div>
             </div>
