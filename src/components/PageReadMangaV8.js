@@ -133,7 +133,7 @@ function PageReadMangaV8() {
 
   async function postUserEvent() {
     try {
-      const response = await fetch('http://go-animapu.herokuapp.com/users/analytic_v1', {
+      const response = await fetch(`${go_animapu_host}/users/analytic_v1`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -147,6 +147,35 @@ function PageReadMangaV8() {
 
     } catch (e) {
       console.log("USER EVENT LOG: ", e.message);
+    }
+  }
+
+  async function setHistoriesToFireBase(manga_title, chapter) {
+    if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") {
+      return
+    }
+
+    console.log("TRY STORE TO FIREBASE", manga_title, chapter)
+
+    try {
+      const response = await fetch(`${go_animapu_host}/users/read_histories`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': cookies.get("GO_ANIMAPU_LOGIN_TOKEN")
+        },
+        body: JSON.stringify({
+          last_chapter: `${chapter}`,
+          manga_title: manga_title
+        })
+      })
+      const results = await response.json()
+      const status = await response.status
+
+      console.log("STORE TO FIREBASE", status, results)
+
+    } catch (e) {
+      console.log("STORE TO FIREBASE ERROR", e.message);
     }
   }
 
@@ -314,6 +343,7 @@ function PageReadMangaV8() {
     let date = new Date(2030, 12)
     cookies.set(key, value, { path: "/", expires: date })
     setMangaHistores()
+    setHistoriesToFireBase(manga_title, chapter)
   }
 
   function setMangaHistores() {
