@@ -414,7 +414,7 @@ function PageReadMangaV8() {
 
       <div className="pb-5">
         <div>
-          <RenderSuggestedManga isShown={manga_title[0]}/>
+          <RenderMangaLibrary isShown={manga_title[0]}/>
         </div>
 
         {manga_pages.map(page_no => (
@@ -497,7 +497,7 @@ function PageReadMangaV8() {
     )
   }
 
-  function RenderSuggestedManga(props) {
+  function RenderMangaLibrary(props) {
     if (props.isShown !== '-') { return(<div></div>) }
 
     return(
@@ -511,19 +511,7 @@ function PageReadMangaV8() {
         </div>
         <div><h4>History</h4></div>
 
-        <div className="row flex-row flex-nowrap overflow-auto">
-          {manga_histories.slice(0, 15).map(manga_title => (
-            <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_history_list`} />
-          ))}
-        </div>
-
-        {/* <div className="row flex-row flex-nowrap overflow-auto">
-          {logged_in_manga_histories.slice(0, 15).map(manga_title => (
-            <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_history_list_logged_in`} />
-          ))}
-        </div> */}
-
-        {/* <RenderHistoriesSection /> */}
+        <RenderHistoriesSection />
 
         <div className="row">
           <div className="col-6"><h4>New Manga{new_manga_check_update}</h4></div>
@@ -560,29 +548,39 @@ function PageReadMangaV8() {
   }
 
   function RenderHistoriesSection() {
-    if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") {
-      return(
-        <div>
-          <h4>History Local</h4>
-          <div className="row flex-row flex-nowrap overflow-auto">
-            {manga_histories.slice(0, 15).map(manga_title => (
-              <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_history_list`} />
-            ))}
+    return(
+      <div>
+        <div className="row">
+          <div className="col-12">
+            <ul className="nav nav-tabs" id="myTab" role="tablist">
+              <li className="nav-item">
+                <a className="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Local</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Logged In</a>
+              </li>
+            </ul>
+
+            <div className="tab-content" id="myTabContent">
+              <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div className="row flex-row flex-nowrap overflow-auto">
+                  {manga_histories.slice(0, 15).map(manga_title => (
+                    <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_history_list`} />
+                  ))}
+                </div>
+              </div>
+              <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div className="row flex-row flex-nowrap overflow-auto">
+                  {logged_in_manga_histories.slice(0, 15).map(manga_title => (
+                    <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_history_list_logged_in`} />
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      )
-    } else {
-      return(
-        <div>
-          <h4>History Logged In</h4>
-          <div className="row flex-row flex-nowrap overflow-auto">
-            {logged_in_manga_histories.slice(0, 15).map(manga_title => (
-              <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_history_list_logged_in`} />
-            ))}
-          </div>
-        </div>
-      )
-    }
+      </div>
+    )
   }
 
   function RenderLoadingBar() {
