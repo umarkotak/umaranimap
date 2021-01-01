@@ -237,6 +237,15 @@ function PageReadMangaV8() {
     window.scrollTo(0, 0)
   }
 
+  function handleSelectedMangaTitleLoggedIn(title) {
+    set_manga_title(title)
+    var last_chapter = findLastMangaChapter(manga_title)
+    set_manga_chapter_list(generateChapterListFromLastChapter(last_chapter))
+    set_manga_chapter(findLatestMangaChapterLoggedIn(title))
+    setMangaHistores()
+    window.scrollTo(0, 0)
+  }
+
   function handleSelectedMangaChapter(chapter) {
     set_manga_chapter(chapter)
     setCookies(chapter)
@@ -273,6 +282,20 @@ function PageReadMangaV8() {
 
   function findLatestMangaChapter(title) {
     var key = `${title}/last_read_chapter`
+    var chapter = cookies.get(key)
+
+    if (typeof chapter !== "undefined") {
+      return parseInt(chapter)
+    // eslint-disable-next-line
+    } else if (typeof chapter === "NaN") {
+      return 1
+    } else {
+      return 1
+    }
+  }
+
+  function findLatestMangaChapterLoggedIn(title) {
+    var key = `${title}/last_read_chapter_logged_in`
     var chapter = cookies.get(key)
 
     if (typeof chapter !== "undefined") {
@@ -572,7 +595,19 @@ function PageReadMangaV8() {
               <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 <div className="row flex-row flex-nowrap overflow-auto">
                   {logged_in_manga_histories.slice(0, 15).map(manga_title => (
-                    <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_history_list_logged_in`} />
+                    <div className="col-4 col-md-2">
+                      <div className={`card mb-4 box-shadow shadow border-4 ${generate_manga_airing_status(manga_title)}`}>
+                        <div style={{height: "170px", backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(manga_title)})`}}>
+                          <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
+                            <small>{`${findLatestMangaChapterLoggedIn(manga_title)}/${findLastMangaChapter(manga_title)}`}</small>
+                          </div>
+                          <div className="text-white card-text overflow-auto" style={{"height": "35px", "width": "100%", backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
+                            <small>{manga_title}</small>
+                          </div>
+                        </div>
+                        <button type="button" className="btn btn-block btn-sm btn-outline-secondary" onClick={(e) => handleSelectedMangaTitleLoggedIn(e.target.value)} value={manga_title}>View</button>
+                      </div>
+                    </div>
                   ))}
                 </div>
               </div>
