@@ -58,9 +58,9 @@ function PageGlobalClipboardV1() {
         <div className="row">
           <div className="col-12">
             <div className="form-group">
-              <label>Content</label>
+              <label>Write your content</label>
               {/* <textarea className="form-control" rows="5" value={message} onChange={(e) => set_message(e.target.value)} /> */}
-              <ReactQuill theme="snow" value={message} onChange={set_message} style={{height: "200px"}}/>
+              <ReactQuill theme="snow" value={message} onChange={set_message} style={{height: "250px"}}/>
             </div>
           </div>
           <div className="col-12">
@@ -79,7 +79,7 @@ function PageGlobalClipboardV1() {
                 <label><b>code : </b> {clip_key}</label>
                 <button className="btn btn-danger btn-sm float-right">delete</button>
 
-                <div className="overflow-auto py-1 border-top border-success" style={{maxHeight: "250px", textAlign: "justify", background: "#ffffff"}}>
+                <div className="overflow-auto py-1 border-top border-success" style={{maxHeight: "300px", textAlign: "justify", background: "#ffffff"}}>
                   <div>
                     <ReactQuill theme="bubble" value={clips.get(clip_key).content} readOnly="true"/>
                   </div>

@@ -233,7 +233,7 @@ function PageReadMangaV8() {
     var last_chapter = findLastMangaChapter(manga_title)
     set_manga_chapter_list(generateChapterListFromLastChapter(last_chapter))
     set_manga_chapter(findLatestMangaChapter(title))
-    setMangaHistores()
+    setCookies(manga_chapter)
     window.scrollTo(0, 0)
   }
 
@@ -242,7 +242,7 @@ function PageReadMangaV8() {
     var last_chapter = findLastMangaChapter(manga_title)
     set_manga_chapter_list(generateChapterListFromLastChapter(last_chapter))
     set_manga_chapter(findLatestMangaChapterLoggedIn(title))
-    setMangaHistores()
+    setCookies(manga_chapter)
     window.scrollTo(0, 0)
   }
 
@@ -394,11 +394,11 @@ function PageReadMangaV8() {
     var value = chapter
     let date = new Date(2030, 12)
     cookies.set(key, value, { path: "/", expires: date })
-    setMangaHistores()
+    setMangaHistories()
     setHistoriesToFireBase(manga_title, chapter)
   }
 
-  function setMangaHistores() {
+  function setMangaHistories() {
     if (manga_title[0] === "-") return
     var key = "last_manga_reads"
     var last_manga_reads = cookies.get(key)
@@ -417,7 +417,12 @@ function PageReadMangaV8() {
       cookies.set(key, [value], { path: "/", expires: date })
       set_manga_histories([value])
     }
+
     set_button_share("Share")
+
+    if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") {
+      return
+    }
   }
 
   function beutifyChapterTitle(raw_title) {
