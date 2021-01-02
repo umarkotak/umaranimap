@@ -6,6 +6,7 @@ function PageGlobalClipboardV1() {
   const [message, set_message] = useState('')
   const [clips, set_clips] = useState([])
   const [clip_keys, set_clip_keys] = useState([])
+  const [is_sending, set_is_sending] = useState(false)
 
   async function fetchTodayMangaData() {
     var api = "http://go-animapu.herokuapp.com/clips"
@@ -25,6 +26,7 @@ function PageGlobalClipboardV1() {
 
   async function sendClip() {
     try {
+      set_is_sending(true)
       const response = await fetch('http://go-animapu.herokuapp.com/clips', {
         method: 'POST',
         headers: {
@@ -39,6 +41,7 @@ function PageGlobalClipboardV1() {
 
       if (status === 200) {
         fetchTodayMangaData()
+        set_message('')
         // window.location.reload();
       } else {
         alert(results.message);
@@ -47,6 +50,7 @@ function PageGlobalClipboardV1() {
     } catch (e) {
       alert(e.message);
     }
+    set_is_sending(false)
   }
 
   return (
@@ -67,7 +71,7 @@ function PageGlobalClipboardV1() {
             <div className="form-group">
               <br />
               <br />
-              <button className="btn btn-success btn-md float-right" onClick={sendClip}>send content</button>
+              <button className="btn btn-success btn-md float-right" disabled={is_sending} onClick={sendClip}>send content</button>
             </div>
           </div>
         </div>
