@@ -64,6 +64,20 @@ function PageHome() {
           </div>
         </div>
 
+        <div className="col-12 col-sm-4 my-1">
+          <div className="card">
+            <div className="card-header">
+              Support Creator!
+            </div>
+            <div className="card-body">
+              Untuk mendukung agar website ini terus berkembang, kalian bisa support ke link berikut
+              <hr />
+              For supporting this website to always be updated, you can support with this link
+              <hr />
+              <a target="_blank" href="https://trakteer.id/marumaru" className="btn btn-block btn-success" rel="noopener noreferrer">Support!</a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )
