@@ -118,7 +118,7 @@ function PageAiringAnimeV5() {
                 <tbody>
                   <tr>
                     <th className="p-1" style={{width: "30%"}}>
-                      <a target="_blank" href={item.url}>
+                      <a target="_blank" rel="noopener noreferrer" href={item.url}>
                         <img className="bd-placeholder-img" src={item.image_url} alt="" style={ { height: "120px", width: "100%", display: "block" } } />
                       </a>
                     </th>

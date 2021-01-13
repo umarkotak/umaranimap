@@ -2,9 +2,7 @@ import React, {useState, useEffect} from "react"
 import {HorizontalBar} from 'react-chartjs-2';
 
 function PageStatisticsV1() {
-  const [titles, set_titles] = useState([])
   const [titles_shorted, set_titles_shorted] = useState([])
-  const [total_count, set_total_count] = useState([])
   const [total_count_shorted, set_total_count_shorted] = useState([])
 
   useEffect(() => {
@@ -21,9 +19,6 @@ function PageStatisticsV1() {
         temp_titles.push(key.substring(0,30))
         temp_total_count.push(value.TotalHitCount)
       })
-
-      set_titles(temp_titles)
-      set_total_count(temp_total_count)
 
       var temp_shorted_arr = []
       temp_statistics.forEach((value, key) => {
