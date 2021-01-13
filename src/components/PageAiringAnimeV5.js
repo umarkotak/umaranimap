@@ -113,28 +113,40 @@ function PageAiringAnimeV5() {
       <div className="container pb-5 pt-1">
         <div className="row">
           {items.map(item => (
-            <div className="col-md-3" key={item.mal_id}>
-              <div className="card mb-2 box-shadow">
-                <div className="row">
-                  <div className="col-4">
-                    <img className="bd-placeholder-img" src={item.image_url} alt="" style={ { height: "100px", width: "100%", display: "block" } } />
-                  </div>
-                  <div className="col-8">
-                    <div className="overflow-auto" style={ { height: "50px" } }>
-                      <small className="text-muted">{item.title}</small>
-                    </div>
-                    <small className="text-muted">Rank : #{item.rank} | Score : {item.score}</small>
-                    <div className="d-flex justify-content-between align-items-center">
-                      <button onClick={() => getAnimeDetail(item.mal_id)} className="btn btn-sm btn-block btn-outline-secondary">
-                        View
-                      </button>
-                      <button onClick={() => getAnimeDetail(item.mal_id)} className="btn btn-sm btn-block btn-outline-secondary">
-                        View
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div className="col-lg-3 col-sm-6 col-12 p-1" key={item.mal_id}>
+              <table className="table border border-info rounded">
+                <tbody>
+                  <tr>
+                    <th className="p-1" style={{width: "30%"}}>
+                      <a target="_blank" href={item.url}>
+                        <img className="bd-placeholder-img" src={item.image_url} alt="" style={ { height: "120px", width: "100%", display: "block" } } />
+                      </a>
+                    </th>
+                    <th className="p-1" style={{width: "70%"}}>
+                      <table className="table table-hover">
+                        <tbody>
+                          <tr className="">
+                            <td className="p-1">
+                              <div className="overflow-auto" style={{height: "55px"}}>
+                                <small>{item.mal_id} - <b>{item.title}</b></small>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr><td className="p-1"><small>Rank #{item.rank} / Score {item.score}</small></td></tr>
+                        </tbody>
+                      </table>
+                    </th>
+                  </tr>
+                  <tr>
+                    <td className="p-1" tyle={{width: "50%"}}>
+                      <button onClick={() => getAnimeDetail(item.mal_id)} className="btn btn-sm btn-block btn-outline-success">Info</button>
+                    </td>
+                    <td className="p-1" tyle={{width: "50%"}}>
+                      <Link to={`/watch-anime-v1?mal_id=${item.mal_id}`} className="btn btn-block btn-sm btn-outline-primary">▶︎ Watch</Link>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           ))}
         </div>
