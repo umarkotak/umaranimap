@@ -3,7 +3,7 @@ import ReactPlayer from 'react-player'
 import {Link} from "react-router-dom"
 
 function PageAiringAnimeV5() {
-  var valid_seasons = ["spring", "summer", "fall", "winter"]
+  var valid_seasons = ["winter", "spring", "summer", "fall"]
   var valid_years = getValiYears()
   var current_year = new Date().getFullYear()
   var current_season = getSeason()
@@ -128,6 +128,9 @@ function PageAiringAnimeV5() {
                       <button onClick={() => getAnimeDetail(item.mal_id)} className="btn btn-sm btn-block btn-outline-secondary">
                         View
                       </button>
+                      <button onClick={() => getAnimeDetail(item.mal_id)} className="btn btn-sm btn-block btn-outline-secondary">
+                        View
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -214,10 +217,11 @@ function getValiYears() {
 
 function getSeason() {
   var month = new Date().getMonth()
-  var winter = 'dec,december,jan,january,feb,february,12,1,2,';
-  var spring = 'mar,march,apr,april,may,3,4,5,';
-  var summer = 'jun,june,jul,july,aug,august,6,7,8,';
-  var fall = 'sep,september,oct,october,nov,november,9,10,11,';
+  console.log(month)
+  var winter = 'jan,january,feb,february,mar,march,0,1,2,';
+  var spring = 'apr,april,may,jun,june,3,4,5,';
+  var summer = 'jul,july,aug,august,sep,september,6,7,8,';
+  var fall = 'oct,october,nov,november,dec,december,9,10,11,';
   var season = 'unknown';
   if (winter.indexOf(month) !== -1) {
       season = 'winter';
