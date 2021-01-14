@@ -1,6 +1,9 @@
 import React, {useState, useEffect} from "react"
 import ReactPlayer from 'react-player'
 import {Link} from "react-router-dom"
+import animeDB from "./AnimeDB"
+
+const mal_id_to_animepahe = animeDB.GetMalToAnimePahe()
 
 function PageAiringAnimeV5() {
   var valid_seasons = ["winter", "spring", "summer", "fall"]
@@ -142,7 +145,12 @@ function PageAiringAnimeV5() {
                       <button onClick={() => getAnimeDetail(item.mal_id)} className="btn btn-sm btn-block btn-outline-success">Info</button>
                     </td>
                     <td className="p-1" tyle={{width: "50%"}}>
-                      <Link to={`/watch-anime-v1?mal_id=${item.mal_id}`} className="btn btn-block btn-sm btn-outline-primary">▶︎ Watch</Link>
+                      <Link
+                        to={`/watch-anime-v1?mal_id=${item.mal_id}`}
+                        className={ mal_id_to_animepahe[item.mal_id] ? "btn btn-block btn-sm btn-outline-primary" : "btn btn-block btn-sm btn-outline-danger disabled" }
+                      >
+                        { mal_id_to_animepahe[item.mal_id] ? "▶︎ Watch" : "↘︎ Soon" }
+                      </Link>
                     </td>
                   </tr>
                 </tbody>
