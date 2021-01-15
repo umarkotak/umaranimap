@@ -4,6 +4,7 @@ import {Link} from "react-router-dom"
 import animeDB from "./AnimeDB"
 
 const mal_id_to_animepahe = animeDB.GetMalToAnimePahe()
+const mal_id_to_backup = animeDB.GetTitleToAnimePahe()
 
 function PageAiringAnimeV5() {
   var valid_seasons = ["winter", "spring", "summer", "fall"]
@@ -73,6 +74,21 @@ function PageAiringAnimeV5() {
       }
     }
     window.scrollTo(0, 0)
+  }
+
+  function sanitizeTitle(title) {
+    return title.replace(/\W/g, '')
+  }
+
+  function checkAvailability(mal_id, title) {
+    if (mal_id_to_animepahe[mal_id]) {
+      return mal_id_to_animepahe[mal_id]
+    }
+    var sanitizedTitle = sanitizeTitle(title)
+    if (mal_id_to_backup[sanitizedTitle]) {
+      return mal_id_to_backup[sanitizedTitle]
+    }
+    return false
   }
 
   function getNextSeason() {
@@ -146,10 +162,10 @@ function PageAiringAnimeV5() {
                     </td>
                     <td className="p-1" tyle={{width: "50%"}}>
                       <Link
-                        to={`/watch-anime-v1?mal_id=${item.mal_id}`}
-                        className={ mal_id_to_animepahe[item.mal_id] ? "btn btn-block btn-sm btn-outline-primary" : "btn btn-block btn-sm btn-outline-danger disabled" }
+                        to={`/watch-anime-v1?mal_id=${item.mal_id}&title=${sanitizeTitle(item.title)}`}
+                        className={ checkAvailability(item.mal_id, item.title) ? "btn btn-block btn-sm btn-outline-primary" : "btn btn-block btn-sm btn-outline-danger disabled" }
                       >
-                        { mal_id_to_animepahe[item.mal_id] ? "▶︎ Watch" : "↘︎ Soon" }
+                        { checkAvailability(item.mal_id, item.title) ? "▶︎ Watch" : "↘︎ Soon" }
                       </Link>
                     </td>
                   </tr>

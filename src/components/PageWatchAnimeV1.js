@@ -6,15 +6,30 @@ var qs = require('qs')
 function query_mal_id() {
   return qs.parse(window.location.search, { ignoreQueryPrefix: true }).mal_id
 }
+function query_title() {
+  return qs.parse(window.location.search, { ignoreQueryPrefix: true }).title
+}
 var web_url = "https://animepahe.com/"
 const mal_id_to_animepahe = animeDB.GetMalToAnimePahe()
+const mal_id_to_backup = animeDB.GetTitleToAnimePahe()
 
 function PageWatchAnimeV1() {
 
+  function checkAvailability(mal_id, title) {
+    if (mal_id_to_animepahe[mal_id]) {
+      return mal_id_to_animepahe[mal_id]
+    }
+    if (mal_id_to_backup[title]) {
+      return mal_id_to_backup[title]
+    }
+    return false
+  }
+
   function hello() {
-    console.log("CALLED", query_mal_id())
-    if (query_mal_id()) {
-      web_url = `https://animepahe.com/anime/${mal_id_to_animepahe[query_mal_id()]}`
+    var anime_id = checkAvailability(query_mal_id(), query_title())
+
+    if (anime_id) {
+      web_url = `https://animepahe.com/anime/${anime_id}`
     } else {
       web_url = "https://animepahe.com/"
     }
