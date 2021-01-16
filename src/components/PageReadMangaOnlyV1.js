@@ -93,6 +93,7 @@ function PageReadMangaOnlyV1() {
   useEffect(() => {
     postUserEvent()
     setHistoriesToFireBase()
+    setCookies()
   }, [])
 
   async function postUserEvent() {
@@ -204,20 +205,6 @@ function PageReadMangaOnlyV1() {
     }
   }
 
-  function findLatestMangaChapterLoggedIn(title) {
-    var key = `${title}/last_read_chapter_logged_in`
-    var chapter = cookies.get(key)
-
-    if (typeof chapter !== "undefined") {
-      return parseInt(chapter)
-    // eslint-disable-next-line
-    } else if (typeof chapter === "NaN") {
-      return 1
-    } else {
-      return 1
-    }
-  }
-
   function generateMangaPages(last_chapter) {
     if (!manga_title && !manga_chapter) {
       console.log("NOT SETTING MANGA PAGES")
@@ -266,9 +253,17 @@ function PageReadMangaOnlyV1() {
     }
   }
 
-  function setCookies(chapter) {
+  function setCookies() {
+    if (!manga_title && !manga_chapter) {
+      console.log("NOT STORING TO COOKIES")
+      return
+    }
+    if (manga_title == "-- select manga title --") {
+      return
+    }
+
     var key = `${manga_title}/last_read_chapter`
-    var value = chapter
+    var value = manga_chapter
     let date = new Date(2030, 12)
     cookies.set(key, value, { path: "/", expires: date })
     setMangaHistories()

@@ -390,6 +390,9 @@ function PageReadMangaV8() {
   }
 
   function setCookies(chapter) {
+    if (manga_title == "-- select manga title --") {
+      return
+    }
     var key = `${manga_title}/last_read_chapter`
     var value = chapter
     let date = new Date(2030, 12)
