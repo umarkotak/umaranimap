@@ -147,7 +147,7 @@ function PageReadMangaOnlyV1() {
   }
 
   function reconstruct_shareable() {
-    return `/read-manga-only-v1/${manga_title}/${next_manga_chapter}?last_chapter=${manga_last_chapter}&chapter_size=${manga_chapter_size}`
+    return `${animapu_host}/read-manga-only-v1/${manga_title}/${next_manga_chapter}?last_chapter=${manga_last_chapter}&chapter_size=${manga_chapter_size}`
   }
 
   function copyToClipboard(e) {
