@@ -147,7 +147,7 @@ function PageReadMangaOnlyV1() {
   }
 
   function reconstruct_shareable() {
-    return `${animapu_host}/read-manga-only-v1?title=${manga_title}&chapter=${manga_chapter}&last_chapter=${manga_last_chapter}`
+    return `/read-manga-only-v1/${manga_title}/${next_manga_chapter}?last_chapter=${manga_last_chapter}&chapter_size=${manga_chapter_size}`
   }
 
   function copyToClipboard(e) {
@@ -299,15 +299,6 @@ function PageReadMangaOnlyV1() {
     if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") {
       return
     }
-  }
-
-  function beutifyChapterTitle(raw_title) {
-    var title = raw_title.replace(/-/g, " ")
-    title = title.toLowerCase().split(" ")
-    for (var i = 0; i < title.length; i++) {
-        title[i] = title[i].charAt(0).toUpperCase() + title[i].substring(1)
-    }
-    return title.join(" ")
   }
 
   return (

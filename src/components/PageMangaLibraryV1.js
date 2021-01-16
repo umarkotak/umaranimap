@@ -2,7 +2,6 @@ import React, {useState, useCallback, useEffect, useRef} from "react"
 import mangaDB from "./MangaDB"
 import Cookies from 'universal-cookie'
 import {Link} from "react-router-dom"
-import {WhatsappShareButton} from "react-share"
 
 const cookies = new Cookies()
 var cdn_host = "https://img.mghubcdn.com/file/imghub"
@@ -36,16 +35,9 @@ function PageMangaLibraryV1() {
   const [manga_chapter, set_manga_chapter] = useState(query_chapter() || findLatestMangaChapter(manga_title))
   const [manga_histories, set_manga_histories] = useState(generateHistoriesSection())
   const [logged_in_manga_histories, set_logged_in_manga_histories] = useState([])
-  const [bottom_nav, set_bottom_nav] = useState(true)
-  const [y_pos, set_y_pos] = useState(window.scrollY)
   const [button_share, set_button_share] = useState("Share")
 
   const [shareable_link, set_shareable_link] = useState(reconstruct_shareable)
-
-  const windowHeight = window.innerHeight
-  const body = document.body
-  const html = document.documentElement
-  const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight)
 
   const textAreaRef = useRef(null)
 
