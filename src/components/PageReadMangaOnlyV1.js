@@ -3,7 +3,6 @@ import mangaDB from "./MangaDB"
 import Cookies from 'universal-cookie'
 import {Link, useParams} from "react-router-dom"
 import {WhatsappShareButton} from "react-share"
-import { v4 as uuidv4 } from 'uuid';
 
 const cookies = new Cookies()
 var cdn_host = "https://img.mghubcdn.com/file/imghub"
@@ -28,16 +27,14 @@ function PageReadMangaOnlyV1() {
   const [manga_last_chapter, set_manga_last_chapter] = useState(query_last_chapter())
   const [manga_chapter_size, set_manga_chapter_size] = useState(query_chapter_size() || 150)
   var manga_pages = generateMangaPages(manga_chapter_size)
-  var next_manga_chapter = parseInt(manga_chapter) == manga_last_chapter ? parseInt(manga_chapter) : parseInt(manga_chapter) + 1
-  var prev_manga_chapter = parseInt(manga_chapter) == 1 ? parseInt(manga_chapter) : parseInt(manga_chapter) - 1
+  var next_manga_chapter = parseInt(manga_chapter) === manga_last_chapter ? parseInt(manga_chapter) : parseInt(manga_chapter) + 1
+  var prev_manga_chapter = parseInt(manga_chapter) === 1 ? parseInt(manga_chapter) : parseInt(manga_chapter) - 1
 
   useEffect(() => {
     set_manga_chapter(path_chapter)
   }, [path_chapter])
 
   const [manga_db, set_manga_db] = useState(mangaDB.GetMangaDB())
-
-  var manga_list = generateMangaListFromDB()
 
   const [manga_chapter_list, set_manga_chapter_list] = useState(generateChapterListFromTitle())
   const [manga_histories, set_manga_histories] = useState(generateHistoriesSection())
@@ -159,14 +156,6 @@ function PageReadMangaOnlyV1() {
     set_button_share("Copied")
   }
 
-  function handleSelectedMangaTitle(title) {
-    set_manga_title(title)
-    set_manga_chapter_list(generateChapterListFromLastChapter(manga_last_chapter))
-    set_manga_chapter(findLatestMangaChapter(title))
-    setCookies(manga_chapter)
-    window.scrollTo(0, 0)
-  }
-
   function handleSelectedMangaChapter(chapter) {
     set_manga_chapter(chapter)
     setCookies(chapter)
@@ -191,20 +180,6 @@ function PageReadMangaOnlyV1() {
     window.scrollTo(0, 0)
   }
 
-  function findLatestMangaChapter(title) {
-    var key = `${title}/last_read_chapter`
-    var chapter = cookies.get(key)
-
-    if (typeof chapter !== "undefined") {
-      return parseInt(chapter)
-    // eslint-disable-next-line
-    } else if (typeof chapter === "NaN") {
-      return 1
-    } else {
-      return 1
-    }
-  }
-
   function generateMangaPages(last_chapter) {
     if (!manga_title && !manga_chapter) {
       console.log("NOT SETTING MANGA PAGES")
@@ -221,14 +196,6 @@ function PageReadMangaOnlyV1() {
 
   function generateImageErrorUrl(page_no) {
     return `${cdn_host}/${manga_title}/${manga_chapter}/${page_no}.png`
-  }
-
-  function generateMangaListFromDB() {
-    var manga_title_list = []
-    for (let manga_title of manga_db.keys()) {
-      manga_title_list.push(manga_title)
-    }
-    return manga_title_list
   }
 
   function generateChapterListFromTitle() {
@@ -258,7 +225,7 @@ function PageReadMangaOnlyV1() {
       console.log("NOT STORING TO COOKIES")
       return
     }
-    if (manga_title == "-- select manga title --") {
+    if (manga_title === "-- select manga title --") {
       return
     }
 

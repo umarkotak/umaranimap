@@ -131,6 +131,7 @@ function PageReadMangaV8() {
 
   useEffect(() => {
     set_manga_chapter_list(generateChapterListFromLastChapter(findLastMangaChapter(manga_title)))
+    // eslint-disable-next-line
   }, [manga_title])
 
   async function postUserEvent() {
@@ -390,7 +391,7 @@ function PageReadMangaV8() {
   }
 
   function setCookies(chapter) {
-    if (manga_title == "-- select manga title --") {
+    if (manga_title === "-- select manga title --") {
       return
     }
     var key = `${manga_title}/last_read_chapter`
@@ -603,7 +604,7 @@ function PageReadMangaV8() {
               <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 <div className="row flex-row flex-nowrap overflow-auto">
                   {logged_in_manga_histories.slice(0, 15).map(manga_title => (
-                    <div className="col-4 col-md-2">
+                    <div className="col-4 col-md-2" key={`logged_in_histories_${manga_title}`}>
                       <div className={`card mb-4 box-shadow shadow border-4 ${generate_manga_airing_status(manga_title)}`}>
                         <div style={{height: "170px", backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(manga_title)})`}}>
                           <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>

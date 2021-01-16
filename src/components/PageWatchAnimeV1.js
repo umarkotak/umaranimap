@@ -1,4 +1,4 @@
-import React from "react"
+import React, {} from "react"
 import {Link} from "react-router-dom"
 import animeDB from "./AnimeDB"
 
@@ -9,22 +9,21 @@ function query_mal_id() {
 function query_title() {
   return qs.parse(window.location.search, { ignoreQueryPrefix: true }).title
 }
-var web_url = "https://animepahe.com/"
-const mal_id_to_animepahe = animeDB.GetMalToAnimePahe()
+var web_url
+// const mal_id_to_animepahe = animeDB.GetMalToAnimePahe()
 const mal_id_to_backup = animeDB.GetTitleToAnimePahe()
 
-function PageWatchAnimeV1() {
-
-  function checkAvailability(mal_id, title) {
-    if (mal_id_to_animepahe[mal_id]) {
-      return mal_id_to_animepahe[mal_id]
-    }
-    if (mal_id_to_backup[title]) {
-      return mal_id_to_backup[title]
-    }
-    return false
+function checkAvailability(mal_id, title) {
+  // if (mal_id_to_animepahe[mal_id]) {
+  //   return mal_id_to_animepahe[mal_id]
+  // }
+  if (mal_id_to_backup[title]) {
+    return mal_id_to_backup[title]
   }
+  return false
+}
 
+function PageWatchAnimeV1() {
   function hello() {
     var anime_id = checkAvailability(query_mal_id(), query_title())
 

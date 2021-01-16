@@ -1,24 +1,11 @@
-import React, {useState, useCallback, useEffect, useRef} from "react"
+import React, {useState, useEffect} from "react"
 import mangaDB from "./MangaDB"
 import Cookies from 'universal-cookie'
 import {Link} from "react-router-dom"
 
 const cookies = new Cookies()
-var cdn_host = "https://img.mghubcdn.com/file/imghub"
 var go_animapu_host = "http://go-animapu.herokuapp.com"
 // var go_animapu_host = "http://localhost:3005"
-var animapu_host = "http://animapu.herokuapp.com"
-
-var qs = require('qs')
-function query_title() {
-  return qs.parse(window.location.search, { ignoreQueryPrefix: true }).title
-}
-function query_chapter() {
-  return qs.parse(window.location.search, { ignoreQueryPrefix: true }).chapter
-}
-function query_custom_last_chapter() {
-  return qs.parse(window.location.search, { ignoreQueryPrefix: true }).custom_last_chapter
-}
 
 function PageMangaLibraryV1() {
   const [manga_db, set_manga_db] = useState(mangaDB.GetMangaDB())
@@ -26,20 +13,10 @@ function PageMangaLibraryV1() {
 
   var manga_list = generateMangaListFromDB()
 
-  const [manga_title, set_manga_title] = useState(query_title() || manga_list[0])
-  var manga_pages = generateMangaPages(manga_title)
-
   const [page_loading_state, set_page_loading_state] = useState("true")
   const [new_manga_check_update, set_new_manga_check_update] = useState(" - finding new chapter . . .")
-  const [manga_chapter_list, set_manga_chapter_list] = useState(generateChapterListFromTitle(manga_title))
-  const [manga_chapter, set_manga_chapter] = useState(query_chapter() || findLatestMangaChapter(manga_title))
   const [manga_histories, set_manga_histories] = useState(generateHistoriesSection())
   const [logged_in_manga_histories, set_logged_in_manga_histories] = useState([])
-  const [button_share, set_button_share] = useState("Share")
-
-  const [shareable_link, set_shareable_link] = useState(reconstruct_shareable)
-
-  const textAreaRef = useRef(null)
 
   useEffect(() => {
     async function fetchData() {
@@ -86,52 +63,6 @@ function PageMangaLibraryV1() {
     updateData()
   }, [])
 
-  useEffect(() => {
-    set_manga_chapter_list(generateChapterListFromLastChapter(findLastMangaChapter(manga_title)))
-  }, [manga_title])
-
-  async function postUserEvent() {
-    try {
-      const response = await fetch(`${go_animapu_host}/users/analytic_v1`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          MangaPage: manga_chapter,
-          MangaTitle: manga_title,
-        })
-      })
-      console.log("RESULT: ", response.json(), response.status)
-
-    } catch (e) {
-      console.log("USER EVENT LOG: ", e.message)
-    }
-  }
-
-  async function setHistoriesToFireBase(manga_title, chapter) {
-    if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") {
-      return
-    }
-
-    try {
-      await fetch(`${go_animapu_host}/users/read_histories`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': cookies.get("GO_ANIMAPU_LOGIN_TOKEN")
-        },
-        body: JSON.stringify({
-          last_chapter: `${chapter}`,
-          manga_title: manga_title
-        })
-      })
-
-    } catch (e) {
-      console.log("STORE TO FIREBASE ERROR", e.message)
-    }
-  }
-
   async function getUserDetailFromFirebase() {
     if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") {
       return
@@ -146,8 +77,6 @@ function PageMangaLibraryV1() {
     })
     const results = await response.json()
 
-    console.log(results.read_histories)
-
     var manga_title_histories = []
 
     const mapped_manga_histories = new Map(Object.entries(results.read_histories))
@@ -161,7 +90,6 @@ function PageMangaLibraryV1() {
     })
     manga_title_histories.sort((a, b) => b.last_read_time_i - a.last_read_time_i)
     var mapped_title_histories = manga_title_histories.map(val => val.manga_title)
-    console.log(mapped_title_histories)
     set_logged_in_manga_histories(mapped_title_histories)
   }
 
@@ -173,68 +101,11 @@ function PageMangaLibraryV1() {
     }
   }
 
-  function reconstruct_shareable() {
-    return `${animapu_host}/read-manga-v8?title=${manga_title}&chapter=${manga_chapter}`
-  }
-
-  function copyToClipboard(e) {
-    textAreaRef.current.value = reconstruct_shareable()
-    textAreaRef.current.select()
-    document.execCommand('copy')
-
-    set_button_share("Copied")
-  }
-
-  function handleSelectedMangaTitle(title) {
-    set_manga_title(title)
-    var last_chapter = findLastMangaChapter(manga_title)
-    set_manga_chapter_list(generateChapterListFromLastChapter(last_chapter))
-    set_manga_chapter(findLatestMangaChapter(title))
-    setCookies(manga_chapter)
-    window.scrollTo(0, 0)
-  }
-
-  function handleSelectedMangaTitleLoggedIn(title) {
-    set_manga_title(title)
-    var last_chapter = findLastMangaChapter(manga_title)
-    set_manga_chapter_list(generateChapterListFromLastChapter(last_chapter))
-    set_manga_chapter(findLatestMangaChapterLoggedIn(title))
-    setCookies(manga_chapter)
-    window.scrollTo(0, 0)
-  }
-
-  function handleSelectedMangaChapter(chapter) {
-    set_manga_chapter(chapter)
-    setCookies(chapter)
-    window.scrollTo(0, 0)
-  }
-
-  // eslint-disable-next-line
-  function handlePreviousPage() {
-    if (parseInt(manga_chapter) === 1) {return true}
-    var last_chapter = findLastMangaChapter(manga_title)
-    set_manga_chapter_list(generateChapterListFromLastChapter(last_chapter))
-    set_manga_chapter(parseInt(manga_chapter) - 1)
-    setCookies(parseInt(manga_chapter) - 1)
-    window.scrollTo(0, 0)
-  }
-
-  // eslint-disable-next-line
-  function handleNextPage() {
-    var last_chapter = findLastMangaChapter(manga_title)
-    if (parseInt(manga_chapter) === last_chapter) {return true}
-    set_manga_chapter_list(generateChapterListFromLastChapter(last_chapter))
-    set_manga_chapter(parseInt(manga_chapter) + 1)
-    setCookies(parseInt(manga_chapter) + 1)
-    window.scrollTo(0, 0)
-  }
-
   function handleClearHistory() {
     var key = "last_manga_reads"
     let date = new Date(2030, 12)
     cookies.set(key, [], { path: "/", expires: date })
     set_manga_histories([])
-    set_shareable_link(reconstruct_shareable())
   }
 
   function findLatestMangaChapter(title) {
@@ -274,29 +145,8 @@ function PageMangaLibraryV1() {
         last_chapter = 150
       }
     } catch (error) {
-      last_chapter = query_custom_last_chapter() || 150
     }
     return last_chapter
-  }
-
-  function generateMangaPages(title) {
-    var page_count
-    try {
-      page_count = manga_db.get(title).average_page
-    } catch (error) {
-      page_count = 100
-    }
-    var pages = []
-    for (let i = 1; i <= page_count; i++) { pages.push(i) }
-    return pages
-  }
-
-  function generateImageURL(page_no) {
-    return `${cdn_host}/${manga_title}/${manga_chapter}/${page_no}.jpg`
-  }
-
-  function generateImageErrorUrl(page_no) {
-    return `${cdn_host}/${manga_title}/${manga_chapter}/${page_no}.png`
   }
 
   function generateMangaListFromDB() {
@@ -305,31 +155,6 @@ function PageMangaLibraryV1() {
       manga_title_list.push(manga_title)
     }
     return manga_title_list
-  }
-
-  function generateChapterListFromTitle(title) {
-    var last_chapter = findLastMangaChapter(title)
-    var chapters = []
-    for (let i = 1; i <= last_chapter; i++) { chapters.push(i) }
-    return chapters
-  }
-
-  function generateChapterListFromLastChapter(last_chapter) {
-    var chapters = []
-    for (let i = 1; i <= last_chapter; i++) { chapters.push(i) }
-    return chapters
-  }
-
-  function generateMangaTitleText(raw_title) {
-    if (raw_title[0] === "-") { return raw_title }
-
-    var title = beutifyChapterTitle(raw_title)
-    var last_read = findLatestMangaChapter(raw_title)
-    var last_chapter = findLastMangaChapter(raw_title)
-    var status = manga_db.get(raw_title).status
-
-    return `( ${last_read} / ${last_chapter} ) - ${title} - ${status}`
-
   }
 
   function generateThumbnailFromTitle(title) {
@@ -346,62 +171,15 @@ function PageMangaLibraryV1() {
     }
   }
 
-  function setCookies(chapter) {
-    var key = `${manga_title}/last_read_chapter`
-    var value = chapter
-    let date = new Date(2030, 12)
-    cookies.set(key, value, { path: "/", expires: date })
-    setMangaHistories()
-    setHistoriesToFireBase(manga_title, chapter)
-  }
-
-  function setMangaHistories() {
-    if (manga_title[0] === "-") return
-    var key = "last_manga_reads"
-    var last_manga_reads = cookies.get(key)
-    var value = manga_title
-    let date = new Date(2030, 12)
-
-    postUserEvent()
-
-    if (Array.isArray(last_manga_reads)) {
-      var index = last_manga_reads.indexOf(manga_title)
-      if (index !== -1) last_manga_reads.splice(index, 1)
-      last_manga_reads.unshift(manga_title)
-      cookies.set(key, last_manga_reads, { path: "/", expires: date })
-      set_manga_histories(last_manga_reads)
-    } else {
-      cookies.set(key, [value], { path: "/", expires: date })
-      set_manga_histories([value])
-    }
-
-    set_button_share("Share")
-
-    if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") {
-      return
-    }
-  }
-
-  function beutifyChapterTitle(raw_title) {
-    var title = raw_title.replace(/-/g, " ")
-    title = title.toLowerCase().split(" ")
-    for (var i = 0; i < title.length; i++) {
-        title[i] = title[i].charAt(0).toUpperCase() + title[i].substring(1)
-    }
-    return title.join(" ")
-  }
-
   return (
     <div>
       <div className="pb-5">
-        <RenderMangaLibrary isShown={manga_title[0]}/>
+        <RenderMangaLibrary />
       </div>
     </div>
   )
 
   function RenderMangaLibrary(props) {
-    if (props.isShown !== '-') { return(<div></div>) }
-
     return(
       <div>
         <div className="row my-2">
@@ -525,23 +303,6 @@ function PageMangaLibraryV1() {
   }
 
   function RenderLoadingBar() {
-    if (page_loading_state === "false") {
-      return(
-        <div className="row flex-row flex-nowrap overflow-auto">
-          {new_mangas.map(manga_title => (
-            <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_new_list`} />
-          ))}
-        </div>
-      )
-    }
-    return(
-      <div>
-        <br/><div className="progress progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style={{width: "100%"}}></div><br/>
-      </div>
-    )
-  }
-
-  function RenderLoadingBar2() {
     if (page_loading_state === "false") {
       return(
         <div className="row flex-row flex-nowrap overflow-auto">
