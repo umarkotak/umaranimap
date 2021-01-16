@@ -25,6 +25,8 @@ import PageTodaysMangaV1 from "./components/PageTodaysMangaV1"
 import PageGlobalClipboardV1 from "./components/PageGlobalClipboardV1"
 import PageChattoV1 from "./components/PageChattoV1"
 import PageStatisticsV1 from "./components/PageStatisticsV1"
+import PageMangaLibraryV1 from "./components/PageMangaLibraryV1"
+import PageReadMangaOnlyV1 from "./components/PageReadMangaOnlyV1"
 
 function App() {
   return (
@@ -57,6 +59,9 @@ function App() {
             <Route path="/watch-anime-v1" exact component={PageWatchAnimeV1} />
             <Route path="/search-manga-v1" exact component={PageSearchMangaV1} />
             <Route path="/todays-manga-v1" exact component={PageTodaysMangaV1} />
+            <Route path="/manga-library-v1" exact component={PageMangaLibraryV1} />
+            {/* <Route path="/read-manga-only-v1" exact component={PageReadMangaOnlyV1} /> */}
+            <Route path="/read-manga-only-v1/:path_title/:path_chapter" exact component={PageReadMangaOnlyV1} />
           </Switch>
         </div>
       </div>
