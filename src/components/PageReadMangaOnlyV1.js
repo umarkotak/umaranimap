@@ -311,7 +311,7 @@ function PageReadMangaOnlyV1() {
   }
 
   return (
-    <div style={{marginLeft: "-10px", marginRight: "-10px", paddingLeft: "10px", paddingRight: "10px"}}>
+    <div style={{marginLeft: "-10px", marginRight: "-10px"}}>
       <RenderHead />
 
       <div className="" key={manga_chapter}>
@@ -355,7 +355,7 @@ function PageReadMangaOnlyV1() {
   function RenderHead() {
     if (bottom_nav === false) return(<div></div>)
     return(
-      <div className="sticky-top bg-dark">
+      <div className="sticky-top bg-dark px-3">
         <div className="nav-scroller">
           <nav className="nav d-flex">
             <button className="btn btn-light btn-sm btn-outline-info mx-1 my-1" onClick={copyToClipboard}>{button_share}</button>

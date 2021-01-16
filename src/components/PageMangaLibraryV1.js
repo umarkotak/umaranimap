@@ -459,30 +459,56 @@ function PageMangaLibraryV1() {
   }
 
   function RenderHistoriesSection() {
+    if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") {
+      return(
+        <div>
+          <div className="row">
+            <div className="col-12">
+              <ul className="nav nav-tabs" id="myTab" role="tablist">
+                <li className="nav-item">
+                  <a className="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Local</a>
+                </li>
+              </ul>
+
+              <div className="tab-content" id="myTabContent">
+                <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                  <div className="row flex-row flex-nowrap overflow-auto">
+                    {manga_histories.slice(0, 15).map(manga_title => (
+                      <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_history_list`} />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      )
+    }
     return(
       <div>
         <div className="row">
           <div className="col-12">
             <ul className="nav nav-tabs" id="myTab" role="tablist">
               <li className="nav-item">
-                <a className="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Local</a>
+                <a className="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Logged In</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Logged In</a>
+                <a className="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Local</a>
               </li>
             </ul>
 
             <div className="tab-content" id="myTabContent">
-              <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+              <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 <div className="row flex-row flex-nowrap overflow-auto">
-                  {manga_histories.slice(0, 15).map(manga_title => (
+                  {manga_histories.slice(0, 50).map(manga_title => (
                     <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_history_list`} />
                   ))}
                 </div>
               </div>
-              <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+              <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                 <div className="row flex-row flex-nowrap overflow-auto">
-                  {logged_in_manga_histories.slice(0, 15).map(manga_title => (
+                  {logged_in_manga_histories.slice(0, 50).map(manga_title => (
                     <div className="col-4 col-md-2" key={"histories_" + manga_title}>
                       <div className={`card mb-4 box-shadow shadow border-4 ${generate_manga_airing_status(manga_title)}`}>
                         <div style={{height: "170px", backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(manga_title)})`}}>
@@ -493,7 +519,7 @@ function PageMangaLibraryV1() {
                             <small>{manga_title}</small>
                           </div>
                         </div>
-                        <button type="button" className="btn btn-block btn-sm btn-outline-secondary" onClick={(e) => handleSelectedMangaTitleLoggedIn(e.target.value)} value={manga_title}>View</button>
+                        <Link type="button" className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${manga_title}/${findLatestMangaChapter(manga_title)}?last_chapter=${findLastMangaChapter(manga_title)}&chapter_size=${ manga_db.get(manga_title) ? manga_db.get(manga_title).average_page : 100}`}>View</Link>
                       </div>
                     </div>
                   ))}
@@ -507,6 +533,23 @@ function PageMangaLibraryV1() {
   }
 
   function RenderLoadingBar() {
+    if (page_loading_state === "false") {
+      return(
+        <div className="row flex-row flex-nowrap overflow-auto">
+          {new_mangas.map(manga_title => (
+            <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_new_list`} />
+          ))}
+        </div>
+      )
+    }
+    return(
+      <div>
+        <br/><div className="progress progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style={{width: "100%"}}></div><br/>
+      </div>
+    )
+  }
+
+  function RenderLoadingBar2() {
     if (page_loading_state === "false") {
       return(
         <div className="row flex-row flex-nowrap overflow-auto">
