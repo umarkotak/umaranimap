@@ -1,7 +1,6 @@
 import React, {useState, useCallback, useEffect, useRef} from "react"
-import mangaDB from "./MangaDB"
 import Cookies from 'universal-cookie'
-import {Link, useParams} from "react-router-dom"
+import {Link, useParams, useHistory} from "react-router-dom"
 import {WhatsappShareButton} from "react-share"
 
 const cookies = new Cookies()
@@ -19,30 +18,34 @@ function query_chapter_size() {
 }
 
 function PageReadMangaOnlyV1() {
+  let history = useHistory();
+
   let { path_title } = useParams();
   let { path_chapter } = useParams();
 
-  const [manga_title, set_manga_title] = useState(path_title)
+  const manga_title = path_title
   const [manga_chapter, set_manga_chapter] = useState(path_chapter)
-  const [manga_last_chapter, set_manga_last_chapter] = useState(query_last_chapter())
-  const [manga_chapter_size, set_manga_chapter_size] = useState(query_chapter_size() || 150)
+  const manga_last_chapter = query_last_chapter()
+  const manga_chapter_size = query_chapter_size() || 150
   var manga_pages = generateMangaPages(manga_chapter_size)
-  var next_manga_chapter = parseInt(manga_chapter) === manga_last_chapter ? parseInt(manga_chapter) : parseInt(manga_chapter) + 1
+  var next_manga_chapter = parseInt(manga_chapter) === parseInt(manga_last_chapter) ? manga_last_chapter : parseInt(manga_chapter) + 1
   var prev_manga_chapter = parseInt(manga_chapter) === 1 ? parseInt(manga_chapter) : parseInt(manga_chapter) - 1
 
   useEffect(() => {
+    console.log("RUN ONCE")
     set_manga_chapter(path_chapter)
+    postUserEvent()
+    setHistoriesToFireBase()
+    setCookies()
+    // eslint-disable-next-line
   }, [path_chapter])
 
-  const [manga_db, set_manga_db] = useState(mangaDB.GetMangaDB())
-
   const [manga_chapter_list, set_manga_chapter_list] = useState(generateChapterListFromTitle())
-  const [manga_histories, set_manga_histories] = useState(generateHistoriesSection())
   const [bottom_nav, set_bottom_nav] = useState(true)
   const [y_pos, set_y_pos] = useState(window.scrollY)
   const [button_share, set_button_share] = useState("❏ Copy Link")
 
-  const [shareable_link, set_shareable_link] = useState(reconstruct_shareable)
+  const shareable_link = reconstruct_shareable
 
   const windowHeight = window.innerHeight
   const body = document.body
@@ -53,9 +56,9 @@ function PageReadMangaOnlyV1() {
     const windowBottom = windowHeight + window.pageYOffset
 
     if (event.keyCode === 39) {
-      handleNextPage()
+      history.push(`/read-manga-only-v1/${manga_title}/${next_manga_chapter}?last_chapter=${manga_last_chapter}&chapter_size=${manga_chapter_size}`);
     } else if (event.keyCode === 37) {
-      handlePreviousPage()
+      history.push(`/read-manga-only-v1/${manga_title}/${prev_manga_chapter}?last_chapter=${manga_last_chapter}&chapter_size=${manga_chapter_size}`);
     }
 
     if (window.scrollY === 0) {
@@ -73,7 +76,7 @@ function PageReadMangaOnlyV1() {
     }
 
     // eslint-disable-next-line
-  }, [handlePreviousPage, handleNextPage, set_bottom_nav])
+  }, [set_bottom_nav])
   useEffect(() => {
     document.addEventListener("keyup", escFunction, false)
     document.addEventListener("scroll", escFunction, false)
@@ -85,13 +88,6 @@ function PageReadMangaOnlyV1() {
   }, [escFunction])
 
   const textAreaRef = useRef(null)
-
-
-  useEffect(() => {
-    postUserEvent()
-    setHistoriesToFireBase()
-    setCookies()
-  }, [])
 
   async function postUserEvent() {
     if (!manga_title && !manga_chapter) {
@@ -118,6 +114,7 @@ function PageReadMangaOnlyV1() {
 
   async function setHistoriesToFireBase() {
     if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") {
+      console.log("NOT SETTING HISTORY")
       return
     }
 
@@ -134,10 +131,11 @@ function PageReadMangaOnlyV1() {
           'Authorization': cookies.get("GO_ANIMAPU_LOGIN_TOKEN")
         },
         body: JSON.stringify({
-          last_chapter: `${manga_chapter}`,
+          last_chapter: `${path_chapter}`,
           manga_title: manga_title
         })
       })
+      console.log("SUCCESS STORE TO FIREBASE", path_chapter)
 
     } catch (e) {
       console.log("STORE TO FIREBASE ERROR", e.message)
@@ -156,28 +154,8 @@ function PageReadMangaOnlyV1() {
     set_button_share("Copied")
   }
 
-  function handleSelectedMangaChapter(chapter) {
-    set_manga_chapter(chapter)
-    setCookies(chapter)
-    window.scrollTo(0, 0)
-  }
-
-  // eslint-disable-next-line
-  function handlePreviousPage() {
-    if (parseInt(manga_chapter) === 1) {return true}
-    set_manga_chapter_list(generateChapterListFromLastChapter(manga_last_chapter))
-    set_manga_chapter(parseInt(manga_chapter) - 1)
-    setCookies(parseInt(manga_chapter) - 1)
-    window.scrollTo(0, 0)
-  }
-
-  // eslint-disable-next-line
-  function handleNextPage() {
-    if (parseInt(manga_chapter) === manga_last_chapter) {return true}
-    set_manga_chapter_list(generateChapterListFromLastChapter(manga_last_chapter))
-    set_manga_chapter(parseInt(manga_chapter) + 1)
-    setCookies(parseInt(manga_chapter) + 1)
-    window.scrollTo(0, 0)
+  function handleChangeMangaChapter(no_chapter) {
+    history.push(`/read-manga-only-v1/${manga_title}/${no_chapter}?last_chapter=${manga_last_chapter}&chapter_size=${manga_chapter_size}`);
   }
 
   function generateMangaPages(last_chapter) {
@@ -210,16 +188,6 @@ function PageReadMangaOnlyV1() {
     return chapters
   }
 
-  function generateHistoriesSection() {
-    var key = "last_manga_reads"
-    var last_manga_reads = cookies.get(key)
-    if (Array.isArray(last_manga_reads)) {
-      return last_manga_reads
-    } else {
-      return []
-    }
-  }
-
   function setCookies() {
     if (!manga_title && !manga_chapter) {
       console.log("NOT STORING TO COOKIES")
@@ -230,7 +198,7 @@ function PageReadMangaOnlyV1() {
     }
 
     var key = `${manga_title}/last_read_chapter`
-    var value = manga_chapter
+    var value = path_chapter
     let date = new Date(2030, 12)
     cookies.set(key, value, { path: "/", expires: date })
     setMangaHistories()
@@ -250,10 +218,8 @@ function PageReadMangaOnlyV1() {
       if (index !== -1) last_manga_reads.splice(index, 1)
       last_manga_reads.unshift(manga_title)
       cookies.set(key, last_manga_reads, { path: "/", expires: date })
-      set_manga_histories(last_manga_reads)
     } else {
       cookies.set(key, [value], { path: "/", expires: date })
-      set_manga_histories([value])
     }
 
     set_button_share("❏ Copy Link")
@@ -331,7 +297,7 @@ function PageReadMangaOnlyV1() {
           </Link>
 
           <Link className="btn btn-light btn-sm btn-outline-secondary mx-1" to="/manga-library-v1">Menu</Link>
-          <select className="custom-select mx-1" name="selectedMangaTitle" onChange={(e) => handleSelectedMangaChapter(e.target.value)} defaultValue={manga_chapter}>
+          <select className="custom-select mx-1" name="selectedMangaTitle" onChange={(e) => handleChangeMangaChapter(e.target.value)} defaultValue={manga_chapter}>
             {manga_chapter_list.map(chapter => (
               <option key={chapter} value={chapter}> Chapter {chapter} </option>
             ))}

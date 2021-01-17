@@ -17,6 +17,7 @@ function PageMangaLibraryV1() {
   const [new_manga_check_update, set_new_manga_check_update] = useState(" - finding new chapter . . .")
   const [manga_histories, set_manga_histories] = useState(generateHistoriesSection())
   const [logged_in_manga_histories, set_logged_in_manga_histories] = useState([])
+  const [history_loading_state, set_history_loading_state] = useState("true")
 
   useEffect(() => {
     async function fetchData() {
@@ -91,6 +92,7 @@ function PageMangaLibraryV1() {
     manga_title_histories.sort((a, b) => b.last_read_time_i - a.last_read_time_i)
     var mapped_title_histories = manga_title_histories.map(val => val.manga_title)
     set_logged_in_manga_histories(mapped_title_histories)
+    set_history_loading_state("false")
   }
 
   function generate_manga_airing_status(manga_title) {
@@ -277,23 +279,7 @@ function PageMangaLibraryV1() {
                 </div>
               </div>
               <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                <div className="row flex-row flex-nowrap overflow-auto">
-                  {logged_in_manga_histories.slice(0, 50).map(manga_title => (
-                    <div className="col-4 col-md-2" key={"histories_" + manga_title}>
-                      <div className={`card mb-4 box-shadow shadow border-4 ${generate_manga_airing_status(manga_title)}`}>
-                        <div style={{height: "170px", backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(manga_title)})`}}>
-                          <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
-                            <small>{`${findLatestMangaChapterLoggedIn(manga_title)}/${findLastMangaChapter(manga_title)}`}</small>
-                          </div>
-                          <div className="text-white card-text overflow-auto" style={{"height": "35px", "width": "100%", backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
-                            <small>{manga_title}</small>
-                          </div>
-                        </div>
-                        <Link type="button" className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${manga_title}/${findLatestMangaChapter(manga_title)}?last_chapter=${findLastMangaChapter(manga_title)}&chapter_size=${ manga_db.get(manga_title) ? manga_db.get(manga_title).average_page : 100}`}>View</Link>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                <RenderLoggedInHistory />
               </div>
             </div>
           </div>
@@ -315,6 +301,35 @@ function PageMangaLibraryV1() {
     return(
       <div>
         <br/><div className="progress progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style={{width: "100%"}}></div><br/>
+      </div>
+    )
+  }
+
+  function RenderLoggedInHistory() {
+    if (history_loading_state === "true") {
+      return(
+        <div>
+          <br/><div className="progress progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style={{width: "100%"}}></div><br/>
+        </div>
+      )
+    }
+    return(
+      <div className="row flex-row flex-nowrap overflow-auto">
+        {logged_in_manga_histories.slice(0, 50).map(manga_title => (
+          <div className="col-4 col-md-2" key={"histories_" + manga_title}>
+            <div className={`card mb-4 box-shadow shadow border-4 ${generate_manga_airing_status(manga_title)}`}>
+              <div style={{height: "170px", backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(manga_title)})`}}>
+                <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
+                  <small>{`${findLatestMangaChapterLoggedIn(manga_title)}/${findLastMangaChapter(manga_title)}`}</small>
+                </div>
+                <div className="text-white card-text overflow-auto" style={{"height": "35px", "width": "100%", backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
+                  <small>{manga_title}</small>
+                </div>
+              </div>
+              <Link type="button" className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${manga_title}/${findLatestMangaChapterLoggedIn(manga_title)}?last_chapter=${findLastMangaChapter(manga_title)}&chapter_size=${ manga_db.get(manga_title) ? manga_db.get(manga_title).average_page : 100}`}>View</Link>
+            </div>
+          </div>
+        ))}
       </div>
     )
   }
