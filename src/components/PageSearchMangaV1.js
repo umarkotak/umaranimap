@@ -64,7 +64,7 @@ function PageSearchManga() {
       <hr/>
       <div className="row">
         <div className="col-12">
-          <Link to="/read-manga-v8" className="btn btn-outline-success btn-sm float-right"><span role="img" aria-label="library">📘</span> Library</Link>
+          <Link to="/manga-library-v1" className="btn btn-outline-success btn-sm float-right"><span role="img" aria-label="library">📘</span> Library</Link>
           <Link to="/todays-manga-v1" className="btn btn-outline-success btn-sm float-right mx-3"><span role="img" aria-label="book">📔</span> Latest</Link>
         </div>
         <div className="col-12"><h4>Search</h4></div>
@@ -122,7 +122,8 @@ function PageSearchManga() {
                     <small>{value}</small>
                   </div>
                 </div>
-                <Link to={`/read-manga-v8?title=${value}&chapter=1`} className="btn btn-block btn-sm btn-outline-secondary">Read Manga</Link>
+                {/* <Link to={`/read-manga-v8?title=${value}&chapter=1`} className="btn btn-block btn-sm btn-outline-secondary">Read Manga</Link> */}
+                <Link className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${value}/1?last_chapter=${search_result_db.get(value).manga_last_chapter}&chapter_size=75`}>First Ch</Link>
               </div>
             </div>
           ))}

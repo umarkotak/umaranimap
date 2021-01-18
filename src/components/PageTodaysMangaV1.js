@@ -55,7 +55,7 @@ function PageSearchManga() {
       <hr/>
       <div className="row">
         <div className="col-12">
-          <Link to="/read-manga-v8" className="btn btn-outline-success btn-sm float-right"><span role="img" aria-label="library">📘</span> Library</Link>
+          <Link to="/manga-library-v1" className="btn btn-outline-success btn-sm float-right"><span role="img" aria-label="library">📘</span> Library</Link>
           <Link to="/search-manga-v1" className="btn btn-outline-success btn-sm float-right mx-3"><span role="img" aria-label="search">🔍</span> Search</Link>
         </div>
         <div className="col-12">
@@ -83,8 +83,10 @@ function PageSearchManga() {
                       <small>{value}</small>
                     </div>
                   </div>
-                  <Link to={`/read-manga-v8?title=${value}&chapter=1&custom_last_chapter=${todays_manga_db.get(value).manga_last_chapter}`} className="btn btn-sm btn-outline-secondary">First Ch</Link>
-                  <Link to={`/read-manga-v8?title=${value}&chapter=${todays_manga_db.get(value).manga_last_chapter}&custom_last_chapter=${todays_manga_db.get(value).manga_last_chapter}`} className="btn btn-sm btn-outline-secondary">Latest Ch</Link>
+                  {/* <Link to={`/read-manga-v8?title=${value}&chapter=1&custom_last_chapter=${todays_manga_db.get(value).manga_last_chapter}`} className="btn btn-sm btn-outline-secondary">First Ch</Link>
+                  <Link to={`/read-manga-v8?title=${value}&chapter=${todays_manga_db.get(value).manga_last_chapter}&custom_last_chapter=${todays_manga_db.get(value).manga_last_chapter}`} className="btn btn-sm btn-outline-secondary">Latest Ch</Link> */}
+                  <Link className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${value}/1?last_chapter=${todays_manga_db.get(value).manga_last_chapter}&chapter_size=75`}>First Ch</Link>
+                  <Link className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${value}/${todays_manga_db.get(value).manga_last_chapter}?last_chapter=${todays_manga_db.get(value).manga_last_chapter}&chapter_size=75`}>Latest Ch</Link>
                 </div>
               </div>
             ))}

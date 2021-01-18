@@ -320,13 +320,13 @@ function PageMangaLibraryV1() {
             <div className={`card mb-4 box-shadow shadow border-4 ${generate_manga_airing_status(manga_title)}`}>
               <div style={{height: "170px", backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(manga_title)})`}}>
                 <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
-                  <small>{`${findLatestMangaChapterLoggedIn(manga_title)}/${findLastMangaChapter(manga_title)}`}</small>
+                  <small>{`${findLatestMangaChapterLoggedIn(manga_title)}/${findLastMangaChapter(manga_title) || 150}`}</small>
                 </div>
                 <div className="text-white card-text overflow-auto" style={{"height": "35px", "width": "100%", backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
                   <small>{manga_title}</small>
                 </div>
               </div>
-              <Link type="button" className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${manga_title}/${findLatestMangaChapterLoggedIn(manga_title)}?last_chapter=${findLastMangaChapter(manga_title)}&chapter_size=${ manga_db.get(manga_title) ? manga_db.get(manga_title).average_page : 100}`}>View</Link>
+              <Link type="button" className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${manga_title}/${findLatestMangaChapterLoggedIn(manga_title)}?last_chapter=${findLastMangaChapter(manga_title) || 150}&chapter_size=${ manga_db.get(manga_title) ? manga_db.get(manga_title).average_page : 100}`}>View</Link>
             </div>
           </div>
         ))}
