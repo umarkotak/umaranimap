@@ -1,43 +1,34 @@
-import React, {} from "react"
+import React, {useState, useEffect} from "react"
 import {Link} from "react-router-dom"
 import animeDB from "./AnimeDB"
 
 var qs = require('qs')
-function query_mal_id() {
-  return qs.parse(window.location.search, { ignoreQueryPrefix: true }).mal_id
-}
 function query_title() {
   return qs.parse(window.location.search, { ignoreQueryPrefix: true }).title
 }
-var web_url
-// const mal_id_to_animepahe = animeDB.GetMalToAnimePahe()
-const mal_id_to_backup = animeDB.GetTitleToAnimePahe()
-
-function checkAvailability(mal_id, title) {
-  // if (mal_id_to_animepahe[mal_id]) {
-  //   return mal_id_to_animepahe[mal_id]
-  // }
-  if (mal_id_to_backup[title]) {
-    return mal_id_to_backup[title]
-  }
-  return false
-}
 
 function PageWatchAnimeV1() {
-  function hello() {
-    var anime_id = checkAvailability(query_mal_id(), query_title())
+  const [web_url, setWebUrl] = useState("https://animepahe.com/")
 
-    if (anime_id) {
-      web_url = `https://animepahe.com/anime/${anime_id}`
-    } else {
-      web_url = "https://animepahe.com/"
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch(`http://go-animapu.herokuapp.com/animes_map`);
+      const result = await response.json();
+      console.log(result)
+
+      var anime_id = result[query_title()]
+      console.log("FOUND", anime_id)
+      if (anime_id) {
+        setWebUrl(`https://animepahe.com/anime/${anime_id}`)
+        console.log("FINISHED")
+      }
     }
-    window.scrollTo(0, 0)
-  }
-  hello()
+    fetchData();
+  }, []);
+
 
   return (
-    <div>
+    <div style={{marginLeft: "-10px", marginRight: "-10px"}}>
       <div className="row my-2">
         <div className="col-12">
           <Link to="/airing-anime-v5" className="btn btn-outline-success btn-sm float-right"><span role="img" aria-label="book">📰</span> Seasonal Anime</Link>
