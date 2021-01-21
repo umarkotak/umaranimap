@@ -20,6 +20,11 @@ function PageMangaLibraryV1() {
   const [history_loading_state, set_history_loading_state] = useState("true")
 
   useEffect(() => {
+    console.log("RUN ONCE")
+    window.scrollTo(0, 0);
+  }, [])
+
+  useEffect(() => {
     async function fetchData() {
       var api = `${go_animapu_host}/mangas/firebase`
       const response = await fetch(api)
@@ -202,9 +207,29 @@ function PageMangaLibraryV1() {
 
         <h4>Manga List</h4>
         <div className="row">
-          {manga_list.slice(1, manga_list.length).map(manga_title => (
-            <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_list`} />
-          ))}
+          <div className="col-12">
+            <ul className="nav nav-tabs" id="myTab2" role="tablist">
+              <li className="nav-item">
+                <a className="nav-link active" id="home-tab2" data-toggle="tab" href="#home2" role="tab" aria-controls="home2" aria-selected="true">Top Picks</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" id="profile-tab2" data-toggle="tab" href="#profile2" role="tab" aria-controls="profile2" aria-selected="false">My Read Later</a>
+              </li>
+            </ul>
+
+            <div className="tab-content" id="myTabContent">
+              <div className="tab-pane fade" id="profile2" role="tabpanel" aria-labelledby="profile-tab2">
+
+              </div>
+              <div className="tab-pane fade show active" id="home2" role="tabpanel" aria-labelledby="home-tab2">
+                <div className="row">
+                  {manga_list.slice(1, manga_list.length).map(manga_title => (
+                    <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_list`} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     )
@@ -218,6 +243,7 @@ function PageMangaLibraryV1() {
           <div style={{height: "170px", backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(props.manga_title)})`}}>
             <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
               <small>{`${findLatestMangaChapter(props.manga_title)}/${findLastMangaChapter(props.manga_title)}`}</small>
+              <button className="btn btn-xs btn-outline-danger float-right" style={{ paddingTop: "1px", paddingBottom: "1px", paddingLeft: "3px", paddingRight: "3px" }}>♥︎</button>
             </div>
             <div className="text-white card-text overflow-auto" style={{"height": "35px", "width": "100%", backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
               <small>{props.manga_title}</small>

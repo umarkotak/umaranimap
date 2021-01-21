@@ -42,7 +42,7 @@ function PageReadMangaOnlyV1() {
 
   const [manga_chapter_list, set_manga_chapter_list] = useState(generateChapterListFromTitle())
   const [bottom_nav, set_bottom_nav] = useState(true)
-  const [y_pos, set_y_pos] = useState(window.scrollY)
+  var y_pos = 0
   const [button_share, set_button_share] = useState("❏ Copy Link")
 
   const shareable_link = reconstruct_shareable
@@ -63,20 +63,18 @@ function PageReadMangaOnlyV1() {
 
     if (window.scrollY === 0) {
       set_bottom_nav(true)
-      set_y_pos(window.scrollY)
-    } else if (windowBottom >= docHeight) {
-      set_bottom_nav(true)
-      set_y_pos(window.scrollY)
+      y_pos = window.scrollY
     } else if (window.scrollY > y_pos + 75) {
       set_bottom_nav(false)
-      set_y_pos(window.scrollY)
+      y_pos = window.scrollY
     } else if (window.scrollY < y_pos) {
       set_bottom_nav(true)
-      set_y_pos(window.scrollY)
+      y_pos = window.scrollY
     }
 
     // eslint-disable-next-line
-  }, [set_bottom_nav])
+  }, [history, set_bottom_nav])
+
   useEffect(() => {
     document.addEventListener("keyup", escFunction, false)
     document.addEventListener("scroll", escFunction, false)

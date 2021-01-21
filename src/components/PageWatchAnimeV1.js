@@ -26,6 +26,11 @@ function PageWatchAnimeV1() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    console.log("RUN ONCE")
+    window.scrollTo(0, 0);
+  }, [])
+
 
   return (
     <div style={{marginLeft: "-10px", marginRight: "-10px"}}>
