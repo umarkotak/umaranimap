@@ -49,9 +49,6 @@ function PageHome() {
               <Link to="read-manga-v8" className="btn btn-block btn-primary">Manga Library</Link>
               <Link to="/todays-manga-v1" className="btn btn-block btn-primary">Latest Manga</Link>
               <Link to="/search-manga-v1" className="btn btn-block btn-primary">Search Manga</Link>
-              <hr/>
-              <Link to="/manga-library-v1" className="btn btn-block btn-primary">dev - Manga Library</Link>
-              <Link to="/read-manga-only-v1" className="btn btn-block btn-primary">dev - Read Manga</Link>
             </div>
           </div>
         </div>
