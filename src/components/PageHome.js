@@ -46,7 +46,7 @@ function PageHome() {
               Menu - Manga
             </div>
             <div className="card-body">
-              <Link to="read-manga-v8" className="btn btn-block btn-primary">Manga Library</Link>
+              <Link to="/manga-library-v1" className="btn btn-block btn-primary">Manga Library</Link>
               <Link to="/todays-manga-v1" className="btn btn-block btn-primary">Latest Manga</Link>
               <Link to="/search-manga-v1" className="btn btn-block btn-primary">Search Manga</Link>
             </div>
@@ -75,6 +75,17 @@ function PageHome() {
               For supporting this website to always be updated, you can support with this link
               <hr />
               <a target="_blank" href="https://trakteer.id/marumaru" className="btn btn-block btn-success" rel="noopener noreferrer">Support!</a>
+            </div>
+          </div>
+        </div>
+
+        <div className="col-12 col-sm-4 my-1">
+          <div className="card">
+            <div className="card-header">
+              Dev
+            </div>
+            <div className="card-body">
+              <Link to="/socket-game-v1" className="btn btn-block btn-primary">Socket Game</Link>
             </div>
           </div>
         </div>

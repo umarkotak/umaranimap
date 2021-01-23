@@ -85,6 +85,11 @@ function PageMangaLibraryV1() {
 
     var manga_title_histories = []
 
+    if (!results.read_histories) {
+      set_history_loading_state("false")
+      return
+    }
+
     const mapped_manga_histories = new Map(Object.entries(results.read_histories))
     mapped_manga_histories.forEach((manga, key) => {
       manga_title_histories.push(manga)

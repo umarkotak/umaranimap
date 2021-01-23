@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from "react"
 import ReactPlayer from 'react-player'
 import {Link} from "react-router-dom"
-import animeDB from "./AnimeDB"
+// import animeDB from "./AnimeDB"
 
 // const mal_id_to_animepahe = animeDB.GetMalToAnimePahe()
-const mal_id_to_backup = animeDB.GetTitleToAnimePahe()
+// const mal_id_to_backup = animeDB.GetTitleToAnimePahe()
 
 function PageAiringAnimeV5() {
   var valid_seasons = ["winter", "spring", "summer", "fall"]

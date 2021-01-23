@@ -40,20 +40,20 @@ function PageReadMangaOnlyV1() {
     // eslint-disable-next-line
   }, [path_chapter])
 
-  const [manga_chapter_list, set_manga_chapter_list] = useState(generateChapterListFromTitle())
+  var manga_chapter_list = generateChapterListFromTitle()
   const [bottom_nav, set_bottom_nav] = useState(true)
   var y_pos = 0
   const [button_share, set_button_share] = useState("❏ Copy Link")
 
   const shareable_link = reconstruct_shareable
 
-  const windowHeight = window.innerHeight
-  const body = document.body
-  const html = document.documentElement
-  const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight)
+  // const windowHeight = window.innerHeight
+  // const body = document.body
+  // const html = document.documentElement
+  // const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight)
 
   const escFunction = useCallback((event) => {
-    const windowBottom = windowHeight + window.pageYOffset
+    // const windowBottom = windowHeight + window.pageYOffset
 
     if (event.keyCode === 39) {
       history.push(`/read-manga-only-v1/${manga_title}/${next_manga_chapter}?last_chapter=${manga_last_chapter}&chapter_size=${manga_chapter_size}`);
@@ -180,11 +180,11 @@ function PageReadMangaOnlyV1() {
     return chapters
   }
 
-  function generateChapterListFromLastChapter(last_chapter) {
-    var chapters = []
-    for (let i = 1; i <= last_chapter; i++) { chapters.push(i) }
-    return chapters
-  }
+  // function generateChapterListFromLastChapter(last_chapter) {
+  //   var chapters = []
+  //   for (let i = 1; i <= last_chapter; i++) { chapters.push(i) }
+  //   return chapters
+  // }
 
   function setCookies() {
     if (!manga_title && !manga_chapter) {

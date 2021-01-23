@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from "react"
 import {Link} from "react-router-dom"
-import animeDB from "./AnimeDB"
 
 var qs = require('qs')
 function query_title() {

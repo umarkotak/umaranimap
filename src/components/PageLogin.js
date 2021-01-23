@@ -69,6 +69,7 @@ function PageLogin() {
     event.preventDefault();
 
     try {
+      // const response = await fetch('http://localhost:4000/users/login', {
       const response = await fetch('http://go-animapu.herokuapp.com/users/login', {
         method: 'POST',
         headers: {
