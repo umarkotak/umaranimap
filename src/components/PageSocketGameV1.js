@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react"
+import React, {useEffect, useRef, useState, useCallback} from "react"
 import {Link} from "react-router-dom"
 import Cookies from 'universal-cookie'
 // import { v4 as uuidv4 } from 'uuid'
@@ -82,6 +82,23 @@ function PageSocketGameV1() {
     )
   }
 
+  function handleRequestPlayerMove(direction) {
+    ws.current.send(
+      `
+        {
+          "message_type": "player_move",
+          "meta": {},
+          "data": {
+            "direction": "${direction}",
+            "value": 1
+          },
+          "headers": {},
+          "direction": "request"
+        }
+      `
+    )
+  }
+
   function handleRequestPlayer() {
     console.log("REQUESTING PLAYER")
   }
@@ -92,6 +109,28 @@ function PageSocketGameV1() {
       return players.join("\n")
     }
   }
+
+  const escFunction = useCallback((event) => {
+
+    if (event.keyCode === 39) {
+      handleRequestPlayerMove("right")
+    } else if (event.keyCode === 37) {
+      handleRequestPlayerMove("left")
+    } else if (event.keyCode === 38) {
+      handleRequestPlayerMove("up")
+    } else if (event.keyCode === 40) {
+      handleRequestPlayerMove("down")
+    }
+
+    // eslint-disable-next-line
+  }, [handleRequestPlayerMove])
+  useEffect(() => {
+    document.addEventListener("keyup", escFunction, false)
+
+    return () => {
+      document.removeEventListener("keyup", escFunction, false)
+    }
+  }, [escFunction])
 
   return (
     <div>
@@ -135,10 +174,18 @@ function PageSocketGameV1() {
               <td><button className="btn btn-sm btn-outline-primary"
                 onClick={() => handleRequestPlayer()}
               >Request Player</button></td>
-              <td><button className="btn btn-sm btn-outline-primary">Move Up</button></td>
-              <td><button className="btn btn-sm btn-outline-primary">Move Down</button></td>
-              <td><button className="btn btn-sm btn-outline-primary">Move Left</button></td>
-              <td><button className="btn btn-sm btn-outline-primary">Move Right</button></td>
+              <td><button className="btn btn-sm btn-outline-primary"
+                onClick={() => handleRequestPlayerMove("up")}
+              >Move Up</button></td>
+              <td><button className="btn btn-sm btn-outline-primary"
+                onClick={() => handleRequestPlayerMove("down")}
+              >Move Down</button></td>
+              <td><button className="btn btn-sm btn-outline-primary"
+                onClick={() => handleRequestPlayerMove("left")}
+              >Move Left</button></td>
+              <td><button className="btn btn-sm btn-outline-primary"
+                onClick={() => handleRequestPlayerMove("right")}
+              >Move Right</button></td>
             </tr>
           </tbody>
         </table>
@@ -154,14 +201,21 @@ function PageSocketGameV1() {
     }
     return(
       <div style={{paddingBottom: "75px"}}>
-        <table className="table">
+        <table className="table table-bordered">
           <tbody>
+            <tr>
+              <td></td>
+              {world_maps.maps[0].map((kk, vv) => (
+                <td>{vv}</td>
+              ))}
+            </tr>
             {world_maps.maps.map( (val, idx) => (
               <tr key={`vertical_${idx}`}>
+                <td>{idx}</td>
                 {val.map( (row_data, row_idx) => (
                   <td key={`horizontal_${idx}_${row_idx}`}>
-                    {row_data.pos_x}, {row_data.pos_y}
-                    <br/>
+                    {/* {row_data.pos_x}, {row_data.pos_y}
+                    <br/> */}
                     <pre>{processPlayer(row_data.players)}</pre>
                   </td>
                 ) )}
