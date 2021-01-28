@@ -373,33 +373,33 @@ function PageTWBot() {
                 <div className="col-12 col-md-4">
                   <div className="form-group">
                     <label >Username</label>
-                    <input className="form-control" placeholder="NgunyahBatu" onChange={(e) => setUserName(e.target.value)} value={userName} />
+                    <input className="form-control" onChange={(e) => setUserName(e.target.value)} value={userName} />
                   </div>
                   <div className="form-group">
                     <label >User Token</label>
-                    <input className="form-control" placeholder="b6bba3b4ff8c3e64b6662bfe20efc3f2353*****" onChange={(e) => setUserToken(e.target.value)} value={userToken} />
+                    <input className="form-control" onChange={(e) => setUserToken(e.target.value)} value={userToken} />
                   </div>
                 </div>
 
                 <div className="col-12 col-md-4">
                   <div className="form-group">
                     <label >User ID</label>
-                    <input className="form-control" placeholder="84891****" onChange={(e) => setUserID(e.target.value)} value={userID} />
+                    <input className="form-control" onChange={(e) => setUserID(e.target.value)} value={userID} />
                   </div>
                   <div className="form-group">
                     <label >World ID</label>
-                    <input className="form-control" placeholder="en62" onChange={(e) => setWorldID(e.target.value)} value={worldID} />
+                    <input className="form-control" onChange={(e) => setWorldID(e.target.value)} value={worldID} />
                   </div>
                 </div>
 
                 <div className="col-12 col-md-4">
                   <div className="form-group">
                     <label >TBD</label>
-                    <input className="form-control" placeholder="TBD" />
+                    <input className="form-control" />
                   </div>
                   <div className="form-group">
                     <label >TBD</label>
-                    <input className="form-control" placeholder="TBD" />
+                    <input className="form-control" />
                   </div>
                 </div>
               </div>
