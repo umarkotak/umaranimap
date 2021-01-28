@@ -56,6 +56,10 @@ function PageTWBot() {
     if (!ws.current) { return }
     ws.current.onopen = (e) => {
       setConnectionStatus("connected")
+      if (userName && userToken && userID && worldID) {
+        handleEasyLogin()
+      }
+      handlePing()
     }
 
     ws.current.onmessage = (e) => {
@@ -71,9 +75,9 @@ function PageTWBot() {
     ws.current.onclose = (e) => {
       e.preventDefault();
 
-      setConnectionStatus("reconnecting . . .")
-      connectWs()
-      setConnectionStatus("connected")
+      console.log("WS CLOSSED")
+
+      setConnectionStatus("CLOSSED, Please reload page")
     }
   }, [socketMessages])
 
@@ -102,18 +106,6 @@ function PageTWBot() {
     sleep(500)
     handleCompleteLogin()
     setConnectionStatus("logged in")
-  }
-
-  function handleEasyLoginV2() {
-    setConnectionStatus("connecting . . .")
-    handleLogin()
-    sleep(500)
-    handleSystemIdentify()
-    sleep(500)
-    handleSelectCharacter()
-    sleep(500)
-    handleCompleteLogin()
-    setConnectionStatus("connected")
   }
 
   function handleSystemIdentify() {
@@ -237,6 +229,7 @@ function PageTWBot() {
       //   "report_result": village.report_result
       // }
       var tempVillageObj = village
+      console.log(village)
 
       if (!village.character_id) {
         tempNearbyBarbarianVillages.push(tempVillageObj)
@@ -260,6 +253,14 @@ function PageTWBot() {
     setMyVillages(tempMyVillages)
     setOtherPlayerVillages(tempPlayerVillages)
 
+  }
+
+  function handlePing() {
+    console.log("PING")
+    setTimeout(() => {
+      ws.current.send(2)
+      handlePing()
+    }, 4000)
   }
 
   // MISC FUNCTION
@@ -550,11 +551,10 @@ function PageTWBot() {
                             <th>ID</th>
                             <th>X</th>
                             <th>Y</th>
-                            <th>Char ID</th>
-                            <th>Char Name</th>
                             <th>Village Name</th>
-                            <th>Tribe Name</th>
                             <th>Points</th>
+                            <th>Report</th>
+                            <th>Time</th>
                           </tr>
                           {nearbyBarbarianVillages.map ((village, idx) => (
                             <tr key={`barbarian-${idx}`}>
@@ -565,11 +565,10 @@ function PageTWBot() {
                               </td>
                               <td>{village.x}</td>
                               <td>{village.y}</td>
-                              <td>{village.character_id}</td>
-                              <td>{village.character_name}</td>
                               <td>{village.name}</td>
-                              <td>{village.tribe_name}</td>
                               <td>{village.points}</td>
+                              <td>{village.report_title}</td>
+                              <td>{new Date(village.report_time_created * 1000).toLocaleString('en-GB', { hour12: false })}</td>
                             </tr>
                           ))}
                         </tbody>
@@ -617,6 +616,7 @@ function PageTWBot() {
                             <th>Village Name</th>
                             <th>Tribe Name</th>
                             <th>Points</th>
+                            <th>Report Title</th>
                           </tr>
                           {otherPlayerVillages.map ((village, idx) => (
                             <tr key={`players-${idx}`}>
@@ -632,6 +632,7 @@ function PageTWBot() {
                               <td>{village.name}</td>
                               <td>{village.tribe_name}</td>
                               <td>{village.points}</td>
+                              <td>{village.report_title}</td>
                             </tr>
                           ))}
                         </tbody>
