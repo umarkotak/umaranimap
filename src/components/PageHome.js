@@ -86,6 +86,7 @@ function PageHome() {
             </div>
             <div className="card-body">
               <Link to="/socket-game-v1" className="btn btn-block btn-primary">Socket Game</Link>
+              <Link to="/tw-bot-v1" className="btn btn-block btn-primary">Tribal War Bot</Link>
             </div>
           </div>
         </div>

@@ -90,7 +90,7 @@ function PageLogin() {
         cookies.set("GO_ANIMAPU_LOGIN_TOKEN", results.login_token, { path: "/", expires: date })
         alert("login success");
         // window.location.reload(false);
-        window.location.href = '/read-manga-v8';
+        window.location.href = '/manga-library-v1';
       } else {
         alert(results.message);
       }

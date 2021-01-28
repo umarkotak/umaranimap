@@ -104,7 +104,6 @@ function PageSocketGameV1() {
   }
 
   function processPlayer(players) {
-    console.log("PLAYERS", players)
     if (players) {
       return players.join("\n")
     }
