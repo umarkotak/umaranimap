@@ -49,15 +49,15 @@ function PageTWBot() {
 
 
   useEffect(() => {
-    ws.current = new WebSocket(`wss://en.tribalwars2.com/socket.io/?platform=desktop&EIO=3&transport=websocket`)
-    return () => {
-      ws.current.close()
-      setConnectionStatus("not connected")
-    }
+    connectWs()
   }, [])
 
   useEffect(() => {
     if (!ws.current) { return }
+    ws.current.onopen = (e) => {
+      setConnectionStatus("connected")
+    }
+
     ws.current.onmessage = (e) => {
       e.preventDefault();
 
@@ -67,7 +67,23 @@ function PageTWBot() {
 
       handleIncomingMessage(e.data)
     }
+
+    ws.current.onclose = (e) => {
+      e.preventDefault();
+
+      setConnectionStatus("reconnecting . . .")
+      connectWs()
+      setConnectionStatus("connected")
+    }
   }, [socketMessages])
+
+  function connectWs() {
+    ws.current = new WebSocket(`wss://en.tribalwars2.com/socket.io/?platform=desktop&EIO=3&transport=websocket`)
+    return () => {
+      ws.current.close()
+      setConnectionStatus("not connected")
+    }
+  }
 
   // MESSAGING FUNCTION
 
@@ -77,6 +93,18 @@ function PageTWBot() {
   }
 
   function handleEasyLogin() {
+    setConnectionStatus("logging in . . .")
+    handleLogin()
+    sleep(500)
+    handleSystemIdentify()
+    sleep(500)
+    handleSelectCharacter()
+    sleep(500)
+    handleCompleteLogin()
+    setConnectionStatus("logged in")
+  }
+
+  function handleEasyLoginV2() {
     setConnectionStatus("connecting . . .")
     handleLogin()
     sleep(500)
@@ -155,10 +183,10 @@ function PageTWBot() {
   function handleFetchMap() {
     var payload = {
       character_id: userID,
-      height: mapHeight,
-      width: mapWidth,
-      x: sourceVillageX,
-      y: sourceVillageY
+      height: parseInt(mapHeight),
+      width: parseInt(mapWidth),
+      x: parseInt(sourceVillageX),
+      y: parseInt(sourceVillageY)
     }
     sendSocketMessage(42, "Map/getVillagesByArea", commonHeaders(), JSON.stringify(payload))
   }
@@ -592,7 +620,11 @@ function PageTWBot() {
                           </tr>
                           {otherPlayerVillages.map ((village, idx) => (
                             <tr key={`players-${idx}`}>
-                              <td>{village.id}</td>
+                              <td>
+                                <button className="btn btn-sm btn-rounded btn-primary" onClick={() => addVillageToTargets(village.id)}>
+                                  {village.id}
+                                </button>
+                              </td>
                               <td>{village.x}</td>
                               <td>{village.y}</td>
                               <td>{village.character_id}</td>
