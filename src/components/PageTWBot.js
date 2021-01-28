@@ -27,6 +27,11 @@ function PageTWBot() {
   // CONFIG DATA
   const [connectionStatus, setConnectionStatus] = useState("not connected")
 
+  // WORLD DATA
+  const [nearbyBarbarianVillages, setNearbyBarbarianVillages] = useState([])
+  const [myVillages, setMyVillages] = useState([])
+  const [otherPlayerVillages, setOtherPlayerVillages] = useState([])
+
   useEffect(() => {
 
 
@@ -42,7 +47,6 @@ function PageTWBot() {
     if (!ws.current) { return }
     ws.current.onmessage = (e) => {
       e.preventDefault();
-      console.log("INCOMING MESSAGE", e.data)
 
       const updateArray = [...socketMessages];
       updateArray.unshift(e.data)
@@ -143,19 +147,70 @@ function PageTWBot() {
       var sanitizedObj = justSanitize(incoming_message)
       console.log("HANDLING MESSAGE", sanitizedObj)
       console.log("HANDLING TYPE", sanitizedObj[1].type)
+      var directObj = sanitizedObj[1]
 
-      if (sanitizedObj[1].type === "Map/villageData") {
-        sanitizedObj[1].data.villages.forEach( (village, idx ) => {
-
-          if (!village.character_id) {
-            console.log(village.id, village.x, village.y, village.name)
-          }
-        })
+      if (directObj.type === "Map/villageData") {
+        handeMapMessage(directObj)
       }
 
     } catch (error) {
 
     }
+  }
+
+  function handeMapMessage(directObj) {
+    var tempNearbyBarbarianVillages = []
+    var tempMyVillages = []
+    var tempPlayerVillages = []
+
+    directObj.data.villages.forEach( (village, idx ) => {
+      // var tempVillageObj = {
+      //   "id": village.id,
+      //   "name": village.name,
+      //   "x": village.x,
+      //   "y": village.y,
+      //   "character_id": village.character_id,
+      //   "province_name": village.province_name,
+      //   "character_name": village.character_name,
+      //   "character_points": village.character_points,
+      //   "points": village.points,
+      //   "fortress": village.fortress,
+      //   "tribe_id": village.tribe_id,
+      //   "tribe_name": village.tribe_name,
+      //   "tribe_tag": village.tribe_tag,
+      //   "tribe_points": village.tribe_points,
+      //   "attack_protection": village.attack_protection,
+      //   "barbarian_boost": village.barbarian_boost,
+      //   "report_time_created": village.report_time_created,
+      //   "report_title": village.report_title,
+      //   "report_haul": village.report_haul,
+      //   "player_attack_id": village.player_attack_id,
+      //   "report_result": village.report_result
+      // }
+      var tempVillageObj = village
+
+      if (!village.character_id) {
+        tempNearbyBarbarianVillages.push(tempVillageObj)
+
+      } else if (village.character_name === userName) {
+        tempMyVillages.push(tempVillageObj)
+
+      } else {
+        try {
+          tempVillageObj.name = tempVillageObj.name.substring(0, 9)
+          tempVillageObj.character_name = tempVillageObj.character_name.substring(0, 9)
+          tempVillageObj.character_id = `${tempVillageObj.character_id}`.substring(0, 3) + "..."
+        } catch (error) {
+          console.log("ERR", error.message)
+        }
+        tempPlayerVillages.push(tempVillageObj)
+      }
+    })
+
+    setNearbyBarbarianVillages(tempNearbyBarbarianVillages)
+    setMyVillages(tempMyVillages)
+    setOtherPlayerVillages(tempPlayerVillages)
+
   }
 
   // MISC FUNCTION
@@ -323,7 +378,7 @@ function PageTWBot() {
 
                   <div className="form-group">
                     <label>Target Village IDs</label>
-                    <textarea className="form-control" rows="5"></textarea>
+                    <textarea className="form-control" rows="5" placeholder="123,124,125"></textarea>
                   </div>
 
                   <div className="input-group mb-3">
@@ -368,13 +423,115 @@ function PageTWBot() {
                     </div>
                     <input type="number" className="form-control" placeholder="0" aria-label="Username" aria-describedby="basic-addon1" />
                   </div>
+                  <button className="btn btn-outline-success btn-sm btn-block" disabled>status: none</button>
                   <button className="btn btn-outline-success btn-sm btn-block" onClick={ () => handleStartRaid() }>Start Raid!</button>
                 </div>
 
-                <div className="col-12 col-md-8 border rounded">
+                <div className="col-12 col-md-8 border rounded py-2 overflow-auto" style={{maxHeight: "1000px"}}>
                   <h3>MAP</h3>
                   <hr/>
                   <button className="btn btn-outline-success btn-sm btn-block" onClick={ () => handleFetchMap() }>Fetch Map</button>
+
+                  <ul className="nav nav-tabs" id="myTab" role="tablist">
+                    <li className="nav-item">
+                      <a className="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Barbarian Villages</a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">My Villages</a>
+                    </li>
+                    <li className="nav-item">
+                      <a className="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Player Villages</a>
+                    </li>
+                  </ul>
+
+                  <div className="tab-content" id="myTabContent">
+                    <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                      <table className="table">
+                        <tbody>
+                          <tr>
+                            <th>ID</th>
+                            <th>X</th>
+                            <th>Y</th>
+                            <th>Char ID</th>
+                            <th>Char Name</th>
+                            <th>Village Name</th>
+                            <th>Tribe Name</th>
+                            <th>Points</th>
+                          </tr>
+                          {nearbyBarbarianVillages.map ((village, idx) => (
+                            <tr key={`barbarian-${idx}`}>
+                              <td>{village.id}</td>
+                              <td>{village.x}</td>
+                              <td>{village.y}</td>
+                              <td>{village.character_id}</td>
+                              <td>{village.character_name}</td>
+                              <td>{village.name}</td>
+                              <td>{village.tribe_name}</td>
+                              <td>{village.points}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                      <table className="table">
+                        <tbody>
+                          <tr>
+                            <th>ID</th>
+                            <th>X</th>
+                            <th>Y</th>
+                            <th>Char ID</th>
+                            <th>Char Name</th>
+                            <th>Village Name</th>
+                            <th>Tribe Name</th>
+                            <th>Points</th>
+                          </tr>
+                          {myVillages.map ((village, idx) => (
+                            <tr key={`my-${idx}`}>
+                              <td>{village.id}</td>
+                              <td>{village.x}</td>
+                              <td>{village.y}</td>
+                              <td>{village.character_id}</td>
+                              <td>{village.character_name}</td>
+                              <td>{village.name}</td>
+                              <td>{village.tribe_name}</td>
+                              <td>{village.points}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <div className="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                      <table className="table">
+                        <tbody>
+                          <tr>
+                            <th>ID</th>
+                            <th>X</th>
+                            <th>Y</th>
+                            <th>Char ID</th>
+                            <th>Char Name</th>
+                            <th>Village Name</th>
+                            <th>Tribe Name</th>
+                            <th>Points</th>
+                          </tr>
+                          {otherPlayerVillages.map ((village, idx) => (
+                            <tr key={`players-${idx}`}>
+                              <td>{village.id}</td>
+                              <td>{village.x}</td>
+                              <td>{village.y}</td>
+                              <td>{village.character_id}</td>
+                              <td>{village.character_name}</td>
+                              <td>{village.name}</td>
+                              <td>{village.tribe_name}</td>
+                              <td>{village.points}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -385,7 +542,7 @@ function PageTWBot() {
       <div className="row">
       </div>
 
-      <div className="row">
+      {/* <div className="row">
         <div className="col-12">
           <div style={{whiteSpace: "pre"}}>
             {socketMessages.map( (socketMessage, idx) => (
@@ -399,7 +556,7 @@ function PageTWBot() {
             ))}
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }
