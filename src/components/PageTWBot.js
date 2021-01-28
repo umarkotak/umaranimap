@@ -32,10 +32,23 @@ function PageTWBot() {
   const [myVillages, setMyVillages] = useState([])
   const [otherPlayerVillages, setOtherPlayerVillages] = useState([])
 
+  // SETTING DATA
+  const [sourceVillageID, setSourceVillageID] = useState("")
+  const [sourceVillageX, setSourceVillageX] = useState(500)
+  const [sourceVillageY, setSourceVillageY] = useState(450)
+  const [mapHeight, setMapHeight] = useState(50)
+  const [mapWidth, setMapWidth] = useState(50)
+  const [targetVillageIDs, setTargetVillageIDs] = useState("")
+  const [spear, setSpear] = useState("")
+  const [sword, setSword] = useState("")
+  const [axe, setAxe] = useState("")
+  const [knight, setKnight] = useState("")
+  const [lightCavalry, setLightCavalry] = useState("")
+  const [mountedArcher, setMountedArcher] = useState("")
+  const [archer, setArcher] = useState("")
+
+
   useEffect(() => {
-
-
-
     ws.current = new WebSocket(`wss://en.tribalwars2.com/socket.io/?platform=desktop&EIO=3&transport=websocket`)
     return () => {
       ws.current.close()
@@ -109,23 +122,31 @@ function PageTWBot() {
   }
 
   function sendTargetedArmy(targetID) {
+    var units = {}
+
+    if (spear > 0) { units.spear = parseInt(spear) }
+    if (sword > 0) { units.sword = parseInt(sword) }
+    if (axe > 0) { units.axe = parseInt(axe) }
+    if (knight > 0) { units.knight = parseInt(knight) }
+    if (lightCavalry > 0) { units.light_cavalry = parseInt(lightCavalry) }
+    if (mountedArcher > 0) { units.mounted_archer = parseInt(mountedArcher) }
+    if (archer > 0) { units.archer = parseInt(archer) }
+
     var payload = {
       catapult_target: "headquarter",
       icon: 0,
-      start_village: 182,
-      target_village: targetID,
+      start_village: parseInt(sourceVillageID),
+      target_village: parseInt(targetID),
       type: "attack",
-      units: {
-        spear: 1
-      }
+      units: units
     }
+    console.log(payload)
     sendSocketMessage(42, "Command/sendCustomArmy", commonHeaders(), JSON.stringify(payload))
   }
 
   function handleStartRaid() {
-    var targets = [26,27,28,31,88,90,99,109,110,116,124,127,155,165,167,173,180,183,211,215,217,250,276,277,283,284,285,286,312,328,330,354,359,369,370,371,381,382,383,387,392,394,396,427,440,441,464,468,480,486,494,496,498,507,508,532,535,541,559,564,568,591,670,681,682,683,684,701,709,716,721,736,738,753,776,822,838,852,858,893,915,943,964,966,996,1046,1056,1065,1084,1086,1093,1099,1103,1131,1136,1143,1144,1145,1162,1171,1172,1201,1203,1215,1217,1219,1245,1253,1256,1260,1275,1287,1335,1338,1353,1357,1359,1364,1388,1391,1403,1414,1419,1430,1492,1493,1495,1501,1507,1524,1526,1566,1585,1608,1669,1678,1680,1683,1693,1699,1736,1737,1781,1804,1808,1815,1816,1880,1889,1900,1910,1936,1938,1947,1949,1982,1990,2000,2011,2056,2095,2115,2117,2119,2121,2129,2132,2158,2161,2263]
+    var targets = targetVillageIDs.split(",")
 
-    return ""
     targets.forEach( (targetID, idx) => {
       sendTargetedArmy(targetID)
     })
@@ -133,11 +154,11 @@ function PageTWBot() {
 
   function handleFetchMap() {
     var payload = {
-      character_id: 848915556,
-      height: 50,
-      width: 50,
-      x: 500,
-      y: 450
+      character_id: userID,
+      height: mapHeight,
+      width: mapWidth,
+      x: sourceVillageX,
+      y: sourceVillageY
     }
     sendSocketMessage(42, "Map/getVillagesByArea", commonHeaders(), JSON.stringify(payload))
   }
@@ -247,6 +268,16 @@ function PageTWBot() {
     })
 
     return tempJson
+  }
+
+  function addVillageToTargets(villageID) {
+    var tempVal = targetVillageIDs
+    if (tempVal === "") {
+      tempVal += villageID
+    } else {
+      tempVal += "," + villageID
+    }
+    setTargetVillageIDs(tempVal)
   }
 
   function beautifyVal(socketMessage) {
@@ -373,55 +404,55 @@ function PageTWBot() {
                     <div className="input-group-prepend">
                       <span className="input-group-text">Source Village ID</span>
                     </div>
-                    <input type="number" className="form-control" placeholder="182" aria-label="Username" aria-describedby="basic-addon1" />
+                    <input type="number" className="form-control" placeholder="" aria-label="Username" value={sourceVillageID} onChange={(e) => setSourceVillageID(e.target.value)} />
                   </div>
 
                   <div className="form-group">
                     <label>Target Village IDs</label>
-                    <textarea className="form-control" rows="5" placeholder="123,124,125"></textarea>
+                    <textarea className="form-control" rows="5" placeholder="" value={targetVillageIDs} onChange={(e) => setTargetVillageIDs(e.target.value)}></textarea>
                   </div>
 
                   <div className="input-group mb-3">
                     <div className="input-group-prepend">
                       <span className="input-group-text">Spear</span>
                     </div>
-                    <input type="number" className="form-control" placeholder="0" aria-label="Username" aria-describedby="basic-addon1" />
+                    <input type="number" className="form-control" placeholder="0" aria-label="Username" value={spear} onChange={(e) => setSpear(e.target.value)} />
                   </div>
                   <div className="input-group mb-3">
                     <div className="input-group-prepend">
                       <span className="input-group-text">Sword</span>
                     </div>
-                    <input type="number" className="form-control" placeholder="0" aria-label="Username" aria-describedby="basic-addon1" />
+                    <input type="number" className="form-control" placeholder="0" aria-label="Username" value={sword} onChange={(e) => setSword(e.target.value)} />
                   </div>
                   <div className="input-group mb-3">
                     <div className="input-group-prepend">
                       <span className="input-group-text">Axe</span>
                     </div>
-                    <input type="number" className="form-control" placeholder="0" aria-label="Username" aria-describedby="basic-addon1" />
+                    <input type="number" className="form-control" placeholder="0" aria-label="Username" value={axe} onChange={(e) => setAxe(e.target.value)} />
                   </div>
                   <div className="input-group mb-3">
                     <div className="input-group-prepend">
                       <span className="input-group-text">Knight</span>
                     </div>
-                    <input type="number" className="form-control" placeholder="0" aria-label="Username" aria-describedby="basic-addon1" />
+                    <input type="number" className="form-control" placeholder="0" aria-label="Username" value={knight} onChange={(e) => setKnight(e.target.value)} />
                   </div>
                   <div className="input-group mb-3">
                     <div className="input-group-prepend">
                       <span className="input-group-text">Light Cavalry</span>
                     </div>
-                    <input type="number" className="form-control" placeholder="0" aria-label="Username" aria-describedby="basic-addon1" />
+                    <input type="number" className="form-control" placeholder="0" aria-label="Username" value={lightCavalry} onChange={(e) => setLightCavalry(e.target.value)} />
                   </div>
                   <div className="input-group mb-3">
                     <div className="input-group-prepend">
                       <span className="input-group-text">Mounted Archer</span>
                     </div>
-                    <input type="number" className="form-control" placeholder="0" aria-label="Username" aria-describedby="basic-addon1" />
+                    <input type="number" className="form-control" placeholder="0" aria-label="Username" value={mountedArcher} onChange={(e) => setMountedArcher(e.target.value)} />
                   </div>
                   <div className="input-group mb-3">
                     <div className="input-group-prepend">
                       <span className="input-group-text">Archer</span>
                     </div>
-                    <input type="number" className="form-control" placeholder="0" aria-label="Username" aria-describedby="basic-addon1" />
+                    <input type="number" className="form-control" placeholder="0" aria-label="Username" value={archer} onChange={(e) => setArcher(e.target.value)} />
                   </div>
                   <button className="btn btn-outline-success btn-sm btn-block" disabled>status: none</button>
                   <button className="btn btn-outline-success btn-sm btn-block" onClick={ () => handleStartRaid() }>Start Raid!</button>
@@ -430,6 +461,45 @@ function PageTWBot() {
                 <div className="col-12 col-md-8 border rounded py-2 overflow-auto" style={{maxHeight: "1000px"}}>
                   <h3>MAP</h3>
                   <hr/>
+
+                  <div className="row">
+                    <div className="col-12 col-md-6">
+                      <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">Coord X</span>
+                        </div>
+                        <input type="number" className="form-control" placeholder="250" aria-label="Username" value={sourceVillageX} onChange={(e) => setSourceVillageX(e.target.value)} />
+                      </div>
+                    </div>
+                    <div className="col-12 col-md-6">
+                      <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">Coord Y</span>
+                        </div>
+                        <input type="number" className="form-control" placeholder="255" aria-label="Username" value={sourceVillageY} onChange={(e) => setSourceVillageY(e.target.value)} />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="col-12 col-md-6">
+                      <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">Height</span>
+                        </div>
+                        <input type="number" className="form-control" placeholder="250" aria-label="Username" value={mapHeight} onChange={(e) => setMapHeight(e.target.value)} />
+                      </div>
+                    </div>
+                    <div className="col-12 col-md-6">
+                      <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">Width</span>
+                        </div>
+                        <input type="number" className="form-control" placeholder="255" aria-label="Username" value={mapWidth} onChange={(e) => setMapWidth(e.target.value)} />
+                      </div>
+                    </div>
+                  </div>
+
                   <button className="btn btn-outline-success btn-sm btn-block" onClick={ () => handleFetchMap() }>Fetch Map</button>
 
                   <ul className="nav nav-tabs" id="myTab" role="tablist">
@@ -460,7 +530,11 @@ function PageTWBot() {
                           </tr>
                           {nearbyBarbarianVillages.map ((village, idx) => (
                             <tr key={`barbarian-${idx}`}>
-                              <td>{village.id}</td>
+                              <td>
+                                <button className="btn btn-sm btn-rounded btn-primary" onClick={() => addVillageToTargets(village.id)}>
+                                  {village.id}
+                                </button>
+                              </td>
                               <td>{village.x}</td>
                               <td>{village.y}</td>
                               <td>{village.character_id}</td>
