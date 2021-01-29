@@ -254,6 +254,7 @@ function PageTWBot() {
     var tempNearbyBarbarianVillages = []
     var tempMyVillages = []
     var tempPlayerVillages = []
+    var tempSafePlayerVillages = []
 
     directObj.data.villages.forEach( (village, idx ) => {
       // var tempVillageObj = {
@@ -287,6 +288,16 @@ function PageTWBot() {
       } else if (village.character_name === userName) {
         tempMyVillages.push(tempVillageObj)
 
+      } else if (!village.tribe_name && village.points < 200 && village.attack_protection === 0) {
+        try {
+          tempVillageObj.name = tempVillageObj.name.substring(0, 9)
+          tempVillageObj.character_name = tempVillageObj.character_name.substring(0, 9)
+          tempVillageObj.character_id = `${tempVillageObj.character_id}`.substring(0, 3) + "..."
+        } catch (error) {
+          console.log("ERR", error.message)
+        }
+        tempSafePlayerVillages.push(tempVillageObj)
+
       } else {
         try {
           tempVillageObj.name = tempVillageObj.name.substring(0, 9)
@@ -302,6 +313,7 @@ function PageTWBot() {
     setNearbyBarbarianVillages(tempNearbyBarbarianVillages)
     setMyVillages(tempMyVillages)
     setOtherPlayerVillages(tempPlayerVillages)
+    setSaveToRaidPlayerVillages(tempSafePlayerVillages  )
 
   }
 
@@ -316,7 +328,8 @@ function PageTWBot() {
         name: village.village_name,
         x: village.village_x,
         y: village.village_y,
-        points: village.points
+        points: village.points,
+        province_name: directObj.data.name
       }
 
       if (!village.character_id) {
@@ -454,6 +467,16 @@ function PageTWBot() {
     } while (currentDate - date < milliseconds);
   }
 
+  function calcDist(x2, y2) {
+    try {
+      var a = sourceVillageX - x2;
+      var b = sourceVillageY - y2;
+
+      var c = Math.sqrt( a*a + b*b );
+      return Math.ceil(c)
+    } catch (error) {}
+  }
+
   function sendSocketMessage(prefixNum, type, headers, payload) {
     var basePayload = `${prefixNum}["msg", {
       "id": ${globID},
@@ -537,7 +560,7 @@ function PageTWBot() {
               <div className="row border rounded">
                 <h4 className="col-12">Village Info</h4>
                 <div className="col-4 py-2">
-                  <button className="btn btn-primary btn-sm float-right mx-2" onClick={() => handleRequestPlayerInfo()}>Get My Villages Info</button>
+                  <button className="btn btn-primary btn-sm float-right" onClick={() => handleRequestPlayerInfo()}>Get My Villages Info</button>
                   <table className="table table-bordered">
                     <tbody>
                       <tr>
@@ -562,77 +585,77 @@ function PageTWBot() {
                   </table>
                 </div>
                 <div className="col-8 py-2">
-                  <input type="number" className="float-right" value={checkVillageID} onChange={(e) => setCheckVillageID(e.target.value)}></input>
-                  <button className="btn btn-primary btn-sm float-right mx-2" onClick={() => handleRequestVillageDetail()}>Get Village Detail</button>
+                  {/* <input type="number" className="float-right" value={checkVillageID} onChange={(e) => setCheckVillageID(e.target.value)}></input>
+                  <button className="btn btn-primary btn-sm float-right mx-2" onClick={() => handleRequestVillageDetail()}>Get Village Detail</button> */}
                   <table className="table table-bordered">
                     <tbody>
                       <tr>
-                        <th>clay</th>
-                        <th>food</th>
-                        <th>iron</th>
-                        <th>wood</th>
+                        <th className="p-1">clay</th>
+                        <th className="p-1">food</th>
+                        <th className="p-1">iron</th>
+                        <th className="p-1">wood</th>
                       </tr>
                       <tr>
-                        <td>{myVillageResources.clay}</td>
-                        <td>{myVillageResources.food}</td>
-                        <td>{myVillageResources.iron}</td>
-                        <td>{myVillageResources.wood}</td>
+                        <td className="p-1">{myVillageResources.clay}</td>
+                        <td className="p-1">{myVillageResources.food}</td>
+                        <td className="p-1">{myVillageResources.iron}</td>
+                        <td className="p-1">{myVillageResources.wood}</td>
                       </tr>
                     </tbody>
                   </table>
                   <table className="table table-bordered">
                     <tbody>
                       <tr>
-                        <th>spear</th>
-                        <th>sword</th>
-                        <th>axe</th>
-                        <th>archer</th>
-                        <th>mounted archer</th>
-                        <th>light cavalry</th>
-                        <th>heavy cavalry</th>
+                        <th className="p-1">spear</th>
+                        <th className="p-1">sword</th>
+                        <th className="p-1">axe</th>
+                        <th className="p-1">archer</th>
+                        <th className="p-1">mounted archer</th>
+                        <th className="p-1">light cavalry</th>
+                        <th className="p-1">heavy cavalry</th>
                       </tr>
                       <tr>
-                        <td>{myVillageUnits.spear}</td>
-                        <td>{myVillageUnits.sword}</td>
-                        <td>{myVillageUnits.axe}</td>
-                        <td>{myVillageUnits.archer}</td>
-                        <td>{myVillageUnits.mounted_archer}</td>
-                        <td>{myVillageUnits.light_cavalry}</td>
-                        <td>{myVillageUnits.heavy_cavalry}</td>
+                        <td className="p-1">{myVillageUnits.spear}</td>
+                        <td className="p-1">{myVillageUnits.sword}</td>
+                        <td className="p-1">{myVillageUnits.axe}</td>
+                        <td className="p-1">{myVillageUnits.archer}</td>
+                        <td className="p-1">{myVillageUnits.mounted_archer}</td>
+                        <td className="p-1">{myVillageUnits.light_cavalry}</td>
+                        <td className="p-1">{myVillageUnits.heavy_cavalry}</td>
                       </tr>
                     </tbody>
                   </table>
                   {/* <table className="table table-bordered">
                     <tbody>
                       <tr>
-                        <th>knight</th>
-                        <th>catapult</th>
-                        <th>doppelsoldner</th>
-                        <th>ram</th>
-                        <th>snob</th>
-                        <th>trebuchet</th>
+                        <th className="p-1">knight</th>
+                        <th className="p-1">catapult</th>
+                        <th className="p-1">doppelsoldner</th>
+                        <th className="p-1">ram</th>
+                        <th className="p-1">snob</th>
+                        <th className="p-1">trebuchet</th>
                       </tr>
                       <tr>
-                        <td>{myVillageUnits.knight}</td>
-                        <td>{myVillageUnits.catapult}</td>
-                        <td>{myVillageUnits.doppelsoldner}</td>
-                        <td>{myVillageUnits.ram}</td>
-                        <td>{myVillageUnits.snob}</td>
-                        <td>{myVillageUnits.trebuchet}</td>
+                        <td className="p-1">{myVillageUnits.knight}</td>
+                        <td className="p-1">{myVillageUnits.catapult}</td>
+                        <td className="p-1">{myVillageUnits.doppelsoldner}</td>
+                        <td className="p-1">{myVillageUnits.ram}</td>
+                        <td className="p-1">{myVillageUnits.snob}</td>
+                        <td className="p-1">{myVillageUnits.trebuchet}</td>
                       </tr>
                     </tbody>
                   </table> */}
                   <table className="table table-bordered">
                     <tbody>
                       <tr>
-                        <th>province X</th>
-                        <th>province Y</th>
-                        <th>province Name</th>
+                        <th className="p-1">province X</th>
+                        <th className="p-1">province Y</th>
+                        <th className="p-1">province Name</th>
                       </tr>
                       <tr>
-                        <td>{provinceLandmarkX}</td>
-                        <td>{provinceLandmarkY}</td>
-                        <td>{provinceName}</td>
+                        <td className="p-1">{provinceLandmarkX}</td>
+                        <td className="p-1">{provinceLandmarkY}</td>
+                        <td className="p-1">{provinceName}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -640,9 +663,8 @@ function PageTWBot() {
               </div>
 
               <div className="row">
-                <div className="col-12 col-md-4 border rounded py-2">
+                <div className="col-12 col-md-3 border rounded py-2">
                   <h4>Easy Raid</h4>
-                  <hr/>
                   <div className="input-group mb-3">
                     <div className="input-group-prepend">
                       <span className="input-group-text">Source Village ID</span>
@@ -681,13 +703,13 @@ function PageTWBot() {
                   </div>
                   <div className="input-group mb-3">
                     <div className="input-group-prepend">
-                      <span className="input-group-text">Light Cavalry</span>
+                      <span className="input-group-text">Light Caval</span>
                     </div>
                     <input type="number" className="form-control" placeholder="0" aria-label="Username" value={lightCavalry} onChange={(e) => setLightCavalry(e.target.value)} />
                   </div>
                   <div className="input-group mb-3">
                     <div className="input-group-prepend">
-                      <span className="input-group-text">Mounted Archer</span>
+                      <span className="input-group-text">Mount Arch</span>
                     </div>
                     <input type="number" className="form-control" placeholder="0" aria-label="Username" value={mountedArcher} onChange={(e) => setMountedArcher(e.target.value)} />
                   </div>
@@ -707,50 +729,47 @@ function PageTWBot() {
                   <button className="btn btn-outline-success btn-sm btn-block" onClick={ () => handleStartRaid() }>Start Raid!</button>
                 </div>
 
-                <div className="col-12 col-md-8 border rounded py-2 overflow-auto" style={{maxHeight: "1000px"}}>
+                <div className="col-12 col-md-9 border rounded py-2 px-1 overflow-auto" style={{maxHeight: "750px"}}>
                   <h4>MAP</h4>
-                  <hr/>
 
-                  <div className="row">
-                    <div className="col-12 col-md-6">
-                      <div className="input-group mb-2">
+                  <div className="row sticky-top bg-light">
+                    <div className="col-12 col-md-2 px-1">
+                      <div className="input-group">
                         <div className="input-group-prepend">
-                          <span className="input-group-text">Coord X</span>
+                          <span className="input-group-text">X</span>
                         </div>
                         <input type="number" className="form-control" placeholder="250" aria-label="Username" value={sourceVillageX} onChange={(e) => setSourceVillageX(e.target.value)} />
                       </div>
                     </div>
-                    <div className="col-12 col-md-6">
-                      <div className="input-group mb-2">
+                    <div className="col-12 col-md-2 px-1">
+                      <div className="input-group">
                         <div className="input-group-prepend">
-                          <span className="input-group-text">Coord Y</span>
+                          <span className="input-group-text">Y</span>
                         </div>
                         <input type="number" className="form-control" placeholder="255" aria-label="Username" value={sourceVillageY} onChange={(e) => setSourceVillageY(e.target.value)} />
                       </div>
                     </div>
-                  </div>
-
-                  <div className="row">
-                    <div className="col-12 col-md-6">
-                      <div className="input-group mb-2">
+                    <div className="col-12 col-md-3 px-1">
+                      <div className="input-group">
                         <div className="input-group-prepend">
                           <span className="input-group-text">Height</span>
                         </div>
                         <input type="number" className="form-control" placeholder="250" aria-label="Username" value={mapHeight} onChange={(e) => setMapHeight(e.target.value)} />
                       </div>
                     </div>
-                    <div className="col-12 col-md-6">
-                      <div className="input-group mb-2">
+                    <div className="col-12 col-md-3 px-1">
+                      <div className="input-group">
                         <div className="input-group-prepend">
                           <span className="input-group-text">Width</span>
                         </div>
                         <input type="number" className="form-control" placeholder="255" aria-label="Username" value={mapWidth} onChange={(e) => setMapWidth(e.target.value)} />
                       </div>
                     </div>
-                  </div>
-
-                  <div className="row">
-                    <div className="col-12 col-md-6">
+                    <div className="col-12 col-md-2 px-1">
+                      <button className="btn btn-outline-success btn-sm btn-block my-1" onClick={ () => handleFetchMap() }>Fetch Map</button>
+                    </div>
+                    {/* BATAS MENUS PER 12 */}
+                    <div className="col-12 col-md-4 p-1">
                       <div className="input-group mb-2">
                         <div className="input-group-prepend">
                           <span className="input-group-text">Landmark X</span>
@@ -758,7 +777,7 @@ function PageTWBot() {
                         <input type="number" className="form-control" placeholder="255" aria-label="Username" value={provinceLandmarkX} onChange={(e) => setProvinceLandmarkX(e.target.value)} />
                       </div>
                     </div>
-                    <div className="col-12 col-md-6">
+                    <div className="col-12 col-md-4 p-1">
                       <div className="input-group mb-2">
                         <div className="input-group-prepend">
                           <span className="input-group-text">Landmark Y</span>
@@ -766,12 +785,12 @@ function PageTWBot() {
                         <input type="number" className="form-control" placeholder="255" aria-label="Username" value={provinceLandmarkY} onChange={(e) => setProvinceLandmarkY(e.target.value)} />
                       </div>
                     </div>
+                    <div className="col-12 col-md-4 p-1">
+                      <button className="btn btn-outline-success btn-sm btn-block my-1" onClick={ () => handleFetchProvince() }>Fetch Province</button>
+                    </div>
                   </div>
 
-                  <button className="btn btn-outline-success btn-sm btn-block my-1" onClick={ () => handleFetchMap() }>Fetch Map</button>
-                  <button className="btn btn-outline-success btn-sm btn-block my-1" onClick={ () => handleFetchProvince() }>Fetch Province</button>
-
-                  <ul className="nav nav-tabs" id="myTab" role="tablist">
+                  <ul className="nav nav-tabs p-1" id="myTab" role="tablist">
                     <li className="nav-item">
                       <a className="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Barbarian Villages</a>
                     </li>
@@ -781,34 +800,41 @@ function PageTWBot() {
                     <li className="nav-item">
                       <a className="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Player Villages</a>
                     </li>
+                    <li className="nav-item">
+                      <a className="nav-link" id="contact-tab" data-toggle="tab" href="#safeVillage" role="tab" aria-controls="contact" aria-selected="false">Low Point Player Villages</a>
+                    </li>
                   </ul>
 
-                  <div className="tab-content" id="myTabContent">
+                  <div className="tab-content p-1" id="myTabContent">
                     <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                      <table className="table">
+                      <table className="table table-bordered">
                         <tbody>
                           <tr>
-                            <th>ID</th>
-                            <th>X</th>
-                            <th>Y</th>
-                            <th>Village Name</th>
-                            <th>Points</th>
-                            <th>Report</th>
-                            <th>Time</th>
+                            <th className="p-1">ID</th>
+                            <th className="p-1">X</th>
+                            <th className="p-1">Y</th>
+                            <th className="p-1">Village Name</th>
+                            <th className="p-1">Points</th>
+                            <th className="p-1">Report</th>
+                            <th className="p-1">Time</th>
+                            <th className="p-1">Province</th>
+                            <th className="p-1">Dist</th>
                           </tr>
                           {nearbyBarbarianVillages.map ((village, idx) => (
                             <tr key={`barbarian-${idx}`}>
-                              <td>
+                              <td className="p-1">
                                 <button className="btn btn-sm btn-rounded btn-primary" onClick={(e) => addVillageToTargets(village.id, e)}>
                                   {village.id}
                                 </button>
                               </td>
-                              <td>{village.x}</td>
-                              <td>{village.y}</td>
-                              <td>{village.name}</td>
-                              <td>{village.points}</td>
-                              <td>{village.report_title}</td>
-                              <td>{new Date(village.report_time_created * 1000).toLocaleString('en-GB', { hour12: false })}</td>
+                              <td className="p-1">{village.x}</td>
+                              <td className="p-1">{village.y}</td>
+                              <td className="p-1">{village.name}</td>
+                              <td className="p-1">{village.points}</td>
+                              <td className="p-1">{village.report_title}</td>
+                              <td className="p-1">{new Date(village.report_time_created * 1000).toLocaleString('en-GB', { hour12: false })}</td>
+                              <td className="p-1">{village.province_name}</td>
+                              <td className="p-1">{calcDist(village.x, village.y)}</td>
                             </tr>
                           ))}
                         </tbody>
@@ -859,6 +885,41 @@ function PageTWBot() {
                             <th>Report Title</th>
                           </tr>
                           {otherPlayerVillages.map ((village, idx) => (
+                            <tr key={`players-${idx}`}>
+                              <td>
+                                <button className="btn btn-sm btn-rounded btn-primary" onClick={(e) => addVillageToTargets(village.id, e)}>
+                                  {village.id}
+                                </button>
+                              </td>
+                              <td>{village.x}</td>
+                              <td>{village.y}</td>
+                              <td>{village.character_id}</td>
+                              <td>{village.character_name}</td>
+                              <td>{village.name}</td>
+                              <td>{village.tribe_name}</td>
+                              <td>{village.points}</td>
+                              <td>{village.report_title}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <div className="tab-pane fade" id="safeVillage" role="tabpanel" aria-labelledby="safeVillage-tab">
+                      <table className="table">
+                        <tbody>
+                          <tr>
+                            <th>ID</th>
+                            <th>X</th>
+                            <th>Y</th>
+                            <th>Char ID</th>
+                            <th>Char Name</th>
+                            <th>Village Name</th>
+                            <th>Tribe Name</th>
+                            <th>Points</th>
+                            <th>Report Title</th>
+                          </tr>
+                          {saveToRaidPlayerVillages.map ((village, idx) => (
                             <tr key={`players-${idx}`}>
                               <td>
                                 <button className="btn btn-sm btn-rounded btn-primary" onClick={(e) => addVillageToTargets(village.id, e)}>
