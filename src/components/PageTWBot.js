@@ -41,7 +41,8 @@ function PageTWBot() {
   const [lightCavalry, setLightCavalry] = useState("")
   const [mountedArcher, setMountedArcher] = useState("")
   const [archer, setArcher] = useState("")
-
+  const [randomChecked, setRandomChecked] = useState(false)
+  const [raidPercentage, setRaidPercentage] = useState(0)
 
   useEffect(() => {
     connectWs()
@@ -172,10 +173,34 @@ function PageTWBot() {
 
   function handleStartRaid() {
     var targets = targetVillageIDs.split(",")
+    setRaidPercentage(0)
 
-    targets.forEach( (targetID, idx) => {
-      sendTargetedArmy(targetID)
-    })
+    if (randomChecked) {
+      var ctr = 0
+      targets.forEach( (targetID, idx) => {
+          var someNumbers = [500, 1000, 1500]
+          var randomNumber = someNumbers[Math.floor(Math.random() * someNumbers.length)];
+
+          setTimeout(() => {
+            sendTargetedArmy(targetID)
+            ctr += 1
+            var percentage = Math.ceil(ctr/targets.length* 100)
+            setRaidPercentage(percentage)
+            console.log("RANDOM", targetID, ctr, percentage)
+          }, randomNumber + (idx * 1000))
+
+        })
+
+    } else {
+      targets.forEach( (targetID, idx) => {
+        sendTargetedArmy(targetID)
+        console.log("DIRECT", targetID)
+      })
+      setRaidPercentage(100)
+    }
+
+    handleRequestVillageDetailAuto(parseInt(sourceVillageID))
+
   }
 
   function handleFetchMap() {
@@ -601,7 +626,13 @@ function PageTWBot() {
                     </div>
                     <input type="number" className="form-control" placeholder="0" aria-label="Username" value={archer} onChange={(e) => setArcher(e.target.value)} />
                   </div>
-                  <button className="btn btn-outline-success btn-sm btn-block" disabled>status: none</button>
+                  <div className="form-check">
+                    <input type="checkbox" className="form-check-input" checked={randomChecked} onChange={(e) => setRandomChecked(e.target.value)} />
+                    <label className="form-check-label" >Enable random interval</label>
+                  </div>
+                  <div className="progress">
+                    <div className="progress-bar" role="progressbar" style={{width: `${raidPercentage}%`}} aria-valuenow={`${raidPercentage}`} aria-valuemin="0" aria-valuemax="100">{`${raidPercentage}`}%</div>
+                  </div>
                   <button className="btn btn-outline-success btn-sm btn-block" onClick={ () => handleStartRaid() }>Start Raid!</button>
                 </div>
 
