@@ -21,6 +21,7 @@ function PageTWBot() {
   const [nearbyBarbarianVillages, setNearbyBarbarianVillages] = useState([])
   const [myVillages, setMyVillages] = useState([])
   const [otherPlayerVillages, setOtherPlayerVillages] = useState([])
+  const [saveToRaidPlayerVillages, setSaveToRaidPlayerVillages] = useState([])
 
   // SETTING DATA
   const [myCharacterVillages, setMyCharacterVillages] = useState([])
@@ -131,7 +132,7 @@ function PageTWBot() {
     sendSocketMessage(42, "Map/getVillageDetails", commonHeaders(), JSON.stringify(payload))
   }
 
-  function handleRequestVillageDetailAuto(selectedVillageID) {
+  function handleRequestVillageDetailAuto(selectedVillageID, e = false) {
     var payload = {
       village_id: selectedVillageID,
       my_village_id: myCharacterVillages[0].id,
@@ -139,6 +140,10 @@ function PageTWBot() {
     }
     sendSocketMessage(42, "Map/getVillageDetails", commonHeaders(), JSON.stringify(payload))
     setSourceVillageID(selectedVillageID)
+
+    if (e) {
+      e.target.className = "btn btn-sm btn-rounded btn-danger"
+    }
   }
 
   function handleSelectCharacter() {
@@ -399,7 +404,7 @@ function PageTWBot() {
     return tempJson
   }
 
-  function addVillageToTargets(villageID) {
+  function addVillageToTargets(villageID, e = false) {
     var tempVal = targetVillageIDs
     if (tempVal === "") {
       tempVal += villageID
@@ -407,6 +412,10 @@ function PageTWBot() {
       tempVal += "," + villageID
     }
     setTargetVillageIDs(tempVal)
+
+    if (e) {
+      e.target.className = "btn btn-sm btn-rounded btn-danger"
+    }
   }
 
   // function beautifyVal(socketMessage) {
@@ -528,7 +537,7 @@ function PageTWBot() {
               <div className="row border rounded">
                 <h4 className="col-12">Village Info</h4>
                 <div className="col-4 py-2">
-                  <button className="btn btn-danger btn-sm float-right mx-2" onClick={() => handleRequestPlayerInfo()}>Get My Villages Info</button>
+                  <button className="btn btn-primary btn-sm float-right mx-2" onClick={() => handleRequestPlayerInfo()}>Get My Villages Info</button>
                   <table className="table table-bordered">
                     <tbody>
                       <tr>
@@ -540,7 +549,7 @@ function PageTWBot() {
                       {myCharacterVillages.map((myVillage, idx) => (
                         <tr key={`my-village-info-${idx}`}>
                           <td>
-                            <button className="btn btn-sm btn-rounded btn-primary" onClick={() => handleRequestVillageDetailAuto(myVillage.id)}>
+                            <button className="btn btn-sm btn-rounded btn-primary" onClick={(e) => handleRequestVillageDetailAuto(myVillage.id, e)}>
                               {myVillage.id}
                             </button>
                           </td>
@@ -554,7 +563,7 @@ function PageTWBot() {
                 </div>
                 <div className="col-8 py-2">
                   <input type="number" className="float-right" value={checkVillageID} onChange={(e) => setCheckVillageID(e.target.value)}></input>
-                  <button className="btn btn-danger btn-sm float-right mx-2" onClick={() => handleRequestVillageDetail()}>Get Village Detail</button>
+                  <button className="btn btn-primary btn-sm float-right mx-2" onClick={() => handleRequestVillageDetail()}>Get Village Detail</button>
                   <table className="table table-bordered">
                     <tbody>
                       <tr>
@@ -771,7 +780,7 @@ function PageTWBot() {
                           {nearbyBarbarianVillages.map ((village, idx) => (
                             <tr key={`barbarian-${idx}`}>
                               <td>
-                                <button className="btn btn-sm btn-rounded btn-primary" onClick={() => addVillageToTargets(village.id)}>
+                                <button className="btn btn-sm btn-rounded btn-primary" onClick={(e) => addVillageToTargets(village.id, e)}>
                                   {village.id}
                                 </button>
                               </td>
@@ -833,7 +842,7 @@ function PageTWBot() {
                           {otherPlayerVillages.map ((village, idx) => (
                             <tr key={`players-${idx}`}>
                               <td>
-                                <button className="btn btn-sm btn-rounded btn-primary" onClick={() => addVillageToTargets(village.id)}>
+                                <button className="btn btn-sm btn-rounded btn-primary" onClick={(e) => addVillageToTargets(village.id, e)}>
                                   {village.id}
                                 </button>
                               </td>
