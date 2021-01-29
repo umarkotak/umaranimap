@@ -63,6 +63,7 @@ function PageTWBot() {
       setConnectionStatus("connected")
       if (userName && userToken && userID && worldID) {
         handleEasyLogin()
+        handleRequestPlayerInfo()
       }
       handlePing()
     }
@@ -134,6 +135,16 @@ function PageTWBot() {
       num_reports: 5
     }
     sendSocketMessage(42, "Map/getVillageDetails", commonHeaders(), JSON.stringify(payload))
+  }
+
+  function handleRequestVillageDetailAuto(selectedVillageID) {
+    var payload = {
+      village_id: selectedVillageID,
+      my_village_id: myCharacterVillages[0].id,
+      num_reports: 5
+    }
+    sendSocketMessage(42, "Map/getVillageDetails", commonHeaders(), JSON.stringify(payload))
+    setSourceVillageID(selectedVillageID)
   }
 
   function handleSelectCharacter() {
@@ -479,7 +490,11 @@ function PageTWBot() {
                       </tr>
                       {myCharacterVillages.map((myVillage, idx) => (
                         <tr key={`my-village-info-${idx}`}>
-                          <td>{myVillage.id}</td>
+                          <td>
+                            <button className="btn btn-sm btn-rounded btn-primary" onClick={() => handleRequestVillageDetailAuto(myVillage.id)}>
+                              {myVillage.id}
+                            </button>
+                          </td>
                           <td>{myVillage.name}</td>
                           <td>{myVillage.x}</td>
                           <td>{myVillage.y}</td>
