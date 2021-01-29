@@ -713,7 +713,7 @@ function PageTWBot() {
 
                   <div className="row">
                     <div className="col-12 col-md-6">
-                      <div className="input-group mb-3">
+                      <div className="input-group mb-2">
                         <div className="input-group-prepend">
                           <span className="input-group-text">Coord X</span>
                         </div>
@@ -721,7 +721,7 @@ function PageTWBot() {
                       </div>
                     </div>
                     <div className="col-12 col-md-6">
-                      <div className="input-group mb-3">
+                      <div className="input-group mb-2">
                         <div className="input-group-prepend">
                           <span className="input-group-text">Coord Y</span>
                         </div>
@@ -732,7 +732,7 @@ function PageTWBot() {
 
                   <div className="row">
                     <div className="col-12 col-md-6">
-                      <div className="input-group mb-3">
+                      <div className="input-group mb-2">
                         <div className="input-group-prepend">
                           <span className="input-group-text">Height</span>
                         </div>
@@ -740,7 +740,7 @@ function PageTWBot() {
                       </div>
                     </div>
                     <div className="col-12 col-md-6">
-                      <div className="input-group mb-3">
+                      <div className="input-group mb-2">
                         <div className="input-group-prepend">
                           <span className="input-group-text">Width</span>
                         </div>
@@ -749,8 +749,27 @@ function PageTWBot() {
                     </div>
                   </div>
 
-                  <button className="btn btn-outline-success btn-sm btn-block" onClick={ () => handleFetchMap() }>Fetch Map</button>
-                  <button className="btn btn-outline-success btn-sm btn-block" onClick={ () => handleFetchProvince() }>Fetch Province</button>
+                  <div className="row">
+                    <div className="col-12 col-md-6">
+                      <div className="input-group mb-2">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">Landmark X</span>
+                        </div>
+                        <input type="number" className="form-control" placeholder="255" aria-label="Username" value={provinceLandmarkX} onChange={(e) => setProvinceLandmarkX(e.target.value)} />
+                      </div>
+                    </div>
+                    <div className="col-12 col-md-6">
+                      <div className="input-group mb-2">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">Landmark Y</span>
+                        </div>
+                        <input type="number" className="form-control" placeholder="255" aria-label="Username" value={provinceLandmarkY} onChange={(e) => setProvinceLandmarkY(e.target.value)} />
+                      </div>
+                    </div>
+                  </div>
+
+                  <button className="btn btn-outline-success btn-sm btn-block my-1" onClick={ () => handleFetchMap() }>Fetch Map</button>
+                  <button className="btn btn-outline-success btn-sm btn-block my-1" onClick={ () => handleFetchProvince() }>Fetch Province</button>
 
                   <ul className="nav nav-tabs" id="myTab" role="tablist">
                     <li className="nav-item">
