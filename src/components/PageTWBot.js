@@ -27,6 +27,9 @@ function PageTWBot() {
   const [checkVillageID, setCheckVillageID] = useState("")
   const [myVillageResources, setMyVillageResources] = useState({})
   const [myVillageUnits, setMyVillageUnits] = useState({})
+  const [provinceLandmarkX, setProvinceLandmarkX] = useState(0)
+  const [provinceLandmarkY, setProvinceLandmarkY] = useState(0)
+  const [provinceName, setProvinceName] = useState("")
 
   const [sourceVillageID, setSourceVillageID] = useState("")
   const [sourceVillageX, setSourceVillageX] = useState(500)
@@ -167,7 +170,6 @@ function PageTWBot() {
       type: "attack",
       units: units
     }
-    console.log(payload)
     sendSocketMessage(42, "Command/sendCustomArmy", commonHeaders(), JSON.stringify(payload))
   }
 
@@ -186,7 +188,6 @@ function PageTWBot() {
             ctr += 1
             var percentage = Math.ceil(ctr/targets.length* 100)
             setRaidPercentage(percentage)
-            console.log("RANDOM", targetID, ctr, percentage)
           }, randomNumber + (idx * 1000))
 
         })
@@ -194,7 +195,6 @@ function PageTWBot() {
     } else {
       targets.forEach( (targetID, idx) => {
         sendTargetedArmy(targetID)
-        console.log("DIRECT", targetID)
       })
       setRaidPercentage(100)
     }
@@ -214,6 +214,14 @@ function PageTWBot() {
     sendSocketMessage(42, "Map/getVillagesByArea", commonHeaders(), JSON.stringify(payload))
   }
 
+  function handleFetchProvince() {
+    var payload = {
+      x: provinceLandmarkX,
+      y: provinceLandmarkY
+    }
+    sendSocketMessage(42, "Map/getProvince", commonHeaders(), JSON.stringify(payload))
+  }
+
   function handleIncomingMessage(incoming_message) {
     try {
       var sanitizedObj = justSanitize(incoming_message)
@@ -227,6 +235,9 @@ function PageTWBot() {
         handleIncomingCharacterInfo(directObj)
       } else if (directObj.type === "Map/villageDetails") {
         handleIncomingVillageDetail(directObj)
+      } else if (directObj.type === "Map/province") {
+        handleIncomingProvinceData(directObj)
+        console.log("PROVINCE DATA", directObj)
       }
 
     } catch (error) {
@@ -264,7 +275,6 @@ function PageTWBot() {
       //   "report_result": village.report_result
       // }
       var tempVillageObj = village
-      console.log(village)
 
       if (!village.character_id) {
         tempNearbyBarbarianVillages.push(tempVillageObj)
@@ -290,6 +300,43 @@ function PageTWBot() {
 
   }
 
+  function handleIncomingProvinceData(directObj) {
+    var tempNearbyBarbarianVillages = []
+    var tempMyVillages = []
+    var tempPlayerVillages = []
+
+    directObj.data.villages.forEach( (village, idx ) => {
+      var tempVillageObj = {
+        id: village.village_id,
+        name: village.village_name,
+        x: village.village_x,
+        y: village.village_y,
+        points: village.points
+      }
+
+      if (!village.character_id) {
+        tempNearbyBarbarianVillages.push(tempVillageObj)
+
+      } else if (village.character_name === userName) {
+        tempMyVillages.push(tempVillageObj)
+
+      } else {
+        try {
+          tempVillageObj.name = tempVillageObj.name.substring(0, 9)
+          tempVillageObj.character_name = tempVillageObj.character_name.substring(0, 9)
+          tempVillageObj.character_id = `${tempVillageObj.character_id}`.substring(0, 3) + "..."
+        } catch (error) {
+          console.log("ERR", error.message)
+        }
+        tempPlayerVillages.push(tempVillageObj)
+      }
+    })
+
+    setNearbyBarbarianVillages(tempNearbyBarbarianVillages)
+    setMyVillages(tempMyVillages)
+    setOtherPlayerVillages(tempPlayerVillages)
+  }
+
   function handleIncomingCharacterInfo(directObj) {
     var tempMyVillages = []
 
@@ -301,10 +348,12 @@ function PageTWBot() {
   }
 
   function handleIncomingVillageDetail(directObj) {
-    console.log("VILLAGE DETAIL", directObj)
-
+    console.log(directObj)
     setMyVillageResources(directObj.data.resources)
     setMyVillageUnits(directObj.data.units)
+    setProvinceLandmarkX(directObj.data.province.x)
+    setProvinceLandmarkY(directObj.data.province.y)
+    setProvinceName(directObj.data.province.name)
   }
 
   function handlePing() {
@@ -318,7 +367,6 @@ function PageTWBot() {
   // MISC FUNCTION
 
   function handleSaveConfig() {
-    console.log("SAVED!")
     saveToCookies("TW_USERNAME", userName)
     saveToCookies("TW_USER_TOKEN", userToken)
     saveToCookies("TW_USER_ID", userID)
@@ -480,7 +528,7 @@ function PageTWBot() {
               <div className="row border rounded">
                 <h4 className="col-12">Village Info</h4>
                 <div className="col-4 py-2">
-                  <button className="btn btn-danger btn-sm float-right mx-2" onClick={() => handleRequestPlayerInfo()}>Get Player Info</button>
+                  <button className="btn btn-danger btn-sm float-right mx-2" onClick={() => handleRequestPlayerInfo()}>Get My Villages Info</button>
                   <table className="table table-bordered">
                     <tbody>
                       <tr>
@@ -545,7 +593,7 @@ function PageTWBot() {
                       </tr>
                     </tbody>
                   </table>
-                  <table className="table table-bordered">
+                  {/* <table className="table table-bordered">
                     <tbody>
                       <tr>
                         <th>knight</th>
@@ -562,6 +610,20 @@ function PageTWBot() {
                         <td>{myVillageUnits.ram}</td>
                         <td>{myVillageUnits.snob}</td>
                         <td>{myVillageUnits.trebuchet}</td>
+                      </tr>
+                    </tbody>
+                  </table> */}
+                  <table className="table table-bordered">
+                    <tbody>
+                      <tr>
+                        <th>province X</th>
+                        <th>province Y</th>
+                        <th>province Name</th>
+                      </tr>
+                      <tr>
+                        <td>{provinceLandmarkX}</td>
+                        <td>{provinceLandmarkY}</td>
+                        <td>{provinceName}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -679,6 +741,7 @@ function PageTWBot() {
                   </div>
 
                   <button className="btn btn-outline-success btn-sm btn-block" onClick={ () => handleFetchMap() }>Fetch Map</button>
+                  <button className="btn btn-outline-success btn-sm btn-block" onClick={ () => handleFetchProvince() }>Fetch Province</button>
 
                   <ul className="nav nav-tabs" id="myTab" role="tablist">
                     <li className="nav-item">
