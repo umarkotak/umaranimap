@@ -33,6 +33,11 @@ function PageTWBot() {
   const [otherPlayerVillages, setOtherPlayerVillages] = useState([])
 
   // SETTING DATA
+  const [myCharacterVillages, setMyCharacterVillages] = useState([])
+  const [checkVillageID, setCheckVillageID] = useState("")
+  const [myVillageResources, setMyVillageResources] = useState({})
+  const [myVillageUnits, setMyVillageUnits] = useState({})
+
   const [sourceVillageID, setSourceVillageID] = useState("")
   const [sourceVillageX, setSourceVillageX] = useState(500)
   const [sourceVillageY, setSourceVillageY] = useState(450)
@@ -117,6 +122,20 @@ function PageTWBot() {
     sendSocketMessage(42, "System/identify", commonHeaders(), JSON.stringify(payload))
   }
 
+  function handleRequestPlayerInfo() {
+    var payload = {}
+    sendSocketMessage(42, "Character/getInfo", commonHeaders(), JSON.stringify(payload))
+  }
+
+  function handleRequestVillageDetail() {
+    var payload = {
+      village_id: parseInt(checkVillageID),
+      my_village_id: myCharacterVillages[0].id,
+      num_reports: 5
+    }
+    sendSocketMessage(42, "Map/getVillageDetails", commonHeaders(), JSON.stringify(payload))
+  }
+
   function handleSelectCharacter() {
     var payload = { id: userID, world_id: worldID }
     sendSocketMessage(42, "Authentication/selectCharacter", commonHeaders(), JSON.stringify(payload))
@@ -191,7 +210,11 @@ function PageTWBot() {
       var directObj = sanitizedObj[1]
 
       if (directObj.type === "Map/villageData") {
-        handeMapMessage(directObj)
+        handleMapMessage(directObj)
+      } else if (directObj.type === "Character/info") {
+        handleIncomingCharacterInfo(directObj)
+      } else if (directObj.type === "Map/villageDetails") {
+        handleIncomingVillageDetail(directObj)
       }
 
     } catch (error) {
@@ -199,7 +222,7 @@ function PageTWBot() {
     }
   }
 
-  function handeMapMessage(directObj) {
+  function handleMapMessage(directObj) {
     var tempNearbyBarbarianVillages = []
     var tempMyVillages = []
     var tempPlayerVillages = []
@@ -253,6 +276,23 @@ function PageTWBot() {
     setMyVillages(tempMyVillages)
     setOtherPlayerVillages(tempPlayerVillages)
 
+  }
+
+  function handleIncomingCharacterInfo(directObj) {
+    var tempMyVillages = []
+
+    directObj.data.villages.forEach((village, idx) => {
+      tempMyVillages.push(village)
+    })
+
+    setMyCharacterVillages(tempMyVillages)
+  }
+
+  function handleIncomingVillageDetail(directObj) {
+    console.log("VILLAGE DETAIL", directObj)
+
+    setMyVillageResources(directObj.data.resources)
+    setMyVillageUnits(directObj.data.units)
   }
 
   function handlePing() {
@@ -425,9 +465,96 @@ function PageTWBot() {
               Game Window
             </div>
             <div className="card-body">
+              <div className="row border rounded">
+                <h4 className="col-12">Village Info</h4>
+                <div className="col-4 py-2">
+                  <button className="btn btn-danger btn-sm float-right mx-2" onClick={() => handleRequestPlayerInfo()}>Get Player Info</button>
+                  <table className="table table-bordered">
+                    <tbody>
+                      <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>X</th>
+                        <th>Y</th>
+                      </tr>
+                      {myCharacterVillages.map((myVillage, idx) => (
+                        <tr key={`my-village-info-${idx}`}>
+                          <td>{myVillage.id}</td>
+                          <td>{myVillage.name}</td>
+                          <td>{myVillage.x}</td>
+                          <td>{myVillage.y}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <div className="col-8 py-2">
+                  <input type="number" className="float-right" value={checkVillageID} onChange={(e) => setCheckVillageID(e.target.value)}></input>
+                  <button className="btn btn-danger btn-sm float-right mx-2" onClick={() => handleRequestVillageDetail()}>Get Village Detail</button>
+                  <table className="table table-bordered">
+                    <tbody>
+                      <tr>
+                        <th>clay</th>
+                        <th>food</th>
+                        <th>iron</th>
+                        <th>wood</th>
+                      </tr>
+                      <tr>
+                        <td>{myVillageResources.clay}</td>
+                        <td>{myVillageResources.food}</td>
+                        <td>{myVillageResources.iron}</td>
+                        <td>{myVillageResources.wood}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table className="table table-bordered">
+                    <tbody>
+                      <tr>
+                        <th>spear</th>
+                        <th>sword</th>
+                        <th>axe</th>
+                        <th>archer</th>
+                        <th>mounted archer</th>
+                        <th>light cavalry</th>
+                        <th>heavy cavalry</th>
+                      </tr>
+                      <tr>
+                        <td>{myVillageUnits.spear}</td>
+                        <td>{myVillageUnits.sword}</td>
+                        <td>{myVillageUnits.axe}</td>
+                        <td>{myVillageUnits.archer}</td>
+                        <td>{myVillageUnits.mounted_archer}</td>
+                        <td>{myVillageUnits.light_cavalry}</td>
+                        <td>{myVillageUnits.heavy_cavalry}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table className="table table-bordered">
+                    <tbody>
+                      <tr>
+                        <th>knight</th>
+                        <th>catapult</th>
+                        <th>doppelsoldner</th>
+                        <th>ram</th>
+                        <th>snob</th>
+                        <th>trebuchet</th>
+                      </tr>
+                      <tr>
+                        <td>{myVillageUnits.knight}</td>
+                        <td>{myVillageUnits.catapult}</td>
+                        <td>{myVillageUnits.doppelsoldner}</td>
+                        <td>{myVillageUnits.ram}</td>
+                        <td>{myVillageUnits.snob}</td>
+                        <td>{myVillageUnits.trebuchet}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
               <div className="row">
                 <div className="col-12 col-md-4 border rounded py-2">
-                  <h3>Easy Raid</h3>
+                  <h4>Easy Raid</h4>
                   <hr/>
                   <div className="input-group mb-3">
                     <div className="input-group-prepend">
@@ -488,7 +615,7 @@ function PageTWBot() {
                 </div>
 
                 <div className="col-12 col-md-8 border rounded py-2 overflow-auto" style={{maxHeight: "1000px"}}>
-                  <h3>MAP</h3>
+                  <h4>MAP</h4>
                   <hr/>
 
                   <div className="row">
