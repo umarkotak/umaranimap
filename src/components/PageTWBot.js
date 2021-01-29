@@ -1,15 +1,11 @@
-import React, {useEffect, useRef, useState, useCallback} from "react"
-import {Link} from "react-router-dom"
+import React, {useEffect, useRef, useState} from "react"
 import Cookies from 'universal-cookie'
 
 const cookies = new Cookies()
-const twCookies = new Cookies()
 
 function PageTWBot() {
   const ws = useRef(null)
   const [socketMessages, setSocketMessages] = useState([])
-  const unitTypes = ["spear", "sword", "axe", "knight", "light_cavalry", "mounted_archer", "archer"]
-
 
   // ACCOUNT DATA
   const [userName, setUserName] = useState(cookies.get("TW_USERNAME"))
@@ -17,12 +13,6 @@ function PageTWBot() {
   const [userID, setUserID] = useState(cookies.get("TW_USER_ID"))
   const [worldID, setWorldID] = useState(cookies.get("TW_WORLD_ID"))
   const [globID, setGlobID] = useState(1)
-
-  // const [userName, setUserName] = useState("NgunyahBatu")
-  // const [userToken, setUserToken] = useState("b6bba3b4ff8c3e64b6662bfe20efc3f2353ea95a")
-  // const [userID, setUserID] = useState(848915556)
-  // const [worldID, setWorldID] = useState("en62")
-  // const [globID, setGlobID] = useState(1)
 
   // CONFIG DATA
   const [connectionStatus, setConnectionStatus] = useState("not connected")
@@ -63,7 +53,6 @@ function PageTWBot() {
       setConnectionStatus("connected")
       if (userName && userToken && userID && worldID) {
         handleEasyLogin()
-        handleRequestPlayerInfo()
       }
       handlePing()
     }
@@ -112,6 +101,7 @@ function PageTWBot() {
     sleep(500)
     handleCompleteLogin()
     setConnectionStatus("logged in")
+    handleRequestPlayerInfo()
   }
 
   function handleSystemIdentify() {
@@ -155,20 +145,6 @@ function PageTWBot() {
   function handleCompleteLogin() {
     var payload = {}
     sendSocketMessage(42, "Authentication/completeLogin", commonHeaders(), JSON.stringify(payload))
-  }
-
-  function handleSendCustomArmy() {
-    var payload = {
-      catapult_target: "headquarter",
-      icon: 0,
-      start_village: 182,
-      target_village: 183,
-      type: "attack",
-      units: {
-        spear: 5
-      }
-    }
-    sendSocketMessage(42, "Command/sendCustomArmy", commonHeaders(), JSON.stringify(payload))
   }
 
   function sendTargetedArmy(targetID) {
@@ -360,27 +336,27 @@ function PageTWBot() {
     setTargetVillageIDs(tempVal)
   }
 
-  function beautifyVal(socketMessage) {
-    try {
-      var prefixes = [0, 42]
-      var beautifiedJson = socketMessage
+  // function beautifyVal(socketMessage) {
+  //   try {
+  //     var prefixes = [0, 42]
+  //     var beautifiedJson = socketMessage
 
-      prefixes.forEach( (prefix, idx) => {
-        if (socketMessage.startsWith(prefix)) {
-          var sanitizedSocketMessage = socketMessage.replace(prefix,"")
-          var tempJson = JSON.parse(sanitizedSocketMessage)
-          console.log(prefix, tempJson)
-          beautifiedJson = JSON.stringify(tempJson, null, 4)
-          return
-        }
-      })
+  //     prefixes.forEach( (prefix, idx) => {
+  //       if (socketMessage.startsWith(prefix)) {
+  //         var sanitizedSocketMessage = socketMessage.replace(prefix,"")
+  //         var tempJson = JSON.parse(sanitizedSocketMessage)
+  //         console.log(prefix, tempJson)
+  //         beautifiedJson = JSON.stringify(tempJson, null, 4)
+  //         return
+  //       }
+  //     })
 
-      return beautifiedJson
+  //     return beautifiedJson
 
-    } catch (error) {
-      return socketMessage
-    }
-  }
+  //   } catch (error) {
+  //     return socketMessage
+  //   }
+  // }
 
   function timeNow() { return + new Date() }
 

@@ -11,8 +11,8 @@ const auth_token = cookies.get("GO_ANIMAPU_LOGIN_TOKEN")
 
 function PageSocketGameV1() {
   const ws = useRef(null)
-  const [horizontal_length, set_horizontal_length] = useState(0)
-  const [vertical_length, set_vertical_length] = useState(0)
+  // const [horizontal_length, set_horizontal_length] = useState(0)
+  // const [vertical_length, set_vertical_length] = useState(0)
   const [world_maps, set_world_maps] = useState({maps: [[{players: []}]]})
   // RUN FOR THE FIRST TIME
   useEffect(() => {
