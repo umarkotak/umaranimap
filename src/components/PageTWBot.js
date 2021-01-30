@@ -742,10 +742,10 @@ function PageTWBot() {
                   <button className="btn btn-outline-success btn-sm btn-block" onClick={ () => handleStartRaid() }>Start Raid!</button>
                 </div>
 
-                <div className="col-12 col-md-9 border rounded py-2 px-1 overflow-auto" style={{maxHeight: "750px"}}>
+                <div className="col-12 col-md-9 border rounded py-2 px-1">
                   <h4>MAP</h4>
 
-                  <div className="row sticky-top bg-light">
+                  <div className="row pb-0 px-3 ">
                     <div className="col-12 col-md-2 px-1">
                       <div className="input-group">
                         <div className="input-group-prepend">
@@ -818,7 +818,7 @@ function PageTWBot() {
                     </li>
                   </ul>
 
-                  <div className="tab-content p-1" id="myTabContent">
+                  <div className="tab-content p-1 overflow-auto" id="myTabContent" style={{maxHeight: "600px"}}>
                     <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                       <table className="table table-bordered">
                         <tbody>
