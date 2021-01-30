@@ -41,6 +41,7 @@ function PageTWBot() {
   const [mapHeight, setMapHeight] = useState(50)
   const [mapWidth, setMapWidth] = useState(50)
   const [targetVillageIDs, setTargetVillageIDs] = useState("")
+  const [targetVillagesCount, setTargetVillagesCount] = useState(0)
   const [spear, setSpear] = useState("")
   const [sword, setSword] = useState("")
   const [axe, setAxe] = useState("")
@@ -451,6 +452,15 @@ function PageTWBot() {
     }
   }
 
+  useEffect(() => {
+    try {
+      var tmpCount = targetVillageIDs.split(",")
+      setTargetVillagesCount(tmpCount.length)
+    } catch (error) {
+      setTargetVillagesCount(0)
+    }
+  }, [targetVillageIDs])
+
   // function beautifyVal(socketMessage) {
   //   try {
   //     var prefixes = [0, 42]
@@ -693,7 +703,7 @@ function PageTWBot() {
                   </div>
 
                   <div className="form-group">
-                    <label>Target Village IDs</label>
+                    <label>Target Village IDs</label><label className="float-right">{targetVillagesCount}</label>
                     <textarea className="form-control" rows="5" placeholder="" value={targetVillageIDs} onChange={(e) => setTargetVillageIDs(e.target.value)}></textarea>
                   </div>
 
