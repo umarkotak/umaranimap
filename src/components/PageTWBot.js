@@ -1,5 +1,7 @@
 import React, {useEffect, useRef, useState} from "react"
 import Cookies from 'universal-cookie'
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const cookies = new Cookies()
 
@@ -13,6 +15,7 @@ function PageTWBot() {
   const [userID, setUserID] = useState(cookies.get("TW_USER_ID"))
   const [worldID, setWorldID] = useState(cookies.get("TW_WORLD_ID"))
   const [globID, setGlobID] = useState(1)
+  const [quickNotes, setQuickNotes] = useState(localStorage.getItem('TW_QUICK_NOTE') || "")
 
   // CONFIG DATA
   const [connectionStatus, setConnectionStatus] = useState("not connected")
@@ -107,6 +110,10 @@ function PageTWBot() {
     handleCompleteLogin()
     setConnectionStatus("logged in")
     handleRequestPlayerInfo()
+  }
+
+  function handeSaveQuickNote() {
+    localStorage.setItem("TW_QUICK_NOTE", quickNotes)
   }
 
   function handleSystemIdentify() {
@@ -960,7 +967,18 @@ function PageTWBot() {
         </div>
       </div>
 
-      <div className="row">
+      <div className="row my-1">
+        <div className="col-12">
+          <button className="btn btn-primary btn-sm float-right" onClick={() => handeSaveQuickNote()}>Save Quick Note</button>
+        </div>
+      </div>
+      <div className="row my-1">
+        <div className="col-12">
+            <ReactQuill theme="snow" value={quickNotes} onChange={setQuickNotes} style={{height: "650px"}}/>
+        </div>
+      </div>
+
+      <div className="row mb-5">
       </div>
 
       {/* <div className="row">
