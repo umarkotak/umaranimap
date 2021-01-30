@@ -452,6 +452,19 @@ function PageTWBot() {
     }
   }
 
+  function addAllVillageIds(villageList) {
+    try {
+      var selectedArr = []
+
+      villageList.forEach((val, idx) => {
+        selectedArr.push(val.id)
+      })
+
+      setTargetVillageIDs(selectedArr.join(","))
+
+    } catch (error) {}
+  }
+
   useEffect(() => {
     try {
       var tmpCount = targetVillageIDs.split(",")
@@ -850,6 +863,13 @@ function PageTWBot() {
                             <th className="p-1">Province</th>
                             <th className="p-1">Dist</th>
                           </tr>
+                          <tr>
+                            <td className="p-1">
+                              <button className="btn btn-sm btn-rounded btn-primary" onClick={(e) => addAllVillageIds(nearbyBarbarianVillages)}>
+                                Add All
+                              </button>
+                            </td>
+                          </tr>
                           {nearbyBarbarianVillages.map ((village, idx) => (
                             <tr key={`barbarian-${idx}`}>
                               <td className="p-1">
@@ -948,6 +968,13 @@ function PageTWBot() {
                             <th>Tribe Name</th>
                             <th>Points</th>
                             <th>Report Title</th>
+                          </tr>
+                          <tr>
+                            <td className="p-1">
+                              <button className="btn btn-sm btn-rounded btn-primary" onClick={(e) => addAllVillageIds(saveToRaidPlayerVillages)}>
+                                Add All
+                              </button>
+                            </td>
                           </tr>
                           {saveToRaidPlayerVillages.map ((village, idx) => (
                             <tr key={`players-${idx}`}>
