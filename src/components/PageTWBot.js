@@ -321,6 +321,7 @@ function PageTWBot() {
     var tempNearbyBarbarianVillages = []
     var tempMyVillages = []
     var tempPlayerVillages = []
+    var tempSafePlayerVillages = []
 
     directObj.data.villages.forEach( (village, idx ) => {
       var tempVillageObj = {
@@ -329,7 +330,8 @@ function PageTWBot() {
         x: village.village_x,
         y: village.village_y,
         points: village.points,
-        province_name: directObj.data.name
+        province_name: directObj.data.name,
+        tribe_name: village.tribe_id
       }
 
       if (!village.character_id) {
@@ -337,6 +339,16 @@ function PageTWBot() {
 
       } else if (village.character_name === userName) {
         tempMyVillages.push(tempVillageObj)
+
+      } else if (!village.tribe_id && village.points < 200) {
+        try {
+          tempVillageObj.name = tempVillageObj.name.substring(0, 9)
+          tempVillageObj.character_name = tempVillageObj.character_name.substring(0, 9)
+          tempVillageObj.character_id = `${tempVillageObj.character_id}`.substring(0, 3) + "..."
+        } catch (error) {
+          console.log("ERR", error.message)
+        }
+        tempSafePlayerVillages.push(tempVillageObj)
 
       } else {
         try {
@@ -353,6 +365,7 @@ function PageTWBot() {
     setNearbyBarbarianVillages(tempNearbyBarbarianVillages)
     setMyVillages(tempMyVillages)
     setOtherPlayerVillages(tempPlayerVillages)
+    setSaveToRaidPlayerVillages(tempSafePlayerVillages  )
   }
 
   function handleIncomingCharacterInfo(directObj) {
