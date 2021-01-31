@@ -198,26 +198,46 @@ function PageReadMangaOnlyV1() {
     var key = `${manga_title}/last_read_chapter`
     var value = path_chapter
     let date = new Date(2030, 12)
-    cookies.set(key, value, { path: "/", expires: date })
+    // cookies.set(key, value, { path: "/", expires: date })
+    localStorage.setItem(key, value)
     setMangaHistories()
   }
 
   function setMangaHistories() {
     if (manga_title[0] === "-") return
     var key = "last_manga_reads"
-    var last_manga_reads = cookies.get(key)
+
+    try {
+      var last_manga_reads = JSON.parse(localStorage.getItem(key))
+
+    } catch (error) {
+      var last_manga_reads = []
+    }
+
     var value = manga_title
     let date = new Date(2030, 12)
 
     postUserEvent()
 
-    if (Array.isArray(last_manga_reads)) {
-      var index = last_manga_reads.indexOf(manga_title)
-      if (index !== -1) last_manga_reads.splice(index, 1)
-      last_manga_reads.unshift(manga_title)
-      cookies.set(key, last_manga_reads, { path: "/", expires: date })
-    } else {
-      cookies.set(key, [value], { path: "/", expires: date })
+    console.log("last_manga_reads", last_manga_reads)
+    try {
+      if (last_manga_reads.length >= 1) {
+
+        var index = last_manga_reads.indexOf(manga_title)
+        if (index !== -1) last_manga_reads.splice(index, 1)
+        last_manga_reads.unshift(manga_title)
+
+        var last_manga_reads_json = JSON.stringify(last_manga_reads)
+        // cookies.set(key, last_manga_reads, { path: "/", expires: date })
+        localStorage.setItem(key, last_manga_reads_json)
+      } else {
+        // cookies.set(key, [value], { path: "/", expires: date })
+        localStorage.setItem(key, `["${value}"]`)
+      }
+
+    } catch (error) {
+      localStorage.setItem(key, `["${value}"]`)
+
     }
 
     set_button_share("❏ Copy Link")

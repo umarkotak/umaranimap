@@ -122,30 +122,42 @@ function PageMangaLibraryV1() {
 
   function findLatestMangaChapter(title) {
     var key = `${title}/last_read_chapter`
-    var chapter = cookies.get(key)
+    var chapter = localStorage.getItem(key)
 
-    if (typeof chapter !== "undefined") {
+    if (chapter) {
       return parseInt(chapter)
-    // eslint-disable-next-line
-    } else if (typeof chapter === "NaN") {
-      return 1
     } else {
       return 1
     }
+
+    // if (typeof chapter !== "undefined") {
+    //   return parseInt(chapter)
+    // // eslint-disable-next-line
+    // } else if (typeof chapter === "NaN") {
+    //   return 1
+    // } else {
+    //   return 1
+    // }
   }
 
   function findLatestMangaChapterLoggedIn(title) {
     var key = `${title}/last_read_chapter_logged_in`
-    var chapter = cookies.get(key)
+    var chapter = localStorage.getItem(key)
 
-    if (typeof chapter !== "undefined") {
+    if (chapter) {
       return parseInt(chapter)
-    // eslint-disable-next-line
-    } else if (typeof chapter === "NaN") {
-      return 1
     } else {
       return 1
     }
+
+    // if (typeof chapter !== "undefined") {
+    //   return parseInt(chapter)
+    // // eslint-disable-next-line
+    // } else if (typeof chapter === "NaN") {
+    //   return 1
+    // } else {
+    //   return 1
+    // }
   }
 
   function findLastMangaChapter(title) {
@@ -175,7 +187,14 @@ function PageMangaLibraryV1() {
 
   function generateHistoriesSection() {
     var key = "last_manga_reads"
-    var last_manga_reads = cookies.get(key)
+    var last_manga_reads = localStorage.getItem(key)
+
+    try {
+      last_manga_reads = JSON.parse(last_manga_reads)
+    } catch (error) {
+      return []
+    }
+
     if (Array.isArray(last_manga_reads)) {
       return last_manga_reads
     } else {
@@ -242,12 +261,31 @@ function PageMangaLibraryV1() {
 
   function RenderMangaCard(props) {
     if (props.manga_title[0] === "-") {return(<div></div>)}
+    if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") {
+      return(
+        <div className="col-4 col-md-2">
+          <div className={`card mb-4 box-shadow shadow border-4 ${generate_manga_airing_status(props.manga_title)}`}>
+            <div style={{height: "170px", backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(props.manga_title)})`}}>
+              <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
+                <small>{`${findLatestMangaChapter(props.manga_title)}/${findLastMangaChapter(props.manga_title)}`}</small>
+                <button className="btn btn-xs btn-outline-danger float-right" style={{ paddingTop: "1px", paddingBottom: "1px", paddingLeft: "3px", paddingRight: "3px" }}>♥︎</button>
+              </div>
+              <div className="text-white card-text overflow-auto" style={{"height": "35px", "width": "100%", backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
+                <small>{props.manga_title}</small>
+              </div>
+            </div>
+            {/* <button type="button" className="btn btn-block btn-sm btn-outline-secondary" onClick={(e) => handleSelectedMangaTitle(e.target.value)} value={props.manga_title}>View</button> */}
+            <Link type="button" className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${props.manga_title}/${findLatestMangaChapter(props.manga_title)}?last_chapter=${findLastMangaChapter(props.manga_title)}&chapter_size=${ manga_db.get(props.manga_title) ? manga_db.get(props.manga_title).average_page : 100}`}>View</Link>
+          </div>
+        </div>
+      )
+    }
     return(
       <div className="col-4 col-md-2">
         <div className={`card mb-4 box-shadow shadow border-4 ${generate_manga_airing_status(props.manga_title)}`}>
           <div style={{height: "170px", backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(props.manga_title)})`}}>
             <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
-              <small>{`${findLatestMangaChapter(props.manga_title)}/${findLastMangaChapter(props.manga_title)}`}</small>
+              <small>{`${findLatestMangaChapterLoggedIn(props.manga_title)}/${findLastMangaChapter(props.manga_title)}`}</small>
               <button className="btn btn-xs btn-outline-danger float-right" style={{ paddingTop: "1px", paddingBottom: "1px", paddingLeft: "3px", paddingRight: "3px" }}>♥︎</button>
             </div>
             <div className="text-white card-text overflow-auto" style={{"height": "35px", "width": "100%", backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
