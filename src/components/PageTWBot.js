@@ -28,7 +28,7 @@ function PageTWBot() {
 
   // SETTING DATA
   const [myCharacterVillages, setMyCharacterVillages] = useState([])
-  const [checkVillageID, setCheckVillageID] = useState("")
+  // const [checkVillageID, setCheckVillageID] = useState("")
   const [myVillageResources, setMyVillageResources] = useState({})
   const [myVillageUnits, setMyVillageUnits] = useState({})
   const [provinceLandmarkX, setProvinceLandmarkX] = useState(0)
@@ -131,14 +131,14 @@ function PageTWBot() {
     sendSocketMessage(42, "Character/getInfo", commonHeaders(), JSON.stringify(payload))
   }
 
-  function handleRequestVillageDetail() {
-    var payload = {
-      village_id: parseInt(checkVillageID),
-      my_village_id: myCharacterVillages[0].id,
-      num_reports: 5
-    }
-    sendSocketMessage(42, "Map/getVillageDetails", commonHeaders(), JSON.stringify(payload))
-  }
+  // function handleRequestVillageDetail() {
+  //   var payload = {
+  //     village_id: parseInt(checkVillageID),
+  //     my_village_id: myCharacterVillages[0].id,
+  //     num_reports: 5
+  //   }
+  //   sendSocketMessage(42, "Map/getVillageDetails", commonHeaders(), JSON.stringify(payload))
+  // }
 
   function handleRequestVillageDetailAuto(selectedVillageID, e = false) {
     var payload = {

@@ -197,9 +197,16 @@ function PageReadMangaOnlyV1() {
 
     var key = `${manga_title}/last_read_chapter`
     var value = path_chapter
-    let date = new Date(2030, 12)
+    // let date = new Date(2030, 12)
     // cookies.set(key, value, { path: "/", expires: date })
     localStorage.setItem(key, value)
+
+    if (cookies.get("GO_ANIMAPU_LOGGED_IN") === "true") {
+      key = `${manga_title}/last_read_chapter`
+      value = path_chapter
+      localStorage.setItem(key, value)
+    }
+
     setMangaHistories()
   }
 
@@ -207,15 +214,16 @@ function PageReadMangaOnlyV1() {
     if (manga_title[0] === "-") return
     var key = "last_manga_reads"
 
+    var last_manga_reads = []
+
     try {
-      var last_manga_reads = JSON.parse(localStorage.getItem(key))
+      last_manga_reads = JSON.parse(localStorage.getItem(key))
 
     } catch (error) {
-      var last_manga_reads = []
+      last_manga_reads = []
     }
 
     var value = manga_title
-    let date = new Date(2030, 12)
 
     postUserEvent()
 
