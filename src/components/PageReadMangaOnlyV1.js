@@ -174,6 +174,10 @@ function PageReadMangaOnlyV1() {
     return `${cdn_host}/${manga_title}/${manga_chapter}/${page_no}.png`
   }
 
+  function generateImageJPEG(page_no) {
+    return `${cdn_host}/${manga_title}/${manga_chapter}/${page_no}.jpeg`
+  }
+
   function generateChapterListFromTitle() {
     var chapters = []
     for (let i = 1; i <= manga_last_chapter; i++) { chapters.push(i) }
@@ -270,6 +274,11 @@ function PageReadMangaOnlyV1() {
             <img
               className="bd-placeholder-img mx-auto d-block img-fluid"
               src={generateImageErrorUrl(page_no)}
+              alt=""
+            />
+            <img
+              className="bd-placeholder-img mx-auto d-block img-fluid"
+              src={generateImageJPEG(page_no)}
               alt=""
             />
           </div>
