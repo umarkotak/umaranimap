@@ -229,7 +229,7 @@ function PageTWBot() {
       return val.id
     })
     targets = shuffle(targets)
-    targets.slice(0, 45)
+    targets = targets.slice(0, 45)
 
     targets.forEach( (targetID) => {
       sendYOLOArmy(targetID, targets.length)
