@@ -38,8 +38,8 @@ function PageTWBot() {
   const [sourceVillageID, setSourceVillageID] = useState("")
   const [sourceVillageX, setSourceVillageX] = useState(500)
   const [sourceVillageY, setSourceVillageY] = useState(450)
-  const [mapHeight, setMapHeight] = useState(50)
-  const [mapWidth, setMapWidth] = useState(50)
+  const [mapHeight, setMapHeight] = useState(30)
+  const [mapWidth, setMapWidth] = useState(30)
   const [targetVillageIDs, setTargetVillageIDs] = useState("")
   const [targetVillagesCount, setTargetVillagesCount] = useState(0)
   const [spear, setSpear] = useState("")
@@ -461,8 +461,8 @@ function PageTWBot() {
   function handleFetchMapDynamic(x, y, modifier) {
     var payload = {
       character_id: userID,
-      height: 50,
-      width: 50,
+      height: mapHeight,
+      width: mapWidth,
       x: parseInt(x) - modifier,
       y: parseInt(y) - modifier
     }
