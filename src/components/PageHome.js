@@ -70,8 +70,6 @@ function PageHome() {
               Support Creator!
             </div>
             <div className="card-body">
-              Untuk mendukung agar website ini terus berkembang, kalian bisa support ke link berikut
-              <hr />
               For supporting this website to always be updated, you can support with this link
               <hr />
               <a target="_blank" href="https://trakteer.id/marumaru" className="btn btn-block btn-success" rel="noopener noreferrer">Support!</a>

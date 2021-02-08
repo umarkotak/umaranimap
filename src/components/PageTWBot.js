@@ -50,6 +50,7 @@ function PageTWBot() {
   const [mountedArcher, setMountedArcher] = useState("")
   const [archer, setArcher] = useState("")
   const [randomChecked, setRandomChecked] = useState(false)
+  const [fuckThisShit, setFuckThisShit] = useState(false)
   const [raidPercentage, setRaidPercentage] = useState(0)
 
   useEffect(() => {
@@ -190,6 +191,12 @@ function PageTWBot() {
     var targets = targetVillageIDs.split(",")
     setRaidPercentage(0)
 
+    if (fuckThisShit) {
+      executeFuckThisShit()
+      setRaidPercentage(100)
+      return
+    }
+
     if (randomChecked) {
       var ctr = 0
       targets.forEach( (targetID, idx) => {
@@ -214,6 +221,60 @@ function PageTWBot() {
 
     handleRequestVillageDetailAuto(parseInt(sourceVillageID))
 
+  }
+
+  function executeFuckThisShit() {
+
+    var targets = nearbyBarbarianVillages.map((val) => {
+      return val.id
+    })
+    targets = shuffle(targets)
+    targets.slice(0, 45)
+
+    targets.forEach( (targetID) => {
+      sendYOLOArmy(targetID, targets.length)
+    })
+  }
+
+  function sendYOLOArmy(targetID, size) {
+    var units = {}
+
+    units.spear = Math.floor(myVillageUnits.spear / size)
+    units.sword = Math.floor(myVillageUnits.sword / size)
+    units.axe = Math.floor(myVillageUnits.axe / size)
+    units.knight = Math.floor(myVillageUnits.knight / size)
+    units.lightCavalry = Math.floor(myVillageUnits.lightCavalry / size)
+    units.mountedArcher = Math.floor(myVillageUnits.mountedArcher / size)
+    units.archer = Math.floor(myVillageUnits.archer / size)
+
+    var payload = {
+      catapult_target: "headquarter",
+      icon: 0,
+      start_village: parseInt(sourceVillageID),
+      target_village: parseInt(targetID),
+      type: "attack",
+      units: units
+    }
+    sendSocketMessage(42, "Command/sendCustomArmy", commonHeaders(), JSON.stringify(payload))
+  }
+
+  function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+
+    return array;
   }
 
   function handleFetchMap() {
@@ -393,6 +454,19 @@ function PageTWBot() {
     setProvinceLandmarkX(directObj.data.province.x)
     setProvinceLandmarkY(directObj.data.province.y)
     setProvinceName(directObj.data.province.name)
+
+    handleFetchMapDynamic(directObj.data.village_x, directObj.data.village_y, 15)
+  }
+
+  function handleFetchMapDynamic(x, y, modifier) {
+    var payload = {
+      character_id: userID,
+      height: 50,
+      width: 50,
+      x: parseInt(x) - modifier,
+      y: parseInt(y) - modifier
+    }
+    sendSocketMessage(42, "Map/getVillagesByArea", commonHeaders(), JSON.stringify(payload))
   }
 
   function handlePing() {
@@ -521,6 +595,7 @@ function PageTWBot() {
   }
 
   function sendSocketMessage(prefixNum, type, headers, payload) {
+    console.log(`SENDING SOCKET MESSAGE ${type}`, payload)
     var basePayload = `${prefixNum}["msg", {
       "id": ${globID},
       "type": "${type}",
@@ -765,6 +840,10 @@ function PageTWBot() {
                   <div className="form-check">
                     <input type="checkbox" className="form-check-input" checked={randomChecked} onChange={(e) => setRandomChecked(e.target.value)} />
                     <label className="form-check-label" >Enable random interval</label>
+                  </div>
+                  <div className="form-check">
+                    <input type="checkbox" className="form-check-input" checked={fuckThisShit} onChange={(e) => setFuckThisShit(e.target.value)} />
+                    <label className="form-check-label" >Fuck this shit!</label>
                   </div>
                   <div className="progress">
                     <div className="progress-bar" role="progressbar" style={{width: `${raidPercentage}%`}} aria-valuenow={`${raidPercentage}`} aria-valuemin="0" aria-valuemax="100">{`${raidPercentage}`}%</div>
