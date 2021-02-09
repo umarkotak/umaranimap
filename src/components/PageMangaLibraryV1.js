@@ -10,6 +10,7 @@ var go_animapu_host = "http://go-animapu.herokuapp.com"
 function PageMangaLibraryV1() {
   const [manga_db, set_manga_db] = useState(mangaDB.GetMangaDB())
   const [new_mangas, set_new_mangas] = useState(mangaDB.GetNewManga())
+  const [my_read_later, set_my_read_later] = useState(mangaDB.GetMangaDB())
 
   var manga_list = generateMangaListFromDB()
 
@@ -18,6 +19,7 @@ function PageMangaLibraryV1() {
   const [manga_histories, set_manga_histories] = useState(generateHistoriesSection())
   const [logged_in_manga_histories, set_logged_in_manga_histories] = useState([])
   const [history_loading_state, set_history_loading_state] = useState("true")
+  const [manga_library_titles, set_manga_library_titles] = useState([])
 
   useEffect(() => {
     console.log("RUN ONCE")
@@ -44,6 +46,7 @@ function PageMangaLibraryV1() {
       set_page_loading_state("false")
     }
     getUserDetailFromFirebase()
+    getMyReadLater()
     fetchData()
   }, [])
 
@@ -74,7 +77,7 @@ function PageMangaLibraryV1() {
       return
     }
 
-    const response = await fetch('https://go-animapu.herokuapp.com/users/detail', {
+    const response = await fetch(`${go_animapu_host}/users/detail`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -107,6 +110,45 @@ function PageMangaLibraryV1() {
     var mapped_title_histories = manga_title_histories.map(val => val.manga_title)
     set_logged_in_manga_histories(mapped_title_histories)
     set_history_loading_state("false")
+  }
+
+  async function getMyReadLater() {
+    if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") {
+      return
+    }
+
+    try {
+      const response = await fetch(`${go_animapu_host}/users/manga_library`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': cookies.get("GO_ANIMAPU_LOGIN_TOKEN")
+        }
+      })
+      const results = await response.json()
+
+      if (!results.my_libraries) {
+        return
+      }
+
+      var tmp_manga_histories_arr = []
+      const tmp_manga_histories_map = new Map(Object.entries(results.my_libraries))
+
+      tmp_manga_histories_map.forEach((manga, key) => {
+        tmp_manga_histories_arr.push(manga)
+      })
+
+      // TODO SHORT BY DATE ADDED
+      tmp_manga_histories_arr.sort((a, b) => b.weight - a.weight)
+
+      var tmp_manga_history_titles = tmp_manga_histories_arr.map(val => val.manga_title)
+      set_my_read_later(tmp_manga_histories_map)
+      set_manga_library_titles(tmp_manga_history_titles)
+
+    } catch (error) {
+
+    }
+
   }
 
   function generate_manga_airing_status(manga_title) {
@@ -172,7 +214,14 @@ function PageMangaLibraryV1() {
       if (typeof last_chapter === "undefined") {
         last_chapter = 150
       }
+
+      if (last_chapter) {
+        return last_chapter
+      }
+
+      last_chapter = 150
     } catch (error) {
+      last_chapter = 150
     }
     return last_chapter
   }
@@ -233,7 +282,6 @@ function PageMangaLibraryV1() {
         </div>
         <RenderLoadingBar />
 
-        <h4>Manga List</h4>
         <div className="row">
           <div className="col-12">
             <ul className="nav nav-tabs" id="myTab2" role="tablist">
@@ -247,7 +295,7 @@ function PageMangaLibraryV1() {
 
             <div className="tab-content" id="myTabContent">
               <div className="tab-pane fade" id="profile2" role="tabpanel" aria-labelledby="profile-tab2">
-
+                <RenderMyReadLater />
               </div>
               <div className="tab-pane fade show active" id="home2" role="tabpanel" aria-labelledby="home-tab2">
                 <div className="row">
@@ -259,6 +307,20 @@ function PageMangaLibraryV1() {
             </div>
           </div>
         </div>
+        {/* <div className="row">
+          <div className="col-12 col-md-8">
+            <h4>Manga List</h4>
+            <div className="row">
+              {manga_list.slice(1, manga_list.length).map(manga_title => (
+                <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_list`} new_manga_carousel={true} />
+              ))}
+            </div>
+          </div>
+          <div className="col-12 col-md-4">
+            <h4>My Read Later</h4>
+            <RenderMyReadLater />
+          </div>
+        </div> */}
       </div>
     )
   }
@@ -311,7 +373,7 @@ function PageMangaLibraryV1() {
       )
     }
     return(
-      <Link to={`/read-manga-only-v1/${props.manga_title}/${findLastMangaChapter(props.manga_title)}?last_chapter=${findLastMangaChapter(props.manga_title)}&chapter_size=${ manga_db.get(props.manga_title) ? manga_db.get(props.manga_title).average_page : 100}`} className="btn btn-xs btn-outline-danger float-right" style={{ paddingTop: "1px", paddingBottom: "1px", paddingLeft: "3px", paddingRight: "3px" }}>⇥</Link>
+      <Link to={`/read-manga-only-v1/${props.manga_title}/${findLastMangaChapter(props.manga_title)}?last_chapter=${findLastMangaChapter(props.manga_title)}&chapter_size=${ manga_db.get(props.manga_title) ? manga_db.get(props.manga_title).average_page : 100}`} className="btn btn-xs btn-outline-danger float-right" style={{ paddingTop: "1px", paddingBottom: "1px", paddingLeft: "3px", paddingRight: "3px" }}>▶︎</Link>
     )
   }
 
@@ -415,6 +477,31 @@ function PageMangaLibraryV1() {
             </div>
           </div>
         ))}
+      </div>
+    )
+  }
+
+  function RenderMyReadLater() {
+    if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") {return(<div></div>)}
+    return(
+      <div>
+        <div className="row">
+          {manga_library_titles.map(manga_title => (
+            <div className="col-4 col-md-2" key={`my-read-later-${manga_title}`}>
+              <div className={`card mb-4 box-shadow shadow border-4 ${generate_manga_airing_status(manga_title)}`}>
+                <div style={{height: "170px", backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(https://thumb.mghubcdn.com/mn/${manga_title}.jpg)`}}>
+                  <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
+                    <small>{`${findLatestMangaChapterLoggedIn(manga_title)}/${my_read_later.get(manga_title).manga_last_chapter}`}</small>
+                  </div>
+                  <div className="text-white card-text overflow-auto" style={{"height": "35px", "width": "100%", backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
+                    <small>{manga_title}</small>
+                  </div>
+                </div>
+                <Link type="button" className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${manga_title}/${findLatestMangaChapter(manga_title)}?last_chapter=${my_read_later.get(manga_title).manga_last_chapter}&chapter_size=${ my_read_later.get(manga_title) ? my_read_later.get(manga_title).average_page : 100}`}>Read</Link>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     )
   }

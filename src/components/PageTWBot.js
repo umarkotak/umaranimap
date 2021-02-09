@@ -644,23 +644,34 @@ function PageTWBot() {
                 </div>
 
                 <div className="col-12 col-md-4">
-                  <div className="form-group">
+                  {/* <div className="form-group">
                     <label >TBD</label>
                     <input className="form-control" />
                   </div>
                   <div className="form-group">
                     <label >TBD</label>
                     <input className="form-control" />
+                  </div> */}
+                  <div className="form-group">
+                    For supporting this website to always be updated, you can support with this link
+                    <hr />
+                    <a target="_blank" href="https://trakteer.id/marumaru" className="btn btn-block btn-success my-2" rel="noopener noreferrer">Support!</a>
                   </div>
                 </div>
               </div>
               <div className="row">
                 <div className="col-12">
-                  <button className="btn btn-primary btn-sm float-left" disabled>Status:</button>
-                  <button className="btn btn-outline-primary btn-sm float-left mx-2">{connectionStatus}</button>
-                  <button className="btn btn-primary btn-sm float-right" onClick={() => handleEasyLogin()}>Login</button>
-                  <button className="btn btn-success btn-sm float-right mx-2" onClick={() => handleSaveConfig()}>Save to cookies</button>
-                  <button className="btn btn-danger btn-sm float-right mx-2" onClick={() => handleClearConfig()}>Clear from cookies</button>
+                  <table className="table">
+                    <tbody>
+                      <tr>
+                        <td><button className="btn btn-block btn-primary btn-sm float-left" disabled>Status:</button></td>
+                        <td><button className="btn btn-block btn-outline-primary btn-sm float-left mx-2">{connectionStatus}</button></td>
+                        <td><button className="btn btn-block btn-primary btn-sm" onClick={() => handleEasyLogin()}>Login</button></td>
+                        <td><button className="btn btn-block btn-success btn-sm mx-2" onClick={() => handleSaveConfig()}>Save</button></td>
+                        <td><button className="btn btn-block btn-danger btn-sm" onClick={() => handleClearConfig()}>Clear</button></td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
@@ -677,7 +688,7 @@ function PageTWBot() {
             <div className="card-body">
               <div className="row border rounded">
                 <h4 className="col-12">Village Info</h4>
-                <div className="col-4 py-2">
+                <div className="col-12 col-lg-4 py-2">
                   <button className="btn btn-primary btn-sm float-right" onClick={() => handleRequestPlayerInfo()}>Get My Villages Info</button>
                   <table className="table table-bordered">
                     <tbody>
@@ -702,7 +713,7 @@ function PageTWBot() {
                     </tbody>
                   </table>
                 </div>
-                <div className="col-8 py-2">
+                <div className="col-12 col-lg-8 py-2">
                   {/* <input type="number" className="float-right" value={checkVillageID} onChange={(e) => setCheckVillageID(e.target.value)}></input>
                   <button className="btn btn-primary btn-sm float-right mx-2" onClick={() => handleRequestVillageDetail()}>Get Village Detail</button> */}
                   <table className="table table-bordered">
