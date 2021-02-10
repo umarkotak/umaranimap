@@ -263,7 +263,7 @@ function PageMangaLibraryV1() {
     </div>
   )
 
-  function RenderMangaLibrary(props) {
+  function RenderMangaLibrary() {
     return(
       <div>
         <div className="row my-2">
@@ -420,7 +420,7 @@ function PageMangaLibraryV1() {
             <div className="tab-content" id="myTabContent">
               <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 <div className="row flex-row flex-nowrap overflow-auto">
-                  {manga_histories.slice(0, 50).map(manga_title => (
+                  {manga_histories.slice(0, 30).map(manga_title => (
                     <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_history_list`} />
                   ))}
                 </div>
@@ -439,7 +439,7 @@ function PageMangaLibraryV1() {
     if (page_loading_state === "false") {
       return(
         <div className="row flex-row flex-nowrap overflow-auto">
-          {new_mangas.map(manga_title => (
+          {new_mangas.slice(0, 30).map(manga_title => (
             <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_new_list`} />
           ))}
         </div>

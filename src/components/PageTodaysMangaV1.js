@@ -3,6 +3,7 @@
 
 import React, {useState, useEffect} from "react"
 import Cookies from 'universal-cookie'
+import InfiniteScroll from 'react-infinite-scroll-component';
 import {Link} from "react-router-dom"
 
 function PageTodaysMangaV1() {
@@ -10,6 +11,22 @@ function PageTodaysMangaV1() {
   const [fetch_todays_manga_state, set_fetch_todays_manga_state] = useState("finding")
   const [todays_manga_db, set_todays_manga_db] = useState(new Map())
   const [todays_manga_titles, set_todays_manga_titles] = useState([])
+  const [count, setCount] = useState({
+    prev: 0,
+    next: 24
+  })
+  const [hasMore, setHasMore] = useState(true);
+  const [current, setCurrent] = useState(todays_manga_titles.slice(count.prev, count.next))
+  const getMoreData = () => {
+    if (current.length === todays_manga_titles.length) {
+      setHasMore(false);
+      return;
+    }
+    setTimeout(() => {
+      setCurrent(current.concat(todays_manga_titles.slice(count.prev + 24, count.next + 24)))
+    }, 2000)
+    setCount((prevState) => ({ prev: prevState.prev + 24, next: prevState.next + 24 }))
+  }
 
   function generateThumbnailFromTitle(title) {
     try {
@@ -37,8 +54,8 @@ function PageTodaysMangaV1() {
       const response = await fetch(api)
       const results = await response.json()
       var converted_manga_db = new Map(Object.entries(results.manga_db))
+      console.log("INCOMING DATA", converted_manga_db)
       set_todays_manga_db(converted_manga_db)
-      // console.log(converted_manga_db)
 
       var new_mangas = []
       converted_manga_db.forEach((num, key) => {
@@ -48,6 +65,7 @@ function PageTodaysMangaV1() {
 
       set_todays_manga_titles(new_mangas.map(val => val.title))
       set_fetch_todays_manga_state("finished")
+      setCurrent(current.concat(new_mangas.map(val => val.title).slice(count.prev + 10, count.next + 10)))
     }
     fetchTodayMangaData()
   }, []);
@@ -107,33 +125,39 @@ function PageTodaysMangaV1() {
     if (fetch_todays_manga_state === "finished") {
       return(
         <div className="col-12">
-          <div className="row">
-            {todays_manga_titles.map(value => (
-              <div className="col-4 col-md-2" key={value}>
-                <div className={`card mb-4 box-shadow shadow border-4 ${generate_manga_airing_status(value)}`}>
-                  <div style={{height: "170px", backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(value)})`}}>
-                    <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
-                      <small>{`( ${todays_manga_db.get(value).manga_last_chapter} / ${todays_manga_db.get(value).manga_last_chapter} )`}</small>
-                      <button
-                        className="btn btn-xs btn-outline-danger float-right"
-                        style={{ paddingTop: "1px", paddingBottom: "1px", paddingLeft: "3px", paddingRight: "3px" }}
-                        onClick={(e) => putToMyLibrary(value, todays_manga_db.get(value).manga_last_chapter)}
-                      >
-                        ♥︎
-                      </button>
+          <InfiniteScroll
+            dataLength={current.length}
+            next={getMoreData}
+            hasMore={hasMore}
+            loader={<h4>Loading...</h4>}
+            className="row"
+          >
+              {current && current.map(((value, index) => (
+                <div className="col-4 col-md-2" key={index+value}>
+                  <div className={`card mb-4 box-shadow shadow border-4 ${generate_manga_airing_status(value)}`}>
+                    <div style={{height: "170px", backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(value)})`}}>
+                      <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
+                        <small>{`( ${todays_manga_db.get(value).manga_last_chapter} / ${todays_manga_db.get(value).manga_last_chapter} )`}</small>
+                        <button
+                          className="btn btn-xs btn-outline-danger float-right"
+                          style={{ paddingTop: "1px", paddingBottom: "1px", paddingLeft: "3px", paddingRight: "3px" }}
+                          onClick={(e) => putToMyLibrary(value, todays_manga_db.get(value).manga_last_chapter)}
+                        >
+                          ♥︎
+                        </button>
+                      </div>
+                      <div className="text-white card-text overflow-auto" style={{"height": "35px", "width": "100%", backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
+                        <small>{value}</small>
+                      </div>
                     </div>
-                    <div className="text-white card-text overflow-auto" style={{"height": "35px", "width": "100%", backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
-                      <small>{value}</small>
-                    </div>
+                    {/* <Link to={`/read-manga-v8?title=${value}&chapter=1&custom_last_chapter=${todays_manga_db.get(value).manga_last_chapter}`} className="btn btn-sm btn-outline-secondary">First Ch</Link>
+                    <Link to={`/read-manga-v8?title=${value}&chapter=${todays_manga_db.get(value).manga_last_chapter}&custom_last_chapter=${todays_manga_db.get(value).manga_last_chapter}`} className="btn btn-sm btn-outline-secondary">Latest Ch</Link> */}
+                    <Link className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${value}/1?last_chapter=${todays_manga_db.get(value).manga_last_chapter}&chapter_size=75`}>First Ch</Link>
+                    <Link className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${value}/${todays_manga_db.get(value).manga_last_chapter}?last_chapter=${todays_manga_db.get(value).manga_last_chapter}&chapter_size=75`}>Latest Ch</Link>
                   </div>
-                  {/* <Link to={`/read-manga-v8?title=${value}&chapter=1&custom_last_chapter=${todays_manga_db.get(value).manga_last_chapter}`} className="btn btn-sm btn-outline-secondary">First Ch</Link>
-                  <Link to={`/read-manga-v8?title=${value}&chapter=${todays_manga_db.get(value).manga_last_chapter}&custom_last_chapter=${todays_manga_db.get(value).manga_last_chapter}`} className="btn btn-sm btn-outline-secondary">Latest Ch</Link> */}
-                  <Link className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${value}/1?last_chapter=${todays_manga_db.get(value).manga_last_chapter}&chapter_size=75`}>First Ch</Link>
-                  <Link className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${value}/${todays_manga_db.get(value).manga_last_chapter}?last_chapter=${todays_manga_db.get(value).manga_last_chapter}&chapter_size=75`}>Latest Ch</Link>
                 </div>
-              </div>
-            ))}
-          </div>
+              )))}
+          </InfiniteScroll>
         </div>
       )
     }
