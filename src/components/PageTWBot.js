@@ -453,7 +453,9 @@ function PageTWBot() {
           throw "FOUND";
         } else {
           var unixTimeNow = + new Date()
+          unixTimeNow = Math.floor(unixTimeNow / 1000)
 
+          console.log("VS TIME", element.time_completed, unixTimeNow)
           if (element.time_completed < unixTimeNow) {
             handleFinishJob(element.id)
           }
