@@ -296,6 +296,8 @@ function PageTWBot() {
     sendSocketMessage(42, "Map/getProvince", commonHeaders(), JSON.stringify(payload))
   }
 
+  // HANDLING INCOMING MESSAGE SUPER IMPORTANT ========================================================================
+
   function handleIncomingMessage(incoming_message) {
     try {
       var sanitizedObj = justSanitize(incoming_message)
@@ -311,7 +313,8 @@ function PageTWBot() {
         handleIncomingVillageDetail(directObj)
       } else if (directObj.type === "Map/province") {
         handleIncomingProvinceData(directObj)
-        console.log("PROVINCE DATA", directObj)
+      } else if (directObj.type === "ResourceDeposit/info") {
+        handleIncomingResourceDepositInfo(directObj)
       }
 
     } catch (error) {
@@ -437,6 +440,31 @@ function PageTWBot() {
     setSaveToRaidPlayerVillages(tempSafePlayerVillages  )
   }
 
+  function handleIncomingResourceDepositInfo(directObj) {
+    console.log("handleIncomingResourceDepositInfo", directObj)
+
+    try {
+      directObj.data.jobs.forEach(element => {
+        if (!element.time_completed) {
+          console.log("KOSONG NEH", element)
+
+          handleStartJob(element.id)
+
+          throw "FOUND";
+        } else {
+          var unixTimeNow = + new Date()
+
+          if (element.time_completed < unixTimeNow) {
+            handleFinishJob(element.id)
+          }
+          throw "FOUND";
+        }
+
+      });
+
+    } catch (e) {}
+  }
+
   function handleIncomingCharacterInfo(directObj) {
     var tempMyVillages = []
 
@@ -469,10 +497,31 @@ function PageTWBot() {
     sendSocketMessage(42, "Map/getVillagesByArea", commonHeaders(), JSON.stringify(payload))
   }
 
+  function handleFetchResourceDeposit() {
+    var payload = {}
+    sendSocketMessage(42, "ResourceDeposit/open", commonHeaders(), JSON.stringify(payload))
+  }
+
+  function handleStartJob(job_id) {
+    var payload = {
+      job_id: job_id
+    }
+    sendSocketMessage(42, "ResourceDeposit/startJob", commonHeaders(), JSON.stringify(payload))
+  }
+
+  function handleFinishJob(job_id) {
+    var payload = {
+      job_id: job_id,
+      village_id: parseInt(sourceVillageID)
+    }
+    sendSocketMessage(42, "ResourceDeposit/collect", commonHeaders(), JSON.stringify(payload))
+  }
+
   function handlePing() {
     console.log("PING")
     setTimeout(() => {
       ws.current.send(2)
+      handleFetchResourceDeposit()
       handlePing()
     }, 4000)
   }
