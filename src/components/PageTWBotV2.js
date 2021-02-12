@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState, useRadioButtons} from "react"
+import React, {useEffect, useRef, useState} from "react"
 import Cookies from 'universal-cookie'
 import ReactQuill from 'react-quill';
 import { Form } from 'semantic-ui-react'
@@ -44,6 +44,7 @@ function PageTWBotV2() {
   const [myActiveVillageProvinceX, setMyActiveVillageProvinceX] = useState(0)
   const [myActiveVillageProvinceY, setMyActiveVillageProvinceY] = useState(0)
   const [myActiveVillageOutgoingArmy, setMyActiveVillageOutgoingArmy] = useState(0)
+  const [myAcriveVillageSummarizedOutgoingArmy, setMyAcriveVillageSummarizedOutgoingArmy] = useState({})
 
   // PLAYER SELECTION
   const [selectedProvinceX, setSelectedProvinceX] = useState(0)
@@ -491,13 +492,16 @@ function PageTWBotV2() {
 
   function handleIncomingUnitScreenData(directObj) {
     try {
-      var targetVillages = targetVillageIDs.split(",")
-
       var tmpOutgoingArmy = directObj.data.outgoingArmies.length
       setMyActiveVillageOutgoingArmy(tmpOutgoingArmy)
-      if (tmpOutgoingArmy >= autoArmyMaxOutgoing) { return }
+      summarizeOutgoingArmy(directObj.data.outgoingArmies)
+
+      if (enableAutoArmySender === "false") { return }
+
+      var targetVillages = targetVillageIDs.split(",")
 
       // ATTACK TARGET VILLAGE
+      if (tmpOutgoingArmy >= autoArmyMaxOutgoing) { return }
       var tempTargetVillage = targetVillages[autoArmyNextAttackIndex]
       sendCustomArmyRequest(tempTargetVillage)
 
@@ -529,6 +533,7 @@ function PageTWBotV2() {
     console.log(tempMyVillages[0].id)
     if (tempMyVillages[0].id) {
       sendVillageDetailRequest(tempMyVillages[0].id)
+      sendUnitScreenInfoRequest(tempMyVillages[0].id)
     }
   }
 
@@ -549,9 +554,35 @@ function PageTWBotV2() {
     setSelectedProvinceX(directObj.data.province.x)
     setSelectedProvinceY(directObj.data.province.y)
     sendVillagesByDynamicAreaRequest(directObj.data.village_x - offset, directObj.data.village_y - offset, selectedMapWidth, selectedMapHeight)
+    sendUnitScreenInfoRequest(directObj.data.village_id)
   }
 
   // =================================================================================================================== HELPER FUNCTION
+
+  function summarizeOutgoingArmy(outgoingArmies) {
+    var tempSummarizedOutgoingArmy = {
+      spear: 0,
+      sword: 0,
+      axe: 0,
+      knight: 0,
+      light_cavalry: 0,
+      mounted_archer: 0,
+      archer: 0,
+      heavy_cavalry: 0
+    }
+    outgoingArmies.forEach((val) => {
+      tempSummarizedOutgoingArmy.spear += val.spear
+      tempSummarizedOutgoingArmy.sword += val.sword
+      tempSummarizedOutgoingArmy.axe += val.axe
+      tempSummarizedOutgoingArmy.knight += val.knight
+      tempSummarizedOutgoingArmy.light_cavalry += val.light_cavalry
+      tempSummarizedOutgoingArmy.mounted_archer += val.mounted_archer
+      tempSummarizedOutgoingArmy.archer += val.archer
+      tempSummarizedOutgoingArmy.heavy_cavalry += val.heavy_cavalry
+    })
+
+    setMyAcriveVillageSummarizedOutgoingArmy(tempSummarizedOutgoingArmy)
+  }
 
   function handleSaveConfig() {
     saveToCookies("TW_USERNAME", userName)
@@ -702,15 +733,17 @@ function PageTWBotV2() {
                   <table className="table table-bordered">
                     <tbody>
                       <tr>
-                        <th className="p-1">spear</th>
-                        <th className="p-1">sword</th>
-                        <th className="p-1">axe</th>
-                        <th className="p-1">archer</th>
-                        <th className="p-1">mounted archer</th>
-                        <th className="p-1">light cavalry</th>
-                        <th className="p-1">heavy cavalry</th>
+                        <th className="p-1">State</th>
+                        <th className="p-1">Spear</th>
+                        <th className="p-1">Sword</th>
+                        <th className="p-1">Axe</th>
+                        <th className="p-1">Archer</th>
+                        <th className="p-1">MA</th>
+                        <th className="p-1">LC</th>
+                        <th className="p-1">HC</th>
                       </tr>
                       <tr>
+                        <td className="p-1">Deff</td>
                         <td className="p-1">{myActiveVillageUnits.spear}</td>
                         <td className="p-1">{myActiveVillageUnits.sword}</td>
                         <td className="p-1">{myActiveVillageUnits.axe}</td>
@@ -719,16 +752,28 @@ function PageTWBotV2() {
                         <td className="p-1">{myActiveVillageUnits.light_cavalry}</td>
                         <td className="p-1">{myActiveVillageUnits.heavy_cavalry}</td>
                       </tr>
+                      <tr>
+                        <td className="p-1">Atk</td>
+                        <td className="p-1">{myAcriveVillageSummarizedOutgoingArmy.spear}</td>
+                        <td className="p-1">{myAcriveVillageSummarizedOutgoingArmy.sword}</td>
+                        <td className="p-1">{myAcriveVillageSummarizedOutgoingArmy.axe}</td>
+                        <td className="p-1">{myAcriveVillageSummarizedOutgoingArmy.archer}</td>
+                        <td className="p-1">{myAcriveVillageSummarizedOutgoingArmy.mounted_archer}</td>
+                        <td className="p-1">{myAcriveVillageSummarizedOutgoingArmy.light_cavalry}</td>
+                        <td className="p-1">{myAcriveVillageSummarizedOutgoingArmy.heavy_cavalry}</td>
+                      </tr>
                     </tbody>
                   </table>
                   <table className="table table-bordered">
                     <tbody>
                       <tr>
-                        <th className="p-1">province X</th>
-                        <th className="p-1">province Y</th>
-                        <th className="p-1">province Name</th>
+                        <th className="p-1">Outgoing</th>
+                        <th className="p-1">Prov X</th>
+                        <th className="p-1">Prov Y</th>
+                        <th className="p-1">Prov Name</th>
                       </tr>
                       <tr>
+                        <td className="p-1">{myActiveVillageOutgoingArmy}</td>
                         <td className="p-1">{myActiveVillageProvinceX}</td>
                         <td className="p-1">{myActiveVillageProvinceY}</td>
                         <td className="p-1">{myActiveVillageProvinceName}</td>
