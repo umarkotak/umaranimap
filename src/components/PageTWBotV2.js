@@ -43,6 +43,7 @@ function PageTWBotV2() {
   const [myActiveVillageProvinceName, setMyActiveVillageProvinceName] = useState("")
   const [myActiveVillageProvinceX, setMyActiveVillageProvinceX] = useState(0)
   const [myActiveVillageProvinceY, setMyActiveVillageProvinceY] = useState(0)
+  const [myActiveVillageOutgoingArmy, setMyActiveVillageOutgoingArmy] = useState(0)
 
   // PLAYER SELECTION
   const [selectedProvinceX, setSelectedProvinceX] = useState(0)
@@ -65,11 +66,22 @@ function PageTWBotV2() {
   const [lightCavalry, setLightCavalry] = useState("")
   const [mountedArcher, setMountedArcher] = useState("")
   const [archer, setArcher] = useState("")
+  const [heavyCavalry, setHeavyCavalry] = useState("")
 
   // BATTLE CONFIGS
   const [sendAttackWithRandomInterval, setSendAttackWithRandomInterval] = useState(false)
   const [sendAttackToAllNearbyRandomBarbarian, setSendAttackToAllNearbyRandomBarbarian] = useState(false)
   const [raidPercentage, setRaidPercentage] = useState(0)
+
+  // AUTOMATED CONFIGS
+  const [enableAutoResourceCollector, setEnableAutoResourceCollector] = useState("true")
+  const [enableAutoArmySender, setEnableAutoArmySender] = useState("false")
+
+  const [autoArmyCycle, setAutoArmyCycle] = useState(0)
+  const [autoArmyMaxOutgoing, setAutoArmyMaxOutgoing] = useState(10)
+  const [autoArmyNextAttackIndex, setAutoArmyNextAttackIndex] = useState(0)
+  const [autoArmyNextAttackVillageID, setAutoArmyNextAttackVillageID] = useState(0)
+  const [autoArmyPercentage, setAutoArmyPercentage] = useState(0)
 
   // =================================================================================================================== END CONFIG
 
@@ -91,7 +103,7 @@ function PageTWBotV2() {
   function onOpenProcess(e) {
     setConnectionStatus(CONNECTION_STATUSES[1])
     if (userName && userToken && userID && worldID) { executeAutoLogin() }
-    sendPing()
+    sendPing(e)
   }
 
   function onIncomingMessage(e) {
@@ -129,6 +141,8 @@ function PageTWBotV2() {
         handleIncomingProvinceData(sanitizedObject)
       } else if (sanitizedObject.type === "ResourceDeposit/info") {
         handleIncomingResourceDepositInfo(sanitizedObject)
+      } else if (sanitizedObject.type === "UnitScreen/data") {
+        handleIncomingUnitScreenData(sanitizedObject)
       }
     } catch (error) { console.log("ERROR ON HANDLING MESSAGE", error) }
   }
@@ -182,8 +196,15 @@ function PageTWBotV2() {
   }
 
   function sendVillageDetailRequest(selectedVillageID, e = false) {
+    var tempMyVillageID
+    if (myVillages[0]) {
+      tempMyVillageID = myVillages[0].id
+    } else {
+      tempMyVillageID = selectedVillageID
+    }
+
     var payload = {
-      village_id: parseInt(selectedVillageID), my_village_id: myVillages[0].id, num_reports: 5
+      village_id: parseInt(selectedVillageID), my_village_id: tempMyVillageID, num_reports: 5
     }
     sendSocketMessage(42, "Map/getVillageDetails", commonHeaders(), JSON.stringify(payload))
     if (e) {
@@ -201,6 +222,7 @@ function PageTWBotV2() {
     if (lightCavalry > 0) { units.light_cavalry = parseInt(lightCavalry) }
     if (mountedArcher > 0) { units.mounted_archer = parseInt(mountedArcher) }
     if (archer > 0) { units.archer = parseInt(archer) }
+    if (heavyCavalry > 0) { units.heavy_cavalry = parseInt(heavyCavalry) }
 
     var payload = {
       catapult_target: "headquarter",
@@ -229,13 +251,13 @@ function PageTWBotV2() {
     sendSocketMessage(42, "Map/getProvince", commonHeaders(), JSON.stringify(payload))
   }
 
-  function sendVillagesByDynamicAreaRequest(offset) {
+  function sendVillagesByDynamicAreaRequest(x, y, width, height) {
     var payload = {
       character_id: userID,
-      height: parseInt(selectedMapHeight),
-      width: parseInt(selectedMapWidth),
-      x: parseInt(selectedMapCoordX) - offset,
-      y: parseInt(selectedMapCoordY) - offset
+      height: parseInt(height),
+      width: parseInt(width),
+      x: parseInt(x),
+      y: parseInt(y)
     }
     sendSocketMessage(42, "Map/getVillagesByArea", commonHeaders(), JSON.stringify(payload))
   }
@@ -254,10 +276,16 @@ function PageTWBotV2() {
     sendSocketMessage(42, "ResourceDeposit/collect", commonHeaders(), JSON.stringify(payload))
   }
 
-  function sendPing() {
-    console.log("PING")
+  function sendUnitScreenInfoRequest(villageID) {
+    var payload = { village_id: villageID }
+    sendSocketMessage(42, "Unit/getUnitScreenInfo", commonHeaders(), JSON.stringify(payload))
+  }
+
+  function sendPing(e) {
+    e.preventDefault()
     setTimeout(() => {
-      ws.current.send(2); executeAutomatedProcess(); sendPing()
+      console.log("PING")
+      ws.current.send(2); executeAutomatedProcess(); sendPing(e)
     }, 4000)
   }
 
@@ -301,6 +329,7 @@ function PageTWBotV2() {
     var targetVillages = nearbyBarbarianVillages.map((village) => { return village.id })
     targetVillages = shuffle(targetVillages).slice(0, 45)
     targetVillages.forEach((targetID) => { sendAveragedArmy(targetID, targetVillages.length) })
+    setRaidPercentage(100)
   }
 
   function sendAveragedArmy(targetID, size) {
@@ -313,6 +342,7 @@ function PageTWBotV2() {
     units.lightCavalry = Math.floor(myActiveVillageUnits.lightCavalry / size)
     units.mountedArcher = Math.floor(myActiveVillageUnits.mountedArcher / size)
     units.archer = Math.floor(myActiveVillageUnits.archer / size)
+    units.heavy_cavalry = Math.floor(myActiveVillageUnits.heavy_cavalry / size)
 
     var payload = {
       catapult_target: "headquarter",
@@ -338,8 +368,19 @@ function PageTWBotV2() {
   }
 
   function executeAutomatedProcess() {
-    sendResourceDepositRequest()
+    if (localStorage.getItem("enableAutoResourceCollector") === "true") {
+      sendResourceDepositRequest()
+    }
+
+    if (localStorage.getItem("enableAutoArmySender") === "true") {
+      sendUnitScreenInfoRequest(localStorage.getItem("myActiveVillageID"))
+    }
   }
+  useEffect(() => { localStorage.setItem("enableAutoResourceCollector", enableAutoResourceCollector) }, [enableAutoResourceCollector])
+  useEffect(() => {
+    localStorage.setItem("enableAutoArmySender", enableAutoArmySender)
+    localStorage.setItem("myActiveVillageID", myActiveVillageID)
+  }, [enableAutoArmySender])
 
   // =================================================================================================================== INCOMING MESSAGE HANDLER
 
@@ -440,10 +481,40 @@ function PageTWBotV2() {
           if (element.time_completed < unixTimeNow) {
             if (!myActiveVillageID) { throw "FOUND" }
             sendCollectJobRequest(element.id)
+            sendCollectJobRequest(element.id)
           }
           throw "FOUND"
         }
       })
+    } catch (e) {}
+  }
+
+  function handleIncomingUnitScreenData(directObj) {
+    try {
+      var targetVillages = targetVillageIDs.split(",")
+
+      // ATTACK TARGET VILLAGE
+      var tempTargetVillage = targetVillages[autoArmyNextAttackIndex]
+      sendCustomArmyRequest(tempTargetVillage)
+
+      var tmpOutgoingArmy = directObj.data.outgoingArmies.length
+      setMyActiveVillageOutgoingArmy(tmpOutgoingArmy)
+      if (tmpOutgoingArmy >= autoArmyMaxOutgoing) { return }
+
+      if (autoArmyNextAttackIndex + 1 >= targetVillages.length) {
+        setAutoArmyCycle(autoArmyCycle + 1)
+        setAutoArmyNextAttackVillageID(targetVillages[0])
+        setAutoArmyNextAttackIndex(0)
+        setAutoArmyPercentage(0)
+
+      } else {
+        setAutoArmyNextAttackVillageID(targetVillages[autoArmyNextAttackIndex + 1])
+        setAutoArmyNextAttackIndex(autoArmyNextAttackIndex + 1)
+
+        var tempPercentage = Math.ceil( (autoArmyNextAttackIndex + 1) / targetVillages.length * 100 )
+        setAutoArmyPercentage(tempPercentage)
+      }
+
     } catch (e) {}
   }
 
@@ -454,11 +525,16 @@ function PageTWBotV2() {
       tempMyVillages.push(village)
     })
     setMyVillages(tempMyVillages)
+
+    console.log(tempMyVillages[0].id)
+    if (tempMyVillages[0].id) {
+      sendVillageDetailRequest(tempMyVillages[0].id)
+    }
   }
 
   function handleIncomingVillageDetail(directObj) {
     setMyActiveVillage(directObj.data)
-    setMyActiveVillageID(directObj.data.id)
+    setMyActiveVillageID(directObj.data.village_id)
     setMyActiveVillageResources(directObj.data.resources)
     setMyActiveVillageUnits(directObj.data.units)
     setMyActiveVillageX(directObj.data.village_x)
@@ -466,10 +542,13 @@ function PageTWBotV2() {
     setMyActiveVillageProvinceName(directObj.data.province.name)
     setMyActiveVillageProvinceX(directObj.data.province.x)
     setMyActiveVillageProvinceY(directObj.data.province.y)
-    selectedMapCoordX(directObj.data.village_x)
-    selectedMapCoordY(directObj.data.village_y)
 
-    sendVillagesByDynamicAreaRequest(15)
+    var offset = 15
+    setSelectedMapCoordX(directObj.data.village_x - offset)
+    setSelectedMapCoordY(directObj.data.village_y - offset)
+    setSelectedProvinceX(directObj.data.province.x)
+    setSelectedProvinceY(directObj.data.province.y)
+    sendVillagesByDynamicAreaRequest(directObj.data.village_x - offset, directObj.data.village_y - offset, selectedMapWidth, selectedMapHeight)
   }
 
   // =================================================================================================================== HELPER FUNCTION
@@ -650,9 +729,9 @@ function PageTWBotV2() {
                         <th className="p-1">province Name</th>
                       </tr>
                       <tr>
-                        <td className="p-1">{selectedProvinceX}</td>
-                        <td className="p-1">{selectedProvinceY}</td>
-                        <td className="p-1">{selectedProvinceName}</td>
+                        <td className="p-1">{myActiveVillageProvinceX}</td>
+                        <td className="p-1">{myActiveVillageProvinceY}</td>
+                        <td className="p-1">{myActiveVillageProvinceName}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -660,88 +739,14 @@ function PageTWBotV2() {
               </div>
 
               <div className="row">
-                <div className="col-12 col-md-3 border rounded py-2">
-                  <h4>Easy Raid</h4>
-                  <div className="input-group mb-3">
-                    <div className="input-group-prepend">
-                      <span className="input-group-text">Source Village ID</span>
-                    </div>
-                    <input type="number" className="form-control" placeholder="" aria-label="Username" value={myActiveVillageID} onChange={(e) => setMyActiveVillageID(e.target.value)} />
-                  </div>
-
-                  <div className="form-group">
-                    <label>Target Village IDs</label><label className="float-right">{targetVillagesCount}</label>
-                    <textarea className="form-control" rows="5" placeholder="" value={targetVillageIDs} onChange={(e) => setTargetVillageIDs(e.target.value)}></textarea>
-                  </div>
-
-                  <div className="input-group mb-3">
-                    <div className="input-group-prepend">
-                      <span className="input-group-text">Spear</span>
-                    </div>
-                    <input type="number" className="form-control" placeholder="0" aria-label="Username" value={spear} onChange={(e) => setSpear(e.target.value)} />
-                  </div>
-                  <div className="input-group mb-3">
-                    <div className="input-group-prepend">
-                      <span className="input-group-text">Sword</span>
-                    </div>
-                    <input type="number" className="form-control" placeholder="0" aria-label="Username" value={sword} onChange={(e) => setSword(e.target.value)} />
-                  </div>
-                  <div className="input-group mb-3">
-                    <div className="input-group-prepend">
-                      <span className="input-group-text">Axe</span>
-                    </div>
-                    <input type="number" className="form-control" placeholder="0" aria-label="Username" value={axe} onChange={(e) => setAxe(e.target.value)} />
-                  </div>
-                  <div className="input-group mb-3">
-                    <div className="input-group-prepend">
-                      <span className="input-group-text">Knight</span>
-                    </div>
-                    <input type="number" className="form-control" placeholder="0" aria-label="Username" value={knight} onChange={(e) => setKnight(e.target.value)} />
-                  </div>
-                  <div className="input-group mb-3">
-                    <div className="input-group-prepend">
-                      <span className="input-group-text">Light Caval</span>
-                    </div>
-                    <input type="number" className="form-control" placeholder="0" aria-label="Username" value={lightCavalry} onChange={(e) => setLightCavalry(e.target.value)} />
-                  </div>
-                  <div className="input-group mb-3">
-                    <div className="input-group-prepend">
-                      <span className="input-group-text">Mount Arch</span>
-                    </div>
-                    <input type="number" className="form-control" placeholder="0" aria-label="Username" value={mountedArcher} onChange={(e) => setMountedArcher(e.target.value)} />
-                  </div>
-                  <div className="input-group mb-3">
-                    <div className="input-group-prepend">
-                      <span className="input-group-text">Archer</span>
-                    </div>
-                    <input type="number" className="form-control" placeholder="0" aria-label="Username" value={archer} onChange={(e) => setArcher(e.target.value)} />
-                  </div>
-                  <div className="mb-3">
-                    <label>random interval</label>
-                    <Form.Radio label="On" checked={sendAttackWithRandomInterval === true} value={`true`} onClick={() => setSendAttackWithRandomInterval(true)} />
-                    <Form.Radio label="Off" checked={sendAttackWithRandomInterval === false} value={`false`} onClick={() => setSendAttackWithRandomInterval(false)} />
-                  </div>
-                  <div className="mb-3">
-                    <label>all random barbarian</label>
-                    <Form.Radio label="On" checked={sendAttackToAllNearbyRandomBarbarian === true} value={`true`} onClick={() => setSendAttackToAllNearbyRandomBarbarian(true)} />
-                    <Form.Radio label="Off" checked={sendAttackToAllNearbyRandomBarbarian === false} value={`false`} onClick={() => setSendAttackToAllNearbyRandomBarbarian(false)} />
-                  </div>
-                  <div className="progress">
-                    <div className="progress-bar" role="progressbar" style={{width: `${raidPercentage}%`}} aria-valuenow={`${raidPercentage}`} aria-valuemin="0" aria-valuemax="100">{`${raidPercentage}`}%</div>
-                  </div>
-                  <button className="btn btn-outline-success btn-sm btn-block" onClick={ () => executeBulkAttack() }>Start Raid!</button>
-                </div>
-
-                <div className="col-12 col-md-9 border rounded py-2 px-1">
-                  <h4>MAP</h4>
-
+                <div className="col-12 border rounded py-2 px-1">
                   <div className="row pb-0 px-3 ">
                     <div className="col-12 col-md-2 px-1">
                       <div className="input-group">
                         <div className="input-group-prepend">
                           <span className="input-group-text">X</span>
                         </div>
-                        <input type="number" className="form-control" aria-label="Username" value={myActiveVillageX} onChange={(e) => setMyActiveVillageX(e.target.value)} />
+                        <input type="number" className="form-control" value={selectedMapCoordX} onChange={(e) => setMyActiveVillageX(e.target.value)} />
                       </div>
                     </div>
                     <div className="col-12 col-md-2 px-1">
@@ -749,7 +754,7 @@ function PageTWBotV2() {
                         <div className="input-group-prepend">
                           <span className="input-group-text">Y</span>
                         </div>
-                        <input type="number" className="form-control" aria-label="Username" value={myActiveVillageY} onChange={(e) => setMyActiveVillageY(e.target.value)} />
+                        <input type="number" className="form-control" value={selectedMapCoordY} onChange={(e) => setMyActiveVillageY(e.target.value)} />
                       </div>
                     </div>
                     <div className="col-12 col-md-3 px-1">
@@ -757,7 +762,7 @@ function PageTWBotV2() {
                         <div className="input-group-prepend">
                           <span className="input-group-text">Height</span>
                         </div>
-                        <input type="number" className="form-control" aria-label="Username" value={selectedMapHeight} onChange={(e) => setSelectedMapHeight(e.target.value)} />
+                        <input type="number" className="form-control" value={selectedMapHeight} onChange={(e) => setSelectedMapHeight(e.target.value)} />
                       </div>
                     </div>
                     <div className="col-12 col-md-3 px-1">
@@ -765,7 +770,7 @@ function PageTWBotV2() {
                         <div className="input-group-prepend">
                           <span className="input-group-text">Width</span>
                         </div>
-                        <input type="number" className="form-control" aria-label="Username" value={selectedMapHeight} onChange={(e) => setSelectedMapHeight(e.target.value)} />
+                        <input type="number" className="form-control" value={selectedMapHeight} onChange={(e) => setSelectedMapHeight(e.target.value)} />
                       </div>
                     </div>
                     <div className="col-12 col-md-2 px-1">
@@ -775,17 +780,17 @@ function PageTWBotV2() {
                     <div className="col-12 col-md-4 p-1">
                       <div className="input-group mb-2">
                         <div className="input-group-prepend">
-                          <span className="input-group-text">Landmark X</span>
+                          <span className="input-group-text">Province X</span>
                         </div>
-                        <input type="number" className="form-control" aria-label="Username" value={selectedProvinceX} onChange={(e) => setSelectedProvinceX(e.target.value)} />
+                        <input type="number" className="form-control" value={selectedProvinceX} onChange={(e) => setSelectedProvinceX(e.target.value)} />
                       </div>
                     </div>
                     <div className="col-12 col-md-4 p-1">
                       <div className="input-group mb-2">
                         <div className="input-group-prepend">
-                          <span className="input-group-text">Landmark Y</span>
+                          <span className="input-group-text">Province Y</span>
                         </div>
-                        <input type="number" className="form-control" aria-label="Username" value={selectedProvinceY} onChange={(e) => setSelectedProvinceY(e.target.value)} />
+                        <input type="number" className="form-control" value={selectedProvinceY} onChange={(e) => setSelectedProvinceY(e.target.value)} />
                       </div>
                     </div>
                     <div className="col-12 col-md-4 p-1">
@@ -852,28 +857,28 @@ function PageTWBotV2() {
                     </div>
 
                     <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                      <table className="table">
+                      <table className="table table-bordered">
                         <tbody>
                           <tr>
-                            <th>ID</th>
-                            <th>X</th>
-                            <th>Y</th>
-                            <th>Char ID</th>
-                            <th>Char Name</th>
-                            <th>Village Name</th>
-                            <th>Tribe Name</th>
-                            <th>Points</th>
+                            <th className="p-1">ID</th>
+                            <th className="p-1">X</th>
+                            <th className="p-1">Y</th>
+                            <th className="p-1">Char ID</th>
+                            <th className="p-1">Char Name</th>
+                            <th className="p-1">Village Name</th>
+                            <th className="p-1">Tribe Name</th>
+                            <th className="p-1">Points</th>
                           </tr>
                           {nearbyMyVillages.map ((village, idx) => (
                             <tr key={`my-${idx}`}>
-                              <td>{village.id}</td>
-                              <td>{village.x}</td>
-                              <td>{village.y}</td>
-                              <td>{village.character_id}</td>
-                              <td>{village.character_name}</td>
-                              <td>{village.name}</td>
-                              <td>{village.tribe_name}</td>
-                              <td>{village.points}</td>
+                              <td className="p-1">{village.id}</td>
+                              <td className="p-1">{village.x}</td>
+                              <td className="p-1">{village.y}</td>
+                              <td className="p-1">{village.character_id}</td>
+                              <td className="p-1">{village.character_name}</td>
+                              <td className="p-1">{village.name}</td>
+                              <td className="p-1">{village.tribe_name}</td>
+                              <td className="p-1">{village.points}</td>
                             </tr>
                           ))}
                         </tbody>
@@ -881,34 +886,34 @@ function PageTWBotV2() {
                     </div>
 
                     <div className="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                      <table className="table">
+                      <table className="table table-bordered">
                         <tbody>
                           <tr>
-                            <th>ID</th>
-                            <th>X</th>
-                            <th>Y</th>
-                            <th>Char ID</th>
-                            <th>Char Name</th>
-                            <th>Village Name</th>
-                            <th>Tribe Name</th>
-                            <th>Points</th>
-                            <th>Report Title</th>
+                            <th className="p-1">ID</th>
+                            <th className="p-1">X</th>
+                            <th className="p-1">Y</th>
+                            <th className="p-1">Char ID</th>
+                            <th className="p-1">Char Name</th>
+                            <th className="p-1">Village Name</th>
+                            <th className="p-1">Tribe Name</th>
+                            <th className="p-1">Points</th>
+                            <th className="p-1">Report Title</th>
                           </tr>
                           {nearbyPlayerVillages.map ((village, idx) => (
                             <tr key={`players-${idx}`}>
-                              <td>
+                              <td className="p-1">
                                 <button className="btn btn-sm btn-rounded btn-primary" onClick={(e) => addVillageToTargets(village.id, e)}>
                                   {village.id}
                                 </button>
                               </td>
-                              <td>{village.x}</td>
-                              <td>{village.y}</td>
-                              <td>{village.character_id}</td>
-                              <td>{village.character_name}</td>
-                              <td>{village.name}</td>
-                              <td>{village.tribe_name}</td>
-                              <td>{village.points}</td>
-                              <td>{village.report_title}</td>
+                              <td className="p-1">{village.x}</td>
+                              <td className="p-1">{village.y}</td>
+                              <td className="p-1">{village.character_id}</td>
+                              <td className="p-1">{village.character_name}</td>
+                              <td className="p-1">{village.name}</td>
+                              <td className="p-1">{village.tribe_name}</td>
+                              <td className="p-1">{village.points}</td>
+                              <td className="p-1">{village.report_title}</td>
                             </tr>
                           ))}
                         </tbody>
@@ -916,18 +921,18 @@ function PageTWBotV2() {
                     </div>
 
                     <div className="tab-pane fade" id="safeVillage" role="tabpanel" aria-labelledby="safeVillage-tab">
-                      <table className="table">
+                      <table className="table table-bordered">
                         <tbody>
                           <tr>
-                            <th>ID</th>
-                            <th>X</th>
-                            <th>Y</th>
-                            <th>Char ID</th>
-                            <th>Char Name</th>
-                            <th>Village Name</th>
-                            <th>Tribe Name</th>
-                            <th>Points</th>
-                            <th>Report Title</th>
+                            <th className="p-1">ID</th>
+                            <th className="p-1">X</th>
+                            <th className="p-1">Y</th>
+                            <th className="p-1">Char ID</th>
+                            <th className="p-1">Char Name</th>
+                            <th className="p-1">Village Name</th>
+                            <th className="p-1">Tribe Name</th>
+                            <th className="p-1">Points</th>
+                            <th className="p-1">Report Title</th>
                           </tr>
                           <tr>
                             <td className="p-1">
@@ -938,24 +943,175 @@ function PageTWBotV2() {
                           </tr>
                           {nearbyPassivePlayerVillages.map ((village, idx) => (
                             <tr key={`players-${idx}`}>
-                              <td>
+                              <td className="p-1">
                                 <button className="btn btn-sm btn-rounded btn-primary" onClick={(e) => addVillageToTargets(village.id, e)}>
                                   {village.id}
                                 </button>
                               </td>
-                              <td>{village.x}</td>
-                              <td>{village.y}</td>
-                              <td>{village.character_id}</td>
-                              <td>{village.character_name}</td>
-                              <td>{village.name}</td>
-                              <td>{village.tribe_name}</td>
-                              <td>{village.points}</td>
-                              <td>{village.report_title}</td>
+                              <td className="p-1">{village.x}</td>
+                              <td className="p-1">{village.y}</td>
+                              <td className="p-1">{village.character_id}</td>
+                              <td className="p-1">{village.character_name}</td>
+                              <td className="p-1">{village.name}</td>
+                              <td className="p-1">{village.tribe_name}</td>
+                              <td className="p-1">{village.points}</td>
+                              <td className="p-1">{village.report_title}</td>
                             </tr>
                           ))}
                         </tbody>
                       </table>
                     </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="col-12 col-lg-3">
+                      <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">Village ID</span>
+                        </div>
+                        <input type="number" className="form-control" placeholder="" value={myActiveVillageID} onChange={(e) => setMyActiveVillageID(e.target.value)} />
+                      </div>
+                    </div>
+                    <div className="col-12 col-lg-3">
+                      <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">Spear</span>
+                        </div>
+                        <input type="number" className="form-control" placeholder="0" value={spear} onChange={(e) => setSpear(e.target.value)} />
+                      </div>
+                    </div>
+                    <div className="col-12 col-lg-3">
+                      <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">Sword</span>
+                        </div>
+                        <input type="number" className="form-control" placeholder="0" value={sword} onChange={(e) => setSword(e.target.value)} />
+                      </div>
+                    </div>
+                    <div className="col-12 col-lg-3">
+                      <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">Axe</span>
+                        </div>
+                        <input type="number" className="form-control" placeholder="0" value={axe} onChange={(e) => setAxe(e.target.value)} />
+                      </div>
+                    </div>
+                    <div className="col-12 col-lg-3">
+                      <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">Knight</span>
+                        </div>
+                        <input type="number" className="form-control" placeholder="0" value={knight} onChange={(e) => setKnight(e.target.value)} />
+                      </div>
+                    </div>
+                    <div className="col-12 col-lg-3">
+                      <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">Light Caval</span>
+                        </div>
+                        <input type="number" className="form-control" placeholder="0" value={lightCavalry} onChange={(e) => setLightCavalry(e.target.value)} />
+                      </div>
+                    </div>
+                    <div className="col-12 col-lg-3">
+                      <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">Mount Arch</span>
+                        </div>
+                        <input type="number" className="form-control" placeholder="0" value={mountedArcher} onChange={(e) => setMountedArcher(e.target.value)} />
+                      </div>
+                    </div>
+                    <div className="col-12 col-lg-3">
+                      <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">Heavy Caval</span>
+                        </div>
+                        <input type="number" className="form-control" placeholder="0" value={heavyCavalry} onChange={(e) => setHeavyCavalry(e.target.value)} />
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <div className="form-group">
+                        <label>Target Village IDs</label><label className="float-right">{`Count: ${targetVillagesCount}`}</label>
+                        <textarea className="form-control" rows="4" placeholder="" value={targetVillageIDs} onChange={(e) => setTargetVillageIDs(e.target.value)}></textarea>
+                      </div>
+                    </div>
+                    <div className="col-12 col-lg-2">
+                      <div className="mb-3">
+                        <label>Random interval</label>
+                        <Form.Radio label=" On" checked={sendAttackWithRandomInterval === true} value={`true`} onClick={() => setSendAttackWithRandomInterval(true)} />
+                        <Form.Radio label=" Off" checked={sendAttackWithRandomInterval === false} value={`false`} onClick={() => setSendAttackWithRandomInterval(false)} />
+                      </div>
+                    </div>
+                    <div className="col-12 col-lg-2">
+                      <div className="mb-3">
+                        <label>All random barbarian</label>
+                        <Form.Radio label=" On" checked={sendAttackToAllNearbyRandomBarbarian === true} value={`true`} onClick={() => setSendAttackToAllNearbyRandomBarbarian(true)} />
+                        <Form.Radio label=" Off" checked={sendAttackToAllNearbyRandomBarbarian === false} value={`false`} onClick={() => setSendAttackToAllNearbyRandomBarbarian(false)} />
+                      </div>
+                    </div>
+                    <div className="col-12 col-lg-2">
+                      <div className="mb-3">
+                        <label>Auto resource collector</label>
+                        <Form.Radio
+                          name="enableAutoResourceCollector"
+                          label="On"
+                          value="true"
+                          checked={enableAutoResourceCollector === "true"}
+                          onClick={() => setEnableAutoResourceCollector("true")} />
+                        <Form.Radio
+                          name="enableAutoResourceCollector"
+                          label="Off"
+                          value="false"
+                          checked={enableAutoResourceCollector === "false"}
+                          onClick={() => setEnableAutoResourceCollector("false")} />
+                      </div>
+                    </div>
+                    <div className="col-12 col-lg-2">
+                      <div className="mb-3">
+                        <label>Auto army sender</label>
+                        <Form.Radio
+                          name="enableAutoArmySender"
+                          label="On"
+                          value="true"
+                          checked={enableAutoArmySender === "true"}
+                          onClick={() => setEnableAutoArmySender("true")} />
+                        <Form.Radio
+                          name="enableAutoArmySender"
+                          label="Off"
+                          value="false"
+                          checked={enableAutoArmySender === "false"}
+                          onClick={() => setEnableAutoArmySender("false")} />
+                      </div>
+                    </div>
+                    <div className="col-12 col-lg-4">
+                      <div className="progress">
+                        <div className="progress-bar" role="progressbar" style={{width: `${raidPercentage}%`}} aria-valuenow={`${raidPercentage}`} aria-valuemin="0" aria-valuemax="100">{`${raidPercentage}`}%</div>
+                      </div>
+                      <button className="btn btn-outline-success btn-sm btn-block" onClick={ () => executeBulkAttack() }>Start Raid!</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-12">
+                  Automated
+                  <hr/>
+                </div>
+                <div className="col-12">
+                  <label>Progress</label>
+                  <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                      <span className="input-group-text">Max Outgoing Threshold</span>
+                    </div>
+                    <input type="number" className="form-control" placeholder="0" value={autoArmyMaxOutgoing} onChange={(e) => setAutoArmyMaxOutgoing(e.target.value)} />
+                  </div>
+                  <br/>
+                  <label>
+                    {
+                      `| Total Cycle: ${autoArmyCycle} | Next IDx: ${autoArmyNextAttackIndex} | Next Attacked: ${autoArmyNextAttackVillageID} | Target Count: ${targetVillagesCount} | Outgoing Army: ${myActiveVillageOutgoingArmy} |`
+                    }
+                  </label>
+                  <div className="progress">
+                    <div className="progress-bar" role="progressbar" style={{width: `${autoArmyPercentage}%`}} aria-valuenow={`${autoArmyPercentage}`} aria-valuemin="0" aria-valuemax="100">{`${autoArmyPercentage}`}%</div>
                   </div>
                 </div>
               </div>
