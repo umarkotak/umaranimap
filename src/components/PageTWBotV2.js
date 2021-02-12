@@ -493,13 +493,13 @@ function PageTWBotV2() {
     try {
       var targetVillages = targetVillageIDs.split(",")
 
-      // ATTACK TARGET VILLAGE
-      var tempTargetVillage = targetVillages[autoArmyNextAttackIndex]
-      sendCustomArmyRequest(tempTargetVillage)
-
       var tmpOutgoingArmy = directObj.data.outgoingArmies.length
       setMyActiveVillageOutgoingArmy(tmpOutgoingArmy)
       if (tmpOutgoingArmy >= autoArmyMaxOutgoing) { return }
+
+      // ATTACK TARGET VILLAGE
+      var tempTargetVillage = targetVillages[autoArmyNextAttackIndex]
+      sendCustomArmyRequest(tempTargetVillage)
 
       if (autoArmyNextAttackIndex + 1 >= targetVillages.length) {
         setAutoArmyCycle(autoArmyCycle + 1)
