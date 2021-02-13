@@ -50,8 +50,8 @@ function PageTWBotV2() {
   const [selectedProvinceX, setSelectedProvinceX] = useState(0)
   const [selectedProvinceY, setSelectedProvinceY] = useState(0)
   const [selectedProvinceName, setSelectedProvinceName] = useState("")
-  const [selectedMapHeight, setSelectedMapHeight] = useState(30)
-  const [selectedMapWidth, setSelectedMapWidth] = useState(30)
+  const [selectedMapHeight, setSelectedMapHeight] = useState(40)
+  const [selectedMapWidth, setSelectedMapWidth] = useState(40)
   const [selectedMapCoordX, setSelectedMapCoordX] = useState(0)
   const [selectedMapCoordY, setSelectedMapCoordY] = useState(0)
 
@@ -87,6 +87,8 @@ function PageTWBotV2() {
   const [autoArmyTotalWood, setAutoArmyTotalWood] = useState(0)
   const [autoArmyTotalClay, setAutoArmyTotalClay] = useState(0)
   const [autoArmyTotalIron, setAutoArmyTotalIron] = useState(0)
+  const [autoArmyWithFullHaul, setAutoArmyWithFullHaul] = useState(0)
+  const [autoArmyWithPartialHaul, setAutoArmyWithPartialHaul] = useState(0)
 
   // =================================================================================================================== END CONFIG
 
@@ -393,7 +395,10 @@ function PageTWBotV2() {
   useEffect(() => { localStorage.setItem("enableAutoResourceCollector", enableAutoResourceCollector) }, [enableAutoResourceCollector])
   useEffect(() => {
     if (targetVillageIDs === "" || !targetVillageIDs) {
-      addAllVillageIds(nearbyBarbarianVillages)
+      var tempArr = nearbyBarbarianVillages
+      tempArr = tempArr.concat(nearbyPassivePlayerVillages)
+
+      addAllVillageIds(tempArr)
     }
     localStorage.setItem("enableAutoArmySender", enableAutoArmySender)
     localStorage.setItem("myActiveVillageID", myActiveVillageID)
@@ -414,7 +419,7 @@ function PageTWBotV2() {
       } else if (village.character_name === userName) {
         tempNearbyMyVillages.push(village)
 
-      } else if (!village.tribe_name && village.points < 200 && village.attack_protection === 0) {
+      } else if (!village.tribe_name && village.points < 150 && village.attack_protection === 0) {
         try {
           village.name = village.name.substring(0, 9)
           village.character_name = village.character_name.substring(0, 9)
@@ -567,7 +572,7 @@ function PageTWBotV2() {
     setMyActiveVillageProvinceX(directObj.data.province.x)
     setMyActiveVillageProvinceY(directObj.data.province.y)
 
-    var offset = 15
+    var offset = 20
     setSelectedMapCoordX(directObj.data.village_x - offset)
     setSelectedMapCoordY(directObj.data.village_y - offset)
     setSelectedProvinceX(directObj.data.province.x)
@@ -587,6 +592,12 @@ function PageTWBotV2() {
       setAutoArmyTotalWood(autoArmyTotalWood + directObj.data.ReportAttack.haul.wood)
       setAutoArmyTotalClay(autoArmyTotalClay + directObj.data.ReportAttack.haul.clay)
       setAutoArmyTotalIron(autoArmyTotalIron + directObj.data.ReportAttack.haul.iron)
+
+      if (directObj.data.haul === "full") {
+        setAutoArmyWithFullHaul(autoArmyWithFullHaul + 1)
+      } else {
+        setAutoArmyWithPartialHaul(autoArmyWithPartialHaul + 1)
+      }
     } catch(error) {}
   }
 
@@ -874,7 +885,7 @@ function PageTWBotV2() {
                         <div className="input-group-prepend">
                           <span className="input-group-text">Width</span>
                         </div>
-                        <input type="number" className="form-control" value={selectedMapHeight} onChange={(e) => setSelectedMapHeight(e.target.value)} />
+                        <input type="number" className="form-control" value={selectedMapWidth} onChange={(e) => setSelectedMapWidth(e.target.value)} />
                       </div>
                     </div>
                     <div className="col-12 col-md-2 px-1">
@@ -1225,6 +1236,8 @@ function PageTWBotV2() {
                         <th className="p-1">Next Village</th>
                         <th className="p-1">Target Cnt</th>
                         <th className="p-1">Outgoing Cnt</th>
+                        <th className="p-1">Full</th>
+                        <th className="p-1">Partial</th>
                         <th className="p-1">Wood</th>
                         <th className="p-1">Clay</th>
                         <th className="p-1">Iron</th>
@@ -1238,6 +1251,8 @@ function PageTWBotV2() {
                         <td className="p-1">{autoArmyNextAttackVillageID}</td>
                         <td className="p-1">{targetVillagesCount}</td>
                         <td className="p-1">{myActiveVillageOutgoingArmy}</td>
+                        <td className="p-1">{autoArmyWithFullHaul}</td>
+                        <td className="p-1">{autoArmyWithPartialHaul}</td>
                         <td className="p-1">{autoArmyTotalWood}</td>
                         <td className="p-1">{autoArmyTotalClay}</td>
                         <td className="p-1">{autoArmyTotalIron}</td>
