@@ -513,6 +513,7 @@ function PageTWBotV2() {
       var tmpOutgoingArmy = directObj.data.outgoingArmies.length
       setMyActiveVillageOutgoingArmy(tmpOutgoingArmy)
       summarizeOutgoingArmy(directObj.data.outgoingArmies)
+      summarizeDeffArmy(directObj.data.defArmies[0])
 
       if (enableAutoArmySender === "false") { return }
 
@@ -614,6 +615,20 @@ function PageTWBotV2() {
     })
 
     setMyAcriveVillageSummarizedOutgoingArmy(tempSummarizedOutgoingArmy)
+  }
+
+  function summarizeDeffArmy(deffArmies) {
+    var tempSummarizedDeffArmy = {
+      spear: deffArmies.spear,
+      sword: deffArmies.sword,
+      axe: deffArmies.axe,
+      knight: deffArmies.knight,
+      light_cavalry: deffArmies.light_cavalry,
+      mounted_archer: deffArmies.mounted_archer,
+      archer: deffArmies.archer,
+      heavy_cavalry: deffArmies.heavy_cavalry
+    }
+    setMyActiveVillageUnits(tempSummarizedDeffArmy)
   }
 
   function handleSaveConfig() {
