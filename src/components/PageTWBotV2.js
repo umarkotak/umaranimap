@@ -79,10 +79,14 @@ function PageTWBotV2() {
   const [enableAutoArmySender, setEnableAutoArmySender] = useState("false")
 
   const [autoArmyCycle, setAutoArmyCycle] = useState(0)
-  const [autoArmyMaxOutgoing, setAutoArmyMaxOutgoing] = useState(10)
+  const [autoArmyMaxOutgoing, setAutoArmyMaxOutgoing] = useState(25)
   const [autoArmyNextAttackIndex, setAutoArmyNextAttackIndex] = useState(0)
   const [autoArmyNextAttackVillageID, setAutoArmyNextAttackVillageID] = useState(0)
   const [autoArmyPercentage, setAutoArmyPercentage] = useState(0)
+  const [autoArmyTotalAttack, setAutoArmyTotalAttack] = useState(0)
+  const [autoArmyTotalWood, setAutoArmyTotalWood] = useState(0)
+  const [autoArmyTotalClay, setAutoArmyTotalClay] = useState(0)
+  const [autoArmyTotalIron, setAutoArmyTotalIron] = useState(0)
 
   // =================================================================================================================== END CONFIG
 
@@ -144,6 +148,10 @@ function PageTWBotV2() {
         handleIncomingResourceDepositInfo(sanitizedObject)
       } else if (sanitizedObject.type === "UnitScreen/data") {
         handleIncomingUnitScreenData(sanitizedObject)
+      } else if (sanitizedObject.type === "Report/new") {
+        handleIncomingNewReport(sanitizedObject)
+      } else if (sanitizedObject.type === "Report/view") {
+        handleIncomingReportDetail(sanitizedObject)
       }
     } catch (error) { console.log("ERROR ON HANDLING MESSAGE", error) }
   }
@@ -282,6 +290,11 @@ function PageTWBotV2() {
     sendSocketMessage(42, "Unit/getUnitScreenInfo", commonHeaders(), JSON.stringify(payload))
   }
 
+  function sendReportDetailRequest(reportID) {
+    var payload = { id: reportID }
+    sendSocketMessage(42, "Report/get", commonHeaders(), JSON.stringify(payload))
+  }
+
   function sendPing(e) {
     e.preventDefault()
     setTimeout(() => {
@@ -379,6 +392,9 @@ function PageTWBotV2() {
   }
   useEffect(() => { localStorage.setItem("enableAutoResourceCollector", enableAutoResourceCollector) }, [enableAutoResourceCollector])
   useEffect(() => {
+    if (targetVillageIDs === "" || !targetVillageIDs) {
+      addAllVillageIds(nearbyBarbarianVillages)
+    }
     localStorage.setItem("enableAutoArmySender", enableAutoArmySender)
     localStorage.setItem("myActiveVillageID", myActiveVillageID)
   }, [enableAutoArmySender])
@@ -519,6 +535,7 @@ function PageTWBotV2() {
         setAutoArmyPercentage(tempPercentage)
       }
 
+      setAutoArmyTotalAttack(autoArmyTotalAttack + 1)
     } catch (e) {}
   }
 
@@ -530,7 +547,6 @@ function PageTWBotV2() {
     })
     setMyVillages(tempMyVillages)
 
-    console.log(tempMyVillages[0].id)
     if (tempMyVillages[0].id) {
       sendVillageDetailRequest(tempMyVillages[0].id)
       sendUnitScreenInfoRequest(tempMyVillages[0].id)
@@ -555,6 +571,20 @@ function PageTWBotV2() {
     setSelectedProvinceY(directObj.data.province.y)
     sendVillagesByDynamicAreaRequest(directObj.data.village_x - offset, directObj.data.village_y - offset, selectedMapWidth, selectedMapHeight)
     sendUnitScreenInfoRequest(directObj.data.village_id)
+  }
+
+  function handleIncomingNewReport(directObj) {
+    sendReportDetailRequest(directObj.data.id)
+  }
+
+  function handleIncomingReportDetail(directObj) {
+    try {
+      if (parseInt(directObj.data.ReportAttack.attVillageId) !== parseInt(myActiveVillageID)) { return }
+
+      setAutoArmyTotalWood(autoArmyTotalWood + directObj.data.ReportAttack.haul.wood)
+      setAutoArmyTotalClay(autoArmyTotalClay + directObj.data.ReportAttack.haul.clay)
+      setAutoArmyTotalIron(autoArmyTotalIron + directObj.data.ReportAttack.haul.iron)
+    } catch(error) {}
   }
 
   // =================================================================================================================== HELPER FUNCTION
@@ -762,17 +792,29 @@ function PageTWBotV2() {
                         <td className="p-1">{myAcriveVillageSummarizedOutgoingArmy.light_cavalry}</td>
                         <td className="p-1">{myAcriveVillageSummarizedOutgoingArmy.heavy_cavalry}</td>
                       </tr>
+                      <tr>
+                        <td className="p-1">Total</td>
+                        <td className="p-1">{myAcriveVillageSummarizedOutgoingArmy.spear + myActiveVillageUnits.spear}</td>
+                        <td className="p-1">{myAcriveVillageSummarizedOutgoingArmy.sword + myActiveVillageUnits.sword}</td>
+                        <td className="p-1">{myAcriveVillageSummarizedOutgoingArmy.axe + myActiveVillageUnits.axe}</td>
+                        <td className="p-1">{myAcriveVillageSummarizedOutgoingArmy.archer + myActiveVillageUnits.archer}</td>
+                        <td className="p-1">{myAcriveVillageSummarizedOutgoingArmy.mounted_archer + myActiveVillageUnits.mounted_archer}</td>
+                        <td className="p-1">{myAcriveVillageSummarizedOutgoingArmy.light_cavalry + myActiveVillageUnits.light_cavalry}</td>
+                        <td className="p-1">{myAcriveVillageSummarizedOutgoingArmy.heavy_cavalry + myActiveVillageUnits.heavy_cavalry}</td>
+                      </tr>
                     </tbody>
                   </table>
                   <table className="table table-bordered">
                     <tbody>
                       <tr>
+                        <th className="p-1">Active Village</th>
                         <th className="p-1">Outgoing</th>
                         <th className="p-1">Prov X</th>
                         <th className="p-1">Prov Y</th>
                         <th className="p-1">Prov Name</th>
                       </tr>
                       <tr>
+                        <td className="p-1">{myActiveVillageID}</td>
                         <td className="p-1">{myActiveVillageOutgoingArmy}</td>
                         <td className="p-1">{myActiveVillageProvinceX}</td>
                         <td className="p-1">{myActiveVillageProvinceY}</td>
@@ -1088,7 +1130,7 @@ function PageTWBotV2() {
                     </div>
                     <div className="col-12 col-lg-2">
                       <div className="mb-3">
-                        <label>All random barbarian</label>
+                        <label>Send All even army to 45 random barbarian</label>
                         <Form.Radio label=" On" checked={sendAttackToAllNearbyRandomBarbarian === true} value={`true`} onClick={() => setSendAttackToAllNearbyRandomBarbarian(true)} />
                         <Form.Radio label=" Off" checked={sendAttackToAllNearbyRandomBarbarian === false} value={`false`} onClick={() => setSendAttackToAllNearbyRandomBarbarian(false)} />
                       </div>
@@ -1131,30 +1173,52 @@ function PageTWBotV2() {
                       <div className="progress">
                         <div className="progress-bar" role="progressbar" style={{width: `${raidPercentage}%`}} aria-valuenow={`${raidPercentage}`} aria-valuemin="0" aria-valuemax="100">{`${raidPercentage}`}%</div>
                       </div>
-                      <button className="btn btn-outline-success btn-sm btn-block" onClick={ () => executeBulkAttack() }>Start Raid!</button>
+                      <button className="btn btn-outline-success btn-sm btn-block" disabled={enableAutoArmySender === "true"} onClick={ () => executeBulkAttack() }>Start Raid!</button>
                     </div>
                   </div>
                 </div>
               </div>
               <div className="row">
-                <div className="col-12">
-                  Automated
-                  <hr/>
-                </div>
-                <div className="col-12">
-                  <label>Progress</label>
-                  <div className="input-group mb-3">
-                    <div className="input-group-prepend">
-                      <span className="input-group-text">Max Outgoing Threshold</span>
+                <div className="col-12 py-2 px-1">
+                  <label><b>Automated Army Progress</b></label>
+                  <div className="row">
+                    <div className="col-12 col-lg-6">
+                      <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">Max Outgoing Cnt</span>
+                        </div>
+                        <input type="number" className="form-control" placeholder="0" value={autoArmyMaxOutgoing} onChange={(e) => setAutoArmyMaxOutgoing(e.target.value)} />
+                      </div>
                     </div>
-                    <input type="number" className="form-control" placeholder="0" value={autoArmyMaxOutgoing} onChange={(e) => setAutoArmyMaxOutgoing(e.target.value)} />
                   </div>
-                  <br/>
-                  <label>
-                    {
-                      `| Total Cycle: ${autoArmyCycle} | Next IDx: ${autoArmyNextAttackIndex} | Next Attacked: ${autoArmyNextAttackVillageID} | Target Count: ${targetVillagesCount} | Outgoing Army: ${myActiveVillageOutgoingArmy} |`
-                    }
-                  </label>
+                  <table className="table table-bordered">
+                    <tbody>
+                      <tr>
+                        <th className="p-1">Total Cycle</th>
+                        <th className="p-1">Total Attack</th>
+                        <th className="p-1">Next IDx</th>
+                        <th className="p-1">Next Village</th>
+                        <th className="p-1">Target Cnt</th>
+                        <th className="p-1">Outgoing Cnt</th>
+                        <th className="p-1">Wood</th>
+                        <th className="p-1">Clay</th>
+                        <th className="p-1">Iron</th>
+                      </tr>
+                    </tbody>
+                    <tbody>
+                      <tr>
+                        <td className="p-1">{autoArmyCycle}</td>
+                        <td className="p-1">{autoArmyTotalAttack}</td>
+                        <td className="p-1">{autoArmyNextAttackIndex}</td>
+                        <td className="p-1">{autoArmyNextAttackVillageID}</td>
+                        <td className="p-1">{targetVillagesCount}</td>
+                        <td className="p-1">{myActiveVillageOutgoingArmy}</td>
+                        <td className="p-1">{autoArmyTotalWood}</td>
+                        <td className="p-1">{autoArmyTotalClay}</td>
+                        <td className="p-1">{autoArmyTotalIron}</td>
+                      </tr>
+                    </tbody>
+                  </table>
                   <div className="progress">
                     <div className="progress-bar" role="progressbar" style={{width: `${autoArmyPercentage}%`}} aria-valuenow={`${autoArmyPercentage}`} aria-valuemin="0" aria-valuemax="100">{`${autoArmyPercentage}`}%</div>
                   </div>
