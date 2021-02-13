@@ -444,6 +444,8 @@ function PageTWBotV2() {
     var tempNearbyPlayerVillages = []
     var tempNearbyPassivePlayerVillages = []
 
+    setSelectedProvinceName(directObj.data.name)
+
     directObj.data.villages.forEach((village) => {
       var tempVillage = {
         id: village.village_id,
@@ -864,7 +866,7 @@ function PageTWBotV2() {
                       <button className="btn btn-outline-success btn-sm btn-block my-1" onClick={ () => sendVillagesByAreaRequest() }>Fetch Map</button>
                     </div>
                     {/* BATAS MENUS PER 12 */}
-                    <div className="col-12 col-md-4 p-1">
+                    <div className="col-12 col-md-3 p-1">
                       <div className="input-group mb-2">
                         <div className="input-group-prepend">
                           <span className="input-group-text">Province X</span>
@@ -872,7 +874,7 @@ function PageTWBotV2() {
                         <input type="number" className="form-control" value={selectedProvinceX} onChange={(e) => setSelectedProvinceX(e.target.value)} />
                       </div>
                     </div>
-                    <div className="col-12 col-md-4 p-1">
+                    <div className="col-12 col-md-3 p-1">
                       <div className="input-group mb-2">
                         <div className="input-group-prepend">
                           <span className="input-group-text">Province Y</span>
@@ -880,7 +882,15 @@ function PageTWBotV2() {
                         <input type="number" className="form-control" value={selectedProvinceY} onChange={(e) => setSelectedProvinceY(e.target.value)} />
                       </div>
                     </div>
-                    <div className="col-12 col-md-4 p-1">
+                    <div className="col-12 col-md-3 p-1">
+                      <div className="input-group mb-2">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">Name</span>
+                        </div>
+                        <input type="text" className="form-control" value={selectedProvinceName} disabled />
+                      </div>
+                    </div>
+                    <div className="col-12 col-md-3 p-1">
                       <button className="btn btn-outline-success btn-sm btn-block my-1" onClick={ () => sendVillagesByProvinceRequest() }>Fetch Province</button>
                     </div>
                   </div>
