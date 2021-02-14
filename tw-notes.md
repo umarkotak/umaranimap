@@ -1766,6 +1766,81 @@
 
 ---
 
+42["msg",{"type":"Building/upgrade","data":{"building":"barracks","village_id":5762,"location":"hq","premium":false},"id":35,"headers":{"traveltimes":[["browser_send",1613276017132]]}}]
+
+[
+    "msg",
+    {
+        "type": "Building/upgrade",
+        "data": {
+            "building": "barracks",
+            "village_id": 5762,
+            "location": "hq",
+            "premium": false
+        },
+        "id": 35,
+        "headers": {
+            "traveltimes": [
+                [
+                    "browser_send",
+                    1613276017132
+                ]
+            ]
+        }
+    }
+]
+
+42["msg",{"id":35,"type":"Building/upgrading","headers":{"traveltimes":[["browser_send",1613276017132],["node_receive",1613276017242],["worker_start",1613276017331],["worker_response",1613276017341],["worker_deliver",1613276017341],["node_deliver",1613276017344]]},"data":{"village_id":5762,"job":{"id":560387,"building":"barracks","level":8,"time_started":1613276394,"time_completed":1613277114,"type":"up"}}}]
+
+[
+    "msg",
+    {
+        "id": 35,
+        "type": "Building/upgrading",
+        "headers": {
+            "traveltimes": [
+                [
+                    "browser_send",
+                    1613276017132
+                ],
+                [
+                    "node_receive",
+                    1613276017242
+                ],
+                [
+                    "worker_start",
+                    1613276017331
+                ],
+                [
+                    "worker_response",
+                    1613276017341
+                ],
+                [
+                    "worker_deliver",
+                    1613276017341
+                ],
+                [
+                    "node_deliver",
+                    1613276017344
+                ]
+            ]
+        },
+        "data": {
+            "village_id": 5762,
+            "job": {
+                "id": 560387,
+                "building": "barracks",
+                "level": 8,
+                "time_started": 1613276394,
+                "time_completed": 1613277114,
+                "type": "up"
+            }
+        }
+    }
+]
+
+---
+
 LIST:
 academy
 barracks
@@ -1787,26 +1862,41 @@ warehouse
 
 [
   { building_name: "headquarter", level: 1 },
+  { building_name: "warehouse", level: 1 },
   { building_name: "farm", level: 1 },
   { building_name: "timber_camp", level: 1 },
   { building_name: "clay_pit", level: 1 },
   { building_name: "iron_mine", level: 1 },
+  { building_name: "barracks", level: 1 },
+  { building_name: "statue", level: 1 },
 
   { building_name: "headquarter", level: 2 },
+  { building_name: "warehouse", level: 2 },
   { building_name: "farm", level: 2 },
   { building_name: "timber_camp", level: 2 },
   { building_name: "clay_pit", level: 2 },
   { building_name: "iron_mine", level: 2 },
 
   { building_name: "headquarter", level: 3 },
+  { building_name: "warehouse", level: 3 },
   { building_name: "farm", level: 3 },
   { building_name: "timber_camp", level: 3 },
   { building_name: "clay_pit", level: 3 },
   { building_name: "iron_mine", level: 3 },
 
   { building_name: "headquarter", level: 4 },
+  { building_name: "warehouse", level: 4 },
   { building_name: "farm", level: 4 },
   { building_name: "timber_camp", level: 4 },
   { building_name: "clay_pit", level: 4 },
   { building_name: "iron_mine", level: 4 },
+
+  { building_name: "headquarter", level: 5 },
+  { building_name: "warehouse", level: 5 },
+  { building_name: "farm", level: 5 },
+  { building_name: "timber_camp", level: 5 },
+  { building_name: "clay_pit", level: 5 },
+  { building_name: "iron_mine", level: 5 },
+
+  {}
 ]

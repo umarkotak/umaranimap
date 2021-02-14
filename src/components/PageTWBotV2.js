@@ -44,7 +44,8 @@ function PageTWBotV2() {
   const [myActiveVillageProvinceX, setMyActiveVillageProvinceX] = useState(0)
   const [myActiveVillageProvinceY, setMyActiveVillageProvinceY] = useState(0)
   const [myActiveVillageOutgoingArmy, setMyActiveVillageOutgoingArmy] = useState(0)
-  const [myAcriveVillageSummarizedOutgoingArmy, setMyAcriveVillageSummarizedOutgoingArmy] = useState({})
+  const [myActiveVillageSummarizedOutgoingArmy, setMyActiveVillageSummarizedOutgoingArmy] = useState({})
+  const [myActiveVillageSimplifiedBuildings, setMyActiveVillageSimplifiedBuildings] = useState({})
 
   // PLAYER SELECTION
   const [selectedProvinceX, setSelectedProvinceX] = useState(0)
@@ -155,6 +156,8 @@ function PageTWBotV2() {
         handleIncomingNewReport(sanitizedObject)
       } else if (sanitizedObject.type === "Report/view") {
         handleIncomingReportDetail(sanitizedObject)
+      } else if (sanitizedObject.type === "VillageBatch/villageData") {
+        handleIncomingVillageDataDetail(sanitizedObject)
       }
     } catch (error) { console.log("ERROR ON HANDLING MESSAGE", error) }
   }
@@ -298,6 +301,11 @@ function PageTWBotV2() {
     sendSocketMessage(42, "Report/get", commonHeaders(), JSON.stringify(payload))
   }
 
+  function sendVillageDataDetailRequest(villageID) {
+    var payload = { village_ids: [parseInt(villageID)] }
+    sendSocketMessage(42, "VillageBatch/getVillageData", commonHeaders(), JSON.stringify(payload))
+  }
+
   function sendPing(e) {
     e.preventDefault()
     setTimeout(() => {
@@ -392,6 +400,10 @@ function PageTWBotV2() {
     if (localStorage.getItem("enableAutoArmySender") === "true") {
       sendUnitScreenInfoRequest(localStorage.getItem("myActiveVillageID"))
     }
+
+    if (localStorage.getItem("enableAutoBuildConstruction") === "true") {
+      sendVillageDataDetailRequest(localStorage.getItem("myActiveVillageID"))
+    }
   }
   useEffect(() => { localStorage.setItem("enableAutoResourceCollector", enableAutoResourceCollector) }, [enableAutoResourceCollector])
   useEffect(() => {
@@ -404,6 +416,10 @@ function PageTWBotV2() {
     localStorage.setItem("enableAutoArmySender", enableAutoArmySender)
     localStorage.setItem("myActiveVillageID", myActiveVillageID)
   }, [enableAutoArmySender])
+  useEffect(() => {
+    localStorage.setItem("enableAutoBuildConstruction", enableAutoBuildConstruction)
+    localStorage.setItem("myActiveVillageID", myActiveVillageID)
+  }, [enableAutoBuildConstruction])
 
   // =================================================================================================================== INCOMING MESSAGE HANDLER
 
@@ -582,6 +598,7 @@ function PageTWBotV2() {
     setSelectedProvinceY(directObj.data.province.y)
     sendVillagesByDynamicAreaRequest(directObj.data.village_x - offset, directObj.data.village_y - offset, selectedMapWidth, selectedMapHeight)
     sendUnitScreenInfoRequest(directObj.data.village_id)
+    sendVillageDataDetailRequest(directObj.data.village_id)
   }
 
   function handleIncomingNewReport(directObj) {
@@ -601,6 +618,35 @@ function PageTWBotV2() {
       } else {
         setAutoArmyWithPartialHaul(autoArmyWithPartialHaul + 1)
       }
+    } catch(error) {}
+  }
+
+  function handleIncomingVillageDataDetail(directObj) {
+    try {
+      var tmpJustVillage = directObj.data[myActiveVillageID]["Village/village"]
+      var tmpMyActiveVillageSimplifiedBuildings = {
+        academy: tmpJustVillage.buildings["academy"].level,
+        barracks: tmpJustVillage.buildings["barracks"].level,
+        chapel: tmpJustVillage.buildings["chapel"].level,
+        church: tmpJustVillage.buildings["church"].level,
+        clay_pit: tmpJustVillage.buildings["clay_pit"].level,
+        farm: tmpJustVillage.buildings["farm"].level,
+        headquarter: tmpJustVillage.buildings["headquarter"].level,
+        hospital: tmpJustVillage.buildings["hospital"].level,
+        iron_mine: tmpJustVillage.buildings["iron_mine"].level,
+        market: tmpJustVillage.buildings["market"].level,
+        preceptory: tmpJustVillage.buildings["preceptory"].level,
+        rally_point: tmpJustVillage.buildings["rally_point"].level,
+        statue: tmpJustVillage.buildings["statue"].level,
+        tavern: tmpJustVillage.buildings["tavern"].level,
+        timber_camp: tmpJustVillage.buildings["timber_camp"].level,
+        wall: tmpJustVillage.buildings["wall"].level,
+        warehouse: tmpJustVillage.buildings["warehouse"].level
+      }
+
+      console.log("INCOMINGGG!!!", tmpJustVillage, tmpMyActiveVillageSimplifiedBuildings)
+
+      setMyActiveVillageSimplifiedBuildings(tmpMyActiveVillageSimplifiedBuildings)
     } catch(error) {}
   }
 
@@ -653,7 +699,7 @@ function PageTWBotV2() {
       tempSummarizedOutgoingArmy.heavy_cavalry += val.heavy_cavalry
     })
 
-    setMyAcriveVillageSummarizedOutgoingArmy(tempSummarizedOutgoingArmy)
+    setMyActiveVillageSummarizedOutgoingArmy(tempSummarizedOutgoingArmy)
   }
 
   function summarizeDeffArmy(deffArmies) {
@@ -774,7 +820,7 @@ function PageTWBotV2() {
                 <div className="col-12 col-lg-4">
                   <button className="btn btn-block btn-sm btn-outline-primary disabled">{connectionStatus}</button>
                   <button className="btn btn-block btn-sm btn-outline-primary" onClick={() => executeAutoLogin()}>➤ Login</button>
-                  <button className="btn btn-block btn-sm btn-outline-danger" onClick={() => handleClearConfig()}>✗ Logout</button>
+                  <button className="btn btn-block btn-sm btn-outline-danger" onClick={() => handleClearConfig()}>X Logout</button>
                   <a className="btn btn-block btn-sm btn-success" target="_blank" href="https://trakteer.id/marumaru" rel="noopener noreferrer">🤝 Give Support</a>
                 </div>
               </div>
@@ -840,23 +886,23 @@ function PageTWBotV2() {
                       </tr>
                       <tr>
                         <td className="p-1">Atk</td>
-                        <td className="p-1">{myAcriveVillageSummarizedOutgoingArmy.spear}</td>
-                        <td className="p-1">{myAcriveVillageSummarizedOutgoingArmy.sword}</td>
-                        <td className="p-1">{myAcriveVillageSummarizedOutgoingArmy.axe}</td>
-                        <td className="p-1">{myAcriveVillageSummarizedOutgoingArmy.archer}</td>
-                        <td className="p-1">{myAcriveVillageSummarizedOutgoingArmy.mounted_archer}</td>
-                        <td className="p-1">{myAcriveVillageSummarizedOutgoingArmy.light_cavalry}</td>
-                        <td className="p-1">{myAcriveVillageSummarizedOutgoingArmy.heavy_cavalry}</td>
+                        <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.spear}</td>
+                        <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.sword}</td>
+                        <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.axe}</td>
+                        <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.archer}</td>
+                        <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.mounted_archer}</td>
+                        <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.light_cavalry}</td>
+                        <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.heavy_cavalry}</td>
                       </tr>
                       <tr>
                         <td className="p-1">Total</td>
-                        <td className="p-1">{myAcriveVillageSummarizedOutgoingArmy.spear + myActiveVillageUnits.spear}</td>
-                        <td className="p-1">{myAcriveVillageSummarizedOutgoingArmy.sword + myActiveVillageUnits.sword}</td>
-                        <td className="p-1">{myAcriveVillageSummarizedOutgoingArmy.axe + myActiveVillageUnits.axe}</td>
-                        <td className="p-1">{myAcriveVillageSummarizedOutgoingArmy.archer + myActiveVillageUnits.archer}</td>
-                        <td className="p-1">{myAcriveVillageSummarizedOutgoingArmy.mounted_archer + myActiveVillageUnits.mounted_archer}</td>
-                        <td className="p-1">{myAcriveVillageSummarizedOutgoingArmy.light_cavalry + myActiveVillageUnits.light_cavalry}</td>
-                        <td className="p-1">{myAcriveVillageSummarizedOutgoingArmy.heavy_cavalry + myActiveVillageUnits.heavy_cavalry}</td>
+                        <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.spear + myActiveVillageUnits.spear}</td>
+                        <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.sword + myActiveVillageUnits.sword}</td>
+                        <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.axe + myActiveVillageUnits.axe}</td>
+                        <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.archer + myActiveVillageUnits.archer}</td>
+                        <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.mounted_archer + myActiveVillageUnits.mounted_archer}</td>
+                        <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.light_cavalry + myActiveVillageUnits.light_cavalry}</td>
+                        <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.heavy_cavalry + myActiveVillageUnits.heavy_cavalry}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -970,6 +1016,7 @@ function PageTWBotV2() {
                         <tbody>
                           <tr>
                             <th className="p-1">ID</th>
+                            <th className="p-1">No</th>
                             <th className="p-1">X</th>
                             <th className="p-1">Y</th>
                             <th className="p-1">Village Name</th>
@@ -980,13 +1027,19 @@ function PageTWBotV2() {
                             <th className="p-1">Dist</th>
                           </tr>
                           <tr>
-                            <td className="p-1" colSpan="9">
+                            <td className="p-1" colSpan="2">
                               <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => addAllVillageIds(nearbyBarbarianVillages)}>
                                 Add All
                               </button>
+                            </td>
+                            <td className="p-1" colSpan="2">
                               <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyBarbarianVillages(sortIDAsc(nearbyBarbarianVillages))}>
                                 ID Asc
                               </button>
+                            </td>
+                            <td className="p-1"></td>
+                            <td className="p-1"></td>
+                            <td className="p-1" colSpan="5"  align="right">
                               <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyBarbarianVillages(sortTimeAsc(nearbyBarbarianVillages))}>
                                 Time Asc
                               </button>
@@ -996,7 +1049,7 @@ function PageTWBotV2() {
                               <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyBarbarianVillages(sortDistAsc(nearbyBarbarianVillages))}>
                                 Dist Asc
                               </button>
-                              <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyBarbarianVillages(sortDistDesc(nearbyBarbarianVillages))}>
+                              <button className="btn btn-sm btn-rounded btn-primary" onClick={(e) => setNearbyBarbarianVillages(sortDistDesc(nearbyBarbarianVillages))}>
                                 Dist Desc
                               </button>
                             </td>
@@ -1008,6 +1061,7 @@ function PageTWBotV2() {
                                   {village.id}
                                 </button>
                               </td>
+                              <td className="p-1">{idx+1}</td>
                               <td className="p-1">{village.x}</td>
                               <td className="p-1">{village.y}</td>
                               <td className="p-1">{village.name}</td>
@@ -1328,6 +1382,34 @@ function PageTWBotV2() {
               <div className="row">
                 <div className="col-12 py-2 px-1">
                   <label><b>Automated Building Construction</b></label>
+                  <table className="table table-bordered">
+                    <tr>
+                      <th className="p-1">headquarter</th>
+                      <th className="p-1">warehouse</th>
+                      <th className="p-1">timber_camp</th>
+                      <th className="p-1">clay_pit</th>
+                      <th className="p-1">iron_mine</th>
+                      <th className="p-1">farm</th>
+                      <th className="p-1">barracks</th>
+                      <th className="p-1">market</th>
+                      <th className="p-1">hospital</th>
+                      <th className="p-1">wall</th>
+                      <th className="p-1">rally_point</th>
+                    </tr>
+                    <tr>
+                      <td className="p-1">{myActiveVillageSimplifiedBuildings.headquarter}</td>
+                      <td className="p-1">{myActiveVillageSimplifiedBuildings.warehouse}</td>
+                      <td className="p-1">{myActiveVillageSimplifiedBuildings.timber_camp}</td>
+                      <td className="p-1">{myActiveVillageSimplifiedBuildings.clay_pit}</td>
+                      <td className="p-1">{myActiveVillageSimplifiedBuildings.iron_mine}</td>
+                      <td className="p-1">{myActiveVillageSimplifiedBuildings.farm}</td>
+                      <td className="p-1">{myActiveVillageSimplifiedBuildings.barracks}</td>
+                      <td className="p-1">{myActiveVillageSimplifiedBuildings.market}</td>
+                      <td className="p-1">{myActiveVillageSimplifiedBuildings.hospital}</td>
+                      <td className="p-1">{myActiveVillageSimplifiedBuildings.wall}</td>
+                      <td className="p-1">{myActiveVillageSimplifiedBuildings.rally_point}</td>
+                    </tr>
+                  </table>
                 </div>
               </div>
             </div>
