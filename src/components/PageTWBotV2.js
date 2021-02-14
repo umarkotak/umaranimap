@@ -405,28 +405,31 @@ function PageTWBotV2() {
     try {
       buildingTemplateList.forEach((val, idx) => {
         if (myActiveVillageSimplifiedBuildingsLevel[val.building_name] >= val.level) {
-          console.log("SKIP ACCOMPLISHED", val, idx)
         } else {
 
           var foundOnQueue = false
           myActiveVillageBuildingQueue.forEach((buildedQueue, idx2) => {
             if (buildedQueue.building == val.building_name && buildedQueue.level >= val.level) {
-              console.log("SKIP ONGOING", val, idx)
               foundOnQueue = true
             }
           })
 
           if (!foundOnQueue) {
-            console.log("FOUND NEXT UPGRADE", val, idx)
             setAutoBuildNextIndex(idx)
             setAutoBuildNextBuilding(val.building_name)
             setAutoBuildNextLevel(val.level)
+
+            console.log("NEXT UPGRADED BUILDING", idx, val.building_name, val.level)
             throw "Break"
           }
         }
       })
 
-    } catch (error) {}
+      setEnableAutoBuildConstruction("false")
+
+    } catch (error) {
+
+    }
   }
 
   function executeAutomatedProcess() {
@@ -457,8 +460,11 @@ function PageTWBotV2() {
   useEffect(() => {
     localStorage.setItem("enableAutoBuildConstruction", enableAutoBuildConstruction)
     localStorage.setItem("myActiveVillageID", myActiveVillageID)
-    findLatestIndexForAutoBuild()
   }, [enableAutoBuildConstruction])
+  useEffect(() => {
+    findLatestIndexForAutoBuild()
+  }, [myActiveVillageSimplifiedBuildingsLevel])
+
 
   // =================================================================================================================== INCOMING MESSAGE HANDLER
 
@@ -689,7 +695,13 @@ function PageTWBotV2() {
       setMyActiveVillageOngoingQueueCount(tempBuildingQueue.queue.length)
       setMyActiveVillageUnlockedQueue(tempBuildingQueue.unlocked_slots)
 
-      // TODO: DO SOME LOGIC
+      // TODO: DO SOME LOGIC FOR UPGRADING BUILDING
+      if (!enableAutoBuildConstruction) { return }
+      if (tempBuildingQueue.queue.length >= tempBuildingQueue.unlocked_slots) { return }
+
+      console.log("TRYING TO UPGRADE BUILDING")
+      sendBuildingUpgradeRequest(myActiveVillageID, autoBuildNextBuilding)
+
     } catch(error) {}
   }
 
