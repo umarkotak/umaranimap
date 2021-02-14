@@ -80,7 +80,6 @@ function PageTWBot() {
     ws.current.onclose = (e) => {
       e.preventDefault();
 
-      console.log("WS CLOSSED")
 
       setConnectionStatus("CLOSSED, Please reload page")
     }
@@ -131,15 +130,6 @@ function PageTWBot() {
     var payload = {}
     sendSocketMessage(42, "Character/getInfo", commonHeaders(), JSON.stringify(payload))
   }
-
-  // function handleRequestVillageDetail() {
-  //   var payload = {
-  //     village_id: parseInt(checkVillageID),
-  //     my_village_id: myCharacterVillages[0].id,
-  //     num_reports: 5
-  //   }
-  //   sendSocketMessage(42, "Map/getVillageDetails", commonHeaders(), JSON.stringify(payload))
-  // }
 
   function handleRequestVillageDetailAuto(selectedVillageID, e = false) {
     var payload = {
@@ -301,8 +291,6 @@ function PageTWBot() {
   function handleIncomingMessage(incoming_message) {
     try {
       var sanitizedObj = justSanitize(incoming_message)
-      console.log("HANDLING MESSAGE", sanitizedObj)
-      console.log("HANDLING TYPE", sanitizedObj[1].type)
       var directObj = sanitizedObj[1]
 
       if (directObj.type === "Map/villageData") {
@@ -329,29 +317,6 @@ function PageTWBot() {
     var tempSafePlayerVillages = []
 
     directObj.data.villages.forEach( (village, idx ) => {
-      // var tempVillageObj = {
-      //   "id": village.id,
-      //   "name": village.name,
-      //   "x": village.x,
-      //   "y": village.y,
-      //   "character_id": village.character_id,
-      //   "province_name": village.province_name,
-      //   "character_name": village.character_name,
-      //   "character_points": village.character_points,
-      //   "points": village.points,
-      //   "fortress": village.fortress,
-      //   "tribe_id": village.tribe_id,
-      //   "tribe_name": village.tribe_name,
-      //   "tribe_tag": village.tribe_tag,
-      //   "tribe_points": village.tribe_points,
-      //   "attack_protection": village.attack_protection,
-      //   "barbarian_boost": village.barbarian_boost,
-      //   "report_time_created": village.report_time_created,
-      //   "report_title": village.report_title,
-      //   "report_haul": village.report_haul,
-      //   "player_attack_id": village.player_attack_id,
-      //   "report_result": village.report_result
-      // }
       var tempVillageObj = village
 
       if (!village.character_id) {
@@ -366,7 +331,6 @@ function PageTWBot() {
           tempVillageObj.character_name = tempVillageObj.character_name.substring(0, 9)
           tempVillageObj.character_id = `${tempVillageObj.character_id}`.substring(0, 3) + "..."
         } catch (error) {
-          console.log("ERR", error.message)
         }
         tempSafePlayerVillages.push(tempVillageObj)
 
@@ -376,7 +340,6 @@ function PageTWBot() {
           tempVillageObj.character_name = tempVillageObj.character_name.substring(0, 9)
           tempVillageObj.character_id = `${tempVillageObj.character_id}`.substring(0, 3) + "..."
         } catch (error) {
-          console.log("ERR", error.message)
         }
         tempPlayerVillages.push(tempVillageObj)
       }
@@ -418,7 +381,6 @@ function PageTWBot() {
           tempVillageObj.character_name = tempVillageObj.character_name.substring(0, 9)
           tempVillageObj.character_id = `${tempVillageObj.character_id}`.substring(0, 3) + "..."
         } catch (error) {
-          console.log("ERR", error.message)
         }
         tempSafePlayerVillages.push(tempVillageObj)
 
@@ -428,7 +390,6 @@ function PageTWBot() {
           tempVillageObj.character_name = tempVillageObj.character_name.substring(0, 9)
           tempVillageObj.character_id = `${tempVillageObj.character_id}`.substring(0, 3) + "..."
         } catch (error) {
-          console.log("ERR", error.message)
         }
         tempPlayerVillages.push(tempVillageObj)
       }
@@ -441,7 +402,6 @@ function PageTWBot() {
   }
 
   function handleIncomingResourceDepositInfo(directObj) {
-    console.log("handleIncomingResourceDepositInfo", directObj)
 
     try {
       directObj.data.jobs.forEach(element => {
@@ -475,7 +435,6 @@ function PageTWBot() {
   }
 
   function handleIncomingVillageDetail(directObj) {
-    console.log(directObj)
     setMyVillageResources(directObj.data.resources)
     setMyVillageUnits(directObj.data.units)
     setProvinceLandmarkX(directObj.data.province.x)
@@ -517,10 +476,8 @@ function PageTWBot() {
   }
 
   function handlePing() {
-    console.log("PING")
     setTimeout(() => {
       ws.current.send(2)
-      handleFetchResourceDeposit()
       handlePing()
     }, 4000)
   }
@@ -596,28 +553,6 @@ function PageTWBot() {
     }
   }, [targetVillageIDs])
 
-  // function beautifyVal(socketMessage) {
-  //   try {
-  //     var prefixes = [0, 42]
-  //     var beautifiedJson = socketMessage
-
-  //     prefixes.forEach( (prefix, idx) => {
-  //       if (socketMessage.startsWith(prefix)) {
-  //         var sanitizedSocketMessage = socketMessage.replace(prefix,"")
-  //         var tempJson = JSON.parse(sanitizedSocketMessage)
-  //         console.log(prefix, tempJson)
-  //         beautifiedJson = JSON.stringify(tempJson, null, 4)
-  //         return
-  //       }
-  //     })
-
-  //     return beautifiedJson
-
-  //   } catch (error) {
-  //     return socketMessage
-  //   }
-  // }
-
   function timeNow() { return + new Date() }
 
   function commonHeaders() {
@@ -643,7 +578,6 @@ function PageTWBot() {
   }
 
   function sendSocketMessage(prefixNum, type, headers, payload) {
-    console.log(`SENDING SOCKET MESSAGE ${type}`, payload)
     var basePayload = `${prefixNum}["msg", {
       "id": ${globID},
       "type": "${type}",
@@ -1155,22 +1089,6 @@ function PageTWBot() {
 
       <div className="row mb-5">
       </div>
-
-      {/* <div className="row">
-        <div className="col-12">
-          <div style={{whiteSpace: "pre"}}>
-            {socketMessages.map( (socketMessage, idx) => (
-              <div key={`${idx}`} className="border rounded p-2">
-                <code>
-                  <pre>
-                    {beautifyVal(socketMessage)}
-                  </pre>
-                </code>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div> */}
     </div>
   )
 }
