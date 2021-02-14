@@ -3,8 +3,10 @@ import Cookies from 'universal-cookie'
 import ReactQuill from 'react-quill';
 import { Form } from 'semantic-ui-react'
 import 'react-quill/dist/quill.snow.css';
+import TWBotDB from "./TWBotDB"
 
 const cookies = new Cookies()
+const tWBotDB = new TWBotDB();
 
 function PageTWBotV2() {
   const ws = useRef(null)
@@ -45,7 +47,7 @@ function PageTWBotV2() {
   const [myActiveVillageProvinceY, setMyActiveVillageProvinceY] = useState(0)
   const [myActiveVillageOutgoingArmy, setMyActiveVillageOutgoingArmy] = useState(0)
   const [myActiveVillageSummarizedOutgoingArmy, setMyActiveVillageSummarizedOutgoingArmy] = useState({})
-  const [myActiveVillageSimplifiedBuildings, setMyActiveVillageSimplifiedBuildings] = useState({})
+  const [myActiveVillageSimplifiedBuildingsLevel, setMyActiveVillageSimplifiedBuildingsLevel] = useState({})
 
   // PLAYER SELECTION
   const [selectedProvinceX, setSelectedProvinceX] = useState(0)
@@ -91,6 +93,11 @@ function PageTWBotV2() {
   const [autoArmyTotalIron, setAutoArmyTotalIron] = useState(0)
   const [autoArmyWithFullHaul, setAutoArmyWithFullHaul] = useState(0)
   const [autoArmyWithPartialHaul, setAutoArmyWithPartialHaul] = useState(0)
+
+  const [autoBuildNextIndex, setAutoBuildNextIndex] = useState(0)
+  const [autoBuildNextBuilding, setAutoBuildNextBuilding] = useState("")
+  const [autoBuildNextLevel, setAutoBuildNextLevel] = useState(0)
+  const [autoBuildTemplateProgress, setAutoBuildTemplateProgress] = useState(0)
 
   // =================================================================================================================== END CONFIG
 
@@ -306,6 +313,16 @@ function PageTWBotV2() {
     sendSocketMessage(42, "VillageBatch/getVillageData", commonHeaders(), JSON.stringify(payload))
   }
 
+  function sendBuildingUpgradeRequest(villageID, buildingName) {
+    var payload = {
+      building: buildingName,
+      village_id: parseInt(villageID),
+      location: "hq",
+      premium: false
+     }
+    sendSocketMessage(42, "Building/upgrade", commonHeaders(), JSON.stringify(payload))
+  }
+
   function sendPing(e) {
     e.preventDefault()
     setTimeout(() => {
@@ -380,16 +397,22 @@ function PageTWBotV2() {
     sendSocketMessage(42, "Command/sendCustomArmy", commonHeaders(), JSON.stringify(payload))
   }
 
-  function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
-    while (0 !== currentIndex) {
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
-    return array;
+  function findLatestIndexForAutoBuild() {
+    var buildingTemplateList = tWBotDB.GetBuildingTemplateList()
+    try {
+      buildingTemplateList.forEach((val, idx) => {
+        if (myActiveVillageSimplifiedBuildingsLevel[val.building_name] >= val.level) {
+          console.log("SKIP ACCOMPLISHED", val, idx)
+        } else {
+          console.log("FOUND IDX", val, idx)
+          setAutoBuildNextIndex(idx)
+          setAutoBuildNextBuilding(val.building_name)
+          setAutoBuildNextLevel(val.level)
+          throw "Break"
+        }
+      })
+
+    } catch (error) {}
   }
 
   function executeAutomatedProcess() {
@@ -405,6 +428,7 @@ function PageTWBotV2() {
       sendVillageDataDetailRequest(localStorage.getItem("myActiveVillageID"))
     }
   }
+
   useEffect(() => { localStorage.setItem("enableAutoResourceCollector", enableAutoResourceCollector) }, [enableAutoResourceCollector])
   useEffect(() => {
     if (targetVillageIDs === "" || !targetVillageIDs) {
@@ -419,6 +443,7 @@ function PageTWBotV2() {
   useEffect(() => {
     localStorage.setItem("enableAutoBuildConstruction", enableAutoBuildConstruction)
     localStorage.setItem("myActiveVillageID", myActiveVillageID)
+    findLatestIndexForAutoBuild()
   }, [enableAutoBuildConstruction])
 
   // =================================================================================================================== INCOMING MESSAGE HANDLER
@@ -624,7 +649,7 @@ function PageTWBotV2() {
   function handleIncomingVillageDataDetail(directObj) {
     try {
       var tmpJustVillage = directObj.data[myActiveVillageID]["Village/village"]
-      var tmpMyActiveVillageSimplifiedBuildings = {
+      var tmpMyActiveVillageSimplifiedBuildingsLevel = {
         academy: tmpJustVillage.buildings["academy"].level,
         barracks: tmpJustVillage.buildings["barracks"].level,
         chapel: tmpJustVillage.buildings["chapel"].level,
@@ -644,9 +669,7 @@ function PageTWBotV2() {
         warehouse: tmpJustVillage.buildings["warehouse"].level
       }
 
-      console.log("INCOMINGGG!!!", tmpJustVillage, tmpMyActiveVillageSimplifiedBuildings)
-
-      setMyActiveVillageSimplifiedBuildings(tmpMyActiveVillageSimplifiedBuildings)
+      setMyActiveVillageSimplifiedBuildingsLevel(tmpMyActiveVillageSimplifiedBuildingsLevel)
     } catch(error) {}
   }
 
@@ -748,6 +771,18 @@ function PageTWBotV2() {
     if (e) {
       e.target.className = "btn btn-sm btn-rounded btn-danger"
     }
+  }
+
+  function shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+    while (0 !== currentIndex) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+    return array;
   }
 
   function addAllVillageIds(villageList) {
@@ -1397,17 +1432,30 @@ function PageTWBotV2() {
                       <th className="p-1">rally_point</th>
                     </tr>
                     <tr>
-                      <td className="p-1">{myActiveVillageSimplifiedBuildings.headquarter}</td>
-                      <td className="p-1">{myActiveVillageSimplifiedBuildings.warehouse}</td>
-                      <td className="p-1">{myActiveVillageSimplifiedBuildings.timber_camp}</td>
-                      <td className="p-1">{myActiveVillageSimplifiedBuildings.clay_pit}</td>
-                      <td className="p-1">{myActiveVillageSimplifiedBuildings.iron_mine}</td>
-                      <td className="p-1">{myActiveVillageSimplifiedBuildings.farm}</td>
-                      <td className="p-1">{myActiveVillageSimplifiedBuildings.barracks}</td>
-                      <td className="p-1">{myActiveVillageSimplifiedBuildings.market}</td>
-                      <td className="p-1">{myActiveVillageSimplifiedBuildings.hospital}</td>
-                      <td className="p-1">{myActiveVillageSimplifiedBuildings.wall}</td>
-                      <td className="p-1">{myActiveVillageSimplifiedBuildings.rally_point}</td>
+                      <td className="p-1">{myActiveVillageSimplifiedBuildingsLevel.headquarter}</td>
+                      <td className="p-1">{myActiveVillageSimplifiedBuildingsLevel.warehouse}</td>
+                      <td className="p-1">{myActiveVillageSimplifiedBuildingsLevel.timber_camp}</td>
+                      <td className="p-1">{myActiveVillageSimplifiedBuildingsLevel.clay_pit}</td>
+                      <td className="p-1">{myActiveVillageSimplifiedBuildingsLevel.iron_mine}</td>
+                      <td className="p-1">{myActiveVillageSimplifiedBuildingsLevel.farm}</td>
+                      <td className="p-1">{myActiveVillageSimplifiedBuildingsLevel.barracks}</td>
+                      <td className="p-1">{myActiveVillageSimplifiedBuildingsLevel.market}</td>
+                      <td className="p-1">{myActiveVillageSimplifiedBuildingsLevel.hospital}</td>
+                      <td className="p-1">{myActiveVillageSimplifiedBuildingsLevel.wall}</td>
+                      <td className="p-1">{myActiveVillageSimplifiedBuildingsLevel.rally_point}</td>
+                    </tr>
+                  </table>
+
+                  <table className="table table-bordered">
+                    <tr>
+                      <th className="p-1">Next Idx</th>
+                      <th className="p-1">Next Building</th>
+                      <th className="p-1">Next Level</th>
+                    </tr>
+                    <tr>
+                      <td className="p-1">{autoBuildNextIndex}</td>
+                      <td className="p-1">{autoBuildNextBuilding}</td>
+                      <td className="p-1">{autoBuildNextLevel}</td>
                     </tr>
                   </table>
                 </div>

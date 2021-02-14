@@ -1,0 +1,55 @@
+const BUILDING_TEMPLATE_LIST = [
+  { building_name: "headquarter", level: 1 },
+  { building_name: "warehouse", level: 1 },
+  { building_name: "farm", level: 1 },
+  { building_name: "timber_camp", level: 1 },
+  { building_name: "clay_pit", level: 1 },
+  { building_name: "iron_mine", level: 1 },
+  { building_name: "barracks", level: 1 },
+  { building_name: "statue", level: 1 },
+
+  { building_name: "headquarter", level: 2 },
+  { building_name: "warehouse", level: 2 },
+  { building_name: "farm", level: 2 },
+  { building_name: "timber_camp", level: 2 },
+  { building_name: "clay_pit", level: 2 },
+  { building_name: "iron_mine", level: 2 },
+
+  { building_name: "headquarter", level: 3 },
+  { building_name: "warehouse", level: 3 },
+  { building_name: "farm", level: 3 },
+  { building_name: "timber_camp", level: 3 },
+  { building_name: "clay_pit", level: 3 },
+  { building_name: "iron_mine", level: 3 },
+
+  { building_name: "headquarter", level: 4 },
+  { building_name: "warehouse", level: 4 },
+  { building_name: "farm", level: 4 },
+  { building_name: "timber_camp", level: 4 },
+  { building_name: "clay_pit", level: 4 },
+  { building_name: "iron_mine", level: 4 },
+
+  { building_name: "headquarter", level: 5 },
+  { building_name: "warehouse", level: 5 },
+  { building_name: "farm", level: 5 },
+  { building_name: "timber_camp", level: 5 },
+  { building_name: "clay_pit", level: 5 },
+  { building_name: "iron_mine", level: 5 },
+
+  { building_name: "headquarter", level: 6 },
+  { building_name: "warehouse", level: 6 },
+  { building_name: "farm", level: 6 },
+  { building_name: "timber_camp", level: 6 },
+  { building_name: "clay_pit", level: 6 },
+  { building_name: "iron_mine", level: 6 },
+  { building_name: "headquarter", level: 20 },
+  { building_name: "headquarter", level: 30 }
+]
+
+class TWBotDB {
+  GetBuildingTemplateList() {
+    return BUILDING_TEMPLATE_LIST
+  }
+}
+
+export default TWBotDB
