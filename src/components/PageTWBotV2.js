@@ -464,7 +464,9 @@ function PageTWBotV2() {
   useEffect(() => {
     findLatestIndexForAutoBuild()
   }, [myActiveVillageSimplifiedBuildingsLevel])
-
+  useEffect(() => {
+    findLatestIndexForAutoBuild()
+  }, [myActiveVillageOngoingQueueCount])
 
   // =================================================================================================================== INCOMING MESSAGE HANDLER
 
