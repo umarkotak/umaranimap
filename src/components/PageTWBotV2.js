@@ -77,6 +77,7 @@ function PageTWBotV2() {
   // AUTOMATED CONFIGS
   const [enableAutoResourceCollector, setEnableAutoResourceCollector] = useState("true")
   const [enableAutoArmySender, setEnableAutoArmySender] = useState("false")
+  const [enableAutoBuildConstruction, setEnableAutoBuildConstruction] = useState("false")
 
   const [autoArmyCycle, setAutoArmyCycle] = useState(0)
   const [autoArmyMaxOutgoing, setAutoArmyMaxOutgoing] = useState(25)
@@ -772,9 +773,9 @@ function PageTWBotV2() {
 
                 <div className="col-12 col-lg-4">
                   <button className="btn btn-block btn-sm btn-outline-primary disabled">{connectionStatus}</button>
-                  <button className="btn btn-block btn-sm btn-outline-primary" onClick={() => executeAutoLogin()}>Login</button>
-                  <button className="btn btn-block btn-sm btn-outline-danger" onClick={() => handleClearConfig()}>Logout</button>
-                  <a className="btn btn-block btn-sm btn-outline-success" target="_blank" href="https://trakteer.id/marumaru" rel="noopener noreferrer">Support!</a>
+                  <button className="btn btn-block btn-sm btn-outline-primary" onClick={() => executeAutoLogin()}>➤ Login</button>
+                  <button className="btn btn-block btn-sm btn-outline-danger" onClick={() => handleClearConfig()}>✗ Logout</button>
+                  <a className="btn btn-block btn-sm btn-success" target="_blank" href="https://trakteer.id/marumaru" rel="noopener noreferrer">🤝 Give Support</a>
                 </div>
               </div>
             </div>
@@ -1208,7 +1209,7 @@ function PageTWBotV2() {
                     </div>
                     <div className="col-12 col-lg-2">
                       <div className="mb-3">
-                        <label>Send All even army to 45 random barbarian</label>
+                        <label>Send all even army to 45 random barbarian</label>
                         <Form.Radio label=" On" checked={sendAttackToAllNearbyRandomBarbarian === true} value={`true`} onClick={() => setSendAttackToAllNearbyRandomBarbarian(true)} />
                         <Form.Radio label=" Off" checked={sendAttackToAllNearbyRandomBarbarian === false} value={`false`} onClick={() => setSendAttackToAllNearbyRandomBarbarian(false)} />
                       </div>
@@ -1247,7 +1248,24 @@ function PageTWBotV2() {
                           onClick={() => setEnableAutoArmySender("false")} />
                       </div>
                     </div>
-                    <div className="col-12 col-lg-4">
+                    <div className="col-12 col-lg-2">
+                      <div className="mb-3">
+                        <label>Auto build construction</label>
+                        <Form.Radio
+                          name="enableAutoBuildConstruction"
+                          label="On"
+                          value="true"
+                          checked={enableAutoBuildConstruction === "true"}
+                          onClick={() => setEnableAutoBuildConstruction("true")} />
+                        <Form.Radio
+                          name="enableAutoBuildConstruction"
+                          label="Off"
+                          value="false"
+                          checked={enableAutoBuildConstruction === "false"}
+                          onClick={() => setEnableAutoBuildConstruction("false")} />
+                      </div>
+                    </div>
+                    <div className="col-12 col-lg-2">
                       <div className="progress">
                         <div className="progress-bar" role="progressbar" style={{width: `${raidPercentage}%`}} aria-valuenow={`${raidPercentage}`} aria-valuemin="0" aria-valuemax="100">{`${raidPercentage}`}%</div>
                       </div>
@@ -1304,6 +1322,12 @@ function PageTWBotV2() {
                   <div className="progress">
                     <div className="progress-bar" role="progressbar" style={{width: `${autoArmyPercentage}%`}} aria-valuenow={`${autoArmyPercentage}`} aria-valuemin="0" aria-valuemax="100">{`${autoArmyPercentage}`}%</div>
                   </div>
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="col-12 py-2 px-1">
+                  <label><b>Automated Building Construction</b></label>
                 </div>
               </div>
             </div>
