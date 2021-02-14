@@ -435,6 +435,7 @@ function PageTWBotV2() {
         } catch (error) {}
         tempNearbyPlayerVillages.push(village)
       }
+      village["dist"] = calcDist(village.x, village.y)
     })
 
     setNearbyBarbarianVillages(tempNearbyBarbarianVillages)
@@ -461,7 +462,8 @@ function PageTWBotV2() {
         y: village.village_y,
         points: village.points,
         province_name: directObj.data.name,
-        tribe_name: village.tribe_id
+        tribe_name: village.tribe_id,
+        dist: calcDist(village.village_x, village.village_y)
       }
 
       if (!tempVillage.character_id) {
@@ -602,6 +604,31 @@ function PageTWBotV2() {
   }
 
   // =================================================================================================================== HELPER FUNCTION
+
+  function sortIDAsc(villages) {
+    var sortedVillages = villages.sort((a, b) => a.id - b.id)
+    return sortedVillages
+  }
+
+  function sortTimeAsc(villages) {
+    var sortedVillages = villages.sort((a, b) => a.report_time_created - b.report_time_created)
+    return sortedVillages
+  }
+
+  function sortTimeDesc(villages) {
+    var sortedVillages = villages.sort((a, b) => b.report_time_created - a.report_time_created)
+    return sortedVillages
+  }
+
+  function sortDistAsc(villages) {
+    var sortedVillages = villages.sort((a, b) => a.dist - b.dist)
+    return sortedVillages
+  }
+
+  function sortDistDesc(villages) {
+    var sortedVillages = villages.sort((a, b) => b.dist - a.dist)
+    return sortedVillages
+  }
 
   function summarizeOutgoingArmy(outgoingArmies) {
     var tempSummarizedOutgoingArmy = {
@@ -861,7 +888,7 @@ function PageTWBotV2() {
                         <div className="input-group-prepend">
                           <span className="input-group-text">X</span>
                         </div>
-                        <input type="number" className="form-control" value={selectedMapCoordX} onChange={(e) => setMyActiveVillageX(e.target.value)} />
+                        <input type="number" className="form-control" value={selectedMapCoordX} onChange={(e) => setSelectedMapCoordX(e.target.value)} />
                       </div>
                     </div>
                     <div className="col-12 col-md-2 px-1">
@@ -869,7 +896,7 @@ function PageTWBotV2() {
                         <div className="input-group-prepend">
                           <span className="input-group-text">Y</span>
                         </div>
-                        <input type="number" className="form-control" value={selectedMapCoordY} onChange={(e) => setMyActiveVillageY(e.target.value)} />
+                        <input type="number" className="form-control" value={selectedMapCoordY} onChange={(e) => setSelectedMapCoordY(e.target.value)} />
                       </div>
                     </div>
                     <div className="col-12 col-md-3 px-1">
@@ -952,9 +979,24 @@ function PageTWBotV2() {
                             <th className="p-1">Dist</th>
                           </tr>
                           <tr>
-                            <td className="p-1">
-                              <button className="btn btn-sm btn-rounded btn-primary" onClick={(e) => addAllVillageIds(nearbyBarbarianVillages)}>
+                            <td className="p-1" colSpan="9">
+                              <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => addAllVillageIds(nearbyBarbarianVillages)}>
                                 Add All
+                              </button>
+                              <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyBarbarianVillages(sortIDAsc(nearbyBarbarianVillages))}>
+                                ID Asc
+                              </button>
+                              <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyBarbarianVillages(sortTimeAsc(nearbyBarbarianVillages))}>
+                                Time Asc
+                              </button>
+                              <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyBarbarianVillages(sortTimeDesc(nearbyBarbarianVillages))}>
+                                Time Desc
+                              </button>
+                              <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyBarbarianVillages(sortDistAsc(nearbyBarbarianVillages))}>
+                                Dist Asc
+                              </button>
+                              <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyBarbarianVillages(sortDistDesc(nearbyBarbarianVillages))}>
+                                Dist Desc
                               </button>
                             </td>
                           </tr>
@@ -972,7 +1014,7 @@ function PageTWBotV2() {
                               <td className="p-1">{village.report_title}</td>
                               <td className="p-1">{new Date(village.report_time_created * 1000).toLocaleString('en-GB', { hour12: false })}</td>
                               <td className="p-1">{village.province_name}</td>
-                              <td className="p-1">{calcDist(village.x, village.y)}</td>
+                              <td className="p-1">{village.dist}</td>
                             </tr>
                           ))}
                         </tbody>
