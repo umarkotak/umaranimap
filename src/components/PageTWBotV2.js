@@ -81,7 +81,7 @@ function PageTWBotV2() {
   const [raidPercentage, setRaidPercentage] = useState(0)
 
   // AUTOMATED CONFIGS
-  const [enableAutoResourceCollector, setEnableAutoResourceCollector] = useState("true")
+  const [enableAutoResourceCollector, setEnableAutoResourceCollector] = useState("false")
   const [enableAutoArmySender, setEnableAutoArmySender] = useState("false")
   const [enableAutoBuildConstruction, setEnableAutoBuildConstruction] = useState("false")
 
@@ -450,7 +450,7 @@ function PageTWBotV2() {
   useEffect(() => {
     if (targetVillageIDs === "" || !targetVillageIDs) {
       var tempArr = nearbyBarbarianVillages
-      tempArr = tempArr.concat(nearbyPassivePlayerVillages)
+      // tempArr = tempArr.concat(nearbyPassivePlayerVillages)
 
       addAllVillageIds(tempArr)
     }
