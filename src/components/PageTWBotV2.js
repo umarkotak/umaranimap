@@ -48,6 +48,9 @@ function PageTWBotV2() {
   const [myActiveVillageOutgoingArmy, setMyActiveVillageOutgoingArmy] = useState(0)
   const [myActiveVillageSummarizedOutgoingArmy, setMyActiveVillageSummarizedOutgoingArmy] = useState({})
   const [myActiveVillageSimplifiedBuildingsLevel, setMyActiveVillageSimplifiedBuildingsLevel] = useState({})
+  const [myActiveVillageBuildingQueue, setMyActiveVillageBuildingQueue] = useState([])
+  const [myActiveVillageOngoingQueueCount, setMyActiveVillageOngoingQueueCount] = useState(0)
+  const [myActiveVillageUnlockedQueue, setMyActiveVillageUnlockedQueue] = useState(0)
 
   // PLAYER SELECTION
   const [selectedProvinceX, setSelectedProvinceX] = useState(0)
@@ -404,11 +407,22 @@ function PageTWBotV2() {
         if (myActiveVillageSimplifiedBuildingsLevel[val.building_name] >= val.level) {
           console.log("SKIP ACCOMPLISHED", val, idx)
         } else {
-          console.log("FOUND IDX", val, idx)
-          setAutoBuildNextIndex(idx)
-          setAutoBuildNextBuilding(val.building_name)
-          setAutoBuildNextLevel(val.level)
-          throw "Break"
+
+          var foundOnQueue = false
+          myActiveVillageBuildingQueue.forEach((buildedQueue, idx2) => {
+            if (buildedQueue.building == val.building_name && buildedQueue.level >= val.level) {
+              console.log("SKIP ONGOING", val, idx)
+              foundOnQueue = true
+            }
+          })
+
+          if (!foundOnQueue) {
+            console.log("FOUND NEXT UPGRADE", val, idx)
+            setAutoBuildNextIndex(idx)
+            setAutoBuildNextBuilding(val.building_name)
+            setAutoBuildNextLevel(val.level)
+            throw "Break"
+          }
         }
       })
 
@@ -669,7 +683,13 @@ function PageTWBotV2() {
         warehouse: tmpJustVillage.buildings["warehouse"].level
       }
 
+      var tempBuildingQueue = directObj.data[myActiveVillageID]["Building/queue"]
       setMyActiveVillageSimplifiedBuildingsLevel(tmpMyActiveVillageSimplifiedBuildingsLevel)
+      setMyActiveVillageBuildingQueue(tempBuildingQueue.queue)
+      setMyActiveVillageOngoingQueueCount(tempBuildingQueue.queue.length)
+      setMyActiveVillageUnlockedQueue(tempBuildingQueue.unlocked_slots)
+
+      // TODO: DO SOME LOGIC
     } catch(error) {}
   }
 
@@ -1448,11 +1468,13 @@ function PageTWBotV2() {
 
                   <table className="table table-bordered">
                     <tr>
+                      <th className="p-1">Queue</th>
                       <th className="p-1">Next Idx</th>
                       <th className="p-1">Next Building</th>
                       <th className="p-1">Next Level</th>
                     </tr>
                     <tr>
+                      <td className="p-1">{myActiveVillageOngoingQueueCount} / {myActiveVillageUnlockedQueue}</td>
                       <td className="p-1">{autoBuildNextIndex}</td>
                       <td className="p-1">{autoBuildNextBuilding}</td>
                       <td className="p-1">{autoBuildNextLevel}</td>

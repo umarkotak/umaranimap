@@ -65,3 +65,8 @@ git push heroku master
 ---
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+--- HEROKU
+
+heroku repo:gc --app your-app-name
+heroku repo:purge_cache --app your-app-name
