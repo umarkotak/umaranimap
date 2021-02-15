@@ -1032,7 +1032,7 @@ function PageTWBotV2() {
                       </div>
                     </div>
                     <div className="col-12 col-md-2">
-                      <button className="btn btn-outline-success btn-sm btn-block my-1" onClick={ () => sendVillagesByAreaRequest() }>Fetch Map</button>
+                      <button className="btn btn-outline-success btn-sm btn-block my-1" onClick={ () => sendVillagesByAreaRequest() }>🔎 Fetch Map</button>
                     </div>
                     {/* BATAS MENUS PER 12 */}
                     <div className="col-12 col-md-3 py-1">
@@ -1060,7 +1060,7 @@ function PageTWBotV2() {
                       </div>
                     </div>
                     <div className="col-12 col-md-3 py-1">
-                      <button className="btn btn-outline-success btn-sm btn-block my-1" onClick={ () => sendVillagesByProvinceRequest() }>Fetch Province</button>
+                      <button className="btn btn-outline-success btn-sm btn-block my-1" onClick={ () => sendVillagesByProvinceRequest() }>🔎 Fetch Province</button>
                     </div>
                   </div>
 
@@ -1388,11 +1388,12 @@ function PageTWBotV2() {
                           onClick={() => setEnableAutoBuildConstruction("false")} />
                       </div>
                     </div>
-                    <div className="col-12 col-lg-2 border border-primary">
+                    <div className="col-12 col-lg-2 border border-primary py-2">
                       <div className="progress">
                         <div className="progress-bar" role="progressbar" style={{width: `${raidPercentage}%`}} aria-valuenow={`${raidPercentage}`} aria-valuemin="0" aria-valuemax="100">{`${raidPercentage}`}%</div>
                       </div>
-                      <button className="btn btn-outline-success btn-sm btn-block" disabled={enableAutoArmySender === "true"} onClick={ () => executeBulkAttack() }>Start Raid!</button>
+                      <hr/>
+                      <button className="btn btn-outline-success btn-lg btn-block" disabled={enableAutoArmySender === "true"} onClick={ () => executeBulkAttack() }>👊 Start Raid!</button>
                     </div>
                   </div>
                 </div>
