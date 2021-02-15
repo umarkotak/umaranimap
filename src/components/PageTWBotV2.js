@@ -10,7 +10,7 @@ const tWBotDB = new TWBotDB();
 
 function PageTWBotV2() {
   const ws = useRef(null)
-  const CONNECTION_STATUSES = ["CONNECTING", "CONNECTED", "LOGGED IN", "DISCONNECTED"]
+  const CONNECTION_STATUSES = ["CONNECTING", "CONNECTED", "LOGGED IN", "DISCONNECTED", "NOT CONNECTED", "RECONNECTING"]
 
   // =================================================================================================================== START CONFIG
 
@@ -109,7 +109,7 @@ function PageTWBotV2() {
 
   function connectWs() {
     ws.current = new WebSocket(`wss://en.tribalwars2.com/socket.io/?platform=desktop&EIO=3&transport=websocket`)
-    return () => { ws.current.close(); setConnectionStatus("not connected") }
+    return () => { ws.current.close(); setConnectionStatus(CONNECTION_STATUSES[4]) }
   }
 
   function initProcess() {
@@ -134,6 +134,7 @@ function PageTWBotV2() {
   function onClosingWebSocket(e) {
     e.preventDefault()
     setConnectionStatus(CONNECTION_STATUSES[3])
+    triggerReconnection()
   }
 
   function handleIncomingMessage(incomingMessage) {
@@ -329,8 +330,10 @@ function PageTWBotV2() {
   function sendPing(e) {
     e.preventDefault()
     setTimeout(() => {
-      console.log("PING")
-      ws.current.send(2); executeAutomatedProcess(); sendPing(e)
+      if (ws.current.readyState === 1) {
+        console.log("PING")
+        ws.current.send(2); executeAutomatedProcess(); sendPing(e)
+      }
     }, 4000)
   }
 
@@ -430,6 +433,14 @@ function PageTWBotV2() {
     } catch (error) {
 
     }
+  }
+
+  function triggerReconnection() {
+    setConnectionStatus(CONNECTION_STATUSES[5])
+    setTimeout(function() {
+      connectWs()
+      initProcess()
+    }, 1000)
   }
 
   function executeAutomatedProcess() {
