@@ -997,9 +997,9 @@ function PageTWBotV2() {
               </div>
 
               <div className="row">
-                <div className="col-12 border rounded py-2 px-1">
-                  <div className="row pb-0 px-3 ">
-                    <div className="col-12 col-md-2 px-1">
+                <div className="col-12 border rounded py-2 ">
+                  <div className="row pb-0">
+                    <div className="col-12 col-md-2">
                       <div className="input-group">
                         <div className="input-group-prepend">
                           <span className="input-group-text">X</span>
@@ -1007,7 +1007,7 @@ function PageTWBotV2() {
                         <input type="number" className="form-control" value={selectedMapCoordX} onChange={(e) => setSelectedMapCoordX(e.target.value)} />
                       </div>
                     </div>
-                    <div className="col-12 col-md-2 px-1">
+                    <div className="col-12 col-md-2">
                       <div className="input-group">
                         <div className="input-group-prepend">
                           <span className="input-group-text">Y</span>
@@ -1015,7 +1015,7 @@ function PageTWBotV2() {
                         <input type="number" className="form-control" value={selectedMapCoordY} onChange={(e) => setSelectedMapCoordY(e.target.value)} />
                       </div>
                     </div>
-                    <div className="col-12 col-md-3 px-1">
+                    <div className="col-12 col-md-3">
                       <div className="input-group">
                         <div className="input-group-prepend">
                           <span className="input-group-text">Height</span>
@@ -1023,7 +1023,7 @@ function PageTWBotV2() {
                         <input type="number" className="form-control" value={selectedMapHeight} onChange={(e) => setSelectedMapHeight(e.target.value)} />
                       </div>
                     </div>
-                    <div className="col-12 col-md-3 px-1">
+                    <div className="col-12 col-md-3">
                       <div className="input-group">
                         <div className="input-group-prepend">
                           <span className="input-group-text">Width</span>
@@ -1031,11 +1031,11 @@ function PageTWBotV2() {
                         <input type="number" className="form-control" value={selectedMapWidth} onChange={(e) => setSelectedMapWidth(e.target.value)} />
                       </div>
                     </div>
-                    <div className="col-12 col-md-2 px-1">
+                    <div className="col-12 col-md-2">
                       <button className="btn btn-outline-success btn-sm btn-block my-1" onClick={ () => sendVillagesByAreaRequest() }>Fetch Map</button>
                     </div>
                     {/* BATAS MENUS PER 12 */}
-                    <div className="col-12 col-md-3 p-1">
+                    <div className="col-12 col-md-3 py-1">
                       <div className="input-group mb-2">
                         <div className="input-group-prepend">
                           <span className="input-group-text">Province X</span>
@@ -1043,7 +1043,7 @@ function PageTWBotV2() {
                         <input type="number" className="form-control" value={selectedProvinceX} onChange={(e) => setSelectedProvinceX(e.target.value)} />
                       </div>
                     </div>
-                    <div className="col-12 col-md-3 p-1">
+                    <div className="col-12 col-md-3 py-1">
                       <div className="input-group mb-2">
                         <div className="input-group-prepend">
                           <span className="input-group-text">Province Y</span>
@@ -1051,7 +1051,7 @@ function PageTWBotV2() {
                         <input type="number" className="form-control" value={selectedProvinceY} onChange={(e) => setSelectedProvinceY(e.target.value)} />
                       </div>
                     </div>
-                    <div className="col-12 col-md-3 p-1">
+                    <div className="col-12 col-md-3 py-1">
                       <div className="input-group mb-2">
                         <div className="input-group-prepend">
                           <span className="input-group-text">Name</span>
@@ -1059,7 +1059,7 @@ function PageTWBotV2() {
                         <input type="text" className="form-control" value={selectedProvinceName} disabled />
                       </div>
                     </div>
-                    <div className="col-12 col-md-3 p-1">
+                    <div className="col-12 col-md-3 py-1">
                       <button className="btn btn-outline-success btn-sm btn-block my-1" onClick={ () => sendVillagesByProvinceRequest() }>Fetch Province</button>
                     </div>
                   </div>
@@ -1323,22 +1323,22 @@ function PageTWBotV2() {
                         <textarea className="form-control" rows="4" placeholder="" value={targetVillageIDs} onChange={(e) => setTargetVillageIDs(e.target.value)}></textarea>
                       </div>
                     </div>
-                    <div className="col-12 col-lg-2">
-                      <div className="mb-3">
+                    <div className={"col-12 col-lg-2 border" + " " + ((sendAttackWithRandomInterval) ? "border-success" : "border-danger")}>
+                      <div>
                         <label>Random interval</label>
                         <Form.Radio label=" On" checked={sendAttackWithRandomInterval === true} value={`true`} onClick={() => setSendAttackWithRandomInterval(true)} />
                         <Form.Radio label=" Off" checked={sendAttackWithRandomInterval === false} value={`false`} onClick={() => setSendAttackWithRandomInterval(false)} />
                       </div>
                     </div>
-                    <div className="col-12 col-lg-2">
-                      <div className="mb-3">
+                    <div className={"col-12 col-lg-2 border" + " " + ((sendAttackToAllNearbyRandomBarbarian) ? "border-success" : "border-danger")}>
+                      <div>
                         <label>Send all even army to 45 random barbarian</label>
                         <Form.Radio label=" On" checked={sendAttackToAllNearbyRandomBarbarian === true} value={`true`} onClick={() => setSendAttackToAllNearbyRandomBarbarian(true)} />
                         <Form.Radio label=" Off" checked={sendAttackToAllNearbyRandomBarbarian === false} value={`false`} onClick={() => setSendAttackToAllNearbyRandomBarbarian(false)} />
                       </div>
                     </div>
-                    <div className="col-12 col-lg-2">
-                      <div className="mb-3">
+                    <div className={"col-12 col-lg-2 border" + " " + ((enableAutoResourceCollector === "true") ? "border-success" : "border-danger")}>
+                      <div>
                         <label>Auto resource collector</label>
                         <Form.Radio
                           name="enableAutoResourceCollector"
@@ -1354,8 +1354,8 @@ function PageTWBotV2() {
                           onClick={() => setEnableAutoResourceCollector("false")} />
                       </div>
                     </div>
-                    <div className="col-12 col-lg-2">
-                      <div className="mb-3">
+                    <div className={"col-12 col-lg-2 border" + " " + ((enableAutoArmySender === "true") ? "border-success" : "border-danger")}>
+                      <div>
                         <label>Auto army sender</label>
                         <Form.Radio
                           name="enableAutoArmySender"
@@ -1371,8 +1371,8 @@ function PageTWBotV2() {
                           onClick={() => setEnableAutoArmySender("false")} />
                       </div>
                     </div>
-                    <div className="col-12 col-lg-2">
-                      <div className="mb-3">
+                    <div className={"col-12 col-lg-2 border" + " " + ((enableAutoBuildConstruction === "true") ? "border-success" : "border-danger")}>
+                      <div>
                         <label>Auto build construction</label>
                         <Form.Radio
                           name="enableAutoBuildConstruction"
@@ -1388,7 +1388,7 @@ function PageTWBotV2() {
                           onClick={() => setEnableAutoBuildConstruction("false")} />
                       </div>
                     </div>
-                    <div className="col-12 col-lg-2">
+                    <div className="col-12 col-lg-2 border border-primary">
                       <div className="progress">
                         <div className="progress-bar" role="progressbar" style={{width: `${raidPercentage}%`}} aria-valuenow={`${raidPercentage}`} aria-valuemin="0" aria-valuemax="100">{`${raidPercentage}`}%</div>
                       </div>
