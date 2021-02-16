@@ -27,6 +27,8 @@ function PageTWBotV2() {
 
   // CONFIG DATA
   const [connectionStatus, setConnectionStatus] = useState(CONNECTION_STATUSES[0])
+  const joinTime = timeNow()
+  var [timeElapsed, setTimeElapsed] = useState("00:00:00")
 
   // MAP VILLAGES DATA
   const [nearbyBarbarianVillages, setNearbyBarbarianVillages] = useState([])
@@ -444,6 +446,7 @@ function PageTWBotV2() {
   }
 
   function executeAutomatedProcess() {
+    calculateTimeElapsed()
     if (localStorage.getItem("enableAutoResourceCollector") === "true") {
       sendResourceDepositRequest()
     }
@@ -719,6 +722,12 @@ function PageTWBotV2() {
   }
 
   // =================================================================================================================== HELPER FUNCTION
+
+  function calculateTimeElapsed() {
+    var tempTimeElapsedMs = timeNow() - joinTime
+    var formattedTimeElapsed = new Date(tempTimeElapsedMs).toISOString().substr(11, 8)
+    setTimeElapsed(formattedTimeElapsed)
+  }
 
   function sortIDAsc(villages) {
     var sortedVillages = villages.sort((a, b) => a.id - b.id)
@@ -1419,6 +1428,14 @@ function PageTWBotV2() {
                           <span className="input-group-text">Max Outgoing Cnt</span>
                         </div>
                         <input type="number" className="form-control" placeholder="0" value={autoArmyMaxOutgoing} onChange={(e) => setAutoArmyMaxOutgoing(e.target.value)} />
+                      </div>
+                    </div>
+                    <div className="col-12 col-lg-6">
+                      <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">Time Elapsed</span>
+                        </div>
+                        <input type="text" className="form-control" value={timeElapsed} disabled />
                       </div>
                     </div>
                   </div>
