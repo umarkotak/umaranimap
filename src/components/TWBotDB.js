@@ -64,11 +64,7 @@ const BUILDING_TEMPLATE_LIST = [
   { building_name: "timber_camp", level: 6 },
   { building_name: "clay_pit", level: 6 },
   { building_name: "iron_mine", level: 6 },
-
-  { building_name: "farm", level: 20 },
-  { building_name: "headquarter", level: 20 },
-
-  { building_name: "headquarter", level: 30 }
+  { building_name: "", level: 0 }
 ]
 
 class TWBotDB {
