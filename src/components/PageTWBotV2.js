@@ -712,7 +712,7 @@ function PageTWBotV2() {
       setMyActiveVillageUnlockedQueue(tempBuildingQueue.unlocked_slots)
 
       // TODO: DO SOME LOGIC FOR UPGRADING BUILDING
-      if (!enableAutoBuildConstruction) { return }
+      if (enableAutoBuildConstruction !== "true") { return }
       if (tempBuildingQueue.queue.length >= tempBuildingQueue.unlocked_slots) { return }
 
       console.log("TRYING TO UPGRADE BUILDING")
