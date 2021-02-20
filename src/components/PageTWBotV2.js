@@ -712,7 +712,6 @@ function PageTWBotV2() {
       setMyActiveVillageOngoingQueueCount(tempBuildingQueue.queue.length)
       setMyActiveVillageUnlockedQueue(tempBuildingQueue.unlocked_slots)
 
-      // TODO: DO SOME LOGIC FOR UPGRADING BUILDING
       if (enableAutoBuildConstruction !== "true") { return }
       if (tempBuildingQueue.queue.length >= tempBuildingQueue.unlocked_slots) { return }
 

@@ -65,6 +65,25 @@ const BUILDING_TEMPLATE_LIST = [
   { building_name: "clay_pit", level: 6 },
   { building_name: "iron_mine", level: 6 },
 
+  { building_name: "warehouse", level: 7 },
+  { building_name: "farm", level: 7 },
+  { building_name: "timber_camp", level: 7 },
+  { building_name: "clay_pit", level: 7 },
+  { building_name: "iron_mine", level: 7 },
+
+  { building_name: "warehouse", level: 8 },
+  { building_name: "farm", level: 8 },
+  { building_name: "timber_camp", level: 8 },
+  { building_name: "clay_pit", level: 8 },
+  { building_name: "iron_mine", level: 8 },
+  { building_name: "barracks", level: 5 },
+
+  { building_name: "timber_camp", level: 20 },
+  { building_name: "clay_pit", level: 20 },
+  { building_name: "iron_mine", level: 20 },
+
+  { building_name: "warehouse", level: 25 },
+  { building_name: "farm", level: 20 },
   { building_name: "headquarter", level: 20 },
   { building_name: "academy", level: 1 },
 
