@@ -343,11 +343,11 @@ function PageTWBotV2() {
 
   function executeAutoLogin() {
     handleSaveConfig()
-    sendLoginRequest()
+    setTimeout(() => { sendLoginRequest() }, 200)
     setTimeout(() => { sendSystemIdentityRequest() }, 500)
-    setTimeout(() => { sendSelectCharacterRequest() }, 1000)
-    setTimeout(() => { sendCompleteLoginRequest() }, 1500)
-    setTimeout(() => { sendCharacterInfoRequest() }, 1750)
+    setTimeout(() => { sendSelectCharacterRequest() }, 750)
+    setTimeout(() => { sendCompleteLoginRequest() }, 1000)
+    setTimeout(() => { sendCharacterInfoRequest() }, 1100)
   }
 
   function executeBulkAttack() {
@@ -407,6 +407,7 @@ function PageTWBotV2() {
 
   function findLatestIndexForAutoBuild() {
     var buildingTemplateList = tWBotDB.GetBuildingTemplateList()
+    if (myActiveVillageID === "") { return }
     try {
       buildingTemplateList.forEach((val, idx) => {
         if (myActiveVillageSimplifiedBuildingsLevel[val.building_name] >= val.level) {
@@ -954,7 +955,7 @@ function PageTWBotV2() {
                   <table className="table table-bordered">
                     <tbody>
                       <tr>
-                        <th className="p-1">State</th>
+                        <th className="p-1">Troops</th>
                         <th className="p-1">Spear</th>
                         <th className="p-1">Sword</th>
                         <th className="p-1">Axe</th>
@@ -964,7 +965,7 @@ function PageTWBotV2() {
                         <th className="p-1">HC</th>
                       </tr>
                       <tr>
-                        <td className="p-1">Deff</td>
+                        <td className="p-1">In</td>
                         <td className="p-1">{myActiveVillageUnits.spear}</td>
                         <td className="p-1">{myActiveVillageUnits.sword}</td>
                         <td className="p-1">{myActiveVillageUnits.axe}</td>
@@ -974,7 +975,7 @@ function PageTWBotV2() {
                         <td className="p-1">{myActiveVillageUnits.heavy_cavalry}</td>
                       </tr>
                       <tr>
-                        <td className="p-1">Atk</td>
+                        <td className="p-1">Out</td>
                         <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.spear}</td>
                         <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.sword}</td>
                         <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.axe}</td>
