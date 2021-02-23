@@ -372,6 +372,7 @@ function PageTWBotV2() {
       setRaidPercentage(100)
     }
 
+    storeVillageLastAttack(myActiveVillageID)
     sendVillageDetailRequest(myActiveVillageID)
   }
 
@@ -661,6 +662,13 @@ function PageTWBotV2() {
     sendVillagesByDynamicAreaRequest(directObj.data.village_x - offset, directObj.data.village_y - offset, selectedMapWidth, selectedMapHeight)
     sendUnitScreenInfoRequest(directObj.data.village_id)
     sendVillageDataDetailRequest(directObj.data.village_id)
+
+    var tempTargetVillageIDs = getVillageLastAttack(directObj.data.village_id)
+    if (tempTargetVillageIDs) {
+      setTargetVillageIDs(tempTargetVillageIDs)
+    } else {
+      setTargetVillageIDs("")
+    }
   }
 
   function handleIncomingNewReport(directObj) {
@@ -837,6 +845,14 @@ function PageTWBotV2() {
       array[randomIndex] = temporaryValue;
     }
     return array;
+  }
+
+  function storeVillageLastAttack(villageID) {
+    localStorage.setItem(`VILLAGE_ATTACK_HISTORY:${villageID}`, targetVillageIDs)
+  }
+
+  function getVillageLastAttack(villageID) {
+    return localStorage.getItem(`VILLAGE_ATTACK_HISTORY:${villageID}`)
   }
 
   function addAllVillageIds(villageList) {
