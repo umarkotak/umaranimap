@@ -1032,6 +1032,16 @@ function PageTWBotV2() {
                         <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.light_cavalry || 0 + myActiveVillageUnits.light_cavalry || 0}</td>
                         <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.heavy_cavalry || 0 + myActiveVillageUnits.heavy_cavalry || 0}</td>
                       </tr>
+                      <tr>
+                        <td className="p-1">Avg/50</td>
+                        <td className="p-1">{Math.floor((myActiveVillageUnits.spear || 0) / 50)}</td>
+                        <td className="p-1">{Math.floor((myActiveVillageUnits.sword || 0) / 50)}</td>
+                        <td className="p-1">{Math.floor((myActiveVillageUnits.axe || 0) / 50)}</td>
+                        <td className="p-1">{Math.floor((myActiveVillageUnits.archer || 0) / 50)}</td>
+                        <td className="p-1">{Math.floor((myActiveVillageUnits.mounted_archer || 0) / 50)}</td>
+                        <td className="p-1">{Math.floor((myActiveVillageUnits.light_cavalry || 0) / 50)}</td>
+                        <td className="p-1">{Math.floor((myActiveVillageUnits.heavy_cavalry || 0) / 50)}</td>
+                      </tr>
                     </tbody>
                   </table>
                   <table className="table table-bordered">
