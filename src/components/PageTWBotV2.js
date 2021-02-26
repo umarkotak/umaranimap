@@ -82,6 +82,7 @@ function PageTWBotV2() {
   const [sendAttackWithRandomInterval, setSendAttackWithRandomInterval] = useState(false)
   const [sendAttackToAllNearbyRandomBarbarian, setSendAttackToAllNearbyRandomBarbarian] = useState(false)
   const [raidPercentage, setRaidPercentage] = useState(0)
+  const [attackAllVillageProgress, setAttackAllVillageProgress] = useState(0)
 
   // AUTOMATED CONFIGS
   const [enableAutoResourceCollector, setEnableAutoResourceCollector] = useState("false")
@@ -152,7 +153,7 @@ function PageTWBotV2() {
       })
       if (!sanitizedObject) { return }
 
-      console.log("INCOMING MESSAGE:", sanitizedObject.type, "VALUE:", sanitizedObject)
+      // console.log("INCOMING MESSAGE:", sanitizedObject.type, "VALUE:", sanitizedObject)
 
       if (sanitizedObject.type === "Map/villageData") {
         handleIncomingMapMessage(sanitizedObject)
@@ -194,7 +195,7 @@ function PageTWBotV2() {
       "data": ${payload}
       }
     ]`
-    console.log("SENDING SOCKET MESSAGE\n", basePayload)
+    // console.log("SENDING SOCKET MESSAGE\n", basePayload)
     ws.current.send(basePayload)
     globID++
   }
@@ -262,6 +263,18 @@ function PageTWBotV2() {
       catapult_target: "headquarter",
       icon: 0,
       start_village: parseInt(myActiveVillageID),
+      target_village: parseInt(targetVillageID),
+      type: "attack",
+      units: units
+    }
+    sendSocketMessage(42, "Command/sendCustomArmy", commonHeaders(), JSON.stringify(payload))
+  }
+
+  function sendFullyCustomArmyRequest(sourceVillageID, targetVillageID, units) {
+    var payload = {
+      catapult_target: "headquarter",
+      icon: 0,
+      start_village: parseInt(sourceVillageID),
       target_village: parseInt(targetVillageID),
       type: "attack",
       units: units
@@ -461,6 +474,75 @@ function PageTWBotV2() {
     } catch (error) {
 
     }
+  }
+
+  function attackAllPreviousVillage() {
+    setAttackAllVillageProgress(0)
+    var totalLength = 0
+    myVillages.forEach(() => {
+      if (targetVillageIDs) {
+        var arrTempTargetVillageIDs = targetVillageIDs.split(",")
+        totalLength += arrTempTargetVillageIDs.length
+      } else {}
+    })
+
+    var currentLength = 0
+    myVillages.forEach((tempVillage, idx) => {
+      var tempTargetVillageIDs = getVillageLastAttack(tempVillage.id)
+      if (tempTargetVillageIDs) {
+        var arrTempTargetVillageIDs = targetVillageIDs.split(",")
+        arrTempTargetVillageIDs.forEach((targetVillageID, idx2) => {
+          var units = {}
+          if (getArmyLastAttack(tempVillage.id, "spear")) {
+            if (parseInt(getArmyLastAttack(tempVillage.id, "spear")) > 0) {
+              units.spear = parseInt(getArmyLastAttack(tempVillage.id, "spear"))
+            }
+          }
+          if (getArmyLastAttack(tempVillage.id, "sword")) {
+            if (parseInt(getArmyLastAttack(tempVillage.id, "sword")) > 0) {
+              units.sword = parseInt(getArmyLastAttack(tempVillage.id, "sword"))
+            }
+          }
+          if (getArmyLastAttack(tempVillage.id, "axe")) {
+            if (parseInt(getArmyLastAttack(tempVillage.id, "axe")) > 0) {
+              units.axe = parseInt(getArmyLastAttack(tempVillage.id, "axe"))
+            }
+          }
+          if (getArmyLastAttack(tempVillage.id, "knight")) {
+            if (parseInt(getArmyLastAttack(tempVillage.id, "knight")) > 0) {
+              units.knight = parseInt(getArmyLastAttack(tempVillage.id, "knight"))
+            }
+          }
+          if (getArmyLastAttack(tempVillage.id, "lightCavalry")) {
+            if (parseInt(getArmyLastAttack(tempVillage.id, "lightCavalry")) > 0) {
+              units.light_cavalry = parseInt(getArmyLastAttack(tempVillage.id, "lightCavalry"))
+            }
+          }
+          if (getArmyLastAttack(tempVillage.id, "mountedArcher")) {
+            if (parseInt(getArmyLastAttack(tempVillage.id, "mountedArcher")) > 0) {
+              units.mounted_archer = parseInt(getArmyLastAttack(tempVillage.id, "mountedArcher"))
+            }
+          }
+          if (getArmyLastAttack(tempVillage.id, "archer")) {
+            if (parseInt(getArmyLastAttack(tempVillage.id, "archer")) > 0) {
+              units.archer = parseInt(getArmyLastAttack(tempVillage.id, "archer"))
+            }
+          }
+          if (getArmyLastAttack(tempVillage.id, "heavyCavalry")) {
+            if (parseInt(getArmyLastAttack(tempVillage.id, "heavyCavalry")) > 0) {
+              units.heavy_cavalry = parseInt(getArmyLastAttack(tempVillage.id, "heavyCavalry"))
+            }
+          }
+
+          setTimeout(function() {
+            sendFullyCustomArmyRequest(tempVillage.id, targetVillageID, units)
+
+            currentLength++
+            setAttackAllVillageProgress(Math.ceil( currentLength / totalLength * 100 ))
+          }, (currentLength * 200))
+        })
+      } else {}
+    })
   }
 
   function triggerReconnection() {
@@ -1675,7 +1757,7 @@ function PageTWBotV2() {
               <div className="row">
                 <div className="col-12 px-1">
                   <label>🔥 <b>One For All</b> 🔥</label>
-                  <button className="btn btn-outline-success btn-md float-right" onClick={() => saveQuickNote()}>😈 Attack!</button>
+                  <button className="btn btn-outline-success btn-md float-right" onClick={() => attackAllPreviousVillage()}>😈 Attack!</button>
                 </div>
                 <div className="col-12 px-1">
                   <table className="table table-bordered">
@@ -1696,7 +1778,7 @@ function PageTWBotV2() {
                     </thead>
                     <tbody>
                       {myVillages.map((myVillage, idx) => (
-                      <tr>
+                      <tr key={`bulkAttacking-${idx}`}>
                         <td className="p-1">{myVillage.id}</td>
                         <td className="p-1">{myVillage.name}</td>
                         <td className="p-1">{(getVillageLastAttack(myVillage.id) || "").split(",").length}</td>
@@ -1716,6 +1798,11 @@ function PageTWBotV2() {
                       ))}
                     </tbody>
                   </table>
+                </div>
+                <div className="col-12 px-1">
+                  <div className="progress">
+                    <div className="progress-bar" role="progressbar" style={{width: `${attackAllVillageProgress}%`}} aria-valuenow={`${attackAllVillageProgress}`} aria-valuemin="0" aria-valuemax="100">{`${attackAllVillageProgress}`}%</div>
+                  </div>
                 </div>
               </div>
             </div>
