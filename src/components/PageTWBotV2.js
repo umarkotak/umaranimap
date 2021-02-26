@@ -152,7 +152,7 @@ function PageTWBotV2() {
       })
       if (!sanitizedObject) { return }
 
-      // console.log("INCOMING MESSAGE:", sanitizedObject.type, "VALUE:", sanitizedObject)
+      console.log("INCOMING MESSAGE:", sanitizedObject.type, "VALUE:", sanitizedObject)
 
       if (sanitizedObject.type === "Map/villageData") {
         handleIncomingMapMessage(sanitizedObject)
@@ -194,7 +194,7 @@ function PageTWBotV2() {
       "data": ${payload}
       }
     ]`
-    // console.log("SENDING SOCKET MESSAGE\n", basePayload)
+    console.log("SENDING SOCKET MESSAGE\n", basePayload)
     ws.current.send(basePayload)
     globID++
   }
@@ -238,6 +238,9 @@ function PageTWBotV2() {
       village_id: parseInt(selectedVillageID), my_village_id: tempMyVillageID, num_reports: 5
     }
     sendSocketMessage(42, "Map/getVillageDetails", commonHeaders(), JSON.stringify(payload))
+
+    setLoginProgress(95)
+
     if (e) {
       e.target.className = "btn btn-sm btn-rounded btn-danger"
     }
@@ -379,11 +382,24 @@ function PageTWBotV2() {
 
     } else {
       targetVillages.forEach((targetID) => { sendCustomArmyRequest(targetID) })
-      setRaidPercentage(100)
+      setTimeout(() => { setRaidPercentage(100) }, 500)
     }
 
-    storeVillageLastAttack(myActiveVillageID)
+    saveAttackPreset()
     sendVillageDetailRequest(myActiveVillageID)
+  }
+
+  function saveAttackPreset() {
+    storeVillageLastAttack(myActiveVillageID)
+
+    storeArmyLastAttack(myActiveVillageID, "spear", (parseInt(spear) || 0))
+    storeArmyLastAttack(myActiveVillageID, "sword", (parseInt(sword) || 0))
+    storeArmyLastAttack(myActiveVillageID, "axe", (parseInt(axe) || 0))
+    storeArmyLastAttack(myActiveVillageID, "knight", (parseInt(knight) || 0))
+    storeArmyLastAttack(myActiveVillageID, "lightCavalry", (parseInt(lightCavalry) || 0))
+    storeArmyLastAttack(myActiveVillageID, "mountedArcher", (parseInt(mountedArcher) || 0))
+    storeArmyLastAttack(myActiveVillageID, "archer", (parseInt(archer) || 0))
+    storeArmyLastAttack(myActiveVillageID, "heavyCavalry", (parseInt(heavyCavalry) || 0))
   }
 
   function executeSendAttackToAllNearbyRandomBarbarian() {
@@ -679,6 +695,8 @@ function PageTWBotV2() {
     } else {
       setTargetVillageIDs("")
     }
+
+    setLoginProgress(100)
   }
 
   function handleIncomingNewReport(directObj) {
@@ -1133,7 +1151,7 @@ function PageTWBotV2() {
                     </div>
                   </div>
 
-                  <ul className="nav nav-tabs p-1" id="myTab" role="tablist">
+                  <ul className="nav nav-tabs" id="myTab" role="tablist">
                     <li className="nav-item">
                       <a className="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Barbarian Villages</a>
                     </li>
@@ -1148,22 +1166,10 @@ function PageTWBotV2() {
                     </li>
                   </ul>
 
-                  <div className="tab-content p-1 overflow-auto" id="myTabContent" style={{maxHeight: "600px"}}>
+                  <div className="tab-content overflow-auto" id="myTabContent" style={{maxHeight: "600px"}}>
                     <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                       <table className="table table-bordered">
                         <tbody>
-                          <tr>
-                            <th className="p-1">ID</th>
-                            <th className="p-1">No</th>
-                            <th className="p-1">X</th>
-                            <th className="p-1">Y</th>
-                            <th className="p-1">Village Name</th>
-                            <th className="p-1">Points</th>
-                            <th className="p-1">Report</th>
-                            <th className="p-1">Time</th>
-                            <th className="p-1">Province</th>
-                            <th className="p-1">Dist</th>
-                          </tr>
                           <tr>
                             <td className="p-1" colSpan="2">
                               <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => addAllVillageIds(nearbyBarbarianVillages)}>
@@ -1191,6 +1197,18 @@ function PageTWBotV2() {
                                 Dist Desc
                               </button>
                             </td>
+                          </tr>
+                          <tr>
+                            <th className="p-1">ID</th>
+                            <th className="p-1">No</th>
+                            <th className="p-1">X</th>
+                            <th className="p-1">Y</th>
+                            <th className="p-1">Village Name</th>
+                            <th className="p-1">Points</th>
+                            <th className="p-1">Report</th>
+                            <th className="p-1">Time</th>
+                            <th className="p-1">Province</th>
+                            <th className="p-1">Dist</th>
                           </tr>
                           {nearbyBarbarianVillages.map ((village, idx) => (
                             <tr key={`barbarian-${idx}`}>
@@ -1247,6 +1265,34 @@ function PageTWBotV2() {
                       <table className="table table-bordered">
                         <tbody>
                           <tr>
+                            <td className="p-1" colSpan="2">
+                              <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => addAllVillageIds(nearbyPlayerVillages)}>
+                                Add All
+                              </button>
+                            </td>
+                            <td className="p-1" colSpan="2">
+                              <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyPlayerVillages(sortIDAsc(nearbyPlayerVillages))}>
+                                ID Asc
+                              </button>
+                            </td>
+                            <td className="p-1"></td>
+                            <td className="p-1"></td>
+                            <td className="p-1" colSpan="6"  align="right">
+                              <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyPlayerVillages(sortTimeAsc(nearbyPlayerVillages))}>
+                                Time Asc
+                              </button>
+                              <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyPlayerVillages(sortTimeDesc(nearbyPlayerVillages))}>
+                                Time Desc
+                              </button>
+                              <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyPlayerVillages(sortDistAsc(nearbyPlayerVillages))}>
+                                Dist Asc
+                              </button>
+                              <button className="btn btn-sm btn-rounded btn-primary" onClick={(e) => setNearbyPlayerVillages(sortDistDesc(nearbyPlayerVillages))}>
+                                Dist Desc
+                              </button>
+                            </td>
+                          </tr>
+                          <tr>
                             <th className="p-1">ID</th>
                             <th className="p-1">X</th>
                             <th className="p-1">Y</th>
@@ -1256,6 +1302,9 @@ function PageTWBotV2() {
                             <th className="p-1">Tribe Name</th>
                             <th className="p-1">Points</th>
                             <th className="p-1">Report Title</th>
+                            <th className="p-1">Time</th>
+                            <th className="p-1">Province</th>
+                            <th className="p-1">Dist</th>
                           </tr>
                           {nearbyPlayerVillages.map ((village, idx) => (
                             <tr key={`players-${idx}`}>
@@ -1272,6 +1321,9 @@ function PageTWBotV2() {
                               <td className="p-1">{village.tribe_name}</td>
                               <td className="p-1">{village.points}</td>
                               <td className="p-1">{village.report_title}</td>
+                              <td className="p-1">{new Date(village.report_time_created * 1000).toLocaleString('en-GB', { hour12: false })}</td>
+                              <td className="p-1">{village.province_name}</td>
+                              <td className="p-1">{village.dist}</td>
                             </tr>
                           ))}
                         </tbody>
@@ -1282,6 +1334,34 @@ function PageTWBotV2() {
                       <table className="table table-bordered">
                         <tbody>
                           <tr>
+                            <td className="p-1" colSpan="2">
+                              <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => addAllVillageIds(nearbyPassivePlayerVillages)}>
+                                Add All
+                              </button>
+                            </td>
+                            <td className="p-1" colSpan="2">
+                              <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyPassivePlayerVillages(sortIDAsc(nearbyPassivePlayerVillages))}>
+                                ID Asc
+                              </button>
+                            </td>
+                            <td className="p-1"></td>
+                            <td className="p-1"></td>
+                            <td className="p-1" colSpan="6"  align="right">
+                              <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyPassivePlayerVillages(sortTimeAsc(nearbyPassivePlayerVillages))}>
+                                Time Asc
+                              </button>
+                              <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyPassivePlayerVillages(sortTimeDesc(nearbyPassivePlayerVillages))}>
+                                Time Desc
+                              </button>
+                              <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyPassivePlayerVillages(sortDistAsc(nearbyPassivePlayerVillages))}>
+                                Dist Asc
+                              </button>
+                              <button className="btn btn-sm btn-rounded btn-primary" onClick={(e) => setNearbyPassivePlayerVillages(sortDistDesc(nearbyPassivePlayerVillages))}>
+                                Dist Desc
+                              </button>
+                            </td>
+                          </tr>
+                          <tr>
                             <th className="p-1">ID</th>
                             <th className="p-1">X</th>
                             <th className="p-1">Y</th>
@@ -1291,14 +1371,17 @@ function PageTWBotV2() {
                             <th className="p-1">Tribe Name</th>
                             <th className="p-1">Points</th>
                             <th className="p-1">Report Title</th>
+                            <th className="p-1">Time</th>
+                            <th className="p-1">Province</th>
+                            <th className="p-1">Dist</th>
                           </tr>
-                          <tr>
+                          {/* <tr>
                             <td className="p-1">
                               <button className="btn btn-sm btn-rounded btn-primary" onClick={(e) => addAllVillageIds(nearbyPassivePlayerVillages)}>
                                 Add All
                               </button>
                             </td>
-                          </tr>
+                          </tr> */}
                           {nearbyPassivePlayerVillages.map ((village, idx) => (
                             <tr key={`players-${idx}`}>
                               <td className="p-1">
@@ -1314,6 +1397,9 @@ function PageTWBotV2() {
                               <td className="p-1">{village.tribe_name}</td>
                               <td className="p-1">{village.points}</td>
                               <td className="p-1">{village.report_title}</td>
+                              <td className="p-1">{new Date(village.report_time_created * 1000).toLocaleString('en-GB', { hour12: false })}</td>
+                              <td className="p-1">{village.province_name}</td>
+                              <td className="p-1">{village.dist}</td>
                             </tr>
                           ))}
                         </tbody>
@@ -1463,6 +1549,7 @@ function PageTWBotV2() {
                       </div>
                       <hr/>
                       <button className="btn btn-outline-success btn-lg btn-block" disabled={enableAutoArmySender === "true"} onClick={ () => executeBulkAttack() }>👊 Start Raid!</button>
+                      <button className="btn btn-outline-success btn-sm btn-block" disabled={enableAutoArmySender === "true"} onClick={ () => saveAttackPreset() }>save preset</button>
                     </div>
                   </div>
                 </div>
@@ -1586,9 +1673,49 @@ function PageTWBotV2() {
 
               {/* AUTOMATED TRUST ME ATTACK */}
               <div className="row">
-                <div className="col-12 py-2 px-1">
+                <div className="col-12 px-1">
                   <label>🔥 <b>One For All</b> 🔥</label>
                   <button className="btn btn-outline-success btn-md float-right" onClick={() => saveQuickNote()}>😈 Attack!</button>
+                </div>
+                <div className="col-12 px-1">
+                  <table className="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th className="p-1">ID</th>
+                        <th className="p-1">Name</th>
+                        <th className="p-1">Target Count</th>
+                        <th className="p-1">Spear</th>
+                        <th className="p-1">Sword</th>
+                        <th className="p-1">Axe</th>
+                        <th className="p-1">Knight</th>
+                        <th className="p-1">LC</th>
+                        <th className="p-1">MA</th>
+                        <th className="p-1">HC</th>
+                        <th className="p-1">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {myVillages.map((myVillage, idx) => (
+                      <tr>
+                        <td className="p-1">{myVillage.id}</td>
+                        <td className="p-1">{myVillage.name}</td>
+                        <td className="p-1">{(getVillageLastAttack(myVillage.id) || "").split(",").length}</td>
+                        <td className="p-1">{getArmyLastAttack(myVillage.id, "spear") || 0}</td>
+                        <td className="p-1">{getArmyLastAttack(myVillage.id, "sword") || 0}</td>
+                        <td className="p-1">{getArmyLastAttack(myVillage.id, "axe") || 0}</td>
+                        <td className="p-1">{getArmyLastAttack(myVillage.id, "knight") || 0}</td>
+                        <td className="p-1">{getArmyLastAttack(myVillage.id, "lightCavalry") || 0}</td>
+                        <td className="p-1">{getArmyLastAttack(myVillage.id, "mountedArcher") || 0}</td>
+                        <td className="p-1">{getArmyLastAttack(myVillage.id, "heavyCavalry") || 0}</td>
+                        <td className="p-1">
+                          <button className="btn btn-block btn-outline-success btn-sm" onClick={() => saveQuickNote()}>
+                            ⚔️
+                          </button>
+                        </td>
+                      </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
