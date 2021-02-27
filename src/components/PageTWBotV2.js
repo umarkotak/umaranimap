@@ -173,7 +173,10 @@ function PageTWBotV2() {
         handleIncomingReportDetail(sanitizedObject)
       } else if (sanitizedObject.type === "VillageBatch/villageData") {
         handleIncomingVillageDataDetail(sanitizedObject)
+      } else if (sanitizedObject.type === "Exception/SystemException") {
+        executeAutoLogin()
       }
+
     } catch (error) {
       console.log("ERROR ON HANDLING MESSAGE", error)
     }
@@ -479,9 +482,11 @@ function PageTWBotV2() {
   function attackAllPreviousVillage() {
     setAttackAllVillageProgress(0)
     var totalLength = 0
-    myVillages.forEach(() => {
-      if (targetVillageIDs) {
-        var arrTempTargetVillageIDs = targetVillageIDs.split(",")
+    myVillages.forEach((tempVillage, idx) => {
+      var tempTargetVillageIDs = getVillageLastAttack(tempVillage.id)
+
+      if (tempTargetVillageIDs) {
+        var arrTempTargetVillageIDs = tempTargetVillageIDs.split(",")
         totalLength += arrTempTargetVillageIDs.length
       } else {}
     })
@@ -489,8 +494,9 @@ function PageTWBotV2() {
     var currentLength = 0
     myVillages.forEach((tempVillage, idx) => {
       var tempTargetVillageIDs = getVillageLastAttack(tempVillage.id)
+
       if (tempTargetVillageIDs) {
-        var arrTempTargetVillageIDs = targetVillageIDs.split(",")
+        var arrTempTargetVillageIDs = tempTargetVillageIDs.split(",")
         arrTempTargetVillageIDs.forEach((targetVillageID, idx2) => {
           var units = {}
           if (getArmyLastAttack(tempVillage.id, "spear")) {
@@ -543,6 +549,65 @@ function PageTWBotV2() {
         })
       } else {}
     })
+  }
+
+  function attackPreviousVillage(selectedVillageID) {
+    var tempTargetVillageIDs = getVillageLastAttack(selectedVillageID)
+    if (tempTargetVillageIDs) {
+      var arrTempTargetVillageIDs = tempTargetVillageIDs.split(",")
+      var totalLength = arrTempTargetVillageIDs.length
+      var currentLength = 0
+      arrTempTargetVillageIDs.forEach((targetVillageID, idx2) => {
+        var units = {}
+        if (getArmyLastAttack(selectedVillageID, "spear")) {
+          if (parseInt(getArmyLastAttack(selectedVillageID, "spear")) > 0) {
+            units.spear = parseInt(getArmyLastAttack(selectedVillageID, "spear"))
+          }
+        }
+        if (getArmyLastAttack(selectedVillageID, "sword")) {
+          if (parseInt(getArmyLastAttack(selectedVillageID, "sword")) > 0) {
+            units.sword = parseInt(getArmyLastAttack(selectedVillageID, "sword"))
+          }
+        }
+        if (getArmyLastAttack(selectedVillageID, "axe")) {
+          if (parseInt(getArmyLastAttack(selectedVillageID, "axe")) > 0) {
+            units.axe = parseInt(getArmyLastAttack(selectedVillageID, "axe"))
+          }
+        }
+        if (getArmyLastAttack(selectedVillageID, "knight")) {
+          if (parseInt(getArmyLastAttack(selectedVillageID, "knight")) > 0) {
+            units.knight = parseInt(getArmyLastAttack(selectedVillageID, "knight"))
+          }
+        }
+        if (getArmyLastAttack(selectedVillageID, "lightCavalry")) {
+          if (parseInt(getArmyLastAttack(selectedVillageID, "lightCavalry")) > 0) {
+            units.light_cavalry = parseInt(getArmyLastAttack(selectedVillageID, "lightCavalry"))
+          }
+        }
+        if (getArmyLastAttack(selectedVillageID, "mountedArcher")) {
+          if (parseInt(getArmyLastAttack(selectedVillageID, "mountedArcher")) > 0) {
+            units.mounted_archer = parseInt(getArmyLastAttack(selectedVillageID, "mountedArcher"))
+          }
+        }
+        if (getArmyLastAttack(selectedVillageID, "archer")) {
+          if (parseInt(getArmyLastAttack(selectedVillageID, "archer")) > 0) {
+            units.archer = parseInt(getArmyLastAttack(selectedVillageID, "archer"))
+          }
+        }
+        if (getArmyLastAttack(selectedVillageID, "heavyCavalry")) {
+          if (parseInt(getArmyLastAttack(selectedVillageID, "heavyCavalry")) > 0) {
+            units.heavy_cavalry = parseInt(getArmyLastAttack(selectedVillageID, "heavyCavalry"))
+          }
+        }
+
+        setTimeout(function() {
+          sendFullyCustomArmyRequest(selectedVillageID, targetVillageID, units)
+
+          currentLength++
+          setAttackAllVillageProgress(Math.ceil( currentLength / totalLength * 100 ))
+        }, (currentLength * 200))
+      })
+    }
   }
 
   function triggerReconnection() {
@@ -1766,6 +1831,7 @@ function PageTWBotV2() {
                         <th className="p-1">ID</th>
                         <th className="p-1">Name</th>
                         <th className="p-1">Target Count</th>
+                        <th className="p-1">Targets</th>
                         <th className="p-1">Spear</th>
                         <th className="p-1">Sword</th>
                         <th className="p-1">Axe</th>
@@ -1782,6 +1848,11 @@ function PageTWBotV2() {
                         <td className="p-1">{myVillage.id}</td>
                         <td className="p-1">{myVillage.name}</td>
                         <td className="p-1">{(getVillageLastAttack(myVillage.id) || "").split(",").length}</td>
+                        <td className="p-1">
+                          <pre style={{width: "115px", height: "35px"}}>
+                            {(getVillageLastAttack(myVillage.id) || "").substring(0, 100)}
+                          </pre>
+                        </td>
                         <td className="p-1">{getArmyLastAttack(myVillage.id, "spear") || 0}</td>
                         <td className="p-1">{getArmyLastAttack(myVillage.id, "sword") || 0}</td>
                         <td className="p-1">{getArmyLastAttack(myVillage.id, "axe") || 0}</td>
@@ -1790,7 +1861,7 @@ function PageTWBotV2() {
                         <td className="p-1">{getArmyLastAttack(myVillage.id, "mountedArcher") || 0}</td>
                         <td className="p-1">{getArmyLastAttack(myVillage.id, "heavyCavalry") || 0}</td>
                         <td className="p-1">
-                          <button className="btn btn-block btn-outline-success btn-sm" onClick={() => saveQuickNote()}>
+                          <button className="btn btn-block btn-outline-success btn-sm" onClick={() => attackPreviousVillage(myVillage.id)}>
                             ⚔️
                           </button>
                         </td>
