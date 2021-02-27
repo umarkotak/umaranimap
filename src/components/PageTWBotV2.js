@@ -1130,7 +1130,7 @@ function PageTWBotV2() {
             </div>
             <div className="card-body">
               <div className="row border rounded">
-                <div className="col-12 col-lg-4 p-2">
+                <div className="col-12 col-lg-4 p-2 overflow-auto" style={{maxHeight: "300px"}}>
                   <table className="table table-bordered">
                     <tbody>
                       <tr>
@@ -1155,6 +1155,24 @@ function PageTWBotV2() {
                   </table>
                 </div>
                 <div className="col-12 col-lg-8 py-2">
+                  <table className="table table-bordered">
+                    <tbody>
+                      <tr>
+                        <th className="p-1">Active Village</th>
+                        <th className="p-1">Outgoing</th>
+                        <th className="p-1">Prov X</th>
+                        <th className="p-1">Prov Y</th>
+                        <th className="p-1">Prov Name</th>
+                      </tr>
+                      <tr>
+                        <td className="p-1">{myActiveVillageID}</td>
+                        <td className="p-1">{myActiveVillageOutgoingArmy}</td>
+                        <td className="p-1">{myActiveVillageProvinceX}</td>
+                        <td className="p-1">{myActiveVillageProvinceY}</td>
+                        <td className="p-1">{myActiveVillageProvinceName}</td>
+                      </tr>
+                    </tbody>
+                  </table>
                   <table className="table table-bordered">
                     <tbody>
                       <tr>
@@ -1209,24 +1227,6 @@ function PageTWBotV2() {
                       </tr>
                     </tbody>
                   </table>
-                  <table className="table table-bordered">
-                    <tbody>
-                      <tr>
-                        <th className="p-1">Active Village</th>
-                        <th className="p-1">Outgoing</th>
-                        <th className="p-1">Prov X</th>
-                        <th className="p-1">Prov Y</th>
-                        <th className="p-1">Prov Name</th>
-                      </tr>
-                      <tr>
-                        <td className="p-1">{myActiveVillageID}</td>
-                        <td className="p-1">{myActiveVillageOutgoingArmy}</td>
-                        <td className="p-1">{myActiveVillageProvinceX}</td>
-                        <td className="p-1">{myActiveVillageProvinceY}</td>
-                        <td className="p-1">{myActiveVillageProvinceName}</td>
-                      </tr>
-                    </tbody>
-                  </table>
                 </div>
               </div>
 
@@ -1251,7 +1251,7 @@ function PageTWBotV2() {
                       <label>🔥 <b>One For All</b> 🔥</label>
                       <button className="btn btn-outline-success btn-md float-right" onClick={() => attackAllPreviousVillage()}>😈 Attack!</button>
                     </div>
-                    <div className="col-12 px-1">
+                    <div className="col-12 px-1 overflow-auto" style={{maxHeight: "550px"}}>
                       <table className="table table-bordered">
                         <thead>
                           <tr>
