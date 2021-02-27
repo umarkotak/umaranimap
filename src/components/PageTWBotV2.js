@@ -1231,6 +1231,82 @@ function PageTWBotV2() {
               </div>
 
               <div className="row">
+                <ul className="nav nav-tabs" id="myTab" role="tablist">
+                  <li className="nav-item">
+                    <a className="nav-link active" id="main-tab" data-toggle="tab" href="#main" role="tab" aria-controls="main" aria-selected="true">🏠 MAIN</a>
+                  </li>
+                  <li className="nav-item">
+                    <a className="nav-link" id="one-for-all-tab" data-toggle="tab" href="#one-for-all" role="tab" aria-controls="one-for-all" aria-selected="false">🔥 ONE FOR ALL</a>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="tab-content" id="myTabContent">
+                <div className="tab-pane fade show active" id="main" role="tabpanel" aria-labelledby="main-tab">
+                </div>
+
+                <div className="tab-pane fade pb-3" id="one-for-all" role="tabpanel" aria-labelledby="one-for-all-tab">
+                  <div className="row">
+                    <div className="col-12 px-1">
+                      <label>🔥 <b>One For All</b> 🔥</label>
+                      <button className="btn btn-outline-success btn-md float-right" onClick={() => attackAllPreviousVillage()}>😈 Attack!</button>
+                    </div>
+                    <div className="col-12 px-1">
+                      <table className="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th className="p-1">ID</th>
+                            <th className="p-1">Name</th>
+                            <th className="p-1">Target Count</th>
+                            <th className="p-1">Targets</th>
+                            <th className="p-1">Spear</th>
+                            <th className="p-1">Sword</th>
+                            <th className="p-1">Axe</th>
+                            <th className="p-1">Knight</th>
+                            <th className="p-1">LC</th>
+                            <th className="p-1">MA</th>
+                            <th className="p-1">HC</th>
+                            <th className="p-1">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {myVillages.map((myVillage, idx) => (
+                          <tr key={`bulkAttacking-${idx}`}>
+                            <td className="p-1">{myVillage.id}</td>
+                            <td className="p-1">{myVillage.name}</td>
+                            <td className="p-1">{(getVillageLastAttack(myVillage.id) || "").split(",").length}</td>
+                            <td className="p-1">
+                              <pre style={{width: "115px", height: "35px"}}>
+                                {(getVillageLastAttack(myVillage.id) || "").substring(0, 100)}
+                              </pre>
+                            </td>
+                            <td className="p-1">{getArmyLastAttack(myVillage.id, "spear") || 0}</td>
+                            <td className="p-1">{getArmyLastAttack(myVillage.id, "sword") || 0}</td>
+                            <td className="p-1">{getArmyLastAttack(myVillage.id, "axe") || 0}</td>
+                            <td className="p-1">{getArmyLastAttack(myVillage.id, "knight") || 0}</td>
+                            <td className="p-1">{getArmyLastAttack(myVillage.id, "lightCavalry") || 0}</td>
+                            <td className="p-1">{getArmyLastAttack(myVillage.id, "mountedArcher") || 0}</td>
+                            <td className="p-1">{getArmyLastAttack(myVillage.id, "heavyCavalry") || 0}</td>
+                            <td className="p-1">
+                              <button className="btn btn-block btn-outline-success btn-sm" onClick={() => attackPreviousVillage(myVillage.id)}>
+                                ⚔️
+                              </button>
+                            </td>
+                          </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                    <div className="col-12 px-1">
+                      <div className="progress">
+                        <div className="progress-bar" role="progressbar" style={{width: `${attackAllVillageProgress}%`}} aria-valuenow={`${attackAllVillageProgress}`} aria-valuemin="0" aria-valuemax="100">{`${attackAllVillageProgress}`}%</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="row">
                 <div className="col-12 border rounded py-2 ">
                   <div className="row pb-0">
                     <div className="col-12 col-md-2">
@@ -1819,63 +1895,7 @@ function PageTWBotV2() {
               </div>
 
               {/* AUTOMATED TRUST ME ATTACK */}
-              <div className="row">
-                <div className="col-12 px-1">
-                  <label>🔥 <b>One For All</b> 🔥</label>
-                  <button className="btn btn-outline-success btn-md float-right" onClick={() => attackAllPreviousVillage()}>😈 Attack!</button>
-                </div>
-                <div className="col-12 px-1">
-                  <table className="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th className="p-1">ID</th>
-                        <th className="p-1">Name</th>
-                        <th className="p-1">Target Count</th>
-                        <th className="p-1">Targets</th>
-                        <th className="p-1">Spear</th>
-                        <th className="p-1">Sword</th>
-                        <th className="p-1">Axe</th>
-                        <th className="p-1">Knight</th>
-                        <th className="p-1">LC</th>
-                        <th className="p-1">MA</th>
-                        <th className="p-1">HC</th>
-                        <th className="p-1">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {myVillages.map((myVillage, idx) => (
-                      <tr key={`bulkAttacking-${idx}`}>
-                        <td className="p-1">{myVillage.id}</td>
-                        <td className="p-1">{myVillage.name}</td>
-                        <td className="p-1">{(getVillageLastAttack(myVillage.id) || "").split(",").length}</td>
-                        <td className="p-1">
-                          <pre style={{width: "115px", height: "35px"}}>
-                            {(getVillageLastAttack(myVillage.id) || "").substring(0, 100)}
-                          </pre>
-                        </td>
-                        <td className="p-1">{getArmyLastAttack(myVillage.id, "spear") || 0}</td>
-                        <td className="p-1">{getArmyLastAttack(myVillage.id, "sword") || 0}</td>
-                        <td className="p-1">{getArmyLastAttack(myVillage.id, "axe") || 0}</td>
-                        <td className="p-1">{getArmyLastAttack(myVillage.id, "knight") || 0}</td>
-                        <td className="p-1">{getArmyLastAttack(myVillage.id, "lightCavalry") || 0}</td>
-                        <td className="p-1">{getArmyLastAttack(myVillage.id, "mountedArcher") || 0}</td>
-                        <td className="p-1">{getArmyLastAttack(myVillage.id, "heavyCavalry") || 0}</td>
-                        <td className="p-1">
-                          <button className="btn btn-block btn-outline-success btn-sm" onClick={() => attackPreviousVillage(myVillage.id)}>
-                            ⚔️
-                          </button>
-                        </td>
-                      </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-                <div className="col-12 px-1">
-                  <div className="progress">
-                    <div className="progress-bar" role="progressbar" style={{width: `${attackAllVillageProgress}%`}} aria-valuenow={`${attackAllVillageProgress}`} aria-valuemin="0" aria-valuemax="100">{`${attackAllVillageProgress}`}%</div>
-                  </div>
-                </div>
-              </div>
+
             </div>
           </div>
         </div>
