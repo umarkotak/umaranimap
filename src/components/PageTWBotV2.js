@@ -382,8 +382,10 @@ function PageTWBotV2() {
     e.preventDefault()
     setTimeout(() => {
       if (ws.current.readyState === 1) {
-        ws.current.send(2); executeAutomatedProcess(); sendPing(e)
-      }
+        sendPing(e)
+        ws.current.send(2)
+        executeAutomatedProcess()
+      } else { sendPing(e) }
     }, 4000)
   }
 
@@ -975,9 +977,13 @@ function PageTWBotV2() {
   // =================================================================================================================== HELPER FUNCTION
 
   function calculateTimeElapsed() {
-    var tempTimeElapsedMs = timeNowUnix() - joinTime
-    var formattedTimeElapsed = new Date(tempTimeElapsedMs).toISOString().substr(11, 8)
-    setTimeElapsed(formattedTimeElapsed)
+    try {
+      var tempTimeElapsedMs = timeNowUnix() - joinTime
+      var formattedTimeElapsed = new Date(tempTimeElapsedMs).toISOString().substr(11, 8)
+      setTimeElapsed(formattedTimeElapsed)
+    } catch (error) {
+      joinTime = timeNowUnix()
+    }
   }
 
   function calculateTimeElapsedCustom(tempTimeNowUnix, tempTimeNextUnix) {
@@ -1189,6 +1195,7 @@ function PageTWBotV2() {
                   <button className="btn btn-block btn-sm btn-outline-primary" onClick={() => executeAutoLogin()}>➤ Login</button>
                   <button className="btn btn-block btn-sm btn-outline-danger" onClick={() => handleClearConfig()}>X Logout</button>
                   <a className="btn btn-block btn-sm btn-success" target="_blank" href="https://trakteer.id/marumaru" rel="noopener noreferrer">🤝 Give Support</a>
+                  {/* <button className="btn btn-block btn-sm btn-outline-primary" onClick={() => ws.current.close()}>DC</button> */}
                 </div>
 
                 <div className="col-12">
