@@ -11,11 +11,16 @@ const tWBotDB = new TWBotDB();
 function PageTWBotV2() {
   const ws = useRef(null)
   const CONNECTION_STATUSES = ["CONNECTING", "CONNECTED", "LOGGED IN", "DISCONNECTED", "NOT CONNECTED", "RECONNECTING"]
+  const ONE_FOR_ALL_DELAY = 9000 * 1000
+  // const ONE_FOR_ALL_DELAY = 20 * 1000
 
   // =================================================================================================================== START CONFIG
 
   // MESSAGING
   const [latestMessage, setLatestMessage] = useState("")
+
+  var globID = 1
+  var joinTime
 
   // ACCOUNT DATA
   const [userName, setUserName] = useState(cookies.get("TW_USERNAME"))
@@ -24,12 +29,10 @@ function PageTWBotV2() {
   const [worldID, setWorldID] = useState(cookies.get("TW_WORLD_ID"))
   const [quickNotes, setQuickNotes] = useState(localStorage.getItem('TW_QUICK_NOTE') || "")
   const [loginProgress, setLoginProgress] = useState(0)
-  var globID = 1
 
   // CONFIG DATA
   const [connectionStatus, setConnectionStatus] = useState(CONNECTION_STATUSES[0])
-  const joinTime = timeNow()
-  var [timeElapsed, setTimeElapsed] = useState("00:00:00")
+  const [timeElapsed, setTimeElapsed] = useState("00:00:00")
 
   // MAP VILLAGES DATA
   const [nearbyBarbarianVillages, setNearbyBarbarianVillages] = useState([])
@@ -106,14 +109,36 @@ function PageTWBotV2() {
   const [autoBuildNextLevel, setAutoBuildNextLevel] = useState(0)
   const [autoBuildTemplateProgress, setAutoBuildTemplateProgress] = useState(0)
 
+  const [enableAutoOneForAll, setEnableAutoOneForAll] = useState("false")
+  const [autoOneForAllLastAttackTime, setAutoOneForAllLastAttackTime] = useState(0)
+  const [autoOneForAllNextAttackTime, setAutoOneForAllNextAttackTime] = useState(0)
+  const [autoOneForAllRemainingAttackTime, setAutoOneForAllRemainingAttackTime] = useState("00:00:00")
+  const [autoOneForAllCycle, setAutoOneForAllCycle] = useState(0)
+
   // =================================================================================================================== END CONFIG
 
-  useEffect(() => { connectWs() }, [])
+  useEffect(() => { connectWs(); autoOneForAllInit() }, [])
   useEffect(() => { initProcess() }, [latestMessage])
 
   function connectWs() {
-    ws.current = new WebSocket(`wss://en.tribalwars2.com/socket.io/?platform=desktop&EIO=3&transport=websocket`)
-    return () => { ws.current.close(); setConnectionStatus(CONNECTION_STATUSES[4]) }
+    try {
+      ws.current = new WebSocket(`wss://en.tribalwars2.com/socket.io/?platform=desktop&EIO=3&transport=websocket`)
+      return () => { ws.current.close(); setConnectionStatus(CONNECTION_STATUSES[4]); console.log(CONNECTION_STATUSES[4]) }
+    } catch (error) {
+      triggerReconnection()
+    }
+  }
+
+  function autoOneForAllInit() {
+    joinTime = timeNowUnix()
+    setEnableAutoOneForAll("false")
+    localStorage.setItem("enableAutoOneForAll", "false")
+    setAutoOneForAllLastAttackTime(0)
+    localStorage.setItem("autoOneForAllLastAttackTime", 0)
+    setAutoOneForAllNextAttackTime(0)
+    localStorage.setItem("autoOneForAllNextAttackTime", 0)
+    setAutoOneForAllCycle(0)
+    localStorage.setItem("autoOneForAllCycle", 0)
   }
 
   function initProcess() {
@@ -125,6 +150,7 @@ function PageTWBotV2() {
 
   function onOpenProcess(e) {
     setConnectionStatus(CONNECTION_STATUSES[1])
+    console.log(CONNECTION_STATUSES[1])
     if (userName && userToken && userID && worldID) { executeAutoLogin() }
     sendPing(e)
   }
@@ -138,6 +164,7 @@ function PageTWBotV2() {
   function onClosingWebSocket(e) {
     e.preventDefault()
     setConnectionStatus(CONNECTION_STATUSES[3])
+    console.log(CONNECTION_STATUSES[3])
     triggerReconnection()
   }
 
@@ -184,10 +211,10 @@ function PageTWBotV2() {
 
   // =================================================================================================================== SENDING WEBSOCKET MESSAGE
 
-  function timeNow() { return + new Date() }
+  function timeNowUnix() { return + new Date() }
 
   function commonHeaders() {
-    return `{ "traveltimes": [["browser_send", ${timeNow()}]] }`
+    return `{ "traveltimes": [["browser_send", ${timeNowUnix()}]] }`
   }
 
   function sendSocketMessage(prefixNum, type, headers, payload) {
@@ -549,7 +576,42 @@ function PageTWBotV2() {
         })
       } else {}
     })
+
+    setEnableAutoOneForAll("true")
+    localStorage.setItem("enableAutoOneForAll", "true")
+    var tempTimeNowUnix = timeNowUnix()
+    setAutoOneForAllLastAttackTime(tempTimeNowUnix)
+    localStorage.setItem("autoOneForAllLastAttackTime", tempTimeNowUnix)
+    setAutoOneForAllNextAttackTime(tempTimeNowUnix + ONE_FOR_ALL_DELAY)
+    localStorage.setItem("autoOneForAllNextAttackTime", tempTimeNowUnix + ONE_FOR_ALL_DELAY)
   }
+
+  function executeAutoOneForAll() {
+    if (localStorage.getItem("enableAutoOneForAll") === "false") { return }
+
+    var tempAutoOneForAllLastAttackTime = parseInt(localStorage.getItem("autoOneForAllLastAttackTime"))
+    var tempAutoOneForAllNextAttackTime = parseInt(localStorage.getItem("autoOneForAllNextAttackTime"))
+    var tempAutoOneForAllCycle = parseInt(localStorage.getItem("autoOneForAllCycle"))
+
+    if (tempAutoOneForAllLastAttackTime >= 0 && tempAutoOneForAllNextAttackTime >= 0) {  } else { return }
+    setAutoOneForAllRemainingAttackTime(calculateTimeElapsedCustom(timeNowUnix(), tempAutoOneForAllNextAttackTime))
+
+    if (timeNowUnix() < tempAutoOneForAllNextAttackTime) { return }
+
+    tempAutoOneForAllCycle++
+    setAutoOneForAllCycle(tempAutoOneForAllCycle)
+    localStorage.setItem("autoOneForAllCycle", tempAutoOneForAllCycle)
+    var tempTimeNowUnix = timeNowUnix()
+    setAutoOneForAllLastAttackTime(tempTimeNowUnix)
+    localStorage.setItem("autoOneForAllLastAttackTime", tempTimeNowUnix)
+    setAutoOneForAllNextAttackTime(tempTimeNowUnix + ONE_FOR_ALL_DELAY)
+    localStorage.setItem("autoOneForAllNextAttackTime", tempTimeNowUnix + ONE_FOR_ALL_DELAY)
+  }
+  useEffect(() => {
+    if (localStorage.getItem("enableAutoOneForAll") === "false") { return }
+
+    attackAllPreviousVillage()
+  }, [autoOneForAllCycle])
 
   function attackPreviousVillage(selectedVillageID) {
     var tempTargetVillageIDs = getVillageLastAttack(selectedVillageID)
@@ -612,6 +674,7 @@ function PageTWBotV2() {
 
   function triggerReconnection() {
     setConnectionStatus(CONNECTION_STATUSES[5])
+    console.log(CONNECTION_STATUSES[5])
     setTimeout(function() {
       connectWs()
       initProcess()
@@ -620,6 +683,7 @@ function PageTWBotV2() {
 
   function executeAutomatedProcess() {
     calculateTimeElapsed()
+
     if (localStorage.getItem("enableAutoResourceCollector") === "true") {
       sendResourceDepositRequest()
     }
@@ -630,6 +694,10 @@ function PageTWBotV2() {
 
     if (localStorage.getItem("enableAutoBuildConstruction") === "true") {
       sendVillageDataDetailRequest(localStorage.getItem("myActiveVillageID"))
+    }
+
+    if (localStorage.getItem("enableAutoOneForAll") === "true") {
+      executeAutoOneForAll()
     }
   }
 
@@ -754,7 +822,7 @@ function PageTWBotV2() {
           sendStartDepositJobRequest(element.id)
 
         } else {
-          var unixTimeNow = Math.floor(timeNow() / 1000)
+          var unixTimeNow = Math.floor(timeNowUnix() / 1000)
           if (element.time_completed < unixTimeNow) {
             if (!myActiveVillageID) { throw "FOUND" }
             sendCollectJobRequest(element.id)
@@ -804,6 +872,7 @@ function PageTWBotV2() {
     setLoginProgress(100)
 
     setConnectionStatus(CONNECTION_STATUSES[2])
+    console.log(CONNECTION_STATUSES[2])
     var tempMyVillages = []
     directObj.data.villages.forEach((village) => {
       tempMyVillages.push(village)
@@ -906,9 +975,20 @@ function PageTWBotV2() {
   // =================================================================================================================== HELPER FUNCTION
 
   function calculateTimeElapsed() {
-    var tempTimeElapsedMs = timeNow() - joinTime
+    var tempTimeElapsedMs = timeNowUnix() - joinTime
     var formattedTimeElapsed = new Date(tempTimeElapsedMs).toISOString().substr(11, 8)
     setTimeElapsed(formattedTimeElapsed)
+  }
+
+  function calculateTimeElapsedCustom(tempTimeNowUnix, tempTimeNextUnix) {
+    if (tempTimeNowUnix > tempTimeNextUnix) {
+      var formattedTimeElapsed = new Date(0).toISOString().substr(11, 8)
+      return formattedTimeElapsed
+    } else {
+      var tempTimeElapsedMs = tempTimeNextUnix - tempTimeNowUnix
+      var formattedTimeElapsed = new Date(tempTimeElapsedMs).toISOString().substr(11, 8)
+      return formattedTimeElapsed
+    }
   }
 
   function sortIDAsc(villages) {
@@ -1248,10 +1328,30 @@ function PageTWBotV2() {
                 <div className="tab-pane fade pb-3" id="one-for-all" role="tabpanel" aria-labelledby="one-for-all-tab">
                   <div className="row">
                     <div className="col-12 px-1">
-                      <label>🔥 <b>One For All</b> 🔥</label>
                       <button className="btn btn-outline-success btn-md float-right" onClick={() => attackAllPreviousVillage()}>😈 Attack!</button>
+                      <button className="btn btn-outline-danger btn-md float-right" onClick={() => {setEnableAutoOneForAll("false"); localStorage.setItem("enableAutoOneForAll", "false")}}>Disable Auto Attack</button>
                     </div>
                     <div className="col-12 px-1 overflow-auto" style={{maxHeight: "550px"}}>
+                      <table className="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th className="p-1" colSpan="2">Auto One For All</th>
+                            <th className="p-1" colSpan="3">Last Attack Time</th>
+                            <th className="p-1" colSpan="3">Next Attack Time</th>
+                            <th className="p-1" colSpan="2">Count Down</th>
+                            <th className="p-1" colSpan="2">Total Cycle</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td className="p-1" colSpan="2">{enableAutoOneForAll}</td>
+                            <td className="p-1" colSpan="3">{new Date(autoOneForAllLastAttackTime).toString().substr(0, 25)}</td>
+                            <td className="p-1" colSpan="3">{new Date(autoOneForAllNextAttackTime).toString().substr(0, 25)}</td>
+                            <td className="p-1" colSpan="2">{autoOneForAllRemainingAttackTime}</td>
+                            <td className="p-1" colSpan="2">{autoOneForAllCycle}</td>
+                          </tr>
+                        </tbody>
+                      </table>
                       <table className="table table-bordered">
                         <thead>
                           <tr>
