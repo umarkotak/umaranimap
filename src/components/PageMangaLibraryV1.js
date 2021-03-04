@@ -341,7 +341,7 @@ function PageMangaLibraryV1() {
               </div>
             </div>
             {/* <button type="button" className="btn btn-block btn-sm btn-outline-secondary" onClick={(e) => handleSelectedMangaTitle(e.target.value)} value={props.manga_title}>Read</button> */}
-            <Link type="button" className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${props.manga_title}/${findLatestMangaChapter(props.manga_title)}?last_chapter=${findLastMangaChapter(props.manga_title)}&chapter_size=${ manga_db.get(props.manga_title) ? manga_db.get(props.manga_title).average_page : 100}`}>Read</Link>
+            <Link type="button" className="btn btn-block btn-sm btn-outline-secondary" to={`/animapu/read-manga-only-v1/${props.manga_title}/${findLatestMangaChapter(props.manga_title)}?last_chapter=${findLastMangaChapter(props.manga_title)}&chapter_size=${ manga_db.get(props.manga_title) ? manga_db.get(props.manga_title).average_page : 100}`}>Read</Link>
           </div>
         </div>
       )
@@ -360,7 +360,7 @@ function PageMangaLibraryV1() {
             </div>
           </div>
           {/* <button type="button" className="btn btn-block btn-sm btn-outline-secondary" onClick={(e) => handleSelectedMangaTitle(e.target.value)} value={props.manga_title}>Read</button> */}
-          <Link type="button" className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${props.manga_title}/${findLatestMangaChapter(props.manga_title)}?last_chapter=${findLastMangaChapter(props.manga_title)}&chapter_size=${ manga_db.get(props.manga_title) ? manga_db.get(props.manga_title).average_page : 100}`}>Read</Link>
+          <Link type="button" className="btn btn-block btn-sm btn-outline-secondary" to={`/animapu/read-manga-only-v1/${props.manga_title}/${findLatestMangaChapter(props.manga_title)}?last_chapter=${findLastMangaChapter(props.manga_title)}&chapter_size=${ manga_db.get(props.manga_title) ? manga_db.get(props.manga_title).average_page : 100}`}>Read</Link>
         </div>
       </div>
     )
@@ -373,7 +373,7 @@ function PageMangaLibraryV1() {
       )
     }
     return(
-      <Link to={`/read-manga-only-v1/${props.manga_title}/${findLastMangaChapter(props.manga_title)}?last_chapter=${findLastMangaChapter(props.manga_title)}&chapter_size=${ manga_db.get(props.manga_title) ? manga_db.get(props.manga_title).average_page : 100}`} className="btn btn-xs btn-outline-danger float-right" style={{ paddingTop: "1px", paddingBottom: "1px", paddingLeft: "3px", paddingRight: "3px" }}>▶︎</Link>
+      <Link to={`/animapu/read-manga-only-v1/${props.manga_title}/${findLastMangaChapter(props.manga_title)}?last_chapter=${findLastMangaChapter(props.manga_title)}&chapter_size=${ manga_db.get(props.manga_title) ? manga_db.get(props.manga_title).average_page : 100}`} className="btn btn-xs btn-outline-danger float-right" style={{ paddingTop: "1px", paddingBottom: "1px", paddingLeft: "3px", paddingRight: "3px" }}>▶︎</Link>
     )
   }
 
@@ -473,7 +473,7 @@ function PageMangaLibraryV1() {
                   <small>{manga_title}</small>
                 </div>
               </div>
-              <Link type="button" className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${manga_title}/${findLatestMangaChapterLoggedIn(manga_title)}?last_chapter=${findLastMangaChapter(manga_title) || 150}&chapter_size=${ manga_db.get(manga_title) ? manga_db.get(manga_title).average_page : 100}`}>Read</Link>
+              <Link type="button" className="btn btn-block btn-sm btn-outline-secondary" to={`/animapu/read-manga-only-v1/${manga_title}/${findLatestMangaChapterLoggedIn(manga_title)}?last_chapter=${findLastMangaChapter(manga_title) || 150}&chapter_size=${ manga_db.get(manga_title) ? manga_db.get(manga_title).average_page : 100}`}>Read</Link>
             </div>
           </div>
         ))}
@@ -497,7 +497,7 @@ function PageMangaLibraryV1() {
                     <small>{manga_title}</small>
                   </div>
                 </div>
-                <Link type="button" className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${manga_title}/${findLatestMangaChapter(manga_title)}?last_chapter=${my_read_later.get(manga_title).manga_last_chapter}&chapter_size=${ my_read_later.get(manga_title) ? my_read_later.get(manga_title).average_page : 100}`}>Read</Link>
+                <Link type="button" className="btn btn-block btn-sm btn-outline-secondary" to={`/animapu/read-manga-only-v1/${manga_title}/${findLatestMangaChapter(manga_title)}?last_chapter=${my_read_later.get(manga_title).manga_last_chapter}&chapter_size=${ my_read_later.get(manga_title) ? my_read_later.get(manga_title).average_page : 100}`}>Read</Link>
               </div>
             </div>
           ))}

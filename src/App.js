@@ -38,36 +38,36 @@ function App() {
         <div className="App container border border-secondary shadow-lg" style={{backgroundColor: "#ffffff"}}>
           <Nav />
           <Switch>
-            <Route path="/" exact component={PageHome} />
-            <Route path="/login" exact component={PageLogin} />
-            <Route path="/tic-tac-toe" exact component={PageTicTacToe} />
-            <Route path="/global-clipboard-v1" exact component={PageGlobalClipboardV1} />
-            <Route path="/chatto-v1" exact component={PageChattoV1} />
-            <Route path="/statistics-v1" exact component={PageStatisticsV1} />
-            <Route path="/learn-react" exact component={PageLearnReact} />
-            <Route path="/airing-anime-v1/:id" exact component={PageAiringAnimeV1} />
-            {/* <Route path="/airing-anime-v1" exact component={PageAiringAnimeV1} />
-            <Route path="/airing-anime-v2" exact component={PageAiringAnimeV2} />
-            <Route path="/airing-anime-v3" exact component={PageAiringAnimeV3} />
-            <Route path="/airing-anime-v4" exact component={PageAiringAnimeV4} /> */}
-            <Route path="/airing-anime-v5" exact component={PageAiringAnimeV5} />
-            {/* <Route path="/read-manga-v1" exact component={PageReadMangaV1} />
-            <Route path="/read-manga-v2" exact component={PageReadMangaV2} />
-            <Route path="/read-manga-v3" exact component={PageReadMangaV3} />
-            <Route path="/read-manga-v4" exact component={PageReadMangaV4} />
-            <Route path="/read-manga-v5" exact component={PageReadMangaV5} />
-            <Route path="/read-manga-v6" exact component={PageReadMangaV6} />
-            <Route path="/read-manga-v7" exact component={PageReadMangaV7} />
-            <Route path="/read-manga-v8" exact component={PageReadMangaV8} /> */}
-            <Route path="/watch-anime-v1" exact component={PageWatchAnimeV1} />
-            <Route path="/search-manga-v1" exact component={PageSearchMangaV1} />
-            <Route path="/todays-manga-v1" exact component={PageTodaysMangaV1} />
-            <Route path="/manga-library-v1" exact component={PageMangaLibraryV1} />
-            {/* <Route path="/read-manga-only-v1" exact component={PageReadMangaOnlyV1} /> */}
-            <Route path="/read-manga-only-v1/:path_title/:path_chapter" exact component={PageReadMangaOnlyV1} />
-            <Route path="/socket-game-v1" exact component={PageSocketGameV1} />
-            <Route path="/tw-bot-v1" exact component={PageTWBot} />
-            <Route path="/tw-bot-v2" exact component={PageTWBotV2} />
+            <Route path="animapu/" exact component={PageHome} />
+            <Route path="animapu/login" exact component={PageLogin} />
+            <Route path="animapu/tic-tac-toe" exact component={PageTicTacToe} />
+            <Route path="animapu/global-clipboard-v1" exact component={PageGlobalClipboardV1} />
+            <Route path="animapu/chatto-v1" exact component={PageChattoV1} />
+            <Route path="animapu/statistics-v1" exact component={PageStatisticsV1} />
+            <Route path="animapu/learn-react" exact component={PageLearnReact} />
+            <Route path="animapu/airing-anime-v1/:id" exact component={PageAiringAnimeV1} />
+            {/* <Route path="animapu/airing-anime-v1" exact component={PageAiringAnimeV1} />
+            <Route path="animapu/airing-anime-v2" exact component={PageAiringAnimeV2} />
+            <Route path="animapu/airing-anime-v3" exact component={PageAiringAnimeV3} />
+            <Route path="animapu/airing-anime-v4" exact component={PageAiringAnimeV4} /> */}
+            <Route path="animapu/airing-anime-v5" exact component={PageAiringAnimeV5} />
+            {/* <Route path="animapu/read-manga-v1" exact component={PageReadMangaV1} />
+            <Route path="animapu/read-manga-v2" exact component={PageReadMangaV2} />
+            <Route path="animapu/read-manga-v3" exact component={PageReadMangaV3} />
+            <Route path="animapu/read-manga-v4" exact component={PageReadMangaV4} />
+            <Route path="animapu/read-manga-v5" exact component={PageReadMangaV5} />
+            <Route path="animapu/read-manga-v6" exact component={PageReadMangaV6} />
+            <Route path="animapu/read-manga-v7" exact component={PageReadMangaV7} />
+            <Route path="animapu/read-manga-v8" exact component={PageReadMangaV8} /> */}
+            <Route path="animapu/watch-anime-v1" exact component={PageWatchAnimeV1} />
+            <Route path="animapu/search-manga-v1" exact component={PageSearchMangaV1} />
+            <Route path="animapu/todays-manga-v1" exact component={PageTodaysMangaV1} />
+            <Route path="animapu/manga-library-v1" exact component={PageMangaLibraryV1} />
+            {/* <Route path="animapu/read-manga-only-v1" exact component={PageReadMangaOnlyV1} /> */}
+            <Route path="animapu/read-manga-only-v1/:path_title/:path_chapter" exact component={PageReadMangaOnlyV1} />
+            <Route path="animapu/socket-game-v1" exact component={PageSocketGameV1} />
+            <Route path="animapu/tw-bot-v1" exact component={PageTWBot} />
+            <Route path="animapu/tw-bot-v2" exact component={PageTWBotV2} />
           </Switch>
         </div>
       </div>
