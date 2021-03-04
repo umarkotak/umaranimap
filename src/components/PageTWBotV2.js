@@ -117,7 +117,7 @@ function PageTWBotV2() {
 
   // =================================================================================================================== END CONFIG
 
-  useEffect(() => { connectWs(); autoOneForAllInit() }, [])
+  useEffect(() => { sendPing(); connectWs(); autoOneForAllInit() }, [])
   useEffect(() => { initProcess() }, [latestMessage])
 
   function connectWs() {
@@ -152,7 +152,6 @@ function PageTWBotV2() {
     setConnectionStatus(CONNECTION_STATUSES[1])
     console.log(CONNECTION_STATUSES[1])
     if (userName && userToken && userID && worldID) { executeAutoLogin() }
-    sendPing(e)
   }
 
   function onIncomingMessage(e) {
@@ -378,14 +377,13 @@ function PageTWBotV2() {
     sendSocketMessage(42, "Building/upgrade", commonHeaders(), JSON.stringify(payload))
   }
 
-  function sendPing(e) {
-    e.preventDefault()
+  function sendPing() {
     setTimeout(() => {
       if (ws.current.readyState === 1) {
-        sendPing(e)
+        sendPing()
         ws.current.send(2)
         executeAutomatedProcess()
-      } else { sendPing(e) }
+      } else { sendPing() }
     }, 4000)
   }
 
