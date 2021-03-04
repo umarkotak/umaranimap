@@ -114,6 +114,7 @@ function PageTWBotV2() {
   const [autoOneForAllNextAttackTime, setAutoOneForAllNextAttackTime] = useState(0)
   const [autoOneForAllRemainingAttackTime, setAutoOneForAllRemainingAttackTime] = useState("00:00:00")
   const [autoOneForAllCycle, setAutoOneForAllCycle] = useState(0)
+  const [autoOneForAllInterval, setAutoOneForAllInterval] = useState(localStorage.getItem("autoOneForAllInterval") || ONE_FOR_ALL_DELAY)
 
   // =================================================================================================================== END CONFIG
 
@@ -582,8 +583,9 @@ function PageTWBotV2() {
     var tempTimeNowUnix = timeNowUnix()
     setAutoOneForAllLastAttackTime(tempTimeNowUnix)
     localStorage.setItem("autoOneForAllLastAttackTime", tempTimeNowUnix)
-    setAutoOneForAllNextAttackTime(tempTimeNowUnix + ONE_FOR_ALL_DELAY)
-    localStorage.setItem("autoOneForAllNextAttackTime", tempTimeNowUnix + ONE_FOR_ALL_DELAY)
+    var tempDelay = parseInt(localStorage.getItem("autoOneForAllInterval"))
+    setAutoOneForAllNextAttackTime(tempTimeNowUnix + tempDelay)
+    localStorage.setItem("autoOneForAllNextAttackTime", tempTimeNowUnix + tempDelay)
   }
 
   function executeAutoOneForAll() {
@@ -604,8 +606,9 @@ function PageTWBotV2() {
     var tempTimeNowUnix = timeNowUnix()
     setAutoOneForAllLastAttackTime(tempTimeNowUnix)
     localStorage.setItem("autoOneForAllLastAttackTime", tempTimeNowUnix)
-    setAutoOneForAllNextAttackTime(tempTimeNowUnix + ONE_FOR_ALL_DELAY)
-    localStorage.setItem("autoOneForAllNextAttackTime", tempTimeNowUnix + ONE_FOR_ALL_DELAY)
+    var tempDelay = parseInt(localStorage.getItem("autoOneForAllInterval"))
+    setAutoOneForAllNextAttackTime(tempTimeNowUnix + tempDelay)
+    localStorage.setItem("autoOneForAllNextAttackTime", tempTimeNowUnix + tempDelay)
   }
   useEffect(() => {
     if (localStorage.getItem("enableAutoOneForAll") === "false") { return }
@@ -1332,7 +1335,15 @@ function PageTWBotV2() {
 
                 <div className="tab-pane fade pb-3" id="one-for-all" role="tabpanel" aria-labelledby="one-for-all-tab">
                   <div className="row">
-                    <div className="col-12 px-1">
+                    <div className="col-12 col-md-6 px-1">
+                      <div className="input-group mb-2">
+                        <div className="input-group-prepend">
+                          <span className="input-group-text">One For All Interval (Ms)</span>
+                        </div>
+                        <input type="number" className="form-control" value={autoOneForAllInterval} onChange={(e) => {setAutoOneForAllInterval(e.target.value); localStorage.setItem("autoOneForAllInterval", e.target.value)}} />
+                      </div>
+                    </div>
+                    <div className="col-12 col-md-6 px-1">
                       <button className="btn btn-outline-success btn-md float-right" onClick={() => attackAllPreviousVillage()}>😈 Attack!</button>
                       <button className="btn btn-outline-danger btn-md float-right" onClick={() => {setEnableAutoOneForAll("false"); localStorage.setItem("enableAutoOneForAll", "false")}}>Disable Auto Attack</button>
                     </div>
