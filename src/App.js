@@ -11,6 +11,7 @@ import PageAiringAnimeV1 from "./components/PageAiringAnimeV1"
 // import PageAiringAnimeV3 from "./components/PageAiringAnimeV3"
 // import PageAiringAnimeV4 from "./components/PageAiringAnimeV4"
 import PageAiringAnimeV5 from "./components/PageAiringAnimeV5"
+import PageAiringAnimeV6 from "./components/PageAiringAnimeV6"
 // import PageReadMangaV1 from "./components/PageReadMangaV1"
 // import PageReadMangaV2 from "./components/PageReadMangaV2"
 // import PageReadMangaV3 from "./components/PageReadMangaV3"
@@ -20,6 +21,7 @@ import PageAiringAnimeV5 from "./components/PageAiringAnimeV5"
 // import PageReadMangaV7 from "./components/PageReadMangaV7"
 // import PageReadMangaV8 from "./components/PageReadMangaV8"
 import PageWatchAnimeV1 from "./components/PageWatchAnimeV1"
+import PageWatchAnimeV2 from "./components/PageWatchAnimeV2"
 import PageSearchMangaV1 from "./components/PageSearchMangaV1"
 import PageTodaysMangaV1 from "./components/PageTodaysMangaV1"
 import PageGlobalClipboardV1 from "./components/PageGlobalClipboardV1"
@@ -51,6 +53,7 @@ function App() {
             <Route path="/airing-anime-v3" exact component={PageAiringAnimeV3} />
             <Route path="/airing-anime-v4" exact component={PageAiringAnimeV4} /> */}
             <Route path="/airing-anime-v5" exact component={PageAiringAnimeV5} />
+            <Route path="/airing-anime-v6" exact component={PageAiringAnimeV6} />
             {/* <Route path="/read-manga-v1" exact component={PageReadMangaV1} />
             <Route path="/read-manga-v2" exact component={PageReadMangaV2} />
             <Route path="/read-manga-v3" exact component={PageReadMangaV3} />
@@ -60,6 +63,7 @@ function App() {
             <Route path="/read-manga-v7" exact component={PageReadMangaV7} />
             <Route path="/read-manga-v8" exact component={PageReadMangaV8} /> */}
             <Route path="/watch-anime-v1" exact component={PageWatchAnimeV1} />
+            <Route path="/watch-anime-v2" exact component={PageWatchAnimeV2} />
             <Route path="/search-manga-v1" exact component={PageSearchMangaV1} />
             <Route path="/todays-manga-v1" exact component={PageTodaysMangaV1} />
             <Route path="/manga-library-v1" exact component={PageMangaLibraryV1} />
