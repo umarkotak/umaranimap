@@ -93,7 +93,7 @@ function PageTWBotV2() {
   const [enableAutoBuildConstruction, setEnableAutoBuildConstruction] = useState("false")
 
   const [autoArmyCycle, setAutoArmyCycle] = useState(0)
-  const [autoArmyMaxOutgoing, setAutoArmyMaxOutgoing] = useState(25)
+  const [autoArmyMaxOutgoing, setAutoArmyMaxOutgoing] = useState(48)
   const [autoArmyNextAttackIndex, setAutoArmyNextAttackIndex] = useState(0)
   const [autoArmyNextAttackVillageID, setAutoArmyNextAttackVillageID] = useState(0)
   const [autoArmyPercentage, setAutoArmyPercentage] = useState(0)
@@ -675,6 +675,30 @@ function PageTWBotV2() {
     }
   }
 
+  function saveLiveTimeGatheredResourcesReport(directObj) {
+    try {
+      var attVillageId = directObj.data.ReportAttack.attVillageId
+
+      // WOOD
+      var haulWood = directObj.data.ReportAttack.haul.wood
+      var currentWood = getLiveTimeResources(attVillageId, "wood")
+      var totalWood = parseInt(currentWood) + parseInt(haulWood)
+      storeLiveTimeResources(attVillageId, "wood", totalWood)
+
+      // CLAY
+      var haulClay = directObj.data.ReportAttack.haul.clay
+      var currentClay = getLiveTimeResources(attVillageId, "clay")
+      var totalClay = parseInt(currentClay) + parseInt(haulClay)
+      storeLiveTimeResources(attVillageId, "clay", totalClay)
+
+      // IRON
+      var haulIron = directObj.data.ReportAttack.haul.iron
+      var currentIron = getLiveTimeResources(attVillageId, "iron")
+      var totalIron = parseInt(currentIron) + parseInt(haulIron)
+      storeLiveTimeResources(attVillageId, "iron", totalIron)
+    } catch(error) {}
+  }
+
   function triggerReconnection() {
     setConnectionStatus(CONNECTION_STATUSES[5])
     console.log(CONNECTION_STATUSES[5])
@@ -924,6 +948,8 @@ function PageTWBotV2() {
 
   function handleIncomingReportDetail(directObj) {
     try {
+      saveLiveTimeGatheredResourcesReport(directObj)
+
       if (parseInt(directObj.data.ReportAttack.attVillageId) !== parseInt(myActiveVillageID)) { return }
 
       setAutoArmyTotalWood(autoArmyTotalWood + directObj.data.ReportAttack.haul.wood)
@@ -1122,6 +1148,22 @@ function PageTWBotV2() {
 
   function getArmyLastAttack(villageID, kind) {
     return localStorage.getItem(`VILLAGE_ARMY_HISTORY:${villageID}:${kind}`)
+  }
+
+  function storeLiveTimeResources(villageID, kind, num) {
+    localStorage.setItem(`VILLAGE_LIVE_TIME_RESOURCE:${villageID}:${kind}`, num)
+  }
+
+  function getLiveTimeResources(villageID, kind) {
+    var key = `VILLAGE_LIVE_TIME_RESOURCE:${villageID}:${kind}`
+    var tempVal = parseInt(localStorage.getItem(key))
+
+    if (tempVal >= 0) {
+      return localStorage.getItem(`VILLAGE_LIVE_TIME_RESOURCE:${villageID}:${kind}`)
+    }
+
+    storeLiveTimeResources(villageID, kind, 0)
+    return localStorage.getItem(key)
   }
 
   function addAllVillageIds(villageList) {
@@ -1326,6 +1368,12 @@ function PageTWBotV2() {
                   <li className="nav-item">
                     <a className="nav-link" id="one-for-all-tab" data-toggle="tab" href="#one-for-all" role="tab" aria-controls="one-for-all" aria-selected="false">🔥 ONE FOR ALL</a>
                   </li>
+                  <li className="nav-item">
+                    <a className="nav-link" id="live-time-report-tab" data-toggle="tab" href="#live-time-report" role="tab" aria-controls="live-time-report" aria-selected="false">🧾 LIVE TIME REPORT</a>
+                  </li>
+                  <li className="nav-item">
+                    <a className="nav-link" id="raid-overflow-tab" data-toggle="tab" href="#raid-overflow" role="tab" aria-controls="raid-overflow" aria-selected="false">☸︎ RAID OVERFLOW</a>
+                  </li>
                 </ul>
               </div>
 
@@ -1418,6 +1466,40 @@ function PageTWBotV2() {
                         <div className="progress-bar" role="progressbar" style={{width: `${attackAllVillageProgress}%`}} aria-valuenow={`${attackAllVillageProgress}`} aria-valuemin="0" aria-valuemax="100">{`${attackAllVillageProgress}`}%</div>
                       </div>
                     </div>
+                  </div>
+                </div>
+
+                <div className="tab-pane fade pb-3" id="live-time-report" role="tabpanel" aria-labelledby="live-time-report-tab">
+                  <div className="row">
+                    <div className="col-12 px-1 overflow-auto" style={{maxHeight: "550px"}}>
+                      <table className="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th className="p-1">ID</th>
+                            <th className="p-1">Name</th>
+                            <th className="p-1">Wood</th>
+                            <th className="p-1">Clay</th>
+                            <th className="p-1">Iron</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {myVillages.map((myVillage, idx) => (
+                          <tr key={`LIVE_TIME_REPORT:${idx}`}>
+                            <td className="p-1">{myVillage.id}</td>
+                            <td className="p-1">{myVillage.name}</td>
+                            <td className="p-1">{getLiveTimeResources(myVillage.id, "wood")}</td>
+                            <td className="p-1">{getLiveTimeResources(myVillage.id, "clay")}</td>
+                            <td className="p-1">{getLiveTimeResources(myVillage.id, "iron")}</td>
+                          </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="tab-pane fade pb-3" id="raid-overflow" role="tabpanel" aria-labelledby="raid-overflow-tab">
+                  <div className="row">
                   </div>
                 </div>
               </div>
