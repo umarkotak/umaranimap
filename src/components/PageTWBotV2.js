@@ -970,20 +970,14 @@ function PageTWBotV2() {
     if (localStorage.getItem("enableRaidOverFlow") !== "true") { return }
 
     var tmpOutgoingArmy = directObj.data.outgoingArmies.length
-    var tempTargetVillageIDs = getVillageLastAttack(selectedVillageID)
-    var arrTempTargetVillageIDs = tempTargetVillageIDs.split(",")
-
-    var selectedTreshold
-    if (MAX_RAID_OVERFLOW > arrTempTargetVillageIDs.length) {
-      selectedTreshold = arrTempTargetVillageIDs.length
-    } else {
-      selectedTreshold = MAX_RAID_OVERFLOW
-    }
-    if (tmpOutgoingArmy >= selectedTreshold) { return }
+    if (tmpOutgoingArmy >= MAX_RAID_OVERFLOW) { return }
 
     var selectedVillageID = directObj.data.village_id
     var selectedRaidOverFlow = raidOverFlow[selectedVillageID]
     if (!selectedRaidOverFlow) { return }
+
+    var tempTargetVillageIDs = getVillageLastAttack(selectedVillageID)
+    var arrTempTargetVillageIDs = tempTargetVillageIDs.split(",")
 
     selectedRaidOverFlow.targetCnt = arrTempTargetVillageIDs.length
     if (selectedRaidOverFlow.nextIdx >= arrTempTargetVillageIDs.length) {
@@ -1494,13 +1488,13 @@ function PageTWBotV2() {
                       </tr>
                       <tr>
                         <td className="p-1">Total</td>
-                        <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.spear || 0 + myActiveVillageUnits.spear || 0}</td>
-                        <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.sword || 0 + myActiveVillageUnits.sword || 0}</td>
-                        <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.axe || 0 + myActiveVillageUnits.axe || 0}</td>
-                        <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.archer || 0 + myActiveVillageUnits.archer || 0}</td>
-                        <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.mounted_archer || 0 + myActiveVillageUnits.mounted_archer || 0}</td>
-                        <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.light_cavalry || 0 + myActiveVillageUnits.light_cavalry || 0}</td>
-                        <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.heavy_cavalry || 0 + myActiveVillageUnits.heavy_cavalry || 0}</td>
+                        <td className="p-1">{(myActiveVillageSummarizedOutgoingArmy.spear || 0) + (myActiveVillageUnits.spear || 0)}</td>
+                        <td className="p-1">{(myActiveVillageSummarizedOutgoingArmy.sword || 0) + (myActiveVillageUnits.sword || 0)}</td>
+                        <td className="p-1">{(myActiveVillageSummarizedOutgoingArmy.axe || 0) + (myActiveVillageUnits.axe || 0)}</td>
+                        <td className="p-1">{(myActiveVillageSummarizedOutgoingArmy.archer || 0) + (myActiveVillageUnits.archer || 0)}</td>
+                        <td className="p-1">{(myActiveVillageSummarizedOutgoingArmy.mounted_archer || 0) + (myActiveVillageUnits.mounted_archer || 0)}</td>
+                        <td className="p-1">{(myActiveVillageSummarizedOutgoingArmy.light_cavalry || 0) + (myActiveVillageUnits.light_cavalry || 0)}</td>
+                        <td className="p-1">{(myActiveVillageSummarizedOutgoingArmy.heavy_cavalry || 0) + (myActiveVillageUnits.heavy_cavalry || 0)}</td>
                       </tr>
                       <tr>
                         <td className="p-1">Avg/50</td>
