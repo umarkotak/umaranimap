@@ -12,7 +12,7 @@ function PageTWBotV2() {
   const ws = useRef(null)
   const CONNECTION_STATUSES = ["CONNECTING", "CONNECTED", "LOGGED IN", "DISCONNECTED", "NOT CONNECTED", "RECONNECTING"]
   const ONE_FOR_ALL_DELAY = 9000 * 1000
-  // const ONE_FOR_ALL_DELAY = 20 * 1000
+  const MAX_RAID_OVERFLOW = 47
 
   // =================================================================================================================== START CONFIG
 
@@ -116,9 +116,29 @@ function PageTWBotV2() {
   const [autoOneForAllCycle, setAutoOneForAllCycle] = useState(0)
   const [autoOneForAllInterval, setAutoOneForAllInterval] = useState(localStorage.getItem("autoOneForAllInterval") || ONE_FOR_ALL_DELAY)
 
+  const [enableRaidOverFlow, setEnableRaidOverFlow] = useState("false")
+  const [pingRaidOverFlow, setPingRaidOverFlow] = useState(0)
+  const [raidOverFlow, setRaidOverFlow] = useState({
+    0: {
+      totalCycle: 0,
+      totalAttack: 0,
+      nextIdx: 0,
+      nextVillage: 0,
+      targetCnt: 0,
+      outgoingCnt: 0,
+      full: 0,
+      partial: 0,
+      wood: 0,
+      clay: 0,
+      iron: 0
+    }
+  })
+
   // =================================================================================================================== END CONFIG
 
-  useEffect(() => { sendPing(); connectWs(); autoOneForAllInit() }, [])
+  // =================================================================================================================== CORE LOGIC START
+
+  useEffect(() => { sendPing(); connectWs(); automatedInitiation() }, [])
   useEffect(() => { initProcess() }, [latestMessage])
 
   function connectWs() {
@@ -130,7 +150,7 @@ function PageTWBotV2() {
     }
   }
 
-  function autoOneForAllInit() {
+  function automatedInitiation() {
     joinTime = timeNowUnix()
     setEnableAutoOneForAll("false")
     localStorage.setItem("enableAutoOneForAll", "false")
@@ -140,6 +160,9 @@ function PageTWBotV2() {
     localStorage.setItem("autoOneForAllNextAttackTime", 0)
     setAutoOneForAllCycle(0)
     localStorage.setItem("autoOneForAllCycle", 0)
+
+    setEnableRaidOverFlow("false")
+    localStorage.setItem("enableRaidOverFlow", "false")
   }
 
   function initProcess() {
@@ -209,7 +232,9 @@ function PageTWBotV2() {
     }
   }
 
-  // =================================================================================================================== SENDING WEBSOCKET MESSAGE
+  // =================================================================================================================== CORE LOGIC END
+
+  // =================================================================================================================== SENDING WEBSOCKET MESSAGE START
 
   function timeNowUnix() { return + new Date() }
 
@@ -388,7 +413,9 @@ function PageTWBotV2() {
     }, 4000)
   }
 
-  // =================================================================================================================== MAIN BUSINESS LOGIC
+  // =================================================================================================================== SENDING WEBSOCKET MESSAGE END
+
+  // =================================================================================================================== MAIN BUSINESS LOGIC START
 
   function executeAutoLogin() {
     handleSaveConfig()
@@ -699,6 +726,33 @@ function PageTWBotV2() {
     } catch(error) {}
   }
 
+  function executeRaidOverFlow() {
+    try {
+      myVillages.forEach((tempVillage, idx) => {
+        if (raidOverFlow[tempVillage.id]) {
+          sendUnitScreenInfoRequest(tempVillage.id)
+
+        } else {
+          var tempRaidOverflow = raidOverFlow
+          tempRaidOverflow[tempVillage.id] = {
+            totalCycle: 0,
+            totalAttack: 0,
+            nextIdx: 0,
+            nextVillage: 0,
+            targetCnt: 0,
+            outgoingCnt: 0,
+            full: 0,
+            partial: 0,
+            wood: 0,
+            clay: 0,
+            iron: 0
+          }
+          setRaidOverFlow(tempRaidOverflow)
+        }
+      })
+    } catch(error) {}
+  }
+
   function triggerReconnection() {
     setConnectionStatus(CONNECTION_STATUSES[5])
     console.log(CONNECTION_STATUSES[5])
@@ -726,9 +780,14 @@ function PageTWBotV2() {
     if (localStorage.getItem("enableAutoOneForAll") === "true") {
       executeAutoOneForAll()
     }
+
+    if (localStorage.getItem("enableRaidOverFlow") === "true") {
+      setPingRaidOverFlow(timeNowUnix())
+    }
   }
 
   useEffect(() => { localStorage.setItem("enableAutoResourceCollector", enableAutoResourceCollector) }, [enableAutoResourceCollector])
+
   useEffect(() => {
     if (targetVillageIDs === "" || !targetVillageIDs) {
       var tempArr = nearbyBarbarianVillages
@@ -739,18 +798,27 @@ function PageTWBotV2() {
     localStorage.setItem("enableAutoArmySender", enableAutoArmySender)
     localStorage.setItem("myActiveVillageID", myActiveVillageID)
   }, [enableAutoArmySender])
+
   useEffect(() => {
     localStorage.setItem("enableAutoBuildConstruction", enableAutoBuildConstruction)
     localStorage.setItem("myActiveVillageID", myActiveVillageID)
   }, [enableAutoBuildConstruction])
+
   useEffect(() => {
     findLatestIndexForAutoBuild()
   }, [myActiveVillageSimplifiedBuildingsLevel])
+
   useEffect(() => {
     findLatestIndexForAutoBuild()
   }, [myActiveVillageOngoingQueueCount])
 
-  // =================================================================================================================== INCOMING MESSAGE HANDLER
+  useEffect(() => {
+    executeRaidOverFlow()
+  }, [pingRaidOverFlow])
+
+  // =================================================================================================================== MAIN BUSINESS LOGIC END
+
+  // =================================================================================================================== INCOMING MESSAGE HANDLER START
 
   function handleIncomingMapMessage(directObj) {
     var tempNearbyBarbarianVillages = []
@@ -863,6 +931,9 @@ function PageTWBotV2() {
 
   function handleIncomingUnitScreenData(directObj) {
     try {
+      handleIncomingUnitScreenDataRaidOverFlow(directObj)
+
+      if (directObj.data.village_id !== myActiveVillageID) { return }
       var tmpOutgoingArmy = directObj.data.outgoingArmies.length
       setMyActiveVillageOutgoingArmy(tmpOutgoingArmy)
       summarizeOutgoingArmy(directObj.data.outgoingArmies)
@@ -893,6 +964,88 @@ function PageTWBotV2() {
 
       setAutoArmyTotalAttack(autoArmyTotalAttack + 1)
     } catch (e) {}
+  }
+
+  function handleIncomingUnitScreenDataRaidOverFlow(directObj) {
+    if (localStorage.getItem("enableRaidOverFlow") !== "true") { return }
+
+    var tmpOutgoingArmy = directObj.data.outgoingArmies.length
+    var tempTargetVillageIDs = getVillageLastAttack(selectedVillageID)
+    var arrTempTargetVillageIDs = tempTargetVillageIDs.split(",")
+
+    var selectedTreshold
+    if (MAX_RAID_OVERFLOW > arrTempTargetVillageIDs.length) {
+      selectedTreshold = arrTempTargetVillageIDs.length
+    } else {
+      selectedTreshold = MAX_RAID_OVERFLOW
+    }
+    if (tmpOutgoingArmy >= selectedTreshold) { return }
+
+    var selectedVillageID = directObj.data.village_id
+    var selectedRaidOverFlow = raidOverFlow[selectedVillageID]
+    if (!selectedRaidOverFlow) { return }
+
+    selectedRaidOverFlow.targetCnt = arrTempTargetVillageIDs.length
+    if (selectedRaidOverFlow.nextIdx >= arrTempTargetVillageIDs.length) {
+      selectedRaidOverFlow.totalCycle++
+      selectedRaidOverFlow.nextIdx = 0
+      selectedRaidOverFlow.nextVillage = arrTempTargetVillageIDs[selectedRaidOverFlow.nextIdx]
+
+    } else {
+      var tempTargetVillageID = arrTempTargetVillageIDs[selectedRaidOverFlow.nextIdx]
+
+      var units = {}
+      if (getArmyLastAttack(selectedVillageID, "spear")) {
+        if (parseInt(getArmyLastAttack(selectedVillageID, "spear")) > 0) {
+          units.spear = parseInt(getArmyLastAttack(selectedVillageID, "spear"))
+        }
+      }
+      if (getArmyLastAttack(selectedVillageID, "sword")) {
+        if (parseInt(getArmyLastAttack(selectedVillageID, "sword")) > 0) {
+          units.sword = parseInt(getArmyLastAttack(selectedVillageID, "sword"))
+        }
+      }
+      if (getArmyLastAttack(selectedVillageID, "axe")) {
+        if (parseInt(getArmyLastAttack(selectedVillageID, "axe")) > 0) {
+          units.axe = parseInt(getArmyLastAttack(selectedVillageID, "axe"))
+        }
+      }
+      if (getArmyLastAttack(selectedVillageID, "knight")) {
+        if (parseInt(getArmyLastAttack(selectedVillageID, "knight")) > 0) {
+          units.knight = parseInt(getArmyLastAttack(selectedVillageID, "knight"))
+        }
+      }
+      if (getArmyLastAttack(selectedVillageID, "lightCavalry")) {
+        if (parseInt(getArmyLastAttack(selectedVillageID, "lightCavalry")) > 0) {
+          units.light_cavalry = parseInt(getArmyLastAttack(selectedVillageID, "lightCavalry"))
+        }
+      }
+      if (getArmyLastAttack(selectedVillageID, "mountedArcher")) {
+        if (parseInt(getArmyLastAttack(selectedVillageID, "mountedArcher")) > 0) {
+          units.mounted_archer = parseInt(getArmyLastAttack(selectedVillageID, "mountedArcher"))
+        }
+      }
+      if (getArmyLastAttack(selectedVillageID, "archer")) {
+        if (parseInt(getArmyLastAttack(selectedVillageID, "archer")) > 0) {
+          units.archer = parseInt(getArmyLastAttack(selectedVillageID, "archer"))
+        }
+      }
+      if (getArmyLastAttack(selectedVillageID, "heavyCavalry")) {
+        if (parseInt(getArmyLastAttack(selectedVillageID, "heavyCavalry")) > 0) {
+          units.heavy_cavalry = parseInt(getArmyLastAttack(selectedVillageID, "heavyCavalry"))
+        }
+      }
+
+      sendFullyCustomArmyRequest(selectedVillageID, tempTargetVillageID, units)
+
+      selectedRaidOverFlow.nextIdx++
+      selectedRaidOverFlow.totalAttack++
+      selectedRaidOverFlow.nextVillage = arrTempTargetVillageIDs[selectedRaidOverFlow.nextIdx]
+    }
+
+    var tempFinalRaidOverFlow = raidOverFlow
+    tempFinalRaidOverFlow[selectedVillageID] = selectedRaidOverFlow
+    setRaidOverFlow(tempFinalRaidOverFlow)
   }
 
   function handleIncomingCharacterInfo(directObj) {
@@ -1001,7 +1154,9 @@ function PageTWBotV2() {
     } catch(error) {}
   }
 
-  // =================================================================================================================== HELPER FUNCTION
+  // =================================================================================================================== INCOMING MESSAGE HANDLER END
+
+  // =================================================================================================================== HELPER FUNCTION START
 
   function calculateTimeElapsed() {
     try {
@@ -1198,6 +1353,8 @@ function PageTWBotV2() {
   }
 
   function saveQuickNote() { localStorage.setItem("TW_QUICK_NOTE", quickNotes) }
+
+  // =================================================================================================================== HELPER FUNCTION END
 
   // =================================================================================================================== RENDERING APPLICATION
 
@@ -1500,6 +1657,50 @@ function PageTWBotV2() {
 
                 <div className="tab-pane fade pb-3" id="raid-overflow" role="tabpanel" aria-labelledby="raid-overflow-tab">
                   <div className="row">
+                    <div className="col-12">
+                      <label><b>Enabled</b>: {enableRaidOverFlow}</label>
+
+                      <button className="btn btn-outline-success btn-md float-right" onClick={() => { localStorage.setItem("enableRaidOverFlow", "true"); setEnableRaidOverFlow("true") }}>Enable</button>
+                      <button className="btn btn-outline-danger btn-md float-right" onClick={() => { localStorage.setItem("enableRaidOverFlow", "false"); setEnableRaidOverFlow("false") }}>Disable</button>
+                    </div>
+                    <div className="col-12">
+                      <table className="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th className="p-1">Village ID</th>
+                            <th className="p-1">Total Cycle</th>
+                            <th className="p-1">Total Attack</th>
+                            <th className="p-1">Next IDx</th>
+                            <th className="p-1">Next Village</th>
+                            <th className="p-1">Target Cnt</th>
+                            <th className="p-1">Outgoing Cnt</th>
+                            <th className="p-1">Full</th>
+                            <th className="p-1">Partial</th>
+                            <th className="p-1">Wood</th>
+                            <th className="p-1">Clay</th>
+                            <th className="p-1">Iron</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {Object.keys(raidOverFlow).map((raidOverFlowID, idx) => (
+                          <tr key={`RAID_OVERFLOW:${idx}`}>
+                            <td className="p-1">{raidOverFlowID}</td>
+                            <td className="p-1">{raidOverFlow[raidOverFlowID].totalCycle}</td>
+                            <td className="p-1">{raidOverFlow[raidOverFlowID].totalAttack}</td>
+                            <td className="p-1">{raidOverFlow[raidOverFlowID].nextIdx}</td>
+                            <td className="p-1">{raidOverFlow[raidOverFlowID].nextVillage}</td>
+                            <td className="p-1">{raidOverFlow[raidOverFlowID].targetCnt}</td>
+                            <td className="p-1">{raidOverFlow[raidOverFlowID].outgoingCnt}</td>
+                            <td className="p-1">{raidOverFlow[raidOverFlowID].full}</td>
+                            <td className="p-1">{raidOverFlow[raidOverFlowID].partial}</td>
+                            <td className="p-1">{raidOverFlow[raidOverFlowID].wood}</td>
+                            <td className="p-1">{raidOverFlow[raidOverFlowID].clay}</td>
+                            <td className="p-1">{raidOverFlow[raidOverFlowID].iron}</td>
+                          </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
