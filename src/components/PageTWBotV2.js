@@ -1036,6 +1036,7 @@ function PageTWBotV2() {
       selectedRaidOverFlow.totalAttack++
       selectedRaidOverFlow.nextVillage = arrTempTargetVillageIDs[selectedRaidOverFlow.nextIdx]
     }
+    selectedRaidOverFlow.outgoingCnt = tmpOutgoingArmy
 
     var tempFinalRaidOverFlow = raidOverFlow
     tempFinalRaidOverFlow[selectedVillageID] = selectedRaidOverFlow
@@ -1638,9 +1639,9 @@ function PageTWBotV2() {
                           <tr key={`LIVE_TIME_REPORT:${idx}`}>
                             <td className="p-1">{myVillage.id}</td>
                             <td className="p-1">{myVillage.name}</td>
-                            <td className="p-1">{getLiveTimeResources(myVillage.id, "wood")}</td>
-                            <td className="p-1">{getLiveTimeResources(myVillage.id, "clay")}</td>
-                            <td className="p-1">{getLiveTimeResources(myVillage.id, "iron")}</td>
+                            <td className="p-1">{new Intl.NumberFormat('de-DE').format(getLiveTimeResources(myVillage.id, "wood"))}</td>
+                            <td className="p-1">{new Intl.NumberFormat('de-DE').format(getLiveTimeResources(myVillage.id, "clay"))}</td>
+                            <td className="p-1">{new Intl.NumberFormat('de-DE').format(getLiveTimeResources(myVillage.id, "iron"))}</td>
                           </tr>
                           ))}
                         </tbody>
@@ -1668,11 +1669,6 @@ function PageTWBotV2() {
                             <th className="p-1">Next Village</th>
                             <th className="p-1">Target Cnt</th>
                             <th className="p-1">Outgoing Cnt</th>
-                            <th className="p-1">Full</th>
-                            <th className="p-1">Partial</th>
-                            <th className="p-1">Wood</th>
-                            <th className="p-1">Clay</th>
-                            <th className="p-1">Iron</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -1685,11 +1681,6 @@ function PageTWBotV2() {
                             <td className="p-1">{raidOverFlow[raidOverFlowID].nextVillage}</td>
                             <td className="p-1">{raidOverFlow[raidOverFlowID].targetCnt}</td>
                             <td className="p-1">{raidOverFlow[raidOverFlowID].outgoingCnt}</td>
-                            <td className="p-1">{raidOverFlow[raidOverFlowID].full}</td>
-                            <td className="p-1">{raidOverFlow[raidOverFlowID].partial}</td>
-                            <td className="p-1">{raidOverFlow[raidOverFlowID].wood}</td>
-                            <td className="p-1">{raidOverFlow[raidOverFlowID].clay}</td>
-                            <td className="p-1">{raidOverFlow[raidOverFlowID].iron}</td>
                           </tr>
                           ))}
                         </tbody>
