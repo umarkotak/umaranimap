@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react"
 import mangaDB from "./MangaDB"
 import Cookies from 'universal-cookie'
 import {Link} from "react-router-dom"
+import { v4 as uuidv4 } from 'uuid';
 
 const cookies = new Cookies()
 var go_animapu_host = "http://go-animapu.herokuapp.com"
@@ -356,7 +357,7 @@ function PageMangaLibraryV1() {
       return(
         <div className="col-4 col-md-2">
           <div className={`card mb-4 box-shadow shadow border-4 ${generate_manga_airing_status(props.manga_title)}`}>
-            <div style={{height: "170px", backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(props.manga_title)})`}}>
+            <div style={{height: "170px", backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(props.manga_title)}), url(${window.location.origin + '/default-book.png'})`}}>
               <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
                 <small>{`${findLatestMangaChapter(props.manga_title)}/${findLastMangaChapter(props.manga_title)}`}</small>
                 <button className="btn btn-xs btn-outline-danger float-right" style={{ paddingTop: "1px", paddingBottom: "1px", paddingLeft: "3px", paddingRight: "3px" }}>♥︎</button>
@@ -374,7 +375,7 @@ function PageMangaLibraryV1() {
     return(
       <div className="col-4 col-md-2">
         <div className={`card mb-4 box-shadow shadow border-4 ${generate_manga_airing_status(props.manga_title)}`}>
-          <div style={{height: "170px", backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(props.manga_title)})`}}>
+          <div style={{height: "170px", backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(props.manga_title)}), url(${window.location.origin + '/default-book.png'})`}}>
             <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
               <small>{`${findLatestMangaChapterLoggedIn(props.manga_title)}/${findLastMangaChapter(props.manga_title)}`}</small>
               {/* <button className="btn btn-xs btn-outline-danger float-right" style={{ paddingTop: "1px", paddingBottom: "1px", paddingLeft: "3px", paddingRight: "3px" }}>♥︎</button> */}
@@ -472,7 +473,12 @@ function PageMangaLibraryV1() {
     }
     return(
       <div>
-        <br/><div className="progress progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style={{width: "100%"}}></div><br/>
+        {/* <br/><div className="progress progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style={{width: "100%"}}></div><br/> */}
+        <div className="row flex-row flex-nowrap overflow-auto">
+          {[0,1,2,3,4,5,6].map(manga_title => (
+            <RenderMangaCardLoading key={uuidv4()} />
+          ))}
+        </div>
       </div>
     )
   }
@@ -481,7 +487,12 @@ function PageMangaLibraryV1() {
     if (history_loading_state === "true") {
       return(
         <div>
-          <br/><div className="progress progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style={{width: "100%"}}></div><br/>
+          {/* <br/><div className="progress progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style={{width: "100%"}}></div><br/> */}
+          <div className="row flex-row flex-nowrap overflow-auto">
+            {[0,1,2,3,4,5,6].map(manga_title => (
+              <RenderMangaCardLoading key={uuidv4()} />
+            ))}
+          </div>
         </div>
       )
     }
@@ -490,7 +501,7 @@ function PageMangaLibraryV1() {
         {logged_in_manga_histories.slice(0, 50).map(manga_title => (
           <div className="col-4 col-md-2" key={"histories_" + manga_title}>
             <div className={`card mb-4 box-shadow shadow border-4 ${generate_manga_airing_status(manga_title)}`}>
-              <div style={{height: "170px", backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(manga_title)})`}}>
+              <div style={{height: "170px", backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(manga_title)}), url(${window.location.origin + '/default-book.png'})`}}>
                 <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
                   <small>{`${findLatestMangaChapterLoggedIn(manga_title)}/${findLastMangaChapter(manga_title) || 150}`}</small>
                 </div>
@@ -514,7 +525,7 @@ function PageMangaLibraryV1() {
           {manga_library_titles.map(manga_title => (
             <div className="col-4 col-md-2" key={`my-read-later-${manga_title}`}>
               <div className={`card mb-4 box-shadow shadow border-4 ${generate_manga_airing_status(manga_title)}`}>
-                <div style={{height: "170px", backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(https://thumb.mghubcdn.com/mn/${manga_title}.jpg)`}}>
+                <div style={{height: "170px", backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(https://thumb.mghubcdn.com/mn/${manga_title}.jpg), url(${window.location.origin + '/default-book.png'})`}}>
                   <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
                     <small>{`${findLatestMangaChapterLoggedIn(manga_title)}/${my_read_later.get(manga_title).manga_last_chapter}`}</small>
 
@@ -528,6 +539,24 @@ function PageMangaLibraryV1() {
               </div>
             </div>
           ))}
+        </div>
+      </div>
+    )
+  }
+
+  function RenderMangaCardLoading() {
+    return(
+      <div className="col-4 col-md-2">
+        <div className={`card mb-4 box-shadow shadow border-4`}>
+          <div style={{height: "170px", backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${window.location.origin + '/cool-loading-animated-gif-1.gif'})`}}>
+            <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
+              <small>0/0</small>
+            </div>
+            <div className="text-white card-text overflow-auto" style={{"height": "35px", "width": "100%", backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
+              <small>Loading</small>
+            </div>
+          </div>
+          <button className="btn btn-block btn-sm btn-outline-secondary" disabled>Read</button>
         </div>
       </div>
     )
