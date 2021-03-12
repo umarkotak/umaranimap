@@ -31,6 +31,7 @@ function PageSocketGameV1() {
       console.log("INCOMING MESSAGE", e.data)
       handleResponse(e.data)
     }
+  // eslint-disable-next-line
   }, [])
 
   function handleResponse(data_raw) {
@@ -82,6 +83,7 @@ function PageSocketGameV1() {
     )
   }
 
+  // eslint-disable-next-line
   function handleRequestPlayerMove(direction) {
     ws.current.send(
       `

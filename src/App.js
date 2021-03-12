@@ -30,7 +30,7 @@ import PageStatisticsV1 from "./components/PageStatisticsV1"
 import PageMangaLibraryV1 from "./components/PageMangaLibraryV1"
 import PageReadMangaOnlyV1 from "./components/PageReadMangaOnlyV1"
 import PageSocketGameV1 from "./components/PageSocketGameV1"
-import PageTWBot from "./components/PageTWBot"
+// import PageTWBot from "./components/PageTWBot"
 import PageTWBotV2 from "./components/PageTWBotV2"
 
 function App() {
@@ -70,7 +70,7 @@ function App() {
             {/* <Route path="/read-manga-only-v1" exact component={PageReadMangaOnlyV1} /> */}
             <Route path="/read-manga-only-v1/:path_title/:path_chapter" exact component={PageReadMangaOnlyV1} />
             <Route path="/socket-game-v1" exact component={PageSocketGameV1} />
-            <Route path="/tw-bot-v1" exact component={PageTWBot} />
+            {/* <Route path="/tw-bot-v1" exact component={PageTWBot} /> */}
             <Route path="/tw-bot-v2" exact component={PageTWBotV2} />
           </Switch>
         </div>

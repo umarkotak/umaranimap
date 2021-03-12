@@ -63,6 +63,7 @@ function PageReadMangaOnlyV1() {
 
     if (window.scrollY === 0) {
       set_bottom_nav(true)
+      // eslint-disable-next-line
       y_pos = window.scrollY
     } else if (window.scrollY > y_pos + 75) {
       set_bottom_nav(false)

@@ -68,6 +68,7 @@ function PageTodaysMangaV1() {
       setCurrent(current.concat(new_mangas.map(val => val.title).slice(count.prev + 10, count.next + 10)))
     }
     fetchTodayMangaData()
+  // eslint-disable-next-line
   }, []);
 
   async function putToMyLibrary(manga_title, manga_last_chapter) {

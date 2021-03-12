@@ -42,9 +42,9 @@ function PageTWBotV2() {
 
   // IN GAME PLAYER DATA
   const [myVillages, setMyVillages] = useState([])
-  const [myActiveVillage, setMyActiveVillage] = useState({})
+  // const [myActiveVillage, setMyActiveVillage] = useState({})
   const [myActiveVillageID, setMyActiveVillageID] = useState("")
-  const [myActiveVillageResources, setMyActiveVillageResources] = useState({})
+  // const [myActiveVillageResources, setMyActiveVillageResources] = useState({})
   const [myActiveVillageUnits, setMyActiveVillageUnits] = useState({})
   const [myActiveVillageX, setMyActiveVillageX] = useState(0)
   const [myActiveVillageY, setMyActiveVillageY] = useState(0)
@@ -78,6 +78,7 @@ function PageTWBotV2() {
   const [knight, setKnight] = useState("")
   const [lightCavalry, setLightCavalry] = useState("")
   const [mountedArcher, setMountedArcher] = useState("")
+  // eslint-disable-next-line
   const [archer, setArcher] = useState("")
   const [heavyCavalry, setHeavyCavalry] = useState("")
 
@@ -107,7 +108,7 @@ function PageTWBotV2() {
   const [autoBuildNextIndex, setAutoBuildNextIndex] = useState(0)
   const [autoBuildNextBuilding, setAutoBuildNextBuilding] = useState("")
   const [autoBuildNextLevel, setAutoBuildNextLevel] = useState(0)
-  const [autoBuildTemplateProgress, setAutoBuildTemplateProgress] = useState(0)
+  // const [autoBuildTemplateProgress, setAutoBuildTemplateProgress] = useState(0)
 
   const [enableAutoOneForAll, setEnableAutoOneForAll] = useState("false")
   const [autoOneForAllLastAttackTime, setAutoOneForAllLastAttackTime] = useState(0)
@@ -138,7 +139,9 @@ function PageTWBotV2() {
 
   // =================================================================================================================== CORE LOGIC START
 
+  // eslint-disable-next-line
   useEffect(() => { sendPing(); connectWs(); automatedInitiation() }, [])
+  // eslint-disable-next-line
   useEffect(() => { initProcess() }, [latestMessage])
 
   function connectWs() {
@@ -513,7 +516,7 @@ function PageTWBotV2() {
 
           var foundOnQueue = false
           myActiveVillageBuildingQueue.forEach((buildedQueue, idx2) => {
-            if (buildedQueue.building == val.building_name && buildedQueue.level >= val.level) {
+            if (buildedQueue.building === val.building_name && buildedQueue.level >= val.level) {
               foundOnQueue = true
             }
           })
@@ -522,7 +525,7 @@ function PageTWBotV2() {
             setAutoBuildNextIndex(idx)
             setAutoBuildNextBuilding(val.building_name)
             setAutoBuildNextLevel(val.level)
-            throw "Break"
+            throw new Error("Break")
           }
         }
       })
@@ -641,6 +644,7 @@ function PageTWBotV2() {
     if (localStorage.getItem("enableAutoOneForAll") === "false") { return }
 
     attackAllPreviousVillage()
+  // eslint-disable-next-line
   }, [autoOneForAllCycle])
 
   function attackPreviousVillage(selectedVillageID) {
@@ -797,23 +801,28 @@ function PageTWBotV2() {
     }
     localStorage.setItem("enableAutoArmySender", enableAutoArmySender)
     localStorage.setItem("myActiveVillageID", myActiveVillageID)
+  // eslint-disable-next-line
   }, [enableAutoArmySender])
 
   useEffect(() => {
     localStorage.setItem("enableAutoBuildConstruction", enableAutoBuildConstruction)
     localStorage.setItem("myActiveVillageID", myActiveVillageID)
+  // eslint-disable-next-line
   }, [enableAutoBuildConstruction])
 
   useEffect(() => {
     findLatestIndexForAutoBuild()
+  // eslint-disable-next-line
   }, [myActiveVillageSimplifiedBuildingsLevel])
 
   useEffect(() => {
     findLatestIndexForAutoBuild()
+  // eslint-disable-next-line
   }, [myActiveVillageOngoingQueueCount])
 
   useEffect(() => {
     executeRaidOverFlow()
+  // eslint-disable-next-line
   }, [pingRaidOverFlow])
 
   // =================================================================================================================== MAIN BUSINESS LOGIC END
@@ -919,11 +928,11 @@ function PageTWBotV2() {
         } else {
           var unixTimeNow = Math.floor(timeNowUnix() / 1000)
           if (element.time_completed < unixTimeNow) {
-            if (!myActiveVillageID) { throw "FOUND" }
+            if (!myActiveVillageID) { throw new Error("Found") }
             sendCollectJobRequest(element.id)
             sendCollectJobRequest(element.id)
           }
-          throw "FOUND"
+          throw new Error("Found")
         }
       })
     } catch (e) {}
@@ -1061,9 +1070,9 @@ function PageTWBotV2() {
   }
 
   function handleIncomingVillageDetail(directObj) {
-    setMyActiveVillage(directObj.data)
+    // setMyActiveVillage(directObj.data)
     setMyActiveVillageID(directObj.data.village_id)
-    setMyActiveVillageResources(directObj.data.resources)
+    // setMyActiveVillageResources(directObj.data.resources)
     setMyActiveVillageUnits(directObj.data.units)
     setMyActiveVillageX(directObj.data.village_x)
     setMyActiveVillageY(directObj.data.village_y)
@@ -1164,12 +1173,13 @@ function PageTWBotV2() {
   }
 
   function calculateTimeElapsedCustom(tempTimeNowUnix, tempTimeNextUnix) {
+    var formattedTimeElapsed
     if (tempTimeNowUnix > tempTimeNextUnix) {
-      var formattedTimeElapsed = new Date(0).toISOString().substr(11, 8)
+      formattedTimeElapsed = new Date(0).toISOString().substr(11, 8)
       return formattedTimeElapsed
     } else {
       var tempTimeElapsedMs = tempTimeNextUnix - tempTimeNowUnix
-      var formattedTimeElapsed = new Date(tempTimeElapsedMs).toISOString().substr(11, 8)
+      formattedTimeElapsed = new Date(tempTimeElapsedMs).toISOString().substr(11, 8)
       return formattedTimeElapsed
     }
   }
@@ -1389,13 +1399,13 @@ function PageTWBotV2() {
                   <button className="btn btn-block btn-sm btn-outline-primary disabled">{connectionStatus}</button>
                   <button className="btn btn-block btn-sm btn-outline-primary" onClick={() => executeAutoLogin()}>➤ Login</button>
                   <button className="btn btn-block btn-sm btn-outline-danger" onClick={() => handleClearConfig()}>X Logout</button>
-                  <a className="btn btn-block btn-sm btn-success" target="_blank" href="https://trakteer.id/marumaru" rel="noopener noreferrer">🤝 Give Support</a>
+                  <a className="btn btn-block btn-sm btn-success" target="_blank" href="https://trakteer.id/marumaru" rel="noopener noreferrer"><span role="img" aria-label="">🤝</span> Give Support</a>
                   {/* <button className="btn btn-block btn-sm btn-outline-primary" onClick={() => ws.current.close()}>DC</button> */}
                 </div>
 
                 <div className="col-12">
                   <div className="progress">
-                    <div className="progress-bar" role="progressbar" style={{width: `${loginProgress}%`}} aria-valuenow={`${loginProgress}`} aria-valuemin="0" aria-valuemax="100">{`${loginProgress}`}%</div>
+                    <div className="progress-bar" role="progressbar" style={{width: `${loginProgress}%`}} aria-valuenow={loginProgress} aria-valuemin="0" aria-valuemax="100">{`${loginProgress}`}%</div>
                   </div>
                 </div>
               </div>
@@ -1515,16 +1525,16 @@ function PageTWBotV2() {
               <div className="row">
                 <ul className="nav nav-tabs" id="myTab" role="tablist">
                   <li className="nav-item">
-                    <a className="nav-link active" id="main-tab" data-toggle="tab" href="#main" role="tab" aria-controls="main" aria-selected="true">🏠 MAIN</a>
+                    <a className="nav-link active" id="main-tab" data-toggle="tab" href="#main" role="tab" aria-controls="main" aria-selected="true"><span role="img" aria-label="">🏠</span> MAIN</a>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" id="one-for-all-tab" data-toggle="tab" href="#one-for-all" role="tab" aria-controls="one-for-all" aria-selected="false">🔥 ONE FOR ALL</a>
+                    <a className="nav-link" id="one-for-all-tab" data-toggle="tab" href="#one-for-all" role="tab" aria-controls="one-for-all" aria-selected="false"><span role="img" aria-label="">🔥</span> ONE FOR ALL</a>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" id="live-time-report-tab" data-toggle="tab" href="#live-time-report" role="tab" aria-controls="live-time-report" aria-selected="false">🧾 LIVE TIME REPORT</a>
+                    <a className="nav-link" id="live-time-report-tab" data-toggle="tab" href="#live-time-report" role="tab" aria-controls="live-time-report" aria-selected="false"><span role="img" aria-label="">🧾</span> LIVE TIME REPORT</a>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" id="raid-overflow-tab" data-toggle="tab" href="#raid-overflow" role="tab" aria-controls="raid-overflow" aria-selected="false">☸︎ RAID OVERFLOW</a>
+                    <a className="nav-link" id="raid-overflow-tab" data-toggle="tab" href="#raid-overflow" role="tab" aria-controls="raid-overflow" aria-selected="false"><span role="img" aria-label="">☸︎</span> RAID OVERFLOW</a>
                   </li>
                 </ul>
               </div>
@@ -1544,7 +1554,7 @@ function PageTWBotV2() {
                       </div>
                     </div>
                     <div className="col-12 col-md-6 px-1">
-                      <button className="btn btn-outline-success btn-md float-right" onClick={() => attackAllPreviousVillage()}>😈 Attack!</button>
+                      <button className="btn btn-outline-success btn-md float-right" onClick={() => attackAllPreviousVillage()}><span role="img" aria-label="">😈</span> Attack!</button>
                       <button className="btn btn-outline-danger btn-md float-right" onClick={() => {setEnableAutoOneForAll("false"); localStorage.setItem("enableAutoOneForAll", "false")}}>Disable Auto Attack</button>
                     </div>
                     <div className="col-12 px-1 overflow-auto" style={{maxHeight: "550px"}}>
@@ -1605,7 +1615,7 @@ function PageTWBotV2() {
                             <td className="p-1">{getArmyLastAttack(myVillage.id, "heavyCavalry") || 0}</td>
                             <td className="p-1">
                               <button className="btn btn-block btn-outline-success btn-sm" onClick={() => attackPreviousVillage(myVillage.id)}>
-                                ⚔️
+                                <span role="img" aria-label="">⚔️</span>
                               </button>
                             </td>
                           </tr>
@@ -1615,7 +1625,7 @@ function PageTWBotV2() {
                     </div>
                     <div className="col-12 px-1">
                       <div className="progress">
-                        <div className="progress-bar" role="progressbar" style={{width: `${attackAllVillageProgress}%`}} aria-valuenow={`${attackAllVillageProgress}`} aria-valuemin="0" aria-valuemax="100">{`${attackAllVillageProgress}`}%</div>
+                        <div className="progress-bar" role="progressbar" style={{width: `${attackAllVillageProgress}%`}} aria-valuenow={attackAllVillageProgress} aria-valuemin="0" aria-valuemax="100">{`${attackAllVillageProgress}`}%</div>
                       </div>
                     </div>
                   </div>
@@ -1726,7 +1736,7 @@ function PageTWBotV2() {
                       </div>
                     </div>
                     <div className="col-12 col-md-2">
-                      <button className="btn btn-outline-success btn-sm btn-block my-1" onClick={ () => sendVillagesByAreaRequest() }>🔎 Fetch Map</button>
+                      <button className="btn btn-outline-success btn-sm btn-block my-1" onClick={ () => sendVillagesByAreaRequest() }><span role="img" aria-label="">🔎</span> Fetch Map</button>
                     </div>
                     {/* BATAS MENUS PER 12 */}
                     <div className="col-12 col-md-3 py-1">
@@ -1754,7 +1764,7 @@ function PageTWBotV2() {
                       </div>
                     </div>
                     <div className="col-12 col-md-3 py-1">
-                      <button className="btn btn-outline-success btn-sm btn-block my-1" onClick={ () => sendVillagesByProvinceRequest() }>🔎 Fetch Province</button>
+                      <button className="btn btn-outline-success btn-sm btn-block my-1" onClick={ () => sendVillagesByProvinceRequest() }><span role="img" aria-label="">🔎</span> Fetch Province</button>
                     </div>
                   </div>
 
@@ -2085,21 +2095,21 @@ function PageTWBotV2() {
                         <textarea className="form-control" rows="4" placeholder="" value={targetVillageIDs} onChange={(e) => setTargetVillageIDs(e.target.value)}></textarea>
                       </div>
                     </div>
-                    <div className={"col-12 col-lg-2 border" + " " + ((sendAttackWithRandomInterval) ? "border-success" : "border-danger")}>
+                    <div className={"col-12 col-lg-2 border " + ((sendAttackWithRandomInterval) ? "border-success" : "border-danger")}>
                       <div>
                         <label>Random interval</label>
                         <Form.Radio label=" On" checked={sendAttackWithRandomInterval === true} value={`true`} onClick={() => setSendAttackWithRandomInterval(true)} />
                         <Form.Radio label=" Off" checked={sendAttackWithRandomInterval === false} value={`false`} onClick={() => setSendAttackWithRandomInterval(false)} />
                       </div>
                     </div>
-                    <div className={"col-12 col-lg-2 border" + " " + ((sendAttackToAllNearbyRandomBarbarian) ? "border-success" : "border-danger")}>
+                    <div className={"col-12 col-lg-2 border " + ((sendAttackToAllNearbyRandomBarbarian) ? "border-success" : "border-danger")}>
                       <div>
                         <label>Send all even army to 45 random barbarian</label>
                         <Form.Radio label=" On" checked={sendAttackToAllNearbyRandomBarbarian === true} value={`true`} onClick={() => setSendAttackToAllNearbyRandomBarbarian(true)} />
                         <Form.Radio label=" Off" checked={sendAttackToAllNearbyRandomBarbarian === false} value={`false`} onClick={() => setSendAttackToAllNearbyRandomBarbarian(false)} />
                       </div>
                     </div>
-                    <div className={"col-12 col-lg-2 border" + " " + ((enableAutoResourceCollector === "true") ? "border-success" : "border-danger")}>
+                    <div className={"col-12 col-lg-2 border " + ((enableAutoResourceCollector === "true") ? "border-success" : "border-danger")}>
                       <div>
                         <label>Auto resource collector</label>
                         <Form.Radio
@@ -2116,7 +2126,7 @@ function PageTWBotV2() {
                           onClick={() => setEnableAutoResourceCollector("false")} />
                       </div>
                     </div>
-                    <div className={"col-12 col-lg-2 border" + " " + ((enableAutoArmySender === "true") ? "border-success" : "border-danger")}>
+                    <div className={"col-12 col-lg-2 border " + ((enableAutoArmySender === "true") ? "border-success" : "border-danger")}>
                       <div>
                         <label>Auto army sender</label>
                         <Form.Radio
@@ -2133,7 +2143,7 @@ function PageTWBotV2() {
                           onClick={() => setEnableAutoArmySender("false")} />
                       </div>
                     </div>
-                    <div className={"col-12 col-lg-2 border" + " " + ((enableAutoBuildConstruction === "true") ? "border-success" : "border-danger")}>
+                    <div className={"col-12 col-lg-2 border " + ((enableAutoBuildConstruction === "true") ? "border-success" : "border-danger")}>
                       <div>
                         <label>Auto build construction</label>
                         <Form.Radio
@@ -2152,10 +2162,10 @@ function PageTWBotV2() {
                     </div>
                     <div className="col-12 col-lg-2 border border-primary py-2">
                       <div className="progress">
-                        <div className="progress-bar" role="progressbar" style={{width: `${raidPercentage}%`}} aria-valuenow={`${raidPercentage}`} aria-valuemin="0" aria-valuemax="100">{`${raidPercentage}`}%</div>
+                        <div className="progress-bar" role="progressbar" style={{width: `${raidPercentage}%`}} aria-valuenow={raidPercentage} aria-valuemin="0" aria-valuemax="100">{`${raidPercentage}`}%</div>
                       </div>
                       <hr/>
-                      <button className="btn btn-outline-success btn-lg btn-block" disabled={enableAutoArmySender === "true"} onClick={ () => executeBulkAttack() }>👊 Start Raid!</button>
+                      <button className="btn btn-outline-success btn-lg btn-block" disabled={enableAutoArmySender === "true"} onClick={ () => executeBulkAttack() }><span role="img" aria-label="">👊</span> Start Raid!</button>
                       <button className="btn btn-outline-success btn-sm btn-block" disabled={enableAutoArmySender === "true"} onClick={ () => saveAttackPreset() }>save preset</button>
                     </div>
                   </div>
@@ -2215,7 +2225,7 @@ function PageTWBotV2() {
                     </tbody>
                   </table>
                   <div className="progress">
-                    <div className="progress-bar" role="progressbar" style={{width: `${autoArmyPercentage}%`}} aria-valuenow={`${autoArmyPercentage}`} aria-valuemin="0" aria-valuemax="100">{`${autoArmyPercentage}`}%</div>
+                    <div className="progress-bar" role="progressbar" style={{width: `${autoArmyPercentage}%`}} aria-valuenow={autoArmyPercentage} aria-valuemin="0" aria-valuemax="100">{`${autoArmyPercentage}`}%</div>
                   </div>
                 </div>
               </div>
@@ -2289,8 +2299,8 @@ function PageTWBotV2() {
 
       <div className="row my-1">
         <div className="col-12">
-          <label>📌 <b>Quick Notes</b></label>
-          <button className="btn btn-primary btn-sm float-right" onClick={() => saveQuickNote()}>💾 Save Quick Note</button>
+          <label><span role="img" aria-label="">📌</span> <b>Quick Notes</b></label>
+          <button className="btn btn-primary btn-sm float-right" onClick={() => saveQuickNote()}><span role="img" aria-label="">💾</span> Save Quick Note</button>
         </div>
       </div>
       <div className="row my-1">
