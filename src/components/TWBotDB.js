@@ -1,22 +1,22 @@
-const BUILDING_ENUM = [
-  "academy",
-  "barracks",
-  "chapel",
-  "church",
-  "clay_pit",
-  "farm",
-  "headquarter",
-  "hospital",
-  "iron_mine",
-  "market",
-  "preceptory",
-  "rally_point",
-  "statue",
-  "tavern",
-  "timber_camp",
-  "wall",
-  "warehouse"
-]
+// const BUILDING_ENUM = [
+//   "academy",
+//   "barracks",
+//   "chapel",
+//   "church",
+//   "clay_pit",
+//   "farm",
+//   "headquarter",
+//   "hospital",
+//   "iron_mine",
+//   "market",
+//   "preceptory",
+//   "rally_point",
+//   "statue",
+//   "tavern",
+//   "timber_camp",
+//   "wall",
+//   "warehouse"
+// ]
 
 const BUILDING_TEMPLATE_LIST = [
   { building_name: "headquarter", level: 1 },

@@ -13,7 +13,7 @@ function PageAiringAnimeV6() {
   const [anime_id, setAnimeId] = useState(null)
   const [selected_year, setSelectedYear] = useState(current_year)
   const [selected_season, setSelectedSeason] = useState(current_season)
-  const [animes_map, setAnimesMap] = useState({})
+  // const [animes_map, setAnimesMap] = useState({})
 
   useEffect(() => {
     async function fetchData(selected_year, selected_season) {
@@ -45,7 +45,7 @@ function PageAiringAnimeV6() {
       const response = await fetch(`http://go-animapu.herokuapp.com/animes_map`);
       const result = await response.json();
       console.log(result)
-      setAnimesMap(result)
+      // setAnimesMap(result)
     }
     fetchData();
   }, []);
@@ -87,16 +87,16 @@ function PageAiringAnimeV6() {
     return title.replace(/\W/g, '')
   }
 
-  function checkAvailability(mal_id, title) {
-    // if (mal_id_to_animepahe[mal_id]) {
-    //   return mal_id_to_animepahe[mal_id]
-    // }
-    var sanitizedTitle = sanitizeTitle(title)
-    if (animes_map[sanitizedTitle]) {
-      return animes_map[sanitizedTitle]
-    }
-    return false
-  }
+  // function checkAvailability(mal_id, title) {
+  //   if (mal_id_to_animepahe[mal_id]) {
+  //     return mal_id_to_animepahe[mal_id]
+  //   }
+  //   var sanitizedTitle = sanitizeTitle(title)
+  //   if (animes_map[sanitizedTitle]) {
+  //     return animes_map[sanitizedTitle]
+  //   }
+  //   return false
+  // }
 
   function getNextSeason() {
     if(selected_season === "fall") {

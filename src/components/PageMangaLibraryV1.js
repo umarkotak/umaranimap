@@ -99,8 +99,8 @@ function PageMangaLibraryV1() {
       var manga_firebase_title = manga.manga_title
       var cache_key = `${manga_firebase_title}/last_read_chapter_logged_in`
       var value = manga.last_chapter
-      let date = new Date(2030, 12)
-      cookies.set(cache_key, value, { path: "/", expires: date })
+      // let date = new Date(2030, 12)
+      // cookies.set(cache_key, value, { path: "/", expires: date })
 
       cache_key = `${manga_firebase_title}/last_read_chapter_logged_in`
       value = manga.last_chapter
@@ -255,75 +255,100 @@ function PageMangaLibraryV1() {
     }
   }
 
+  async function removeMangaLibrary(selected_title) {
+    if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") {
+      return
+    }
+
+    try {
+      const response = await fetch('http://go-animapu.herokuapp.com/users/remove_manga_library', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': cookies.get("GO_ANIMAPU_LOGIN_TOKEN")
+        },
+        body: JSON.stringify({
+          manga_title: selected_title
+        })
+      })
+      const results = await response.json()
+      const status = await response.status
+
+      if (status === 200) {
+        alert("manga successfully removed from library!")
+        window.location.reload(false)
+      } else {
+        alert(results.message);
+      }
+
+    } catch (e) {
+      alert(e.message);
+    }
+  }
+
   return (
     <div>
       <div className="pb-5">
-        <RenderMangaLibrary />
-      </div>
-    </div>
-  )
-
-  function RenderMangaLibrary() {
-    return(
-      <div>
-        <div className="row my-2">
-          <div className="col-12">
-            <Link to="/todays-manga-v1" className="btn btn-outline-success btn-sm float-right"><span role="img" aria-label="book">📔</span> Latest</Link>
-            <Link to="/search-manga-v1" className="btn btn-outline-success btn-sm float-right mx-3"><span role="img" aria-label="search">🔍</span> Search</Link>
-            <button className="float-right btn btn-sm btn-outline-danger" onClick={() => handleClearHistory()} href="#"><span role="img" aria-label="bin">🗑</span> Clear History</button>
+        <div>
+          <div className="row my-2">
+            <div className="col-12">
+              <Link to="/todays-manga-v1" className="btn btn-outline-success btn-sm float-right"><span role="img" aria-label="book">📔</span> Latest</Link>
+              <Link to="/search-manga-v1" className="btn btn-outline-success btn-sm float-right mx-3"><span role="img" aria-label="search">🔍</span> Search</Link>
+              <button className="float-right btn btn-sm btn-outline-danger" onClick={() => handleClearHistory()} href="#"><span role="img" aria-label="bin">🗑</span> Clear History</button>
+            </div>
           </div>
-        </div>
-        <div><h4>History</h4></div>
+          <div><h4>History</h4></div>
 
-        <RenderHistoriesSection />
+          <RenderHistoriesSection />
 
-        <div className="row">
-          <div className="col-6"><h4>New Manga{new_manga_check_update}</h4></div>
-        </div>
-        <RenderLoadingBar />
+          <div className="row">
+            <div className="col-6"><h4>New Manga{new_manga_check_update}</h4></div>
+          </div>
+          <RenderLoadingBar />
 
-        <div className="row">
-          <div className="col-12">
-            <ul className="nav nav-tabs" id="myTab2" role="tablist">
-              <li className="nav-item">
-                <a className="nav-link active" id="home-tab2" data-toggle="tab" href="#home2" role="tab" aria-controls="home2" aria-selected="true">Top Picks</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" id="profile-tab2" data-toggle="tab" href="#profile2" role="tab" aria-controls="profile2" aria-selected="false">My Read Later</a>
-              </li>
-            </ul>
+          <div className="row">
+            <div className="col-12">
+              <ul className="nav nav-tabs" id="myTab2" role="tablist">
+                <li className="nav-item">
+                  <a className="nav-link active" id="home-tab2" data-toggle="tab" href="#home2" role="tab" aria-controls="home2" aria-selected="true">Top Picks</a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" id="profile-tab2" data-toggle="tab" href="#profile2" role="tab" aria-controls="profile2" aria-selected="false">My Read Later</a>
+                </li>
+              </ul>
 
-            <div className="tab-content" id="myTabContent">
-              <div className="tab-pane fade" id="profile2" role="tabpanel" aria-labelledby="profile-tab2">
-                <RenderMyReadLater />
-              </div>
-              <div className="tab-pane fade show active" id="home2" role="tabpanel" aria-labelledby="home-tab2">
-                <div className="row">
-                  {manga_list.slice(1, manga_list.length).map(manga_title => (
-                    <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_list`} new_manga_carousel={true} />
-                  ))}
+              <div className="tab-content" id="myTabContent">
+                <div className="tab-pane fade" id="profile2" role="tabpanel" aria-labelledby="profile-tab2">
+                  <RenderMyReadLater />
+                </div>
+                <div className="tab-pane fade show active" id="home2" role="tabpanel" aria-labelledby="home-tab2">
+                  <div className="row">
+                    {manga_list.slice(1, manga_list.length).map(manga_title => (
+                      <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_list`} new_manga_carousel={true} />
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        {/* <div className="row">
-          <div className="col-12 col-md-8">
-            <h4>Manga List</h4>
-            <div className="row">
-              {manga_list.slice(1, manga_list.length).map(manga_title => (
-                <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_list`} new_manga_carousel={true} />
-              ))}
+          {/* <div className="row">
+            <div className="col-12 col-md-8">
+              <h4>Manga List</h4>
+              <div className="row">
+                {manga_list.slice(1, manga_list.length).map(manga_title => (
+                  <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_list`} new_manga_carousel={true} />
+                ))}
+              </div>
             </div>
-          </div>
-          <div className="col-12 col-md-4">
-            <h4>My Read Later</h4>
-            <RenderMyReadLater />
-          </div>
-        </div> */}
+            <div className="col-12 col-md-4">
+              <h4>My Read Later</h4>
+              <RenderMyReadLater />
+            </div>
+          </div> */}
+        </div>
       </div>
-    )
-  }
+    </div>
+  )
 
   function RenderMangaCard(props) {
     if (props.manga_title[0] === "-") {return(<div></div>)}
@@ -367,11 +392,11 @@ function PageMangaLibraryV1() {
   }
 
   function RenderLoveButton(props) {
-    if (props.new_manga_carousel === true) {
-      return(
-        <button className="btn btn-xs btn-outline-danger float-right" style={{ paddingTop: "1px", paddingBottom: "1px", paddingLeft: "3px", paddingRight: "3px" }}>♥︎</button>
-      )
-    }
+    // if (props.new_manga_carousel === true) {
+    //   return(
+    //     <button className="btn btn-xs btn-outline-danger float-right" style={{ paddingTop: "1px", paddingBottom: "1px", paddingLeft: "3px", paddingRight: "3px" }}>♥︎</button>
+    //   )
+    // }
     return(
       <Link to={`/read-manga-only-v1/${props.manga_title}/${findLastMangaChapter(props.manga_title)}?last_chapter=${findLastMangaChapter(props.manga_title)}&chapter_size=${ manga_db.get(props.manga_title) ? manga_db.get(props.manga_title).average_page : 100}`} className="btn btn-xs btn-outline-danger float-right" style={{ paddingTop: "1px", paddingBottom: "1px", paddingLeft: "3px", paddingRight: "3px" }}>▶︎</Link>
     )
@@ -492,6 +517,8 @@ function PageMangaLibraryV1() {
                 <div style={{height: "170px", backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(https://thumb.mghubcdn.com/mn/${manga_title}.jpg)`}}>
                   <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
                     <small>{`${findLatestMangaChapterLoggedIn(manga_title)}/${my_read_later.get(manga_title).manga_last_chapter}`}</small>
+
+                    <button className="btn btn-xs btn-outline-danger float-right" style={{ paddingTop: "1px", paddingBottom: "1px", paddingLeft: "3px", paddingRight: "3px" }} onClick={() => removeMangaLibrary(manga_title)}>✕</button>
                   </div>
                   <div className="text-white card-text overflow-auto" style={{"height": "35px", "width": "100%", backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
                     <small>{manga_title}</small>

@@ -43,7 +43,7 @@ function PageReadMangaOnlyV1() {
   var manga_chapter_list = generateChapterListFromTitle()
   const [bottom_nav, set_bottom_nav] = useState(true)
   var y_pos = 0
-  const [button_share, set_button_share] = useState("❏ Copy Link")
+  const [button_share, set_button_share] = useState("📑 Copy Link")
 
   const shareable_link = reconstruct_shareable
 
@@ -229,7 +229,7 @@ function PageReadMangaOnlyV1() {
 
     var value = manga_title
 
-    postUserEvent()
+    // postUserEvent()
 
     console.log("last_manga_reads", last_manga_reads)
     try {

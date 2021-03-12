@@ -2,9 +2,9 @@ import React, {useState, useEffect} from "react"
 import {Link} from "react-router-dom"
 
 var qs = require('qs')
-function query_title() {
-  return qs.parse(window.location.search, { ignoreQueryPrefix: true }).title
-}
+// function query_title() {
+//   return qs.parse(window.location.search, { ignoreQueryPrefix: true }).title
+// }
 function query_raw_title() {
   return qs.parse(window.location.search, { ignoreQueryPrefix: true }).raw_title
 }
