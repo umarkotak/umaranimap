@@ -357,7 +357,7 @@ function PageMangaLibraryV1() {
       return(
         <div className="col-4 col-md-2">
           <div className={`card mb-4 box-shadow shadow border-4 ${generate_manga_airing_status(props.manga_title)}`}>
-            <div style={{height: "170px", backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(props.manga_title)}), url(${window.location.origin + '/default-book.png'})`}}>
+            <div style={{height: "170px", backgroundSize: '100% 100%', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(props.manga_title)}), url(${window.location.origin + '/default-book.png'})`}}>
               <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
                 <small>{`${findLatestMangaChapter(props.manga_title)}/${findLastMangaChapter(props.manga_title)}`}</small>
                 <button className="btn btn-xs btn-outline-danger float-right" style={{ paddingTop: "1px", paddingBottom: "1px", paddingLeft: "3px", paddingRight: "3px" }}>♥︎</button>
@@ -375,7 +375,7 @@ function PageMangaLibraryV1() {
     return(
       <div className="col-4 col-md-2">
         <div className={`card mb-4 box-shadow shadow border-4 ${generate_manga_airing_status(props.manga_title)}`}>
-          <div style={{height: "170px", backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(props.manga_title)}), url(${window.location.origin + '/default-book.png'})`}}>
+          <div style={{height: "170px", backgroundSize: '100% 100%', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(props.manga_title)}), url(${window.location.origin + '/default-book.png'})`}}>
             <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
               <small>{`${findLatestMangaChapterLoggedIn(props.manga_title)}/${findLastMangaChapter(props.manga_title)}`}</small>
               {/* <button className="btn btn-xs btn-outline-danger float-right" style={{ paddingTop: "1px", paddingBottom: "1px", paddingLeft: "3px", paddingRight: "3px" }}>♥︎</button> */}
@@ -501,7 +501,7 @@ function PageMangaLibraryV1() {
         {logged_in_manga_histories.slice(0, 50).map(manga_title => (
           <div className="col-4 col-md-2" key={"histories_" + manga_title}>
             <div className={`card mb-4 box-shadow shadow border-4 ${generate_manga_airing_status(manga_title)}`}>
-              <div style={{height: "170px", backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(manga_title)}), url(${window.location.origin + '/default-book.png'})`}}>
+              <div style={{height: "170px", backgroundSize: '100% 100%', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(manga_title)}), url(${window.location.origin + '/default-book.png'})`}}>
                 <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
                   <small>{`${findLatestMangaChapterLoggedIn(manga_title)}/${findLastMangaChapter(manga_title) || 150}`}</small>
                 </div>
@@ -525,7 +525,7 @@ function PageMangaLibraryV1() {
           {manga_library_titles.map(manga_title => (
             <div className="col-4 col-md-2" key={`my-read-later-${manga_title}`}>
               <div className={`card mb-4 box-shadow shadow border-4 ${generate_manga_airing_status(manga_title)}`}>
-                <div style={{height: "170px", backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(https://thumb.mghubcdn.com/mn/${manga_title}.jpg), url(${window.location.origin + '/default-book.png'})`}}>
+                <div style={{height: "170px", backgroundSize: '100% 100%', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(https://thumb.mghubcdn.com/mn/${manga_title}.jpg), url(${window.location.origin + '/default-book.png'})`}}>
                   <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
                     <small>{`${findLatestMangaChapterLoggedIn(manga_title)}/${my_read_later.get(manga_title).manga_last_chapter}`}</small>
 

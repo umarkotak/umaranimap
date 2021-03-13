@@ -2,6 +2,7 @@ import React, {useState, useCallback, useEffect, useRef} from "react"
 import Cookies from 'universal-cookie'
 import {Link, useParams, useHistory} from "react-router-dom"
 import {WhatsappShareButton} from "react-share"
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const cookies = new Cookies()
 var cdn_host = "https://img.mghubcdn.com/file/imghub"
@@ -30,6 +31,24 @@ function PageReadMangaOnlyV1() {
   var manga_pages = generateMangaPages(manga_chapter_size)
   var next_manga_chapter = parseInt(manga_chapter) === parseInt(manga_last_chapter) ? manga_last_chapter : parseInt(manga_chapter) + 1
   var prev_manga_chapter = parseInt(manga_chapter) === 1 ? parseInt(manga_chapter) : parseInt(manga_chapter) - 1
+  const loadCount = 10
+  const [count, setCount] = useState({
+    prev: 0,
+    next: loadCount
+  })
+  const [hasMore, setHasMore] = useState(true);
+  const [current, setCurrent] = useState(manga_pages.slice(count.prev, count.next))
+  const getMoreData = () => {
+    if (current.length === manga_chapter_size) {
+      setHasMore(false);
+      return;
+    }
+    setTimeout(() => {
+      console.log("triggered")
+      setCurrent(current.concat(manga_pages.slice(count.prev + loadCount, count.next + loadCount)))
+    }, 500)
+    setCount((prevState) => ({ prev: prevState.prev + loadCount, next: prevState.next + loadCount }))
+  }
 
   useEffect(() => {
     console.log("RUN ONCE")
@@ -265,7 +284,7 @@ function PageReadMangaOnlyV1() {
       <RenderHead />
 
       <div className="" key={manga_chapter}>
-        {manga_pages.map(page_no => (
+        {/* {manga_pages.map(page_no => (
           <div className="bg-dark border-left border-right border-dark rounded" key={generateImageURL(page_no)}>
             <img
               className="bd-placeholder-img mx-auto d-block img-fluid"
@@ -283,7 +302,34 @@ function PageReadMangaOnlyV1() {
               alt=""
             />
           </div>
-        ))}
+        ))} */}
+
+        <InfiniteScroll
+          dataLength={current.length}
+          next={getMoreData}
+          hasMore={hasMore}
+          loader={<h4>...</h4>}
+        >
+          {current && current.map(((value, index) => (
+            <div className="bg-dark border-left border-right border-dark rounded" key={generateImageURL(value)}>
+              <img
+                className="bd-placeholder-img mx-auto d-block img-fluid"
+                src={generateImageURL(value)}
+                alt=""
+              />
+              <img
+                className="bd-placeholder-img mx-auto d-block img-fluid"
+                src={generateImageErrorUrl(value)}
+                alt=""
+              />
+              <img
+                className="bd-placeholder-img mx-auto d-block img-fluid"
+                src={generateImageJPEG(value)}
+                alt=""
+              />
+            </div>
+          )))}
+        </InfiniteScroll>
       </div>
 
       <div className='form-group'>
