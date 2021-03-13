@@ -1,5 +1,7 @@
 import React from "react"
 import {Link} from "react-router-dom"
+import CompDailyMangaClick from "./CompDailyMangaClick"
+import CompDailyPageVisits from "./CompDailyPageVisits"
 
 function PageHome() {
   return (
@@ -36,6 +38,7 @@ function PageHome() {
             <div className="card-body">
               <Link to="/airing-anime-v5" className="btn btn-block btn-primary">Seasonal Animes</Link>
               <Link to="/watch-anime-v1" className="btn btn-block btn-primary">Watch Animes</Link>
+              <Link to="#" className="btn btn-block btn-primary">Watch Light Novel Resume</Link>
             </div>
           </div>
         </div>
@@ -86,6 +89,28 @@ function PageHome() {
               <Link to="/socket-game-v1" className="btn btn-block btn-primary">Socket Game</Link>
               {/* <Link to="/tw-bot-v1" className="btn btn-block btn-primary">Tribal War Bot</Link> */}
               <Link to="/tw-bot-v2" className="btn btn-block btn-primary">Tribal War Bot</Link>
+            </div>
+          </div>
+        </div>
+
+        <div className="col-12 my-1">
+          <div className="card">
+            <div className="card-header">
+              Daily Manga Clicks
+            </div>
+            <div className="card-body">
+              <CompDailyMangaClick />
+            </div>
+          </div>
+        </div>
+
+        <div className="col-12 my-1">
+          <div className="card">
+            <div className="card-header">
+              Daily Page Visits
+            </div>
+            <div className="card-body">
+              <CompDailyPageVisits />
             </div>
           </div>
         </div>
