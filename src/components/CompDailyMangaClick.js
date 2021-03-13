@@ -1,11 +1,11 @@
-import React, {useState} from "react"
+import React, {useState, useEffect} from "react"
 import {Line} from 'react-chartjs-2';
 
 function CompDailyMangaClick() {
   // eslint-disable-next-line
-  const [date_data_shorted, set_date_data_shorted] = useState(['January', 'February', 'March', 'April', 'May', 'June', 'July'])
+  const [date_data_shorted, set_date_data_shorted] = useState([])
   // eslint-disable-next-line
-  const [total_count_shorted, set_total_count_shorted] = useState([65, 70, 65, 60, 55, 0, 10])
+  const [total_count_shorted, set_total_count_shorted] = useState([])
   const data = {
     labels: date_data_shorted,
     datasets: [
@@ -31,7 +31,40 @@ function CompDailyMangaClick() {
         data: total_count_shorted
       }
     ]
-  };
+  }
+
+  useEffect(() => {
+    async function fetchTodayMangaData() {
+      var api = "http://go-animapu.herokuapp.com/mangas/daily_manga_statistics"
+      const response = await fetch(api)
+      const results = await response.json()
+      var temp_statistics = new Map(Object.entries(results))
+
+
+      var temp_titles = []
+      var temp_total_count = []
+      temp_statistics.forEach((value, key) => {
+        temp_titles.push(key)
+        temp_total_count.push(value.count)
+      })
+
+      // var temp_shorted_arr = []
+      // temp_statistics.forEach((value, key) => {
+      //   value.title = key
+      //   temp_shorted_arr.push(value)
+      // })
+      // temp_shorted_arr.sort(function (a, b) {
+      //   return b.TotalHitCount - a.TotalHitCount || a.Title - b.Title
+      // })
+      // console.log("HEY!", temp_shorted_arr)
+
+      // set_titles_shorted(temp_shorted_arr.map(v => v.Title.substring(0,30)).slice(0, statCount))
+      // set_total_count_shorted(temp_shorted_arr.map(v => v.TotalHitCount).slice(0, statCount))
+      set_date_data_shorted(temp_titles)
+      set_total_count_shorted(temp_total_count)
+    }
+    fetchTodayMangaData()
+  }, [])
 
   return (
     <div>

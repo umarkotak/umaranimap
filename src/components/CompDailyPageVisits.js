@@ -10,7 +10,7 @@ function CompDailyPageVisits() {
     labels: date_data_shorted,
     datasets: [
       {
-        label: 'Daily manga clicks',
+        label: 'Daily page visits',
         fill: true,
         lineTension: 0.1,
         backgroundColor: 'rgba(75,192,192,0.4)',
@@ -31,7 +31,7 @@ function CompDailyPageVisits() {
         data: total_count_shorted
       }
     ]
-  };
+  }
 
   return (
     <div>
