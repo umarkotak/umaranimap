@@ -44,14 +44,15 @@ function PageReadMangaOnlyV1() {
       return;
     }
     setTimeout(() => {
-      console.log("triggered")
+      // console.log("triggered")
       setCurrent(current.concat(manga_pages.slice(count.prev + loadCount, count.next + loadCount)))
     }, 500)
     setCount((prevState) => ({ prev: prevState.prev + loadCount, next: prevState.next + loadCount }))
   }
 
   useEffect(() => {
-    console.log("RUN ONCE")
+    // console.log("RUN ONCE")
+    window.scrollTo(0, 0)
     set_manga_chapter(path_chapter)
     postUserEvent()
     setHistoriesToFireBase()
@@ -109,11 +110,12 @@ function PageReadMangaOnlyV1() {
 
   async function postUserEvent() {
     if (!manga_title && !manga_chapter) {
-      console.log("NOT SENDING USER EVENT")
+      // console.log("NOT SENDING USER EVENT")
       return
     }
     try {
-      const response = await fetch(`${go_animapu_host}/users/analytic_v1`, {
+      // const response = await fetch(`${go_animapu_host}/users/analytic_v1`, {
+      await fetch(`${go_animapu_host}/users/analytic_v1`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -123,21 +125,21 @@ function PageReadMangaOnlyV1() {
           MangaTitle: manga_title,
         })
       })
-      console.log("RESULT: ", response.json(), response.status)
+      // console.log("RESULT: ", response.json(), response.status)
 
     } catch (e) {
-      console.log("USER EVENT LOG: ", e.message)
+      // console.log("USER EVENT LOG: ", e.message)
     }
   }
 
   async function setHistoriesToFireBase() {
     if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") {
-      console.log("NOT SETTING HISTORY")
+      // console.log("NOT SETTING HISTORY")
       return
     }
 
     if (!manga_title && !manga_chapter) {
-      console.log("NOT SETTING HISTORY")
+      // console.log("NOT SETTING HISTORY")
       return
     }
 
@@ -153,10 +155,10 @@ function PageReadMangaOnlyV1() {
           manga_title: manga_title
         })
       })
-      console.log("SUCCESS STORE TO FIREBASE", path_chapter)
+      // console.log("SUCCESS STORE TO FIREBASE", path_chapter)
 
     } catch (e) {
-      console.log("STORE TO FIREBASE ERROR", e.message)
+      // console.log("STORE TO FIREBASE ERROR", e.message)
     }
   }
 
@@ -178,7 +180,7 @@ function PageReadMangaOnlyV1() {
 
   function generateMangaPages(last_chapter) {
     if (!manga_title && !manga_chapter) {
-      console.log("NOT SETTING MANGA PAGES")
+      // console.log("NOT SETTING MANGA PAGES")
       return []
     }
     var pages = []
@@ -212,7 +214,7 @@ function PageReadMangaOnlyV1() {
 
   function setCookies() {
     if (!manga_title && !manga_chapter) {
-      console.log("NOT STORING TO COOKIES")
+      // console.log("NOT STORING TO COOKIES")
       return
     }
     if (manga_title === "-- select manga title --") {
@@ -251,7 +253,7 @@ function PageReadMangaOnlyV1() {
 
     // postUserEvent()
 
-    console.log("last_manga_reads", last_manga_reads)
+    // console.log("last_manga_reads", last_manga_reads)
     try {
       if (last_manga_reads.length >= 1) {
 

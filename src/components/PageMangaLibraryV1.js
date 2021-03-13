@@ -23,8 +23,8 @@ function PageMangaLibraryV1() {
   const [manga_library_titles, set_manga_library_titles] = useState([])
 
   useEffect(() => {
-    console.log("RUN ONCE")
-    window.scrollTo(0, 0);
+    // console.log("RUN ONCE")
+    window.scrollTo(0, 0)
   }, [])
 
   useEffect(() => {

@@ -4,6 +4,7 @@ import {HorizontalBar} from 'react-chartjs-2';
 function PageStatisticsV1() {
   const [titles_shorted, set_titles_shorted] = useState([])
   const [total_count_shorted, set_total_count_shorted] = useState([])
+  const statCount = 50
 
   useEffect(() => {
     async function fetchTodayMangaData() {
@@ -30,8 +31,8 @@ function PageStatisticsV1() {
       })
       console.log("HEY!", temp_shorted_arr)
 
-      set_titles_shorted(temp_shorted_arr.map(v => v.Title.substring(0,30)))
-      set_total_count_shorted(temp_shorted_arr.map(v => v.TotalHitCount))
+      set_titles_shorted(temp_shorted_arr.map(v => v.Title.substring(0,30)).slice(0, statCount))
+      set_total_count_shorted(temp_shorted_arr.map(v => v.TotalHitCount).slice(0, statCount))
     }
     fetchTodayMangaData()
   }, [])
@@ -58,7 +59,7 @@ function PageStatisticsV1() {
       </div>
 
       <div>
-        <HorizontalBar data={data} height={800} />
+        <HorizontalBar data={data} height={500} />
       </div>
     </div>
   )
