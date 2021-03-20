@@ -284,7 +284,7 @@ function PageMangaLibraryV1() {
 
       if (status === 200) {
         alert("manga successfully removed from library!")
-        window.location.reload(false)
+        // window.location.reload(false)
       } else {
         alert(results.message);
       }
