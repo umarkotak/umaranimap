@@ -50,7 +50,7 @@ function PageTodaysMangaV1() {
 
   useEffect(() => {
     async function fetchTodayMangaData() {
-      var api = "http://go-animapu.herokuapp.com/mangas/todays_v1"
+      var api = "http://go-animapu2.herokuapp.com/mangas/todays_v1"
       const response = await fetch(api)
       const results = await response.json()
       var converted_manga_db = new Map(Object.entries(results.manga_db))
@@ -77,7 +77,7 @@ function PageTodaysMangaV1() {
     }
 
     try {
-      const response = await fetch('http://go-animapu.herokuapp.com/users/add_manga_library', {
+      const response = await fetch('http://go-animapu2.herokuapp.com/users/add_manga_library', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

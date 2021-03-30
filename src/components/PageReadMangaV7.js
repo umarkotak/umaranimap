@@ -5,7 +5,7 @@ import {WhatsappShareButton} from "react-share";
 
 const cookies = new Cookies();
 var cdn_host = "https://img.mghubcdn.com/file/imghub"
-var go_animapu_host = "http://go-animapu.herokuapp.com"
+var go_animapu_host = "http://go-animapu2.herokuapp.com"
 var animapu_host = "http://animapu.herokuapp.com"
 
 var qs = require('qs');
@@ -124,7 +124,7 @@ function PageReadMangaV7() {
 
   async function postUserEvent() {
     try {
-      const response = await fetch('http://go-animapu.herokuapp.com/users/analytic_v1', {
+      const response = await fetch('http://go-animapu2.herokuapp.com/users/analytic_v1', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

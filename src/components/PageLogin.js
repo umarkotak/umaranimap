@@ -70,7 +70,7 @@ function PageLogin() {
 
     try {
       // const response = await fetch('http://localhost:4000/users/login', {
-      const response = await fetch('http://go-animapu.herokuapp.com/users/login', {
+      const response = await fetch('http://go-animapu2.herokuapp.com/users/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -108,7 +108,7 @@ function PageLogin() {
     }
 
     try {
-      const response = await fetch('http://go-animapu.herokuapp.com/users/register', {
+      const response = await fetch('http://go-animapu2.herokuapp.com/users/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

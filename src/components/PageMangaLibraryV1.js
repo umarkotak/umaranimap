@@ -5,7 +5,7 @@ import {Link} from "react-router-dom"
 import { v4 as uuidv4 } from 'uuid';
 
 const cookies = new Cookies()
-var go_animapu_host = "http://go-animapu.herokuapp.com"
+var go_animapu_host = "http://go-animapu2.herokuapp.com"
 // var go_animapu_host = "http://localhost:3005"
 
 function PageMangaLibraryV1() {
@@ -269,7 +269,7 @@ function PageMangaLibraryV1() {
     }
 
     try {
-      const response = await fetch('http://go-animapu.herokuapp.com/users/remove_manga_library', {
+      const response = await fetch('http://go-animapu2.herokuapp.com/users/remove_manga_library', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

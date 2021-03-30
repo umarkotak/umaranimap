@@ -46,7 +46,7 @@ function PageAiringAnimeV5() {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(`http://go-animapu.herokuapp.com/animes_map`);
+      const response = await fetch(`http://go-animapu2.herokuapp.com/animes_map`);
       const result = await response.json();
       console.log(result)
       setAnimesMap(result)

@@ -9,7 +9,7 @@ function PageGlobalClipboardV1() {
   const [is_sending, set_is_sending] = useState(false)
 
   async function fetchTodayMangaData() {
-    var api = "http://go-animapu.herokuapp.com/clips"
+    var api = "http://go-animapu2.herokuapp.com/clips"
     const response = await fetch(api)
     const results = await response.json()
     var temp_clips = new Map(Object.entries(results))
@@ -27,7 +27,7 @@ function PageGlobalClipboardV1() {
   async function sendClip() {
     try {
       set_is_sending(true)
-      const response = await fetch('http://go-animapu.herokuapp.com/clips', {
+      const response = await fetch('http://go-animapu2.herokuapp.com/clips', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -78,7 +78,7 @@ function PageReadMangaV4() {
 
   useEffect(() => {
     async function fetchData() {
-      var api = "http://go-animapu.herokuapp.com/mangas/firebase"
+      var api = "http://go-animapu2.herokuapp.com/mangas/firebase"
       // var api = "http://localhost:3005/mangas/firebase"
       const response = await fetch(api)
       const results = await response.json()
@@ -100,7 +100,7 @@ function PageReadMangaV4() {
 
   useEffect(() => {
     async function updateData() {
-      var api = "http://go-animapu.herokuapp.com/mangas/firebase/update"
+      var api = "http://go-animapu2.herokuapp.com/mangas/firebase/update"
       // var api = "http://localhost:3005/mangas/firebase/update"
       await fetch(api)
     }

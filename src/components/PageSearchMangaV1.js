@@ -27,7 +27,7 @@ function PageSearchManga() {
   async function execute_search_manga(search_query) {
     console.log("fetching execute_search_manga")
 
-    var api = `http://go-animapu.herokuapp.com/mangas/search_v1?title=${search_query}`
+    var api = `http://go-animapu2.herokuapp.com/mangas/search_v1?title=${search_query}`
     const response = await fetch(api)
     const results = await response.json()
     var converted_search_result_db = new Map(Object.entries(results.manga_db))

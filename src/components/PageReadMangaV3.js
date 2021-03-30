@@ -78,7 +78,7 @@ function PageReadMangaV3() {
 
   useEffect(() => {
     async function fetchData() {
-      var api = "http://go-animapu.herokuapp.com/mangas"
+      var api = "http://go-animapu2.herokuapp.com/mangas"
       const response = await fetch(api)
       const results = await response.json()
       var converted_manga_db = new Map(Object.entries(results.manga_db))
@@ -99,7 +99,7 @@ function PageReadMangaV3() {
 
   useEffect(() => {
     async function updateData() {
-      var api = "http://go-animapu.herokuapp.com/mangas/update"
+      var api = "http://go-animapu2.herokuapp.com/mangas/update"
       await fetch(api)
     }
     updateData();

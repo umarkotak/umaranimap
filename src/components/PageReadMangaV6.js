@@ -4,7 +4,7 @@ import {WhatsappShareButton} from "react-share";
 
 const cookies = new Cookies();
 var cdn_host = "https://img.mghubcdn.com/file/imghub"
-var go_animapu_host = "http://go-animapu.herokuapp.com"
+var go_animapu_host = "http://go-animapu2.herokuapp.com"
 var go_animapu_read_manga_path = "read-manga-v6"
 var default_manga_title_list = ["-- select manga title --"]
 var default_manga_object_list = new Map([["-- select manga title --", {average_page: 1, image_url: "", manga_last_chapter: 0, new_added: 0, status: "finished", weight: 0}]])

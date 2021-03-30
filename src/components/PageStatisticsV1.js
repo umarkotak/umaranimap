@@ -8,7 +8,7 @@ function PageStatisticsV1() {
 
   useEffect(() => {
     async function fetchTodayMangaData() {
-      var api = "http://go-animapu.herokuapp.com/mangas/statistics"
+      var api = "http://go-animapu2.herokuapp.com/mangas/statistics"
       const response = await fetch(api)
       const results = await response.json()
       var temp_statistics = new Map(Object.entries(results))

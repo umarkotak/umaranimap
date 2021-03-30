@@ -79,7 +79,7 @@ function PageReadMangaV5() {
   // fetch manga list from firebase
   useEffect(() => {
     async function fetchData() {
-      var api = "http://go-animapu.herokuapp.com/mangas/firebase"
+      var api = "http://go-animapu2.herokuapp.com/mangas/firebase"
       // var api = "http://localhost:3005/mangas/firebase"
       const response = await fetch(api)
       const results = await response.json()
@@ -102,7 +102,7 @@ function PageReadMangaV5() {
   // update manga list on firebase if there is any new chapter
   useEffect(() => {
     async function updateData() {
-      var api = "http://go-animapu.herokuapp.com/mangas/firebase/update"
+      var api = "http://go-animapu2.herokuapp.com/mangas/firebase/update"
       // var api = "http://localhost:3005/mangas/firebase/update"
       await fetch(api)
     }
@@ -498,7 +498,7 @@ function PageReadMangaV5() {
     console.log("TRY STORE TO FIREBASE")
 
     try {
-      const response = await fetch('http://go-animapu.herokuapp.com/users/read_histories', {
+      const response = await fetch('http://go-animapu2.herokuapp.com/users/read_histories', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
