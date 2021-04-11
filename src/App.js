@@ -2,6 +2,7 @@ import React from "react"
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom"
 
 import Nav from "./components/Nav"
+import configDB from "./components/ConfigDB"
 import PageHome from "./components/PageHome"
 import PageLogin from "./components/PageLogin"
 import PageTicTacToe from "./components/PageTicTacToe"
@@ -37,8 +38,8 @@ import PageTWBotV2 from "./components/PageTWBotV2"
 function App() {
   return (
     <Router>
-      <div style={{backgroundColor: "#b3e7ff"}}>
-        <div className="App container border border-secondary shadow-lg" style={{backgroundColor: "#ffffff"}}>
+      <div style={{backgroundColor: `${configDB.GetActiveTemplate("#1b262c", "#b3e7ff")}`}}>
+        <div className="App container border border-secondary shadow-lg" style={{backgroundColor: `${configDB.GetActiveTemplate("#0f4c75", "#ffffff")}`}}>
           <Nav />
           <Switch>
             <Route path="/" exact component={PageHome} />

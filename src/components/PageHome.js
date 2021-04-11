@@ -6,10 +6,14 @@ import CompDailyMangaClick from "./CompDailyMangaClick"
 function PageHome() {
   function set_to_dark_mode() {
     console.log("DARK!")
+    localStorage.setItem("DARK_MODE", "ON")
+    window.location.reload()
   }
 
   function set_to_light_mode() {
     console.log("LIGHT!")
+    localStorage.setItem("DARK_MODE", "OFF")
+    window.location.reload()
   }
 
   return (
@@ -67,7 +71,7 @@ function PageHome() {
         <div className="col-12 col-sm-4 my-1">
           <div className="card">
             <div className="card-header">
-              Subscribe Notification
+              Settings
             </div>
             <div className="card-body">
               <div className="row">

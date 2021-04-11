@@ -120,18 +120,18 @@ function PageAiringAnimeV6() {
   }
 
   return (
-    <div>
+    <div ca>
       <div className="row my-2">
         <div className="col-12">
           <Link to="/watch-anime-v2" className="btn btn-outline-success btn-sm float-right"><span role="img" aria-label="book">🎬</span> Watch Anime</Link>
         </div>
       </div>
-      <div className="bg-dark sticky-top">
+      <div className="bg-white sticky-top p-0">
           <div className="row">
-            <div className="col-6 col-md-6">
+            <div className="col-12 col-lg-6 px-0">
               <RenderYouTube anime={item} />
             </div>
-            <div className="col-6 col-md-6">
+            <div className="col-12 col-lg-6 px-0">
               <div className="container overflow-auto bg-light" style={{maxHeight: window.innerHeight / 3 + "px"}}>
                 <h3 className="mb-0">{`[${item.type}]`} {item.title}</h3>
                 <a href={item.url} target="_blank" rel="noopener noreferrer">Go to My Anime List</a>
