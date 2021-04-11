@@ -393,8 +393,15 @@ function PageMangaLibraryV1() {
               <small>{props.manga_title}</small>
             </div>
           </div>
+          <div className="row">
+            <div className="col-4 pr-0">
+              <Link type="button" className="btn btn-block btn-sm btn-outline-secondary p-1" to={`/manga-detail-v1/${props.manga_title}`}>ℹ</Link>
+            </div>
+            <div className="col-8 pl-0">
+              <Link type="button" className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${props.manga_title}/${findLatestMangaChapter(props.manga_title)}?last_chapter=${findLastMangaChapter(props.manga_title)}&chapter_size=${ manga_db.get(props.manga_title) ? manga_db.get(props.manga_title).average_page : 100}`}>Read</Link>
+            </div>
+          </div>
           {/* <button type="button" className="btn btn-block btn-sm btn-outline-secondary" onClick={(e) => handleSelectedMangaTitle(e.target.value)} value={props.manga_title}>Read</button> */}
-          <Link type="button" className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${props.manga_title}/${findLatestMangaChapter(props.manga_title)}?last_chapter=${findLastMangaChapter(props.manga_title)}&chapter_size=${ manga_db.get(props.manga_title) ? manga_db.get(props.manga_title).average_page : 100}`}>Read</Link>
         </div>
         {/* </Link> */}
       </div>
@@ -544,7 +551,15 @@ function PageMangaLibraryV1() {
                     <small>{manga_title}</small>
                   </div>
                 </div>
-                <Link type="button" className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${manga_title}/${findLatestMangaChapter(manga_title)}?last_chapter=${my_read_later.get(manga_title).manga_last_chapter}&chapter_size=${ my_read_later.get(manga_title) ? my_read_later.get(manga_title).average_page : 100}`}>Read</Link>
+
+                <div className="row">
+                  <div className="col-4 pr-0">
+                    <Link type="button" className="btn btn-block btn-sm btn-outline-secondary p-1" to={`/manga-detail-v1/${manga_title}`}>ℹ</Link>
+                  </div>
+                  <div className="col-8 pl-0">
+                    <Link type="button" className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${manga_title}/${findLatestMangaChapter(manga_title)}?last_chapter=${my_read_later.get(manga_title).manga_last_chapter}&chapter_size=${ my_read_later.get(manga_title) ? my_read_later.get(manga_title).average_page : 100}`}>Read</Link>
+                  </div>
+                </div>
               </div>
             </div>
           ))}

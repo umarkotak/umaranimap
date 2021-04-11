@@ -1,9 +1,17 @@
 import React from "react"
 import {Link} from "react-router-dom"
 import CompDailyMangaClick from "./CompDailyMangaClick"
-import CompDailyPageVisits from "./CompDailyPageVisits"
+// import CompDailyPageVisits from "./CompDailyPageVisits"
 
 function PageHome() {
+  function set_to_dark_mode() {
+    console.log("DARK!")
+  }
+
+  function set_to_light_mode() {
+    console.log("LIGHT!")
+  }
+
   return (
     <div>
       {/* <img src={window.location.origin + '/dashboard.png'} style={{width: "100%"}} /> */}
@@ -62,6 +70,14 @@ function PageHome() {
               Subscribe Notification
             </div>
             <div className="card-body">
+              <div className="row">
+                <div className="col-6">
+                  <button className="btn btn-primary btn-block" onClick={() => set_to_dark_mode()}>Dark</button>
+                </div>
+                <div className="col-6">
+                  <button className="btn btn-primary btn-block" onClick={() => set_to_light_mode()}>Light</button>
+                </div>
+              </div>
               <div className='onesignal-customlink-container'></div>
             </div>
           </div>
@@ -86,6 +102,7 @@ function PageHome() {
               Dev
             </div>
             <div className="card-body">
+              <a href="https://app.panelbear.com/sites/2g1FkT5VVgY/overview" target="_blank" className="btn btn-block btn-primary" rel="noopener noreferrer">Panel Bear</a>
               <Link to="/socket-game-v1" className="btn btn-block btn-primary">Socket Game</Link>
               {/* <Link to="/tw-bot-v1" className="btn btn-block btn-primary">Tribal War Bot</Link> */}
               <Link to="/tw-bot-v2" className="btn btn-block btn-primary">Tribal War Bot</Link>
@@ -104,7 +121,7 @@ function PageHome() {
           </div>
         </div>
 
-        <div className="col-12 my-1">
+        {/* <div className="col-12 my-1">
           <div className="card">
             <div className="card-header">
               Daily Page Visits
@@ -113,7 +130,7 @@ function PageHome() {
               <CompDailyPageVisits />
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   )
