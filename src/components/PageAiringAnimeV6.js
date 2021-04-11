@@ -128,11 +128,12 @@ function PageAiringAnimeV6() {
       </div>
       <div className="bg-white sticky-top p-0">
           <div className="row">
-            <div className="col-12 col-lg-6 px-0">
+            <div className="col-8 col-lg-8 px-0">
               <RenderYouTube anime={item} />
             </div>
-            <div className="col-12 col-lg-6 px-0">
-              <div className="container overflow-auto bg-light" style={{maxHeight: window.innerHeight / 3 + "px"}}>
+            <div className="col-4 col-lg-4 px-0">
+              {/* <div className="container overflow-auto bg-light" style={{maxHeight: window.innerHeight / 3 + "px"}}> */}
+              <div className="container overflow-auto bg-light" style={{maxHeight: window.innerHeight / 3.25 + "px"}}>
                 <h3 className="mb-0">{`[${item.type}]`} {item.title}</h3>
                 <a href={item.url} target="_blank" rel="noopener noreferrer">Go to My Anime List</a>
                 <p>{item.synopsis}</p>
@@ -240,7 +241,7 @@ function RenderYouTube(props) {
       url={videoId}
       playing={true}
       width={'100%'}
-      height={window.innerHeight / 3 + "px"}
+      height={window.innerHeight / 3.25 + "px"}
       config={{
         youtube: {
           playerVars: {

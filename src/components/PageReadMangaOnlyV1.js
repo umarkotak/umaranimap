@@ -60,7 +60,29 @@ function PageReadMangaOnlyV1() {
     // eslint-disable-next-line
   }, [path_chapter])
 
-  var manga_chapter_list = generateChapterListFromTitle()
+  const [manga_chapter_list, set_manga_chapter_list] = useState(generateChapterListFromTitle())
+
+  useEffect(() => {
+    async function fetchData() {
+      var api = `${go_animapu_host}/mangas_detail?manga_title=${manga_title}`
+      const response = await fetch(api)
+      const results = await response.json()
+      console.log(results)
+
+      if (!Array.isArray(results.chapters)) {
+        results.chapters=[]
+      }
+
+      if (!response.ok) {
+        return
+      }
+
+      set_manga_chapter_list(results.chapters)
+    }
+    fetchData()
+  }, [manga_title])
+
+  // var manga_chapter_list = generateChapterListFromTitle()
   const [bottom_nav, set_bottom_nav] = useState(true)
   var y_pos = 0
   const [button_share, set_button_share] = useState("📑 Copy Link")

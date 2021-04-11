@@ -11,14 +11,11 @@ function PageMangaDetailV1() {
   })
   const [last_chapter, set_last_chapter] = useState("0")
 
-  console.log("HEHE", go_animapu_host)
-
   useEffect(() => {
     async function fetchData() {
       var api = `${go_animapu_host}/mangas_detail?manga_title=${manga_title}`
       const response = await fetch(api)
       const results = await response.json()
-      console.log(results)
 
       if (!Array.isArray(results.chapters)) {
         results.chapters=[]
