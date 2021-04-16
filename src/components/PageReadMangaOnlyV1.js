@@ -222,6 +222,10 @@ function PageReadMangaOnlyV1() {
     return `${cdn_host}/${manga_title}/${manga_chapter}/${page_no}.jpeg`
   }
 
+  function generateImageWEBP(page_no) {
+    return `${cdn_host}/${manga_title}/${manga_chapter}/${page_no}.webp`
+  }
+
   function generateChapterListFromTitle() {
     var chapters = []
     for (let i = 1; i <= manga_last_chapter; i++) { chapters.push(i) }
@@ -303,8 +307,26 @@ function PageReadMangaOnlyV1() {
     }
   }
 
+  var hist = {}
+  function handleImageFallback(val, e) {
+    if (!hist[val]) { hist[val] = {} }
+
+    if (hist[val] && !hist[val]["png"]) {
+      hist[val]["png"] = "tried"
+      e.target.src = generateImageErrorUrl(val)
+    } else if (hist[val] && !hist[val]["jpeg"]) {
+      hist[val]["jpeg"] = "tried"
+      e.target.src = generateImageJPEG(val)
+    } else if (hist[val] && !hist[val]["webp"]) {
+      hist[val]["webp"] = "tried"
+      e.target.src = generateImageWEBP(val)
+    } else {
+      e.target.src = window.location.origin + "/default-image.png"
+    }
+  }
+
   return (
-    <div style={{marginLeft: "-10px", marginRight: "-10px"}}>
+    <div style={{marginLeft: "-12px", marginRight: "-12px"}}>
       <RenderHead />
 
       <div className="" key={manga_chapter}>
@@ -340,8 +362,9 @@ function PageReadMangaOnlyV1() {
                 className="bd-placeholder-img mx-auto d-block img-fluid"
                 src={generateImageURL(value)}
                 alt=""
+                onError={(e) => handleImageFallback(value, e)}
               />
-              <img
+              {/* <img
                 className="bd-placeholder-img mx-auto d-block img-fluid"
                 src={generateImageErrorUrl(value)}
                 alt=""
@@ -350,7 +373,7 @@ function PageReadMangaOnlyV1() {
                 className="bd-placeholder-img mx-auto d-block img-fluid"
                 src={generateImageJPEG(value)}
                 alt=""
-              />
+              /> */}
             </div>
           )))}
         </InfiniteScroll>
