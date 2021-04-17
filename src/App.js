@@ -39,7 +39,7 @@ function App() {
   return (
     <Router>
       <div style={{backgroundColor: `${configDB.GetActiveTemplate("#1b262c", "#b3e7ff")}`}}>
-        <div className="App container border border-secondary shadow-lg" style={{backgroundColor: `${configDB.GetActiveTemplate("#0f4c75", "#ffffff")}`}}>
+        <div className="App container border border-secondary shadow-lg" style={{backgroundColor: `${configDB.GetActiveTemplate("#0f4a71", "#ffffff")}`}}>
           <Nav />
           <Switch>
             <Route path="/" exact component={PageHome} />

@@ -71,6 +71,7 @@ function PageReadMangaOnlyV1() {
 
       if (!Array.isArray(results.chapters)) {
         results.chapters=[]
+        return
       }
 
       if (!response.ok) {
@@ -231,12 +232,6 @@ function PageReadMangaOnlyV1() {
     for (let i = 1; i <= manga_last_chapter; i++) { chapters.push(i) }
     return chapters
   }
-
-  // function generateChapterListFromLastChapter(last_chapter) {
-  //   var chapters = []
-  //   for (let i = 1; i <= last_chapter; i++) { chapters.push(i) }
-  //   return chapters
-  // }
 
   function setCookies() {
     if (!manga_title && !manga_chapter) {

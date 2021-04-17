@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react"
 import ReactPlayer from 'react-player'
 import {Link} from "react-router-dom"
+import configDB from "./ConfigDB"
 
 function PageAiringAnimeV6() {
   var valid_seasons = ["winter", "spring", "summer", "fall"]
@@ -128,17 +129,16 @@ function PageAiringAnimeV6() {
       </div>
       <div className="bg-white sticky-top p-0">
           <div className="row">
-            <div className="col-8 col-lg-8 px-0">
+            <div className="col-12 px-0">
               <RenderYouTube anime={item} />
             </div>
-            <div className="col-4 col-lg-4 px-0">
-              {/* <div className="container overflow-auto bg-light" style={{maxHeight: window.innerHeight / 3 + "px"}}> */}
+            {/* <div className="col-4 col-lg-4 px-0">
               <div className="container overflow-auto bg-light" style={{maxHeight: window.innerHeight / 3.25 + "px"}}>
                 <h3 className="mb-0">{`[${item.type}]`} {item.title}</h3>
                 <a href={item.url} target="_blank" rel="noopener noreferrer">Go to My Anime List</a>
                 <p>{item.synopsis}</p>
               </div>
-            </div>
+            </div> */}
           </div>
       </div>
 
@@ -146,7 +146,7 @@ function PageAiringAnimeV6() {
         <div className="row">
           {items.map(item => (
             <div className="col-lg-3 col-sm-6 col-12 p-1" key={item.mal_id}>
-              <table className="table border border-info rounded">
+              <table className="table border border-info rounded" style={{backgroundColor: configDB.GetActiveTemplate("#CBD2D9", "white")}}>
                 <tbody>
                   <tr>
                     <th className="p-1" style={{width: "30%"}}>
@@ -155,18 +155,21 @@ function PageAiringAnimeV6() {
                       </a>
                     </th>
                     <th className="p-1" style={{width: "70%"}}>
-                      <table className="table table-hover">
-                        <tbody>
-                          <tr className="">
-                            <td className="p-1">
-                              <div className="overflow-auto" style={{height: "55px"}}>
-                                <small>{item.mal_id} - <b>{item.title}</b></small>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr><td className="p-1"><small>Rank #{item.rank} / Score {item.score}</small></td></tr>
-                        </tbody>
-                      </table>
+                      <div className="overflow-auto" style={{maxHeight: "130px"}}>
+                        <table className="table table-hover">
+                          <tbody>
+                            <tr className="p-0">
+                              <td className="p-1">
+                                <div className="overflow-auto" style={{height: "55px"}}>
+                                  <small>{item.mal_id} - <b>{item.title}</b></small>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr><td className="p-1"><small>Rank #{item.rank} / Score {item.score}</small></td></tr>
+                            <tr><td className="p-1"><small>{item.synopsis}</small></td></tr>
+                          </tbody>
+                        </table>
+                      </div>
                     </th>
                   </tr>
                   <tr>

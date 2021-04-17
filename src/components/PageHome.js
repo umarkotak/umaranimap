@@ -4,17 +4,17 @@ import CompDailyMangaClick from "./CompDailyMangaClick"
 // import CompDailyPageVisits from "./CompDailyPageVisits"
 
 function PageHome() {
-  function set_to_dark_mode() {
-    console.log("DARK!")
-    localStorage.setItem("DARK_MODE", "ON")
-    window.location.reload()
-  }
+  // function set_to_dark_mode() {
+  //   console.log("DARK!")
+  //   localStorage.setItem("DARK_MODE", "ON")
+  //   window.location.reload()
+  // }
 
-  function set_to_light_mode() {
-    console.log("LIGHT!")
-    localStorage.setItem("DARK_MODE", "OFF")
-    window.location.reload()
-  }
+  // function set_to_light_mode() {
+  //   console.log("LIGHT!")
+  //   localStorage.setItem("DARK_MODE", "OFF")
+  //   window.location.reload()
+  // }
 
   return (
     <div>
@@ -28,6 +28,12 @@ function PageHome() {
       </div>
 
       <div className="row mb-5">
+        <div className="col-12">
+          <div className="border rounded" style={{backgroundColor: "white"}}>
+            Animapu Alternative: <a href="http://47.254.247.135/" target="_blank" rel="noopener noreferrer">http://47.254.247.135</a> / <a href="http://bit.ly/animapu-bk" target="_blank" rel="noopener noreferrer">http://bit.ly/animapu-bk</a>
+          </div>
+        </div>
+
         <div className="col-12 col-sm-4 my-1">
           <div className="card">
             <div className="card-header">
@@ -37,7 +43,6 @@ function PageHome() {
               <Link to="/tic-tac-toe" className="btn btn-block btn-primary">Tic Tac Toe</Link>
               <Link to="/global-clipboard-v1" className="btn btn-block btn-primary">Global Clipboard</Link>
               <Link to="/chatto-v1" className="btn btn-block btn-primary">Chatto</Link>
-              <Link to="/statistics-v1" className="btn btn-block btn-primary">Statistics</Link>
             </div>
           </div>
         </div>
@@ -74,14 +79,16 @@ function PageHome() {
               Settings
             </div>
             <div className="card-body">
-              <div className="row">
+              {/* <div className="row">
                 <div className="col-6">
                   <button className="btn btn-primary btn-block" onClick={() => set_to_dark_mode()}>Dark</button>
                 </div>
                 <div className="col-6">
                   <button className="btn btn-primary btn-block" onClick={() => set_to_light_mode()}>Light</button>
                 </div>
-              </div>
+              </div> */}
+              <Link to="/statistics-v1" className="btn btn-block btn-primary">Statistics</Link>
+              <a href="https://app.panelbear.com/sites/2g1FkT5VVgY/overview" target="_blank" className="btn btn-block btn-primary" rel="noopener noreferrer">Panel Bear</a>
               <div className='onesignal-customlink-container'></div>
             </div>
           </div>
@@ -106,7 +113,6 @@ function PageHome() {
               Dev
             </div>
             <div className="card-body">
-              <a href="https://app.panelbear.com/sites/2g1FkT5VVgY/overview" target="_blank" className="btn btn-block btn-primary" rel="noopener noreferrer">Panel Bear</a>
               <Link to="/socket-game-v1" className="btn btn-block btn-primary">Socket Game</Link>
               {/* <Link to="/tw-bot-v1" className="btn btn-block btn-primary">Tribal War Bot</Link> */}
               <Link to="/tw-bot-v2" className="btn btn-block btn-primary">Tribal War Bot</Link>

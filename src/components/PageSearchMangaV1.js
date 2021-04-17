@@ -3,6 +3,7 @@
 
 import React, {useState, useEffect} from "react"
 import {Link} from "react-router-dom"
+import configDB from "./ConfigDB"
 
 function PageSearchManga() {
   const [searching_state, set_searching_state] = useState("standby")
@@ -64,10 +65,10 @@ function PageSearchManga() {
       <hr/>
       <div className="row">
         <div className="col-12">
-          <Link to="/manga-library-v1" className="btn btn-outline-success btn-sm float-right"><span role="img" aria-label="library">📘</span> Library</Link>
-          <Link to="/todays-manga-v1" className="btn btn-outline-success btn-sm float-right mx-3"><span role="img" aria-label="book">📔</span> Latest</Link>
+          <Link to="/manga-library-v1" className={`btn ${configDB.GetActiveTemplate("btn-success", "btn-outline-success")} btn-sm float-right`}><span role="img" aria-label="library">📘</span> Library</Link>
+          <Link to="/todays-manga-v1" className={`btn ${configDB.GetActiveTemplate("btn-success", "btn-outline-success")} btn-sm float-right mx-3`}><span role="img" aria-label="book">📔</span> Latest</Link>
         </div>
-        <div className="col-12"><h4>Search</h4></div>
+        <div className="col-12"><h4 style={{color:configDB.GetActiveTemplate("white", "black")}}>Search</h4></div>
         <div className="col-12 col-lg-9"><input
           type="text" name="search_text" className="form-control"
           value={search_query}

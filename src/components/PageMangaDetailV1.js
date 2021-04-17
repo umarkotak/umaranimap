@@ -32,13 +32,13 @@ function PageMangaDetailV1() {
   return (
     <div>
       <div className="row">
-        <div className="col-12 col-md-3">
+        <div className="col-12 col-md-3 border">
           <img src={manga_detail.image_url} style={{width: "100%"}} alt="immage" className="img border rounded"></img>
         </div>
 
-        <div className="col-12 col-md-9">
-          <h1>{manga_title.replace(/-/g, " ")}</h1>
-          <table className="table table-bordered">
+        <div className="col-12 col-md-9 border">
+          <h1 style={{color: configDB.GetActiveTemplate("white", "black")}}>{manga_title.replace(/-/g, " ")}</h1>
+          <table className="table table-bordered" style={{color: configDB.GetActiveTemplate("white", "black")}}>
             <thead>
               <tr>
                 <td>Genres</td>
@@ -56,8 +56,8 @@ function PageMangaDetailV1() {
 
           <div className="row">
             {manga_detail.chapters.map(chapter_no => (
-              <div className="col-4 col-md-2">
-                <Link className="btn btn-outline-info btn-block" to={`/read-manga-only-v1/${manga_title}/${chapter_no}?last_chapter=${last_chapter}&chapter_size=150`}>{chapter_no}</Link>
+              <div className="col-4 col-md-2 px-1">
+                <Link className={`btn btn-block my-1 ${configDB.GetActiveTemplate("btn-info", "btn-outline-info")}`} to={`/read-manga-only-v1/${manga_title}/${chapter_no}?last_chapter=${last_chapter}&chapter_size=150`}>{chapter_no}</Link>
               </div>
             ))}
           </div>

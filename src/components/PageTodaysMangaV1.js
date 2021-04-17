@@ -5,6 +5,7 @@ import React, {useState, useEffect} from "react"
 import Cookies from 'universal-cookie'
 import InfiniteScroll from 'react-infinite-scroll-component';
 import {Link} from "react-router-dom"
+import configDB from "./ConfigDB"
 
 function PageTodaysMangaV1() {
   const cookies = new Cookies()
@@ -110,11 +111,11 @@ function PageTodaysMangaV1() {
       <hr/>
       <div className="row">
         <div className="col-12">
-          <Link to="/manga-library-v1" className="btn btn-outline-success btn-sm float-right"><span role="img" aria-label="library">📘</span> Library</Link>
-          <Link to="/search-manga-v1" className="btn btn-outline-success btn-sm float-right mx-3"><span role="img" aria-label="search">🔍</span> Search</Link>
+          <Link to="/manga-library-v1" className={`btn ${configDB.GetActiveTemplate("btn-success", "btn-outline-success")} btn-sm float-right`}><span role="img" aria-label="library">📘</span> Library</Link>
+          <Link to="/search-manga-v1" className={`btn ${configDB.GetActiveTemplate("btn-success", "btn-outline-success")} btn-sm float-right mx-3`}><span role="img" aria-label="search">🔍</span> Search</Link>
         </div>
         <div className="col-12">
-          <h4>Today's Manga</h4>
+          <h4 style={{color:configDB.GetActiveTemplate("white", "black")}}>Today's Manga</h4>
           <hr/>
         </div>
         <RenderTodaysMangaSection />
@@ -138,7 +139,7 @@ function PageTodaysMangaV1() {
                   <div className={`card mb-4 box-shadow shadow border-4 ${generate_manga_airing_status(value)}`}>
                     <div style={{height: "170px", backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(value)})`}}>
                       <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
-                        <small>{`( ${todays_manga_db.get(value).manga_last_chapter} / ${todays_manga_db.get(value).manga_last_chapter} )`}</small>
+                        <small>{`${todays_manga_db.get(value).manga_last_chapter} / ${todays_manga_db.get(value).manga_last_chapter}`}</small>
                         <button
                           className="btn btn-xs btn-outline-danger float-right"
                           style={{ paddingTop: "1px", paddingBottom: "1px", paddingLeft: "3px", paddingRight: "3px" }}
@@ -156,13 +157,13 @@ function PageTodaysMangaV1() {
                     {/* <Link className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${value}/1?last_chapter=${todays_manga_db.get(value).manga_last_chapter}&chapter_size=75`}>First Ch</Link> */}
                     {/* <Link className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${value}/${todays_manga_db.get(value).manga_last_chapter}?last_chapter=${todays_manga_db.get(value).manga_last_chapter}&chapter_size=75`}>Latest Ch</Link> */}
                     <div className="row">
-                      <div className="col-4 pr-0">
+                      <div className="col-3 pr-0">
                         <Link type="button" className="btn btn-block btn-sm btn-outline-secondary p-1" to={`/manga-detail-v1/${value}`}>ℹ</Link>
                       </div>
-                      <div className="col-4 px-0">
+                      <div className="col-3 px-0">
                         <Link className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${value}/1?last_chapter=${todays_manga_db.get(value).manga_last_chapter}&chapter_size=75`}>1</Link>
                       </div>
-                      <div className="col-4 pl-0">
+                      <div className="col-6 pl-0">
                         <Link className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${value}/${todays_manga_db.get(value).manga_last_chapter}?last_chapter=${todays_manga_db.get(value).manga_last_chapter}&chapter_size=75`}>{todays_manga_db.get(value).manga_last_chapter}</Link>
                       </div>
                     </div>
