@@ -145,48 +145,50 @@ function PageAiringAnimeV6() {
       <div className="container pb-5 pt-1">
         <div className="row">
           {items.map(item => (
-            <div className="col-lg-3 col-sm-6 col-12 p-1" key={item.mal_id}>
-              <table className="table border border-info rounded" style={{backgroundColor: configDB.GetActiveTemplate("#CBD2D9", "white")}}>
-                <tbody>
-                  <tr>
-                    <th className="p-1" style={{width: "30%"}}>
-                      <a target="_blank" rel="noopener noreferrer" href={item.url}>
-                        <img className="bd-placeholder-img" src={item.image_url} alt="" style={ { height: "120px", width: "100%", display: "block" } } />
-                      </a>
-                    </th>
-                    <th className="p-1" style={{width: "70%"}}>
-                      <div className="overflow-auto" style={{maxHeight: "130px"}}>
-                        <table className="table table-hover">
-                          <tbody>
-                            <tr className="p-0">
-                              <td className="p-1">
-                                <div className="overflow-auto" style={{height: "55px"}}>
-                                  <small>{item.mal_id} - <b>{item.title}</b></small>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr><td className="p-1"><small>Rank #{item.rank} / Score {item.score}</small></td></tr>
-                            <tr><td className="p-1"><small>{item.synopsis}</small></td></tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </th>
-                  </tr>
-                  <tr>
-                    <td className="p-1" tyle={{width: "50%"}}>
-                      <button onClick={() => getAnimeDetail(item.mal_id)} className="btn btn-sm btn-block btn-outline-success">Info</button>
-                    </td>
-                    <td className="p-1" tyle={{width: "50%"}}>
-                      <Link
-                        to={`/watch-anime-v2?mal_id=${item.mal_id}&title=${sanitizeTitle(item.title)}&raw_title=${item.title}`}
-                        className={ "btn btn-block btn-sm btn-outline-primary" }
-                      >
-                        { "▶︎ Watch" }
-                      </Link>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+            <div className="col-lg-3 col-sm-6 col-12 px-1 py-0" key={item.mal_id}>
+              <div className="border border-info rounded">
+                <table className="table" style={{backgroundColor: configDB.GetActiveTemplate("#CBD2D9", "white")}}>
+                  <tbody>
+                    <tr>
+                      <th className="p-1" style={{width: "30%"}}>
+                        <a target="_blank" rel="noopener noreferrer" href={item.url}>
+                          <img className="bd-placeholder-img" src={item.image_url} alt="" style={ { height: "120px", width: "100%", display: "block" } } />
+                        </a>
+                      </th>
+                      <th className="p-1" style={{width: "70%"}}>
+                        <div className="overflow-auto" style={{maxHeight: "130px"}}>
+                          <table className="table table-hover">
+                            <tbody>
+                              <tr className="p-0">
+                                <td className="p-1">
+                                  <div>
+                                    <small>{item.mal_id} - <b>{item.title}</b></small>
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr><td className="p-1"><small>Rank #{item.rank} / Score {item.score}</small></td></tr>
+                              <tr><td className="p-1"><small>{item.synopsis}</small></td></tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </th>
+                    </tr>
+                    <tr>
+                      <td className="p-1">
+                        <button onClick={() => getAnimeDetail(item.mal_id)} className="btn btn-sm btn-block btn-outline-success">Info</button>
+                      </td>
+                      <td className="p-1">
+                        <Link
+                          to={`/watch-anime-v2?mal_id=${item.mal_id}&title=${sanitizeTitle(item.title)}&raw_title=${item.title}`}
+                          className={ "btn btn-block btn-sm btn-outline-primary" }
+                        >
+                          { "▶︎ Watch" }
+                        </Link>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           ))}
         </div>
