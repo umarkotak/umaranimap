@@ -30,7 +30,7 @@ function PageHome() {
       <div className="row mb-5">
         <div className="col-12">
           <div className="border rounded" style={{backgroundColor: "white"}}>
-            Animapu Alternative: <a href="http://47.254.247.135/" target="_blank" rel="noopener noreferrer">http://47.254.247.135</a> / <a href="http://bit.ly/animapu-bk" target="_blank" rel="noopener noreferrer">http://bit.ly/animapu-bk</a>
+            Animapu Alternative: <a href="http://47.254.247.135/" target="_blank" rel="noopener noreferrer">http://47.254.247.135</a> / <a href="http://bit.ly/animapu-bk" target="_blank" rel="noopener noreferrer">http://bit.ly/animapu-bk</a> / <a href="https://animapu.netlify.app" target="_blank" rel="noopener noreferrer">https://animapu.netlify.app</a>
           </div>
         </div>
 
