@@ -18,11 +18,12 @@ function PageMangaLibraryV1() {
 
   const [page_loading_state, set_page_loading_state] = useState("true")
   const [new_manga_check_update, set_new_manga_check_update] = useState(" - finding new chapter . . .")
-  const [manga_histories, set_manga_histories] = useState(generateHistoriesSection())
+  // const [manga_histories, set_manga_histories] = useState(generateHistoriesSection())
+  const manga_histories = generateHistoriesSection()
   const [logged_in_manga_histories, set_logged_in_manga_histories] = useState([])
   const [history_loading_state, set_history_loading_state] = useState("true")
   const [manga_library_titles, set_manga_library_titles] = useState([])
-  const [manga_source, set_manga_source] = useState(localStorage.getItem("MANGA_SOURCE"))
+  // const [manga_source, set_manga_source] = useState(localStorage.getItem("MANGA_SOURCE"))
 
   useEffect(() => {
     // console.log("RUN ONCE")
@@ -162,12 +163,12 @@ function PageMangaLibraryV1() {
     }
   }
 
-  function handleClearHistory() {
-    var key = "last_manga_reads"
-    let date = new Date(2030, 12)
-    cookies.set(key, [], { path: "/", expires: date })
-    set_manga_histories([])
-  }
+  // function handleClearHistory() {
+  //   var key = "last_manga_reads"
+  //   let date = new Date(2030, 12)
+  //   cookies.set(key, [], { path: "/", expires: date })
+  //   set_manga_histories([])
+  // }
 
   function findLatestMangaChapter(title) {
     var key = `${title}/last_read_chapter`
@@ -299,10 +300,10 @@ function PageMangaLibraryV1() {
   function handleChangeSource(source) {
     if (source === "maid_my") {
       localStorage.setItem("MANGA_SOURCE", "maid_my")
-      set_manga_source("maid_my")
+      // set_manga_source("maid_my")
     } else {
       localStorage.setItem("MANGA_SOURCE", "mangahub")
-      set_manga_source("mangahub")
+      // set_manga_source("mangahub")
     }
     window.location.reload()
   }
