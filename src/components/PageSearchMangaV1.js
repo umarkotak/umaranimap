@@ -10,6 +10,7 @@ function PageSearchManga() {
   const [search_query, set_search_query] = useState("")
   const [search_result_db, set_search_result_db] = useState(new Map())
   const [result_titles, set_result_titles] = useState([])
+  const [manga_source, set_manga_source] = useState(localStorage.getItem("MANGA_SOURCE"))
 
   function handleSearchManga(event) {
     event.preventDefault()
@@ -26,9 +27,13 @@ function PageSearchManga() {
   }
 
   async function execute_search_manga(search_query) {
-    console.log("fetching execute_search_manga")
+    var api
+    if (manga_source === "maid_my") {
+      api = `http://go-animapu2.herokuapp.com/mangas/maid_my/search?query=${search_query}`
+    } else {
+      api = `http://go-animapu2.herokuapp.com/mangas/search_v1?title=${search_query}`
+    }
 
-    var api = `http://go-animapu2.herokuapp.com/mangas/search_v1?title=${search_query}`
     const response = await fetch(api)
     const results = await response.json()
     var converted_search_result_db = new Map(Object.entries(results.manga_db))
@@ -60,11 +65,26 @@ function PageSearchManga() {
     set_result_titles(manga_title_list.map(val => val.title))
   }, [search_result_db])
 
+  function handleChangeSource(source) {
+    if (source === "maid_my") {
+      localStorage.setItem("MANGA_SOURCE", "maid_my")
+      set_manga_source("maid_my")
+    } else {
+      localStorage.setItem("MANGA_SOURCE", "mangahub")
+      set_manga_source("mangahub")
+    }
+    window.location.reload()
+  }
+
   return (
     <div>
       <hr/>
       <div className="row">
         <div className="col-12">
+          <select className="form-select float-left" name="selectedMangaTitle" onChange={(e) => handleChangeSource(e.target.value)} defaultValue={localStorage.getItem("MANGA_SOURCE")}>
+            <option key="mangahub" value="mangahub"> mangahub (ENG) </option>
+            <option key="maid_my" value="maid_my"> maid_my (INDO) </option>
+          </select>
           <Link to="/manga-library-v1" className={`btn ${configDB.GetActiveTemplate("btn-success", "btn-outline-success")} btn-sm float-right`}><span role="img" aria-label="library">📘</span> Library</Link>
           <Link to="/todays-manga-v1" className={`btn ${configDB.GetActiveTemplate("btn-success", "btn-outline-success")} btn-sm float-right mx-3`}><span role="img" aria-label="book">📔</span> Latest</Link>
         </div>
@@ -77,14 +97,14 @@ function PageSearchManga() {
         <div className="col-6 col-lg-2"><input
           type="button"
           name="search_submit"
-          className="btn btn-outline-secondary btn-block"
+          className={`btn ${configDB.GetActiveTemplate("btn-success", "btn-outline-success")} btn-block`}
           value="search"
           onClick={(e) => handleSearchManga(e)}
         ></input></div>
         <div className="col-6 col-lg-1"><input
           type="button"
           name="search_submit"
-          className="btn btn-outline-secondary btn-block"
+          className={`btn ${configDB.GetActiveTemplate("btn-success", "btn-outline-success")} btn-block`}
           value="clear"
           onClick={(e) => handleClearManga(e)}
         ></input></div>

@@ -22,6 +22,7 @@ function PageMangaLibraryV1() {
   const [logged_in_manga_histories, set_logged_in_manga_histories] = useState([])
   const [history_loading_state, set_history_loading_state] = useState("true")
   const [manga_library_titles, set_manga_library_titles] = useState([])
+  const [manga_source, set_manga_source] = useState(localStorage.getItem("MANGA_SOURCE"))
 
   useEffect(() => {
     // console.log("RUN ONCE")
@@ -295,15 +296,30 @@ function PageMangaLibraryV1() {
     }
   }
 
+  function handleChangeSource(source) {
+    if (source === "maid_my") {
+      localStorage.setItem("MANGA_SOURCE", "maid_my")
+      set_manga_source("maid_my")
+    } else {
+      localStorage.setItem("MANGA_SOURCE", "mangahub")
+      set_manga_source("mangahub")
+    }
+    window.location.reload()
+  }
+
   return (
     <div>
       <div className="pb-5">
         <div>
           <div className="row my-2">
             <div className="col-12">
+              <select className="form-select float-left" name="selectedMangaTitle" onChange={(e) => handleChangeSource(e.target.value)} defaultValue={localStorage.getItem("MANGA_SOURCE")}>
+                <option key="mangahub" value="mangahub"> mangahub (ENG) </option>
+                <option key="maid_my" value="maid_my"> maid_my (INDO) </option>
+              </select>
               <Link to="/todays-manga-v1" className={`btn ${configDB.GetActiveTemplate("btn-success", "btn-outline-success")} btn-sm float-right`}><span role="img" aria-label="book">📔</span> Latest</Link>
               <Link to="/search-manga-v1" className={`btn ${configDB.GetActiveTemplate("btn-success", "btn-outline-success")} btn-sm float-right mx-3`}><span role="img" aria-label="search">🔍</span> Search</Link>
-              <button className={`float-right btn btn-sm ${configDB.GetActiveTemplate("btn-danger", "btn-outline-danger")}`} onClick={() => handleClearHistory()} href="#"><span role="img" aria-label="bin">🗑</span> Clear History</button>
+              {/* <button className={`float-right btn btn-sm ${configDB.GetActiveTemplate("btn-danger", "btn-outline-danger")}`} onClick={() => handleClearHistory()} href="#"><span role="img" aria-label="bin">🗑</span> Clear History</button> */}
             </div>
           </div>
           <div><h4 style={{color:configDB.GetActiveTemplate("white", "black")}}>History</h4></div>

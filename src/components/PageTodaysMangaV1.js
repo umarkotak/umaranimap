@@ -3,7 +3,6 @@
 
 import React, {useState, useEffect} from "react"
 import Cookies from 'universal-cookie'
-import InfiniteScroll from 'react-infinite-scroll-component';
 import {Link} from "react-router-dom"
 import configDB from "./ConfigDB"
 
@@ -12,22 +11,7 @@ function PageTodaysMangaV1() {
   const [fetch_todays_manga_state, set_fetch_todays_manga_state] = useState("finding")
   const [todays_manga_db, set_todays_manga_db] = useState(new Map())
   const [todays_manga_titles, set_todays_manga_titles] = useState([])
-  const [count, setCount] = useState({
-    prev: 0,
-    next: 24
-  })
-  const [hasMore, setHasMore] = useState(true);
-  const [current, setCurrent] = useState(todays_manga_titles.slice(count.prev, count.next))
-  const getMoreData = () => {
-    if (current.length === todays_manga_titles.length) {
-      setHasMore(false);
-      return;
-    }
-    setTimeout(() => {
-      setCurrent(current.concat(todays_manga_titles.slice(count.prev + 24, count.next + 24)))
-    }, 2000)
-    setCount((prevState) => ({ prev: prevState.prev + 24, next: prevState.next + 24 }))
-  }
+  const [manga_source, set_manga_source] = useState(localStorage.getItem("MANGA_SOURCE"))
 
   function generateThumbnailFromTitle(title) {
     try {
@@ -49,25 +33,31 @@ function PageTodaysMangaV1() {
     }
   }
 
-  useEffect(() => {
-    async function fetchTodayMangaData() {
-      var api = "http://go-animapu2.herokuapp.com/mangas/todays_v1"
-      const response = await fetch(api)
-      const results = await response.json()
-      var converted_manga_db = new Map(Object.entries(results.manga_db))
-      console.log("INCOMING DATA", converted_manga_db)
-      set_todays_manga_db(converted_manga_db)
-
-      var new_mangas = []
-      converted_manga_db.forEach((num, key) => {
-        new_mangas.push({title: key, order: num.new_added, weight: num.weight})
-      })
-      new_mangas.sort((a, b) => b.weight - a.weight)
-
-      set_todays_manga_titles(new_mangas.map(val => val.title))
-      set_fetch_todays_manga_state("finished")
-      setCurrent(current.concat(new_mangas.map(val => val.title).slice(count.prev + 10, count.next + 10)))
+  async function fetchTodayMangaData() {
+    var api
+    if (manga_source === "maid_my") {
+      api = "http://go-animapu2.herokuapp.com/mangas/maid_my/home"
+    } else {
+      api = "http://go-animapu2.herokuapp.com/mangas/todays_v1"
     }
+
+    const response = await fetch(api)
+    const results = await response.json()
+    var converted_manga_db = new Map(Object.entries(results.manga_db))
+    console.log("INCOMING DATA", converted_manga_db)
+    set_todays_manga_db(converted_manga_db)
+
+    var new_mangas = []
+    converted_manga_db.forEach((num, key) => {
+      new_mangas.push({title: key, order: num.new_added, weight: num.weight})
+    })
+    new_mangas.sort((a, b) => b.weight - a.weight)
+
+    set_todays_manga_titles(new_mangas.map(val => val.title))
+    set_fetch_todays_manga_state("finished")
+  }
+
+  useEffect(() => {
     fetchTodayMangaData()
   // eslint-disable-next-line
   }, []);
@@ -106,11 +96,26 @@ function PageTodaysMangaV1() {
     }
   }
 
+  function handleChangeSource(source) {
+    if (source === "maid_my") {
+      localStorage.setItem("MANGA_SOURCE", "maid_my")
+      set_manga_source("maid_my")
+    } else {
+      localStorage.setItem("MANGA_SOURCE", "mangahub")
+      set_manga_source("mangahub")
+    }
+    window.location.reload()
+  }
+
   return (
     <div>
       <hr/>
       <div className="row">
         <div className="col-12">
+          <select className="form-select float-left" name="selectedMangaTitle" onChange={(e) => handleChangeSource(e.target.value)} defaultValue={localStorage.getItem("MANGA_SOURCE")}>
+            <option key="mangahub" value="mangahub"> mangahub (ENG) </option>
+            <option key="maid_my" value="maid_my"> maid_my (INDO) </option>
+          </select>
           <Link to="/manga-library-v1" className={`btn ${configDB.GetActiveTemplate("btn-success", "btn-outline-success")} btn-sm float-right`}><span role="img" aria-label="library">📘</span> Library</Link>
           <Link to="/search-manga-v1" className={`btn ${configDB.GetActiveTemplate("btn-success", "btn-outline-success")} btn-sm float-right mx-3`}><span role="img" aria-label="search">🔍</span> Search</Link>
         </div>
@@ -127,14 +132,8 @@ function PageTodaysMangaV1() {
     if (fetch_todays_manga_state === "finished") {
       return(
         <div className="col-12">
-          <InfiniteScroll
-            dataLength={current.length}
-            next={getMoreData}
-            hasMore={hasMore}
-            loader={<h4>Loading...</h4>}
-            className="row"
-          >
-              {current && current.map(((value, index) => (
+          <div className="row">
+              {todays_manga_titles && todays_manga_titles.slice(0, 144).map(((value, index) => (
                 <div className="col-4 col-md-2" key={index+value}>
                   <div className={`card mb-4 box-shadow shadow border-4 ${generate_manga_airing_status(value)}`}>
                     <div style={{height: "170px", backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(value)})`}}>
@@ -170,7 +169,7 @@ function PageTodaysMangaV1() {
                   </div>
                 </div>
               )))}
-          </InfiniteScroll>
+          </div>
         </div>
       )
     }

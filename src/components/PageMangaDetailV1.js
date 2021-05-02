@@ -13,7 +13,12 @@ function PageMangaDetailV1() {
 
   useEffect(() => {
     async function fetchData() {
-      var api = `${go_animapu_host}/mangas_detail?manga_title=${manga_title}`
+      var api
+      if (localStorage.getItem("MANGA_SOURCE") === "maid_my") {
+        api = `${go_animapu_host}/mangas/maid_my/manga_detail?manga_title=${manga_title}`
+      } else {
+        api = `${go_animapu_host}/mangas_detail?manga_title=${manga_title}`
+      }
       const response = await fetch(api)
       const results = await response.json()
 
