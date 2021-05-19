@@ -34,6 +34,7 @@ import PageMangaDetailV1 from "./components/PageMangaDetailV1"
 import PageSocketGameV1 from "./components/PageSocketGameV1"
 // import PageTWBot from "./components/PageTWBot"
 import PageTWBotV2 from "./components/PageTWBotV2"
+import PageRepackGamesV1 from "./components/PageRepackGamesV1"
 
 function App() {
   return (
@@ -76,6 +77,7 @@ function App() {
             <Route path="/socket-game-v1" exact component={PageSocketGameV1} />
             {/* <Route path="/tw-bot-v1" exact component={PageTWBot} /> */}
             <Route path="/tw-bot-v2" exact component={PageTWBotV2} />
+            <Route path="/repack-games-v1" exact component={PageRepackGamesV1} />
           </Switch>
         </div>
       </div>

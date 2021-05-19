@@ -116,6 +116,7 @@ function PageHome() {
               <Link to="/socket-game-v1" className="btn btn-block btn-primary">Socket Game</Link>
               {/* <Link to="/tw-bot-v1" className="btn btn-block btn-primary">Tribal War Bot</Link> */}
               <Link to="/tw-bot-v2" className="btn btn-block btn-primary">Tribal War Bot</Link>
+              <Link to="/repack-games-v1" className="btn btn-block btn-primary">Repack Games</Link>
             </div>
           </div>
         </div>
