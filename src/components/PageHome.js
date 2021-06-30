@@ -54,7 +54,7 @@ function PageHome() {
             </div>
             <div className="card-body">
               <Link to="/airing-anime-v5" className="btn btn-block btn-primary">Seasonal Animes</Link>
-              <Link to="/watch-anime-v1" className="btn btn-block btn-primary">Watch Animes</Link>
+              <Link to="/watch-anime-v2" className="btn btn-block btn-primary">Watch Animes</Link>
               <Link to="#" className="btn btn-block btn-primary">Watch Light Novel Resume</Link>
             </div>
           </div>

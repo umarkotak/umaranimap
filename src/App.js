@@ -2,15 +2,12 @@ import React from "react"
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom"
 
 import Nav from "./components/Nav"
-import configDB from "./components/ConfigDB"
+import dataStoreCommon from "./components/DataStoreCommon"
 import PageHome from "./components/PageHome"
 import PageLogin from "./components/PageLogin"
 import PageTicTacToe from "./components/PageTicTacToe"
 import PageLearnReact from "./components/PageLearnReact"
-import PageAiringAnimeV1 from "./components/PageAiringAnimeV1"
-import PageAiringAnimeV5 from "./components/PageAiringAnimeV5"
 import PageAiringAnimeV6 from "./components/PageAiringAnimeV6"
-import PageWatchAnimeV1 from "./components/PageWatchAnimeV1"
 import PageWatchAnimeV2 from "./components/PageWatchAnimeV2"
 import PageSearchMangaV1 from "./components/PageSearchMangaV1"
 import PageTodaysMangaV1 from "./components/PageTodaysMangaV1"
@@ -28,8 +25,8 @@ import PageRepackGamesV2 from "./components/PageRepackGamesV2"
 function App() {
   return (
     <Router>
-      <div style={{backgroundColor: `${configDB.GetActiveTemplate("#1b262c", "#b3e7ff")}`}}>
-        <div className="App container border border-secondary shadow-lg" style={{backgroundColor: `${configDB.GetActiveTemplate("#0f4a71", "#ffffff")}`}}>
+      <div style={{backgroundColor: `${dataStoreCommon.GetActiveTemplate("#1b262c", "#b3e7ff")}`}}>
+        <div className="App container border border-secondary shadow-lg" style={{backgroundColor: `${dataStoreCommon.GetActiveTemplate("#0f4a71", "#ffffff")}`}}>
           <Nav />
           <Switch>
             <Route path="/" exact component={PageHome} />
@@ -39,10 +36,7 @@ function App() {
             <Route path="/chatto-v1" exact component={PageChattoV1} />
             <Route path="/statistics-v1" exact component={PageStatisticsV1} />
             <Route path="/learn-react" exact component={PageLearnReact} />
-            <Route path="/airing-anime-v1/:id" exact component={PageAiringAnimeV1} />
-            <Route path="/airing-anime-v5" exact component={PageAiringAnimeV5} />
             <Route path="/airing-anime-v6" exact component={PageAiringAnimeV6} />
-            <Route path="/watch-anime-v1" exact component={PageWatchAnimeV1} />
             <Route path="/watch-anime-v2" exact component={PageWatchAnimeV2} />
             <Route path="/search-manga-v1" exact component={PageSearchMangaV1} />
             <Route path="/todays-manga-v1" exact component={PageTodaysMangaV1} />

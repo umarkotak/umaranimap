@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react"
 import ReactPlayer from 'react-player'
 import {Link} from "react-router-dom"
-import configDB from "./ConfigDB"
+import dataStoreCommon from "./DataStoreCommon"
 
 function PageAiringAnimeV6() {
   var valid_seasons = ["winter", "spring", "summer", "fall"]
@@ -147,7 +147,7 @@ function PageAiringAnimeV6() {
           {items.map(item => (
             <div className="col-lg-3 col-sm-6 col-12 px-1 py-0" key={item.mal_id}>
               <div className="border border-info rounded">
-                <table className="table" style={{backgroundColor: configDB.GetActiveTemplate("#CBD2D9", "white")}}>
+                <table className="table" style={{backgroundColor: dataStoreCommon.GetActiveTemplate("#CBD2D9", "white")}}>
                   <tbody>
                     <tr>
                       <th className="p-1" style={{width: "30%"}}>

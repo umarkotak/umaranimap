@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from "react"
 import {Link, useParams} from "react-router-dom"
-import configDB from "./ConfigDB"
+import dataStoreCommon from "./DataStoreCommon"
 
-var go_animapu_host = configDB.GetConf().GO_ANIMAPU_HOST
+var go_animapu_host = dataStoreCommon.GetConf().GO_ANIMAPU_HOST
 
 function PageMangaDetailV1() {
   let { manga_title } = useParams();
@@ -42,8 +42,8 @@ function PageMangaDetailV1() {
         </div>
 
         <div className="col-12 col-md-9 border">
-          <h1 style={{color: configDB.GetActiveTemplate("white", "black")}}>{manga_title.replace(/-/g, " ")}</h1>
-          <table className="table table-bordered" style={{color: configDB.GetActiveTemplate("white", "black")}}>
+          <h1 style={{color: dataStoreCommon.GetActiveTemplate("white", "black")}}>{manga_title.replace(/-/g, " ")}</h1>
+          <table className="table table-bordered" style={{color: dataStoreCommon.GetActiveTemplate("white", "black")}}>
             <thead>
               <tr>
                 <td>Genres</td>
@@ -62,7 +62,7 @@ function PageMangaDetailV1() {
           <div className="row">
             {manga_detail.chapters.map(chapter_no => (
               <div className="col-4 col-md-2 px-1">
-                <Link className={`btn btn-block my-1 ${configDB.GetActiveTemplate("btn-info", "btn-outline-info")}`} to={`/read-manga-only-v1/${manga_title}/${chapter_no}?last_chapter=${last_chapter}&chapter_size=150`}>{chapter_no}</Link>
+                <Link className={`btn btn-block my-1 ${dataStoreCommon.GetActiveTemplate("btn-info", "btn-outline-info")}`} to={`/read-manga-only-v1/${manga_title}/${chapter_no}?last_chapter=${last_chapter}&chapter_size=150`}>{chapter_no}</Link>
               </div>
             ))}
           </div>

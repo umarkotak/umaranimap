@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react"
 import {Line} from 'react-chartjs-2';
+import dataStoreCommon from "./DataStoreCommon"
 
 function CompDailyMangaClick() {
   // eslint-disable-next-line
@@ -35,7 +36,7 @@ function CompDailyMangaClick() {
 
   useEffect(() => {
     async function fetchTodayMangaData() {
-      var api = "http://go-animapu2.herokuapp.com/mangas/daily_manga_statistics"
+      var api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", "/mangas/daily_manga_statistics")
       const response = await fetch(api)
       const results = await response.json()
       var temp_statistics = new Map(Object.entries(results))
@@ -48,18 +49,6 @@ function CompDailyMangaClick() {
         temp_total_count.push(value.count)
       })
 
-      // var temp_shorted_arr = []
-      // temp_statistics.forEach((value, key) => {
-      //   value.title = key
-      //   temp_shorted_arr.push(value)
-      // })
-      // temp_shorted_arr.sort(function (a, b) {
-      //   return b.TotalHitCount - a.TotalHitCount || a.Title - b.Title
-      // })
-      // console.log("HEY!", temp_shorted_arr)
-
-      // set_titles_shorted(temp_shorted_arr.map(v => v.Title.substring(0,30)).slice(0, statCount))
-      // set_total_count_shorted(temp_shorted_arr.map(v => v.TotalHitCount).slice(0, statCount))
       set_date_data_shorted(temp_titles)
       set_total_count_shorted(temp_total_count)
     }

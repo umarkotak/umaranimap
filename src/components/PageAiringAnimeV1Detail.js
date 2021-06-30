@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react"
+import dataStoreCommon from "./DataStoreCommon"
 
 function AboutDetail({match}) {
 

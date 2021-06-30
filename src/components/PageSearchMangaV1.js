@@ -3,7 +3,7 @@
 
 import React, {useState, useEffect} from "react"
 import {Link} from "react-router-dom"
-import configDB from "./ConfigDB"
+import dataStoreCommon from "./DataStoreCommon"
 
 function PageSearchManga() {
   const [searching_state, set_searching_state] = useState("standby")
@@ -85,10 +85,10 @@ function PageSearchManga() {
             <option key="mangahub" value="mangahub"> mangahub (ENG) </option>
             <option key="maid_my" value="maid_my"> maid_my (INDO) </option>
           </select>
-          <Link to="/manga-library-v1" className={`btn ${configDB.GetActiveTemplate("btn-success", "btn-outline-success")} btn-sm float-right`}><span role="img" aria-label="library">📘</span> Library</Link>
-          <Link to="/todays-manga-v1" className={`btn ${configDB.GetActiveTemplate("btn-success", "btn-outline-success")} btn-sm float-right mx-3`}><span role="img" aria-label="book">📔</span> Latest</Link>
+          <Link to="/manga-library-v1" className={`btn ${dataStoreCommon.GetActiveTemplate("btn-success", "btn-outline-success")} btn-sm float-right`}><span role="img" aria-label="library">📘</span> Library</Link>
+          <Link to="/todays-manga-v1" className={`btn ${dataStoreCommon.GetActiveTemplate("btn-success", "btn-outline-success")} btn-sm float-right mx-3`}><span role="img" aria-label="book">📔</span> Latest</Link>
         </div>
-        <div className="col-12"><h4 style={{color:configDB.GetActiveTemplate("white", "black")}}>Search</h4></div>
+        <div className="col-12"><h4 style={{color:dataStoreCommon.GetActiveTemplate("white", "black")}}>Search</h4></div>
         <div className="col-12 col-lg-9"><input
           type="text" name="search_text" className="form-control"
           value={search_query}
@@ -97,14 +97,14 @@ function PageSearchManga() {
         <div className="col-6 col-lg-2"><input
           type="button"
           name="search_submit"
-          className={`btn ${configDB.GetActiveTemplate("btn-success", "btn-outline-success")} btn-block`}
+          className={`btn ${dataStoreCommon.GetActiveTemplate("btn-success", "btn-outline-success")} btn-block`}
           value="search"
           onClick={(e) => handleSearchManga(e)}
         ></input></div>
         <div className="col-6 col-lg-1"><input
           type="button"
           name="search_submit"
-          className={`btn ${configDB.GetActiveTemplate("btn-success", "btn-outline-success")} btn-block`}
+          className={`btn ${dataStoreCommon.GetActiveTemplate("btn-success", "btn-outline-success")} btn-block`}
           value="clear"
           onClick={(e) => handleClearManga(e)}
         ></input></div>
