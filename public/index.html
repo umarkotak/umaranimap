@@ -70,6 +70,12 @@
     </div>
 
     <script>
+      if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
+        location.replace(`https:${location.href.substring(location.protocol.length)}`);
+      }
+    </script>
+
+    <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function() {
           navigator.serviceWorker.register("%PUBLIC_URL%/worker.js").then(function(registration) {
