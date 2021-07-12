@@ -6,8 +6,6 @@ import { v4 as uuidv4 } from 'uuid';
 import dataStoreCommon from "./DataStoreCommon"
 
 const cookies = new Cookies()
-var go_animapu_host = "http://go-animapu2.herokuapp.com"
-// var go_animapu_host = "http://localhost:3005"
 
 function PageMangaLibraryV1() {
   const [manga_db, set_manga_db] = useState(mangaDB.GetMangaDB())
@@ -32,7 +30,7 @@ function PageMangaLibraryV1() {
 
   useEffect(() => {
     async function fetchData() {
-      var api = `${go_animapu_host}/mangas/firebase`
+      var api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", "/mangas/firebase")
       const response = await fetch(api)
       const results = await response.json()
       var converted_manga_db = new Map(Object.entries(results.manga_db))
@@ -56,7 +54,7 @@ function PageMangaLibraryV1() {
 
   useEffect(() => {
     async function updateData() {
-      var api = `${go_animapu_host}/mangas/firebase/update`
+      var api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", "/mangas/firebase/update")
       const response = await fetch(api)
       const results = await response.json()
       var converted_manga_db = new Map(Object.entries(results.manga_db))
@@ -81,7 +79,8 @@ function PageMangaLibraryV1() {
       return
     }
 
-    const response = await fetch(`${go_animapu_host}/users/detail`, {
+    var api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", "/users/detail")
+    const response = await fetch(api, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -121,8 +120,9 @@ function PageMangaLibraryV1() {
       return
     }
 
+    var api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", "/users/manga_library")
     try {
-      const response = await fetch(`${go_animapu_host}/users/manga_library`, {
+      const response = await fetch(api, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -271,8 +271,9 @@ function PageMangaLibraryV1() {
       return
     }
 
+    var api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", "/users/remove_manga_library")
     try {
-      const response = await fetch('http://go-animapu2.herokuapp.com/users/remove_manga_library', {
+      const response = await fetch(api, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
