@@ -4,7 +4,7 @@
 import React, {useState, useEffect} from "react"
 import Cookies from 'universal-cookie'
 import {Link} from "react-router-dom"
-import configDB from "./ConfigDB"
+import dataStoreCommon from "./DataStoreCommon"
 
 function PageTodaysMangaV1() {
   const cookies = new Cookies()
@@ -116,11 +116,11 @@ function PageTodaysMangaV1() {
             <option key="mangahub" value="mangahub"> mangahub (ENG) </option>
             <option key="maid_my" value="maid_my"> maid_my (INDO) </option>
           </select>
-          <Link to="/manga-library-v1" className={`btn ${configDB.GetActiveTemplate("btn-success", "btn-outline-success")} btn-sm float-right`}><span role="img" aria-label="library">📘</span> Library</Link>
-          <Link to="/search-manga-v1" className={`btn ${configDB.GetActiveTemplate("btn-success", "btn-outline-success")} btn-sm float-right mx-3`}><span role="img" aria-label="search">🔍</span> Search</Link>
+          <Link to="/manga-library-v1" className={`btn ${dataStoreCommon.GetActiveTemplate("btn-success", "btn-outline-success")} btn-sm float-right`}><span role="img" aria-label="library">📘</span> Library</Link>
+          <Link to="/search-manga-v1" className={`btn ${dataStoreCommon.GetActiveTemplate("btn-success", "btn-outline-success")} btn-sm float-right mx-3`}><span role="img" aria-label="search">🔍</span> Search</Link>
         </div>
         <div className="col-12">
-          <h4 style={{color:configDB.GetActiveTemplate("white", "black")}}>Today's Manga</h4>
+          <h4 style={{color:dataStoreCommon.GetActiveTemplate("white", "black")}}>Today's Manga</h4>
           <hr/>
         </div>
         <RenderTodaysMangaSection />

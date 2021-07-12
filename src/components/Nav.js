@@ -1,7 +1,7 @@
 import React, {useState} from "react"
 import {Link} from "react-router-dom"
 import Cookies from 'universal-cookie'
-import configDB from "./ConfigDB"
+import dataStoreCommon from "./DataStoreCommon"
 
 const cookies = new Cookies()
 
@@ -26,11 +26,8 @@ function Nav() {
       <header className="blog-header py-3">
         <div className="row flex-nowrap justify-content-between align-items-center">
           <div className="col-4 pt-1">
-            <Link to="/" style={{color:configDB.GetActiveTemplate("#bbe1fa", "#0f4c75")}}>ANIMAPU</Link>
+            <Link to="/" style={{color:dataStoreCommon.GetActiveTemplate("#bbe1fa", "#0f4c75")}}>ANIMAPU</Link>
           </div>
-          {/* <div className="col-4 text-center">
-            <Link to="/" className="blog-header-logo text-dark">ANIMAPU</Link>
-          </div> */}
           <div className="col-8 d-flex justify-content-end align-items-center">
             <ToggleDarkMode />
             <UserNav />
@@ -39,26 +36,9 @@ function Nav() {
       </header>
       <div className="nav-scroller py-1 mb-2">
         <nav className="nav d-flex justify-content-between">
-          <Link to="/" className="p-2 m-1" style={{color:configDB.GetActiveTemplate("#bbe1fa", "#0f4c75")}}>Main Menu</Link>
-          {/* <Link to="/tic-tac-toe" className="p-2 m-1">Tic Tac Toe</Link>
-          <Link to="/learn-react" className="p-2 m-1">Learn React</Link>
-          <Link to="/airing-anime-v1" className="p-2 m-1">Airing Anime V1</Link>
-          <Link to="/airing-anime-v2" className="p-2 m-1">Airing Anime V2</Link>
-          <Link to="/airing-anime-v3" className="p-2 m-1">Airing Anime V3</Link>
-          <Link to="/airing-anime-v4" className="p-2 m-1">Airing Anime V4</Link>
-          <Link to="/airing-anime-v5" className="p-2 m-1">Airing Anime V5</Link> */}
-          <Link to="/airing-anime-v6" className="p-2 m-1" style={{color:configDB.GetActiveTemplate("#bbe1fa", "#0f4c75")}}>Animes</Link>
-          {/* <Link to="/read-manga-v1" className="p-2 m-1">Read Manga</Link>
-          <Link to="/read-manga-v2" className="p-2 m-1">Read Manga</Link>
-          <Link to="/read-manga-v3" className="p-2 m-1">Read Manga</Link>
-          <Link to="/read-manga-v4" className="p-2 m-1">Read Manga</Link>
-          <Link to="/read-manga-v5" className="p-2 m-1">Read Manga</Link>
-          <Link to="/read-manga-v6" className="p-2 m-1">Read Manga</Link> */}
-          {/* <Link to="/read-manga-v7" className="p-2 m-1">Read Manga</Link> */}
-          {/* <Link to="/read-manga-v8" className="p-2 m-1">Mangas</Link> */}
-          <Link to="/manga-library-v1" className="p-2 m-1" style={{color:configDB.GetActiveTemplate("#bbe1fa", "#0f4c75")}}>Mangas</Link>
-          {/* <Link to="/search-manga-v1" className="p-2 m-1">Search Manga</Link> */}
-          {/* <Link to="/watch-anime-v1" className="p-2 m-1">Watch Anime</Link> */}
+          <Link to="/" className="p-2 m-1" style={{color:dataStoreCommon.GetActiveTemplate("#bbe1fa", "#0f4c75")}}>Main Menu</Link>
+          <Link to="/airing-anime-v6" className="p-2 m-1" style={{color:dataStoreCommon.GetActiveTemplate("#bbe1fa", "#0f4c75")}}>Animes</Link>
+          <Link to="/manga-library-v1" className="p-2 m-1" style={{color:dataStoreCommon.GetActiveTemplate("#bbe1fa", "#0f4c75")}}>Mangas</Link>
         </nav>
       </div>
     </div>
@@ -68,7 +48,7 @@ function Nav() {
     if (logged_in === "true") {
       return(
         <div>
-          <Link to="#" className={`btn btn-sm ${configDB.GetActiveTemplate("btn-secondary", "btn-outline-secondary")} mx-2`}>
+          <Link to="#" className={`btn btn-sm ${dataStoreCommon.GetActiveTemplate("btn-secondary", "btn-outline-secondary")} mx-2`}>
             Hello {username}
           </Link>
           <Link to="#" className="btn btn-sm btn-danger mx-2" onClick={handleLogout}>
@@ -79,7 +59,7 @@ function Nav() {
     } else {
       return(
         <div>
-          <Link to="/login" className={`btn btn-sm ${configDB.GetActiveTemplate("btn-primary", "btn-outline-secondary")} mx-2`}>
+          <Link to="/login" className={`btn btn-sm ${dataStoreCommon.GetActiveTemplate("btn-primary", "btn-outline-secondary")} mx-2`}>
             Login
           </Link>
         </div>
@@ -88,7 +68,7 @@ function Nav() {
   }
 
   function ToggleDarkMode() {
-    if (configDB.GetActiveTemplate("ON", "OFF") === "ON") {
+    if (dataStoreCommon.GetActiveTemplate("ON", "OFF") === "ON") {
       return(
         <div>
           <button className="btn btn-sm btn-secondary" onClick={() => set_to_light_mode()}>Light</button>
@@ -104,9 +84,9 @@ function Nav() {
 
   function handleLogout() {
     alert("are you sure?")
-    cookies.remove("GO_ANIMAPU_LOGGED_IN")
-    cookies.remove("GO_ANIMAPU_USERNAME")
-    cookies.remove("GO_ANIMAPU_LOGIN_TOKEN")
+    cookies.remove("GO_ANIMAPU_LOGGED_IN", {path: "/", expires: "2000-01-01"})
+    cookies.remove("GO_ANIMAPU_USERNAME", {path: "/", expires: "2000-01-01"})
+    cookies.remove("GO_ANIMAPU_LOGIN_TOKEN", {path: "/", expires: "2000-01-01"})
     set_logged_in("false")
     set_username("")
     window.location.reload(false)

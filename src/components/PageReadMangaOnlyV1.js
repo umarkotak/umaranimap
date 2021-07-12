@@ -3,12 +3,11 @@ import Cookies from 'universal-cookie'
 import {Link, useParams, useHistory} from "react-router-dom"
 import {WhatsappShareButton} from "react-share"
 import InfiniteScroll from 'react-infinite-scroll-component';
+import dataStoreCommon from "./DataStoreCommon"
 
 const cookies = new Cookies()
-var cdn_host = "https://img.mghubcdn.com/file/imghub"
-var go_animapu_host = "http://go-animapu2.herokuapp.com"
-// var go_animapu_host = "http://localhost:3005"
-var animapu_host = "http://animapu.herokuapp.com"
+var cdn_host = dataStoreCommon.GetConf()["MANGAHUB_CDN_HOST"]
+var animapu_host = dataStoreCommon.GetConf()["ANIMAPU_HOST"]
 
 var qs = require('qs')
 function query_last_chapter() {
@@ -62,25 +61,32 @@ function PageReadMangaOnlyV1() {
 
   const [manga_chapter_list, set_manga_chapter_list] = useState(generateChapterListFromTitle())
 
+  async function fetchMangaDetail() {
+    var api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", `/mangas_detail?manga_title=${manga_title}`)
+    const response = await fetch(api)
+    const results = await response.json()
+    // console.log(results)
+
+    if (!Array.isArray(results.chapters)) {
+      results.chapters=[]
+      return
+    }
+
+    if (!response.ok) {
+      return
+    }
+
+    return results
+  }
+
   useEffect(() => {
     async function fetchData() {
-      var api = `${go_animapu_host}/mangas_detail?manga_title=${manga_title}`
-      const response = await fetch(api)
-      const results = await response.json()
-      console.log(results)
-
-      if (!Array.isArray(results.chapters)) {
-        results.chapters=[]
-        return
-      }
-
-      if (!response.ok) {
-        return
-      }
+      var results = await fetchMangaDetail()
 
       set_manga_chapter_list(results.chapters)
     }
     fetchData()
+    // eslint-disable-next-line
   }, [manga_title])
 
   // var manga_chapter_list = generateChapterListFromTitle()
@@ -138,7 +144,7 @@ function PageReadMangaOnlyV1() {
     }
     try {
       // const response = await fetch(`${go_animapu_host}/users/analytic_v1`, {
-      await fetch(`${go_animapu_host}/users/analytic_v1`, {
+      await fetch(dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", `/users/analytic_v1`), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -167,7 +173,7 @@ function PageReadMangaOnlyV1() {
     }
 
     try {
-      await fetch(`${go_animapu_host}/users/read_histories`, {
+      await fetch(dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", `/users/read_histories`), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -185,8 +191,20 @@ function PageReadMangaOnlyV1() {
     }
   }
 
+  function capitalizeTheFirstLetterOfEachWord(words) {
+    var separateWord = words.toLowerCase().split(' ');
+    for (var i = 0; i < separateWord.length; i++) {
+       separateWord[i] = separateWord[i].charAt(0).toUpperCase() +
+       separateWord[i].substring(1);
+    }
+    return separateWord.join(' ');
+ }
+
   function reconstruct_shareable() {
-    return `${animapu_host}/read-manga-only-v1/${manga_title}/${next_manga_chapter}?last_chapter=${manga_last_chapter}&chapter_size=${manga_chapter_size}`
+    var beauty_title = manga_title.replace('-',' ')
+    beauty_title = capitalizeTheFirstLetterOfEachWord(beauty_title)
+    var shareLink = `${animapu_host}/read-manga-only-v1/${manga_title}/${manga_chapter}`
+    return `Come and read your favorite manga on Animapu! *${beauty_title}* Chapter *${manga_chapter}*. Link: *${shareLink}*`
   }
 
   function copyToClipboard(e) {
@@ -195,6 +213,61 @@ function PageReadMangaOnlyV1() {
     document.execCommand('copy')
 
     set_button_share("Copied")
+  }
+
+  async function addToGenericLibrary() {
+    if (!manga_title && !manga_chapter) {
+      console.log("Invalid!")
+      return
+    }
+    if (!cookies.get("GO_ANIMAPU_LOGIN_TOKEN")) {
+      console.log("Unauthorized!")
+      return
+    }
+    try {
+      var payload = {
+        "title": manga_title,
+        "manga_last_chapter": parseInt(manga_chapter_list[0]) || 150,
+        "image_url": ""
+      }
+      fetch(dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", `/mangas/general/add`), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': cookies.get("GO_ANIMAPU_LOGIN_TOKEN")
+        },
+        body: JSON.stringify(payload)
+      })
+      alert("SUCCESS!")
+
+    } catch (e) {}
+  }
+
+  async function removeFromGenericLibrary() {
+    if (!manga_title && !manga_chapter) {
+      console.log("Invalid!")
+      return
+    }
+    if (!cookies.get("GO_ANIMAPU_LOGIN_TOKEN")) {
+      console.log("Unauthorized!")
+      return
+    }
+    if (!window.confirm("Are you sure removing this?")) {
+      return
+    }
+
+    try {
+      var payload = {"title": manga_title}
+      fetch(dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", `/mangas/general/delete`), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': cookies.get("GO_ANIMAPU_LOGIN_TOKEN")
+        },
+        body: JSON.stringify(payload)
+      })
+
+    } catch (e) {}
   }
 
   function handleChangeMangaChapter(no_chapter) {
@@ -325,26 +398,6 @@ function PageReadMangaOnlyV1() {
       <RenderHead />
 
       <div className="" key={manga_chapter}>
-        {/* {manga_pages.map(page_no => (
-          <div className="bg-dark border-left border-right border-dark rounded" key={generateImageURL(page_no)}>
-            <img
-              className="bd-placeholder-img mx-auto d-block img-fluid"
-              src={generateImageURL(page_no)}
-              alt=""
-            />
-            <img
-              className="bd-placeholder-img mx-auto d-block img-fluid"
-              src={generateImageErrorUrl(page_no)}
-              alt=""
-            />
-            <img
-              className="bd-placeholder-img mx-auto d-block img-fluid"
-              src={generateImageJPEG(page_no)}
-              alt=""
-            />
-          </div>
-        ))} */}
-
         <InfiniteScroll
           dataLength={current.length}
           next={getMoreData}
@@ -359,16 +412,6 @@ function PageReadMangaOnlyV1() {
                 alt=""
                 onError={(e) => handleImageFallback(value, e)}
               />
-              {/* <img
-                className="bd-placeholder-img mx-auto d-block img-fluid"
-                src={generateImageErrorUrl(value)}
-                alt=""
-              />
-              <img
-                className="bd-placeholder-img mx-auto d-block img-fluid"
-                src={generateImageJPEG(value)}
-                alt=""
-              /> */}
             </div>
           )))}
         </InfiniteScroll>
@@ -405,6 +448,8 @@ function PageReadMangaOnlyV1() {
             <div className="btn btn-light btn-sm btn-outline-info mx-1 my-1">
               <WhatsappShareButton url={reconstruct_shareable()} children={"⇪ Share WhatsApp"} />
             </div>
+            <button className="btn btn-light btn-sm btn-outline-info mx-1 my-1" onClick={addToGenericLibrary}>+</button>
+            <button className="btn btn-light btn-sm btn-outline-info mx-1 my-1" onClick={removeFromGenericLibrary}>-</button>
           </nav>
         </div>
       </div>

@@ -3,7 +3,7 @@ import mangaDB from "./MangaDB"
 import Cookies from 'universal-cookie'
 import {Link} from "react-router-dom"
 import { v4 as uuidv4 } from 'uuid';
-import configDB from "./ConfigDB"
+import dataStoreCommon from "./DataStoreCommon"
 
 const cookies = new Cookies()
 var go_animapu_host = "http://go-animapu2.herokuapp.com"
@@ -318,17 +318,17 @@ function PageMangaLibraryV1() {
                 <option key="mangahub" value="mangahub"> mangahub (ENG) </option>
                 <option key="maid_my" value="maid_my"> maid_my (INDO) </option>
               </select>
-              <Link to="/todays-manga-v1" className={`btn ${configDB.GetActiveTemplate("btn-success", "btn-outline-success")} btn-sm float-right`}><span role="img" aria-label="book">📔</span> Latest</Link>
-              <Link to="/search-manga-v1" className={`btn ${configDB.GetActiveTemplate("btn-success", "btn-outline-success")} btn-sm float-right mx-3`}><span role="img" aria-label="search">🔍</span> Search</Link>
-              {/* <button className={`float-right btn btn-sm ${configDB.GetActiveTemplate("btn-danger", "btn-outline-danger")}`} onClick={() => handleClearHistory()} href="#"><span role="img" aria-label="bin">🗑</span> Clear History</button> */}
+              <Link to="/todays-manga-v1" className={`btn ${dataStoreCommon.GetActiveTemplate("btn-success", "btn-outline-success")} btn-sm float-right`}><span role="img" aria-label="book">📔</span> Latest</Link>
+              <Link to="/search-manga-v1" className={`btn ${dataStoreCommon.GetActiveTemplate("btn-success", "btn-outline-success")} btn-sm float-right mx-3`}><span role="img" aria-label="search">🔍</span> Search</Link>
+              {/* <button className={`float-right btn btn-sm ${dataStoreCommon.GetActiveTemplate("btn-danger", "btn-outline-danger")}`} onClick={() => handleClearHistory()} href="#"><span role="img" aria-label="bin">🗑</span> Clear History</button> */}
             </div>
           </div>
-          <div><h4 style={{color:configDB.GetActiveTemplate("white", "black")}}>History</h4></div>
+          <div><h4 style={{color:dataStoreCommon.GetActiveTemplate("white", "black")}}>History</h4></div>
 
           <RenderHistoriesSection />
 
           <div className="row">
-            <div className="col-6"><h4 style={{color:configDB.GetActiveTemplate("white", "black")}}>New Manga{new_manga_check_update}</h4></div>
+            <div className="col-6"><h4 style={{color:dataStoreCommon.GetActiveTemplate("white", "black")}}>New Manga{new_manga_check_update}</h4></div>
           </div>
           <RenderLoadingBar />
 
