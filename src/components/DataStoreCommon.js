@@ -2,7 +2,7 @@ class DataStoreCommon {
   GetConf() {
     var go_animapu_host, mal_host, go_animapu_ws
 
-    if (window.location.protocol === "https") {
+    if (window.location.protocol === "https:") {
       go_animapu_host = "https://go-animapu2.herokuapp.com"
       go_animapu_ws = "wss://go-animapu.herokuapp.com"
       mal_host = "https://api.jikan.moe"
