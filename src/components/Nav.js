@@ -84,9 +84,9 @@ function Nav() {
 
   function handleLogout() {
     alert("are you sure?")
-    cookies.remove("GO_ANIMAPU_LOGGED_IN")
-    cookies.remove("GO_ANIMAPU_USERNAME")
-    cookies.remove("GO_ANIMAPU_LOGIN_TOKEN")
+    cookies.remove("GO_ANIMAPU_LOGGED_IN", {path: "/", expires: "2000-01-01"})
+    cookies.remove("GO_ANIMAPU_USERNAME", {path: "/", expires: "2000-01-01"})
+    cookies.remove("GO_ANIMAPU_LOGIN_TOKEN", {path: "/", expires: "2000-01-01"})
     set_logged_in("false")
     set_username("")
     window.location.reload(false)
