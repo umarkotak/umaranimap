@@ -1,5 +1,6 @@
 import React, {useState} from "react"
 import Cookies from 'universal-cookie';
+import dataStoreCommon from "./DataStoreCommon"
 
 const cookies = new Cookies();
 
@@ -24,7 +25,7 @@ function PageLogin() {
                 </div>
                 <div className="form-group">
                   <label>Password</label>
-                  <input type="text" className="form-control" required autoComplete="off" onChange={e => set_password(e.target.value)} />
+                  <input type="password" className="form-control" required autoComplete="off" onChange={e => set_password(e.target.value)} />
                 </div>
                 <hr/>
                 <button className="btn btn-block btn-primary">Login</button>
@@ -57,10 +58,6 @@ function PageLogin() {
             </div>
           </form>
         </div>
-        <div className="col-12">
-          <hr/>
-          <p>Chill this is only for learning that's why password is shown. do not put any personal data!</p>
-        </div>
       </div>
     </div>
   )
@@ -70,7 +67,8 @@ function PageLogin() {
 
     try {
       // const response = await fetch('http://localhost:4000/users/login', {
-      const response = await fetch('http://go-animapu2.herokuapp.com/users/login', {
+      var api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", "/users/login")
+      const response = await fetch(api, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -108,7 +106,8 @@ function PageLogin() {
     }
 
     try {
-      const response = await fetch('http://go-animapu2.herokuapp.com/users/register', {
+      var api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", "/users/register")
+      const response = await fetch(api, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

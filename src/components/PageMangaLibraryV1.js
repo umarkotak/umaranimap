@@ -179,15 +179,6 @@ function PageMangaLibraryV1() {
     }
 
     return 1
-
-    // if (typeof chapter !== "undefined") {
-    //   return parseInt(chapter)
-    // // eslint-disable-next-line
-    // } else if (typeof chapter === "NaN") {
-    //   return 1
-    // } else {
-    //   return 1
-    // }
   }
 
   function findLatestMangaChapterLoggedIn(title) {
@@ -199,15 +190,6 @@ function PageMangaLibraryV1() {
     }
 
     return findLatestMangaChapter(title)
-
-    // if (typeof chapter !== "undefined") {
-    //   return parseInt(chapter)
-    // // eslint-disable-next-line
-    // } else if (typeof chapter === "NaN") {
-    //   return 1
-    // } else {
-    //   return 1
-    // }
   }
 
   function findLastMangaChapter(title) {
@@ -321,7 +303,6 @@ function PageMangaLibraryV1() {
               </select>
               <Link to="/todays-manga-v1" className={`btn ${dataStoreCommon.GetActiveTemplate("btn-success", "btn-outline-success")} btn-sm float-right`}><span role="img" aria-label="book">📔</span> Latest</Link>
               <Link to="/search-manga-v1" className={`btn ${dataStoreCommon.GetActiveTemplate("btn-success", "btn-outline-success")} btn-sm float-right mx-3`}><span role="img" aria-label="search">🔍</span> Search</Link>
-              {/* <button className={`float-right btn btn-sm ${dataStoreCommon.GetActiveTemplate("btn-danger", "btn-outline-danger")}`} onClick={() => handleClearHistory()} href="#"><span role="img" aria-label="bin">🗑</span> Clear History</button> */}
             </div>
           </div>
           <div><h4 style={{color:dataStoreCommon.GetActiveTemplate("white", "black")}}>History</h4></div>
@@ -386,27 +367,32 @@ function PageMangaLibraryV1() {
             <div style={{height: "170px", backgroundSize: '100% 100%', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(props.manga_title)}), url(${window.location.origin + '/default-book.png'})`}}>
               <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
                 <small>{`${findLatestMangaChapter(props.manga_title)}/${findLastMangaChapter(props.manga_title)}`}</small>
-                <button className="btn btn-xs btn-outline-danger float-right" style={{ paddingTop: "1px", paddingBottom: "1px", paddingLeft: "3px", paddingRight: "3px" }}>♥︎</button>
+                <RenderGoToLatestChapterButton manga_title={props.manga_title} new_manga_carousel={props.new_manga_carousel} />
               </div>
               <div className="text-white card-text overflow-auto" style={{"height": "35px", "width": "100%", backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
                 <small>{props.manga_title}</small>
               </div>
             </div>
             {/* <button type="button" className="btn btn-block btn-sm btn-outline-secondary" onClick={(e) => handleSelectedMangaTitle(e.target.value)} value={props.manga_title}>Read</button> */}
-            <Link type="button" className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${props.manga_title}/${findLatestMangaChapter(props.manga_title)}?last_chapter=${findLastMangaChapter(props.manga_title)}&chapter_size=${ manga_db.get(props.manga_title) ? manga_db.get(props.manga_title).average_page : 100}`}>Read</Link>
+            <div className="row">
+              <div className="col-4 pr-0">
+                <Link type="button" className="btn btn-block btn-sm btn-outline-secondary p-1" to={`/manga-detail-v1/${props.manga_title}`}>ℹ</Link>
+              </div>
+              <div className="col-8 pl-0">
+                <Link type="button" className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${props.manga_title}/${findLatestMangaChapter(props.manga_title)}?last_chapter=${findLastMangaChapter(props.manga_title)}&chapter_size=${ manga_db.get(props.manga_title) ? manga_db.get(props.manga_title).average_page : 100}`}>Read</Link>
+              </div>
+            </div>
           </div>
         </div>
       )
     }
     return(
       <div className="col-4 col-md-2">
-        {/* <Link to={`/read-manga-only-v1/${props.manga_title}/${findLatestMangaChapter(props.manga_title)}?last_chapter=${findLastMangaChapter(props.manga_title)}&chapter_size=${ manga_db.get(props.manga_title) ? manga_db.get(props.manga_title).average_page : 100}`}> */}
         <div className={`card mb-4 box-shadow shadow border-4 ${generate_manga_airing_status(props.manga_title)}`}>
           <div style={{height: "170px", backgroundSize: '100% 100%', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(props.manga_title)}), url(${window.location.origin + '/default-book.png'})`}}>
             <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
               <small>{`${findLatestMangaChapterLoggedIn(props.manga_title)}/${findLastMangaChapter(props.manga_title)}`}</small>
-              {/* <button className="btn btn-xs btn-outline-danger float-right" style={{ paddingTop: "1px", paddingBottom: "1px", paddingLeft: "3px", paddingRight: "3px" }}>♥︎</button> */}
-              <RenderLoveButton manga_title={props.manga_title} new_manga_carousel={props.new_manga_carousel} />
+              <RenderGoToLatestChapterButton manga_title={props.manga_title} new_manga_carousel={props.new_manga_carousel} />
             </div>
             <div className="text-white card-text overflow-auto" style={{"height": "35px", "width": "100%", backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
               <small>{props.manga_title}</small>
@@ -420,19 +406,12 @@ function PageMangaLibraryV1() {
               <Link type="button" className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${props.manga_title}/${findLatestMangaChapter(props.manga_title)}?last_chapter=${findLastMangaChapter(props.manga_title)}&chapter_size=${ manga_db.get(props.manga_title) ? manga_db.get(props.manga_title).average_page : 100}`}>Read</Link>
             </div>
           </div>
-          {/* <button type="button" className="btn btn-block btn-sm btn-outline-secondary" onClick={(e) => handleSelectedMangaTitle(e.target.value)} value={props.manga_title}>Read</button> */}
         </div>
-        {/* </Link> */}
       </div>
     )
   }
 
-  function RenderLoveButton(props) {
-    // if (props.new_manga_carousel === true) {
-    //   return(
-    //     <button className="btn btn-xs btn-outline-danger float-right" style={{ paddingTop: "1px", paddingBottom: "1px", paddingLeft: "3px", paddingRight: "3px" }}>♥︎</button>
-    //   )
-    // }
+  function RenderGoToLatestChapterButton(props) {
     return(
       <Link to={`/read-manga-only-v1/${props.manga_title}/${findLastMangaChapter(props.manga_title)}?last_chapter=${findLastMangaChapter(props.manga_title)}&chapter_size=${ manga_db.get(props.manga_title) ? manga_db.get(props.manga_title).average_page : 100}`} className="btn btn-xs btn-outline-danger float-right" style={{ paddingTop: "1px", paddingBottom: "1px", paddingLeft: "3px", paddingRight: "3px" }}>▶︎</Link>
     )
@@ -544,7 +523,15 @@ function PageMangaLibraryV1() {
                   <small>{manga_title}</small>
                 </div>
               </div>
-              <Link type="button" className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${manga_title}/${findLatestMangaChapterLoggedIn(manga_title)}?last_chapter=${findLastMangaChapter(manga_title) || 150}&chapter_size=${ manga_db.get(manga_title) ? manga_db.get(manga_title).average_page : 100}`}>Read</Link>
+
+              <div className="row">
+                <div className="col-4 pr-0">
+                  <Link type="button" className="btn btn-block btn-sm btn-outline-secondary p-1" to={`/manga-detail-v1/${manga_title}`}>ℹ</Link>
+                </div>
+                <div className="col-8 pl-0">
+                  <Link type="button" className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${manga_title}/${findLatestMangaChapterLoggedIn(manga_title)}?last_chapter=${findLastMangaChapter(manga_title) || 150}&chapter_size=${ manga_db.get(manga_title) ? manga_db.get(manga_title).average_page : 100}`}>Read</Link>
+                </div>
+              </div>
             </div>
           </div>
         ))}

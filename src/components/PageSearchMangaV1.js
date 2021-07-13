@@ -29,9 +29,9 @@ function PageSearchManga() {
   async function execute_search_manga(search_query) {
     var api
     if (manga_source === "maid_my") {
-      api = `http://go-animapu2.herokuapp.com/mangas/maid_my/search?query=${search_query}`
+      api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", `/mangas/maid_my/search?query=${search_query}`)
     } else {
-      api = `http://go-animapu2.herokuapp.com/mangas/search_v1?title=${search_query}`
+      api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", `/mangas/search_v1?title=${search_query}`)
     }
 
     const response = await fetch(api)
@@ -44,7 +44,7 @@ function PageSearchManga() {
   }
 
   function generateThumbnailFromTitle(title) {
-    return `https://thumb.mghubcdn.com/mn/${title}.jpg`
+    return dataStoreCommon.ConstructURI("MANGAHUB_CDN_HOST", `/mn/${title}.jpg`)
   }
 
   function generate_manga_airing_status(manga_title) {

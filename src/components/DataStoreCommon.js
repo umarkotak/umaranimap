@@ -17,7 +17,7 @@ class DataStoreCommon {
       GO_ANIMAPU_WS: go_animapu_ws,
       MAL_HOST: mal_host,
       ANIMAPU_HOST: "https://animapu.herokuapp.com",
-      MANGAHUB_CDN_HOST: "https://img.mghubcdn.com/file/imghub"
+      MANGAHUB_CDN_HOST: "https://img.mghubcdn.com"
     }
   }
 

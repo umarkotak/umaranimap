@@ -6,7 +6,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import dataStoreCommon from "./DataStoreCommon"
 
 const cookies = new Cookies()
-var cdn_host = dataStoreCommon.GetConf()["MANGAHUB_CDN_HOST"]
+var cdn_host = dataStoreCommon.ConstructURI("MANGAHUB_CDN_HOST", "/file/imghub")
 var animapu_host = dataStoreCommon.GetConf()["ANIMAPU_HOST"]
 
 var qs = require('qs')

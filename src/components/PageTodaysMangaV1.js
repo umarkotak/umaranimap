@@ -18,10 +18,10 @@ function PageTodaysMangaV1() {
       if (todays_manga_db.get(title).image_url !== "") {
         return todays_manga_db.get(title).image_url
       } else {
-        return `https://thumb.mghubcdn.com/mn/${title}.jpg`
+        return dataStoreCommon.ConstructURI("MANGAHUB_CDN_HOST", `/mn/${title}.jpg`)
       }
     } catch {
-      return `https://thumb.mghubcdn.com/mn/${title}.jpg`
+      return dataStoreCommon.ConstructURI("MANGAHUB_CDN_HOST", `/mn/${title}.jpg`)
     }
   }
 
@@ -36,9 +36,9 @@ function PageTodaysMangaV1() {
   async function fetchTodayMangaData() {
     var api
     if (manga_source === "maid_my") {
-      api = "http://go-animapu2.herokuapp.com/mangas/maid_my/home"
+      api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", "/mangas/maid_my/home")
     } else {
-      api = "http://go-animapu2.herokuapp.com/mangas/todays_v1"
+      api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", "/mangas/todays_v1")
     }
 
     const response = await fetch(api)
@@ -68,7 +68,8 @@ function PageTodaysMangaV1() {
     }
 
     try {
-      const response = await fetch('http://go-animapu2.herokuapp.com/users/add_manga_library', {
+      var api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", "/users/add_manga_library")
+      const response = await fetch(api, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
