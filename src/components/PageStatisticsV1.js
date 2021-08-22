@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react"
 import {HorizontalBar} from 'react-chartjs-2';
+import dataStoreCommon from "./DataStoreCommon"
 
 function PageStatisticsV1() {
   const [titles_shorted, set_titles_shorted] = useState([])
@@ -8,7 +9,7 @@ function PageStatisticsV1() {
 
   useEffect(() => {
     async function fetchTodayMangaData() {
-      var api = "http://go-animapu2.herokuapp.com/mangas/statistics"
+      var api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", "/mangas/statistics")
       const response = await fetch(api)
       const results = await response.json()
       var temp_statistics = new Map(Object.entries(results))
@@ -55,10 +56,10 @@ function PageStatisticsV1() {
   return (
     <div>
       <div className="page-header">
-        <h2>Statistics</h2>
+        <h2 style={{color:dataStoreCommon.GetActiveTemplate("white", "black")}}>Statistics</h2>
       </div>
 
-      <div>
+      <div className="bg-white">
         <HorizontalBar data={data} height={500} />
       </div>
     </div>

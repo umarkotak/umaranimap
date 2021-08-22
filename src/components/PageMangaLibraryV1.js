@@ -370,7 +370,7 @@ function PageMangaLibraryV1() {
                 <RenderGoToLatestChapterButton manga_title={props.manga_title} new_manga_carousel={props.new_manga_carousel} />
               </div>
               <div className="text-white card-text overflow-auto" style={{"height": "35px", "width": "100%", backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
-                <small>{props.manga_title}</small>
+                <small>{props.manga_title.replaceAll('-',' ')}</small>
               </div>
             </div>
             {/* <button type="button" className="btn btn-block btn-sm btn-outline-secondary" onClick={(e) => handleSelectedMangaTitle(e.target.value)} value={props.manga_title}>Read</button> */}

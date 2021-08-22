@@ -201,7 +201,7 @@ function PageReadMangaOnlyV1() {
  }
 
   function reconstruct_shareable() {
-    var beauty_title = manga_title.replace('-',' ')
+    var beauty_title = manga_title.replaceAll('-',' ')
     beauty_title = capitalizeTheFirstLetterOfEachWord(beauty_title)
     var shareLink = `${animapu_host}/read-manga-only-v1/${manga_title}/${manga_chapter}`
     return `Come and read your favorite manga on Animapu! *${beauty_title}* Chapter *${manga_chapter}*. Link: *${shareLink}*`

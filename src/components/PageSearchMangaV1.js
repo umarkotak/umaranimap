@@ -144,7 +144,6 @@ function PageSearchManga() {
                   </div>
                 </div>
                 {/* <Link to={`/read-manga-v8?title=${value}&chapter=1`} className="btn btn-block btn-sm btn-outline-secondary">Read Manga</Link> */}
-                <Link className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${value}/1?last_chapter=${search_result_db.get(value).manga_last_chapter}&chapter_size=75`}>First Ch</Link>
                 <div className="row">
                   <div className="col-4 pr-0">
                     <Link type="button" className="btn btn-block btn-sm btn-outline-secondary p-1" to={`/manga-detail-v1/${value}`}>ℹ</Link>
