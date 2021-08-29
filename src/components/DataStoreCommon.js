@@ -3,11 +3,11 @@ class DataStoreCommon {
     var go_animapu_host, mal_host, go_animapu_ws
 
     if (window.location.protocol === "https:") {
-      go_animapu_host = "https://go-animapu2.herokuapp.com"
+      go_animapu_host = "https://go-animapu.herokuapp.com"
       go_animapu_ws = "wss://go-animapu.herokuapp.com"
       mal_host = "https://api.jikan.moe"
     } else {
-      go_animapu_host = "http://go-animapu2.herokuapp.com"
+      go_animapu_host = "http://go-animapu.herokuapp.com"
       go_animapu_ws = "ws://go-animapu.herokuapp.com"
       mal_host = "https://api.jikan.moe"
     }
