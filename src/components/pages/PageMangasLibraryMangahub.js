@@ -507,7 +507,7 @@ function PageMangaLibraryV1() {
     return(
       <div className="col-4 col-md-2">
         <div className={`card mb-4 box-shadow shadow border-4`}>
-          <div style={{height: "170px", backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${window.location.origin + '/cool-loading-animated-gif-1.gif'})`}}>
+          <div style={{height: (helper.GenerateImageCardHeightByWidth(window.innerWidth) + "px"), backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${window.location.origin + '/cool-loading-animated-gif-1.gif'})`}}>
             <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
               <small>0/0</small>
             </div>
