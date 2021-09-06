@@ -403,7 +403,7 @@ function PageReadMangaOnlyV1() {
             dataLength={current.length}
             next={getMoreData}
             hasMore={hasMore}
-            loader={<h4></h4>}
+            loader={<hr />}
           >
             {current && current.map(((value, index) => (
               <div className="bg-dark border-left border-right border-dark rounded" key={generateImageURL(value)}>

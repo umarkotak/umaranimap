@@ -11,7 +11,7 @@ function PageTodaysMangaV1() {
   const [fetch_todays_manga_state, set_fetch_todays_manga_state] = useState("finding")
   const [todays_manga_db, set_todays_manga_db] = useState(new Map())
   const [todays_manga_titles, set_todays_manga_titles] = useState([])
-  const [manga_source, set_manga_source] = useState(localStorage.getItem("ANIMAPU_ACTIVE_MANGA_SOURCE"))
+  const manga_source = localStorage.getItem("ANIMAPU_ACTIVE_MANGA_SOURCE")
 
   function generateThumbnailFromTitle(title) {
     try {

@@ -1,16 +1,12 @@
-import React, {useState} from "react"
+import React from "react"
 import {Link} from "react-router-dom"
 
 function Navbar() {
-  const [manga_source, set_manga_source] = useState(localStorage.getItem("MANGA_SOURCE"))
-
   function handleChangeSource(source) {
     if (source === "maid_my") {
       localStorage.setItem("ANIMAPU_ACTIVE_MANGA_SOURCE", "maid_my")
-      set_manga_source("maid_my")
     } else {
       localStorage.setItem("ANIMAPU_ACTIVE_MANGA_SOURCE", "mangahub")
-      set_manga_source("mangahub")
     }
     window.location.reload()
   }
