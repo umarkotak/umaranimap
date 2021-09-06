@@ -1,5 +1,8 @@
 import React, {useState, useEffect} from "react"
 import {Link, useHistory} from "react-router-dom"
+import Cookies from 'universal-cookie'
+
+const cookies = new Cookies()
 
 function Sidebar() {
   const history = useHistory()
@@ -11,7 +14,7 @@ function Sidebar() {
 
   const [sideBarItems, setSideBarItems] = useState(RefreshSideBarItems())
 
-  var activeName = localStorage.getItem("ANIMAPU_SESSION_USERNAME") || "Guest"
+  var activeName = cookies.get("GO_ANIMAPU_USERNAME") || "Guest"
 
   function RefreshSideBarItems() {
     let tempSideBarItems = {}
@@ -52,7 +55,7 @@ function Sidebar() {
   )
 
   function SideBarItems() {
-    if ("" === "") {
+    if (cookies.get("GO_ANIMAPU_LOGGED_IN")) {
       return OnLoggedIn()
     } else {
       return OnPublic()

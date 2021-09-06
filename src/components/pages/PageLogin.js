@@ -39,12 +39,12 @@ function PageLogin() {
           </div>
         </div>
       </div>
-      
+
       <footer className="main-footer bg-dark">
         ...
       </footer>
     </div>
-    
+
   )
 
   async function handleLoginSubmit(event) {
@@ -59,11 +59,11 @@ function PageLogin() {
       const body = await response.json()
       if (status === 200) {
         let date = new Date(2030, 12)
-        cookies.set("ANIMAPU_LOGGED_IN", "true", { path: "/", expires: date })
-        cookies.set("ANIMAPU_USERNAME", body.username, { path: "/", expires: date })
-        cookies.set("ANIMAPU_LOGIN_TOKEN", body.login_token, { path: "/", expires: date })
-        alert("Login success")
+        cookies.set("GO_ANIMAPU_LOGGED_IN", "true", { path: "/", expires: date })
+        cookies.set("GO_ANIMAPU_USERNAME", body.username, { path: "/", expires: date })
+        cookies.set("GO_ANIMAPU_LOGIN_TOKEN", body.login_token, { path: "/", expires: date })
         history.push("/")
+        window.location.reload()
       } else {
         alert(body.message)
       }

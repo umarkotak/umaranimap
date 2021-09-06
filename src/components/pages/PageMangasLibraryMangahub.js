@@ -12,7 +12,6 @@ const cookies = new Cookies()
 function PageMangaLibraryV1() {
   const [manga_db, set_manga_db] = useState(mangaDB.GetMangaDB())
   const [new_mangas, set_new_mangas] = useState(mangaDB.GetNewManga())
-  const [my_read_later, set_my_read_later] = useState(mangaDB.GetMangaDB())
 
   var manga_list = generateMangaListFromDB()
 
@@ -22,7 +21,6 @@ function PageMangaLibraryV1() {
   const manga_histories = generateHistoriesSection()
   const [logged_in_manga_histories, set_logged_in_manga_histories] = useState([])
   const [history_loading_state, set_history_loading_state] = useState("true")
-  const [manga_library_titles, set_manga_library_titles] = useState([])
   // const [manga_source, set_manga_source] = useState(localStorage.getItem("MANGA_SOURCE"))
 
   useEffect(() => {
@@ -147,22 +145,11 @@ function PageMangaLibraryV1() {
       // TODO SHORT BY DATE ADDED
       tmp_manga_histories_arr.sort((a, b) => b.weight - a.weight)
 
-      var tmp_manga_history_titles = tmp_manga_histories_arr.map(val => val.manga_title)
-      set_my_read_later(tmp_manga_histories_map)
-      set_manga_library_titles(tmp_manga_history_titles)
 
     } catch (error) {
 
     }
 
-  }
-
-  function generate_manga_airing_status(manga_title) {
-    try {
-      return (manga_db.get(manga_title).status === "ongoing") ? "border-primary" : "border-success"
-    } catch (error) {
-      return "border-primary"
-    }
   }
 
   function findLatestMangaChapter(title) {
@@ -243,51 +230,21 @@ function PageMangaLibraryV1() {
     }
   }
 
-  async function removeMangaLibrary(selected_title) {
-    if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") {
-      return
-    }
-
-    var api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", "/users/remove_manga_library")
-    try {
-      const response = await fetch(api, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': cookies.get("GO_ANIMAPU_LOGIN_TOKEN")
-        },
-        body: JSON.stringify({
-          manga_title: selected_title
-        })
-      })
-      const results = await response.json()
-      const status = await response.status
-
-      if (status === 200) {
-        alert("manga successfully removed from library!")
-        // window.location.reload(false)
-      } else {
-        alert(results.message);
-      }
-
-    } catch (e) {
-      alert(e.message);
-    }
-  }
-
   return (
     <div className="content-wrapper"  style={{backgroundColor: "#454d55"}}>
       <div className="px-2 py-2">
-        <h2 className="text-white">History</h2>
 
+        <h2 className="text-white">History</h2>
         <RenderHistoriesSection />
 
         <hr className="my-2" />
         <h2 className="text-white">New Manga {new_manga_check_update}</h2>
-
-        <RenderLoadingBar />
+        <RenderLatestUpdateSection />
 
         <hr className="my-2" />
+        <h2 className="text-white">Top Picks</h2>
+        <RenderTopPicksSection />
+
         <div className="row">
           <div className="col-12">
             <ul className="nav nav-tabs" id="myTab2" role="tablist">
@@ -300,9 +257,6 @@ function PageMangaLibraryV1() {
             </ul>
 
             <div className="tab-content" id="myTabContent">
-              <div className="tab-pane fade" id="profile2" role="tabpanel" aria-labelledby="profile-tab2">
-                <RenderMyReadLater />
-              </div>
               <div className="tab-pane fade show active" id="home2" role="tabpanel" aria-labelledby="home-tab2">
                 <div className="row">
                     {manga_list.slice(1, manga_list.length).map(manga_title => (
@@ -325,10 +279,6 @@ function PageMangaLibraryV1() {
           </div>
         </div>
       </div>
-
-      <footer className="main-footer bg-dark">
-        ...
-      </footer>
     </div>
   )
 
@@ -388,47 +338,12 @@ function PageMangaLibraryV1() {
 
   function RenderHistoriesSection() {
     if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") {
-      return(
-        <div>
-          <ul className="nav nav-tabs" id="myTab" role="tablist">
-            <li className="nav-item">
-              <a className="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Local</a>
-            </li>
-          </ul>
-
-          <div className="tab-content" id="myTabContent">
-            <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-              <RenderNonLoggedInHistory />
-            </div>
-          </div>
-        </div>
-
-      )
+      return(<div><RenderNonLoggedInHistory /></div>)
     }
-    return(
-      <div>
-        <ul className="nav nav-tabs" id="myTab" role="tablist">
-          <li className="nav-item">
-            <a className="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Logged In</a>
-          </li>
-          <li className="nav-item">
-            <a className="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Local</a>
-          </li>
-        </ul>
-
-        <div className="tab-content" id="myTabContent">
-          <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-            <RenderNonLoggedInHistory />
-          </div>
-          <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-            <RenderLoggedInHistory />
-          </div>
-        </div>
-      </div>
-    )
+    return(<div><RenderLoggedInHistory /></div>)
   }
 
-  function RenderLoadingBar() {
+  function RenderLatestUpdateSection() {
     if (page_loading_state === "false") {
       if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") {
         return(
@@ -459,9 +374,9 @@ function PageMangaLibraryV1() {
                 beautified_title = {manga_title.replaceAll("-", " ")}
                 detail_link = {`/mangas/detail/mangahub/${manga_title}`}
                 last_chapter = {findLastMangaChapter(manga_title)}
-                continue_chapter = {findLatestMangaChapter(manga_title)}
+                continue_chapter = {findLatestMangaChapterLoggedIn(manga_title)}
                 util_icon = "fa-angle-double-right"
-                util_link = {`/mangas/read/mangahub/${manga_title}/1?last_chapter=${findLatestMangaChapterLoggedIn(manga_title)}`}
+                util_link = {`/mangas/read/mangahub/${manga_title}/${findLatestMangaChapterLoggedIn(manga_title)}?last_chapter=${findLastMangaChapter(manga_title)}`}
                 border_color = "border-primary"
               />
             </div>
@@ -524,9 +439,9 @@ function PageMangaLibraryV1() {
               beautified_title = {manga_title.replaceAll("-", " ")}
               detail_link = {`/mangas/detail/mangahub/${manga_title}`}
               last_chapter = {findLastMangaChapter(manga_title)}
-              continue_chapter = {findLatestMangaChapter(manga_title)}
+              continue_chapter = {findLatestMangaChapterLoggedIn(manga_title)}
               util_icon = "fa-angle-double-right"
-              util_link = {`/mangas/read/mangahub/${manga_title}/1?last_chapter=${findLatestMangaChapterLoggedIn(manga_title)}`}
+              util_link = {`/mangas/read/mangahub/${manga_title}/${findLatestMangaChapterLoggedIn(manga_title)}?last_chapter=${findLastMangaChapter(manga_title)}`}
               border_color = "border-primary"
             />
           </div>
@@ -535,13 +450,19 @@ function PageMangaLibraryV1() {
     )
   }
 
-  function RenderMyReadLater() {
-    if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") {return(<div></div>)}
+  function RenderTopPicksSection() {
+    if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") {
+      return(<div><RenderNonLoggedInTopPicks /></div>)
+    }
+    return(<div><RenderLoggedInTopPicks /></div>)
+  }
+
+  function RenderNonLoggedInTopPicks() {
     return(
       <div>
-        <div className="row">
-          {manga_library_titles.map(manga_title => (
-            <div className="col-4 col-md-2 pb-4" key={`my-read-later-${manga_title}`}>
+        <div className="row flex-row flex-nowrap overflow-auto">
+          {manga_list.slice(1, manga_list.length).map(manga_title => (
+            <div className="col-4 col-md-2" key={`${manga_title}-manga_title_history_list`}>
               <RenderMangaCardV2
                 title = {manga_title}
                 beautified_title = {manga_title.replaceAll("-", " ")}
@@ -549,7 +470,30 @@ function PageMangaLibraryV1() {
                 last_chapter = {findLastMangaChapter(manga_title)}
                 continue_chapter = {findLatestMangaChapter(manga_title)}
                 util_icon = "fa-angle-double-right"
-                util_link = {`/mangas/read/mangahub/${manga_title}/1?last_chapter=${findLatestMangaChapterLoggedIn(manga_title)}`}
+                util_link = {`/mangas/read/mangahub/${manga_title}/1?last_chapter=${findLatestMangaChapter(manga_title)}`}
+                border_color = "border-primary"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  function RenderLoggedInTopPicks() {
+    return(
+      <div>
+        <div className="row flex-row flex-nowrap overflow-auto">
+          {manga_list.slice(1, manga_list.length).map(manga_title => (
+            <div className="col-4 col-md-2" key={`${manga_title}-manga_title_history_list`}>
+              <RenderMangaCardV2
+                title = {manga_title}
+                beautified_title = {manga_title.replaceAll("-", " ")}
+                detail_link = {`/mangas/detail/mangahub/${manga_title}`}
+                last_chapter = {findLastMangaChapter(manga_title)}
+                continue_chapter = {findLatestMangaChapterLoggedIn(manga_title)}
+                util_icon = "fa-angle-double-right"
+                util_link = {`/mangas/read/mangahub/${manga_title}/${findLatestMangaChapterLoggedIn(manga_title)}?last_chapter=${findLastMangaChapter(manga_title)}`}
                 border_color = "border-primary"
               />
             </div>

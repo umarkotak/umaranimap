@@ -184,8 +184,8 @@ function PageAnimesSeasons() {
         <table style={{width: "100%"}}>
           <thead>
             <tr>
-              <td ><button className="btn btn-block btn-sm btn-primary mx-1 px-2" onClick={() => getPreviousSeason()}>Prev</button></td>
-              <td><button className="btn btn-block btn-sm btn-primary mx-1 px-2" disabled>{selected_year}</button></td>
+              <td ><button className="btn btn-block btn-primary mx-1 px-2" onClick={() => getPreviousSeason()}>Prev</button></td>
+              <td><button className="btn btn-block btn-primary mx-1 px-2" disabled>{selected_year}</button></td>
               <td width="30%">
                 <select className="custom-select mx-1" name="selectedYear" onChange={(e) => handleYearChange(e.target.value)} defaultValue={selected_year}>
                   {valid_years.map(year => (
@@ -200,8 +200,8 @@ function PageAnimesSeasons() {
                   ))}
                 </select>
               </td>
-              <td><button className="btn btn-block btn-sm btn-primary mx-1 px-2" disabled>{selected_season}</button></td>
-              <td><button className="btn btn-block btn-sm btn-primary mx-1 px-2" onClick={() => getNextSeason()}>Next</button></td>
+              <td><button className="btn btn-block btn-primary mx-1 px-2" disabled>{selected_season}</button></td>
+              <td><button className="btn btn-block btn-primary mx-1 px-2" onClick={() => getNextSeason()}>Next</button></td>
             </tr>
           </thead>
         </table>

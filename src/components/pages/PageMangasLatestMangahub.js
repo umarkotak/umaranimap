@@ -1,7 +1,7 @@
 // https://reactjs.org/docs/hooks-effect.html
 // https://stackoverflow.com/questions/54069253/usestate-set-method-not-reflecting-change-immediately
 
-import React, {useState, useEffect, useRef} from "react"
+import React, {useState, useEffect} from "react"
 import Cookies from 'universal-cookie'
 import {Link} from "react-router-dom"
 
@@ -24,14 +24,6 @@ function PageTodaysMangaV1() {
       }
     } catch {
       return dataStoreCommon.ConstructURI("MANGAHUB_CDN_HOST", `/mn/${title}.jpg`)
-    }
-  }
-
-  function generate_manga_airing_status(manga_title) {
-    try {
-      return (todays_manga_db.get(manga_title).status === "ongoing") ? "border-primary" : "border-success"
-    } catch (error) {
-      return "border-primary"
     }
   }
 

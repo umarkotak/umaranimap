@@ -1,5 +1,8 @@
 import React from "react"
 import {Link} from "react-router-dom"
+import Cookies from 'universal-cookie'
+
+const cookies = new Cookies()
 
 function Navbar() {
   function handleChangeSource(source) {
@@ -8,6 +11,13 @@ function Navbar() {
     } else {
       localStorage.setItem("ANIMAPU_ACTIVE_MANGA_SOURCE", "mangahub")
     }
+    window.location.reload()
+  }
+
+  function handleLogout() {
+    cookies.remove("GO_ANIMAPU_LOGGED_IN")
+    cookies.remove("GO_ANIMAPU_USERNAME")
+    cookies.remove("GO_ANIMAPU_LOGIN_TOKEN")
     window.location.reload()
   }
 
@@ -26,7 +36,7 @@ function Navbar() {
   )
 
   function NavItems() {
-    if (false) {
+    if (cookies.get("GO_ANIMAPU_USERNAME")) {
       return OnLoggedIn()
     } else {
       return OnPublic()
@@ -37,7 +47,7 @@ function Navbar() {
     return(
       <ul className="navbar-nav ml-auto">
         <li className="nav-item" id="nav-items-3">
-          <button className="btn btn-sm btn-danger" onClick={() => console.log("logout")}><i className="fa fa-sign-out-alt"></i> logout</button>
+          <button className="btn btn-sm btn-danger" onClick={() => handleLogout()}><i className="fa fa-sign-out-alt"></i> logout</button>
         </li>
       </ul>
     )

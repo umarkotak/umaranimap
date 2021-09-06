@@ -1,7 +1,4 @@
 class Helper {
-  constructor() {
-  }
-
   GenerateImageCardHeightByWidth(width) {
     if (width <= 576) {
       return 170
