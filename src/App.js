@@ -27,6 +27,8 @@ import PageTWBotV2 from "./components/pages/PageTWBotV2"
 import PageRepackGamesV1 from "./components/pages/PageRepackGamesV1"
 import PageRepackGamesV2 from "./components/pages/PageRepackGamesV2"
 
+import PageNotFound from "./components/pages/PageNotFound"
+
 function App() {
   return (
     <Router>
@@ -57,6 +59,8 @@ function App() {
             <Route path="/tw-bot-v2" exact component={PageTWBotV2} />
             <Route path="/repack-games-v1" exact component={PageRepackGamesV1} />
             <Route path="/repack-games-v2" exact component={PageRepackGamesV2} />
+
+            <Route path="/" component={PageNotFound} />
           </Switch>
         </div>
       </div>
