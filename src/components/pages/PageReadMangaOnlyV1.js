@@ -394,47 +394,47 @@ function PageReadMangaOnlyV1() {
   }
 
   return (
-    <div className="wrapper" style={{marginLeft: "-12px", marginRight: "-12px"}}>
-      <RenderHead />
+    <div>
+      <div className="content-wrapper" style={{backgroundColor: "#454d55"}}>
+        <RenderHead />
 
-      <div className="" key={manga_chapter}>
-        <InfiniteScroll
-          dataLength={current.length}
-          next={getMoreData}
-          hasMore={hasMore}
-          loader={<h4>...</h4>}
-        >
-          {current && current.map(((value, index) => (
-            <div className="bg-dark border-left border-right border-dark rounded" key={generateImageURL(value)}>
-              <img
-                className="bd-placeholder-img mx-auto d-block img-fluid"
-                src={generateImageURL(value)}
-                alt=""
-                onError={(e) => handleImageFallback(value, e)}
-              />
-            </div>
-          )))}
-        </InfiniteScroll>
+        <div className="" key={manga_chapter}>
+          <InfiniteScroll
+            dataLength={current.length}
+            next={getMoreData}
+            hasMore={hasMore}
+            loader={<h4>...</h4>}
+          >
+            {current && current.map(((value, index) => (
+              <div className="bg-dark border-left border-right border-dark rounded" key={generateImageURL(value)}>
+                <img
+                  className="bd-placeholder-img mx-auto d-block img-fluid"
+                  src={generateImageURL(value)}
+                  alt=""
+                  onError={(e) => handleImageFallback(value, e)}
+                />
+              </div>
+            )))}
+          </InfiniteScroll>
+        </div>
+
+        <div className='form-group'>
+          <form>
+            <input
+              readOnly
+              className='form-control'
+              type='text'
+              style={{"display": "block"}}
+              rows="10"
+              display='none'
+              ref={textAreaRef}
+              defaultValue={shareable_link}
+            />
+          </form>
+        </div>
       </div>
 
-      <div className='form-group'>
-        <form>
-          <input
-            readOnly
-            className='form-control'
-            type='text'
-            style={{"display": "block"}}
-            rows="10"
-            display='none'
-            ref={textAreaRef}
-            defaultValue={shareable_link}
-          />
-        </form>
-      </div>
-
-      <div className="container fixed-bottom bg-dark">
-        <RenderFoot />
-      </div>
+      <RenderFoot />
     </div>
   )
 
@@ -442,16 +442,20 @@ function PageReadMangaOnlyV1() {
     if (bottom_nav === false) return(<div></div>)
     return(
       <div className="sticky-top bg-dark px-3">
-        <div className="nav-scroller">
-          <nav className="nav d-flex">
-            <button className="btn btn-light btn-sm btn-outline-info mx-1 my-1" onClick={copyToClipboard}>{button_share}</button>
-            <div className="btn btn-light btn-sm btn-outline-info mx-1 my-1">
-              <WhatsappShareButton url={reconstruct_shareable()} children={"⇪ Share WhatsApp"} />
-            </div>
-            <button className="btn btn-light btn-sm btn-outline-info mx-1 my-1" onClick={addToGenericLibrary}>+</button>
-            <button className="btn btn-light btn-sm btn-outline-info mx-1 my-1" onClick={removeFromGenericLibrary}>-</button>
-          </nav>
-        </div>
+        <table style={{width: "100%"}}>
+          <thead>
+            <tr>
+              <th><button className="btn btn-light btn-sm btn-block btn-outline-info mx-1 my-1" onClick={copyToClipboard}>{button_share}</button></th>
+              <th>
+                <div className="btn btn-light btn-sm btn-block btn-outline-info mx-1 my-1">
+                  <WhatsappShareButton url={reconstruct_shareable()} children={"⇪ Share WhatsApp"} />
+                </div>
+              </th>
+              <th><button className="btn btn-light btn-sm btn-block btn-outline-info mx-1 my-1" onClick={addToGenericLibrary}>+</button></th>
+              <th><button className="btn btn-light btn-sm btn-block btn-outline-info mx-1 my-1" onClick={removeFromGenericLibrary}>-</button></th>
+            </tr>
+          </thead>
+        </table>
       </div>
     )
   }
@@ -459,24 +463,34 @@ function PageReadMangaOnlyV1() {
   function RenderFoot() {
     if (bottom_nav === false) return(<div></div>)
     return(
-      <div className="nav-scroller py-1 mb-3">
-        <nav className="nav d-flex justify-content-between">
-          <Link className="btn btn-light btn-sm btn-outline-secondary mx-1 px-2" to={`/read-manga-only-v1/${manga_title}/${prev_manga_chapter}?last_chapter=${manga_last_chapter}&chapter_size=${manga_chapter_size}`}>
-            Prev
-          </Link>
-
-          <Link className="btn btn-light btn-sm btn-outline-secondary mx-1" to="/manga-library-v1">Menu</Link>
-          <select className="custom-select mx-1" name="selectedMangaTitle" onChange={(e) => handleChangeMangaChapter(e.target.value)} defaultValue={manga_chapter}>
-            {manga_chapter_list.map(chapter => (
-              <option key={chapter} value={chapter}> Chapter {chapter} </option>
-            ))}
-          </select>
-
-          <Link className="btn btn-light btn-sm btn-outline-secondary mx-1 px-2" to={`/read-manga-only-v1/${manga_title}/${next_manga_chapter}?last_chapter=${manga_last_chapter}&chapter_size=${manga_chapter_size}`}>
-            Next
-          </Link>
-        </nav>
-      </div>
+      <footer className="main-footer bg-dark">
+        <table style={{width: "100%"}}>
+          <thead>
+            <tr>
+              <th>
+                <Link className="btn btn-light btn-block btn-outline-secondary mx-1 my-1" to={`/read-manga-only-v1/${manga_title}/${prev_manga_chapter}?last_chapter=${manga_last_chapter}&chapter_size=${manga_chapter_size}`}>
+                  Prev
+                </Link>
+              </th>
+              <th>
+                <Link className="btn btn-light btn-block btn-outline-secondary mx-1 my-1" to="/manga-library-v1">Menu</Link>
+              </th>
+              <th>
+                <select className="custom-select mx-1 my-1" name="selectedMangaTitle" onChange={(e) => handleChangeMangaChapter(e.target.value)} defaultValue={manga_chapter}>
+                  {manga_chapter_list.map(chapter => (
+                    <option key={chapter} value={chapter}> Chapter {chapter} </option>
+                  ))}
+                </select>
+              </th>
+              <th>
+                <Link className="btn btn-light btn-block btn-outline-secondary mx-1 my-1" to={`/read-manga-only-v1/${manga_title}/${next_manga_chapter}?last_chapter=${manga_last_chapter}&chapter_size=${manga_chapter_size}`}>
+                  Next
+                </Link>
+              </th>
+            </tr>
+          </thead>
+        </table>
+      </footer>
     )
   }
 

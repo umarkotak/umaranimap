@@ -1,7 +1,20 @@
-import React from "react"
+import React, {useState} from "react"
 import {Link} from "react-router-dom"
 
 function Navbar() {
+  const [manga_source, set_manga_source] = useState(localStorage.getItem("MANGA_SOURCE"))
+
+  function handleChangeSource(source) {
+    if (source === "maid_my") {
+      localStorage.setItem("ANIMAPU_ACTIVE_MANGA_SOURCE", "maid_my")
+      set_manga_source("maid_my")
+    } else {
+      localStorage.setItem("ANIMAPU_ACTIVE_MANGA_SOURCE", "mangahub")
+      set_manga_source("mangahub")
+    }
+    window.location.reload()
+  }
+
   return (
     <div>
       <nav className="main-header navbar navbar-expand navbar-dark">
@@ -37,9 +50,10 @@ function Navbar() {
   function OnPublic() {
     return(
       <ul className="navbar-nav ml-auto">
-        <li className="nav-item">
-          <a target="_blank" href="https://trakteer.id/marumaru" rel="noopener noreferrer" className="btn btn-sm btn-outline-success mr-2"><i className="fa fa-handshake"></i> Support</a>
-        </li>
+        <select className="form-select float-left mr-2" name="selectedMangaTitle" onChange={(e) => handleChangeSource(e.target.value)} defaultValue={localStorage.getItem("ANIMAPU_ACTIVE_MANGA_SOURCE")}>
+          <option key="mangahub" value="mangahub"> mangahub (ENG) </option>
+          <option key="maid_my" value="maid_my"> maid_my (INDO) </option>
+        </select>
         <li className="nav-item">
           <Link to="/sign_up" className="btn btn-sm btn-outline-light mr-2"><i className="fa fa-user-plus"></i> Sign Up</Link>
         </li>

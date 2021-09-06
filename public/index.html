@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico?v=2" />
+    <link rel="icon" href="/favicon.ico" />
     <meta name="theme-color" content="#000000" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -12,14 +12,14 @@
       content="An anime and manga web app build on top of react. You can find anime trailers and read mangas"
     />
     <link rel="canonical" href="https://umaranimap.herokuapp.com/">
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <link rel="stylesheet" href="%PUBLIC_URL%/bootstrap.4.4.1.min.css">
-    <link href="%PUBLIC_URL%/googleapis.font.css" rel="stylesheet">
-    <link href="%PUBLIC_URL%/style.css" rel="stylesheet">
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="stylesheet" href="/bootstrap.4.4.1.min.css">
+    <link href="/googleapis.font.css" rel="stylesheet">
+    <link href="/style.css" rel="stylesheet">
     <title>animapu</title>
 
-    <meta property="og:image" content="%PUBLIC_URL%/logo512.png" />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo512.png">
+    <meta property="og:image" content="/logo512.png" />
+    <link rel="apple-touch-icon" href="/logo512.png">
     <meta property="og:title" content="animapu - helps you navigate to popular manga and anime." />
     <meta property="og:site_name" content="animapu" />
     <meta property="og:description" content="read manga and watch anime without ads!" />
@@ -86,7 +86,7 @@
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function() {
-          navigator.serviceWorker.register("%PUBLIC_URL%/worker.js").then(function(registration) {
+          navigator.serviceWorker.register("/worker.js").then(function(registration) {
             console.log('Worker registration successful', registration.scope);
           }, function(err) {
             console.log('Worker registration failed', err);
@@ -99,8 +99,8 @@
       }
     </script>
 
-    <script src="%PUBLIC_URL%/jquery-3.5.1.slim.min.js"></script>
-    <script src="%PUBLIC_URL%/bootstrap.4.4.1.min.js"></script>
+    <script src="/jquery-3.5.1.slim.min.js"></script>
+    <script src="/bootstrap.4.4.1.min.js"></script>
     <script src="/plugins/jquery/jquery.min.js"></script>
     <script src="/plugins/jquery-ui/jquery-ui.min.js"></script>
     <script>$.widget.bridge('uibutton', $.ui.button);</script>

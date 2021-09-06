@@ -61,25 +61,25 @@ function Sidebar() {
   }
 
   function OnLoggedIn() {
-    return(
-      <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-      </ul>
-    )
+    return(OnPublic())
   }
 
   function OnPublic() {
     return(
       <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li className="nav-item">
+          <a target="_blank" href="https://trakteer.id/marumaru" rel="noopener noreferrer" className="nav-link bg-success"><i className="nav-icon fa fa-handshake"></i> <p><b>Support</b></p></a>
+        </li>
+        <li className="nav-item">
           <Link to="/" className={`nav-link ${sideBarItems["home"] || ""}`}><i className="nav-icon fas fa-home"></i> <p>Home</p></Link>
         </li>
 
         <li className="nav-header py-2">ANIME</li>
         <li className="nav-item">
-          <Link to="/airing-anime-v6" className={`nav-link ${sideBarItems["dashboard"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Seasons</p></Link>
+          <Link to="/animes/seasons" className={`nav-link ${sideBarItems["dashboard"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Seasons</p></Link>
         </li>
         <li className="nav-item">
-          <Link to="/watch-anime-v2" className={`nav-link ${sideBarItems["dashboard"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Watch</p></Link>
+          <Link to="/animes/animepahe/watch" className={`nav-link ${sideBarItems["dashboard"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Watch</p></Link>
         </li>
 
         <li className="nav-header py-2">MANGA</li>

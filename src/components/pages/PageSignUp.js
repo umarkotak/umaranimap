@@ -34,14 +34,14 @@ function PageSignUp() {
                     <input type="text" className="form-control" required autoComplete="off" onChange={e => set_password_confirmation(e.target.value)} />
                   </div>
                   <hr/>
-                  <button className="btn btn-block btn-info">Register</button>
+                  <button className="btn btn-block btn-primary">Register</button>
                 </div>
               </div>
             </form>
           </div>
         </div>
       </div>
-      
+
       <footer className="main-footer bg-dark">
         ...
       </footer>

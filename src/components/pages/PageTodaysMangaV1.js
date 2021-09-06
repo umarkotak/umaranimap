@@ -11,7 +11,7 @@ function PageTodaysMangaV1() {
   const [fetch_todays_manga_state, set_fetch_todays_manga_state] = useState("finding")
   const [todays_manga_db, set_todays_manga_db] = useState(new Map())
   const [todays_manga_titles, set_todays_manga_titles] = useState([])
-  const [manga_source, set_manga_source] = useState(localStorage.getItem("MANGA_SOURCE"))
+  const [manga_source, set_manga_source] = useState(localStorage.getItem("ANIMAPU_ACTIVE_MANGA_SOURCE"))
 
   function generateThumbnailFromTitle(title) {
     try {
@@ -97,35 +97,16 @@ function PageTodaysMangaV1() {
     }
   }
 
-  function handleChangeSource(source) {
-    if (source === "maid_my") {
-      localStorage.setItem("MANGA_SOURCE", "maid_my")
-      set_manga_source("maid_my")
-    } else {
-      localStorage.setItem("MANGA_SOURCE", "mangahub")
-      set_manga_source("mangahub")
-    }
-    window.location.reload()
-  }
-
   return (
-    <div className="content-wrapper wrapper">
-      <hr/>
-      <div className="row">
-        <div className="col-12">
-          <select className="form-select float-left" name="selectedMangaTitle" onChange={(e) => handleChangeSource(e.target.value)} defaultValue={localStorage.getItem("MANGA_SOURCE")}>
-            <option key="mangahub" value="mangahub"> mangahub (ENG) </option>
-            <option key="maid_my" value="maid_my"> maid_my (INDO) </option>
-          </select>
-          <Link to="/manga-library-v1" className={`btn ${dataStoreCommon.GetActiveTemplate("btn-success", "btn-outline-success")} btn-sm float-right`}><span role="img" aria-label="library">📘</span> Library</Link>
-          <Link to="/search-manga-v1" className={`btn ${dataStoreCommon.GetActiveTemplate("btn-success", "btn-outline-success")} btn-sm float-right mx-3`}><span role="img" aria-label="search">🔍</span> Search</Link>
+    <div>
+      <div className="content-wrapper" style={{backgroundColor: "#454d55"}}>
+        <div className="row">
+          <RenderTodaysMangaSection />
         </div>
-        <div className="col-12">
-          <h4 style={{color:dataStoreCommon.GetActiveTemplate("white", "black")}}>Today's Manga</h4>
-          <hr/>
-        </div>
-        <RenderTodaysMangaSection />
       </div>
+      <footer className="main-footer bg-dark">
+        ...
+      </footer>
     </div>
   )
 
@@ -152,10 +133,6 @@ function PageTodaysMangaV1() {
                         <small>{value}</small>
                       </div>
                     </div>
-                    {/* <Link to={`/read-manga-v8?title=${value}&chapter=1&custom_last_chapter=${todays_manga_db.get(value).manga_last_chapter}`} className="btn btn-sm btn-outline-secondary">First Ch</Link>
-                    <Link to={`/read-manga-v8?title=${value}&chapter=${todays_manga_db.get(value).manga_last_chapter}&custom_last_chapter=${todays_manga_db.get(value).manga_last_chapter}`} className="btn btn-sm btn-outline-secondary">Latest Ch</Link> */}
-                    {/* <Link className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${value}/1?last_chapter=${todays_manga_db.get(value).manga_last_chapter}&chapter_size=75`}>First Ch</Link> */}
-                    {/* <Link className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${value}/${todays_manga_db.get(value).manga_last_chapter}?last_chapter=${todays_manga_db.get(value).manga_last_chapter}&chapter_size=75`}>Latest Ch</Link> */}
                     <div className="row">
                       <div className="col-3 pr-0">
                         <Link type="button" className="btn btn-block btn-sm btn-outline-secondary p-1" to={`/manga-detail-v1/${value}`}>ℹ</Link>
