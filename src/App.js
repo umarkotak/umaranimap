@@ -46,20 +46,23 @@ function App() {
             <Route path="/animes/seasons" exact component={PageAnimesSeasons} />
             <Route path="/animes/animepahe/watch" exact component={PageAnimesAnimepaheWatch} />
 
+            <Route path="/mangas/latest/mangahub" exact component={PageTodaysMangaV1} />
+            <Route path="/mangas/library/mangahub" exact component={PageMangaLibraryV1} />
+            <Route path="/mangas/search/mangahub" exact component={PageSearchMangaV1} />
+            <Route path="/mangas/read/mangahub/:path_title/:path_chapter" exact component={PageReadMangaOnlyV1} />
+            <Route path="/mangas/detail/mangahub/:manga_title" exact component={PageMangaDetailV1} />
+
+            <Route path="/statistics-v1" exact component={PageStatisticsV1} />
+
             <Route path="/tic-tac-toe" exact component={PageTicTacToe} />
             <Route path="/global-clipboard-v1" exact component={PageGlobalClipboardV1} />
             <Route path="/chatto-v1" exact component={PageChattoV1} />
-            <Route path="/statistics-v1" exact component={PageStatisticsV1} />
-            <Route path="/learn-react" exact component={PageLearnReact} />
-            <Route path="/search-manga-v1" exact component={PageSearchMangaV1} />
-            <Route path="/todays-manga-v1" exact component={PageTodaysMangaV1} />
-            <Route path="/manga-library-v1" exact component={PageMangaLibraryV1} />
-            <Route path="/read-manga-only-v1/:path_title/:path_chapter" exact component={PageReadMangaOnlyV1} />
-            <Route path="/manga-detail-v1/:manga_title" exact component={PageMangaDetailV1} />
             <Route path="/socket-game-v1" exact component={PageSocketGameV1} />
             <Route path="/tw-bot-v2" exact component={PageTWBotV2} />
-            <Route path="/repack-games-v1" exact component={PageRepackGamesV1} />
             <Route path="/repack-games-v2" exact component={PageRepackGamesV2} />
+
+            <Route path="/learn-react" exact component={PageLearnReact} />
+            <Route path="/repack-games-v1" exact component={PageRepackGamesV1} />
 
             <Route path="/" component={PageNotFound} />
           </Switch>

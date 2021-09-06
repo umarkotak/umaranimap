@@ -3,6 +3,8 @@ import mangaDB from "../utils/MangaDB"
 import Cookies from 'universal-cookie'
 import {Link} from "react-router-dom"
 import { v4 as uuidv4 } from 'uuid';
+
+import helper from "../utils/Helper"
 import dataStoreCommon from "../utils/DataStoreCommon"
 
 const cookies = new Cookies()
@@ -163,13 +165,6 @@ function PageMangaLibraryV1() {
     }
   }
 
-  // function handleClearHistory() {
-  //   var key = "last_manga_reads"
-  //   let date = new Date(2030, 12)
-  //   cookies.set(key, [], { path: "/", expires: date })
-  //   set_manga_histories([])
-  // }
-
   function findLatestMangaChapter(title) {
     var key = `${title}/last_read_chapter`
     var chapter = localStorage.getItem(key)
@@ -280,140 +275,114 @@ function PageMangaLibraryV1() {
     }
   }
 
-  function handleChangeSource(source) {
-    if (source === "maid_my") {
-      localStorage.setItem("MANGA_SOURCE", "maid_my")
-      // set_manga_source("maid_my")
-    } else {
-      localStorage.setItem("MANGA_SOURCE", "mangahub")
-      // set_manga_source("mangahub")
-    }
-    window.location.reload()
-  }
-
   return (
-    <div className="content-wrapper wrapper">
-      <div className="pb-5">
-        <div>
-          <div className="row my-2">
-            <div className="col-12">
-              <select className="form-select float-left" name="selectedMangaTitle" onChange={(e) => handleChangeSource(e.target.value)} defaultValue={localStorage.getItem("MANGA_SOURCE")}>
-                <option key="mangahub" value="mangahub"> mangahub (ENG) </option>
-                <option key="maid_my" value="maid_my"> maid_my (INDO) </option>
-              </select>
-              <Link to="/todays-manga-v1" className={`btn ${dataStoreCommon.GetActiveTemplate("btn-success", "btn-outline-success")} btn-sm float-right`}><span role="img" aria-label="book">📔</span> Latest</Link>
-              <Link to="/search-manga-v1" className={`btn ${dataStoreCommon.GetActiveTemplate("btn-success", "btn-outline-success")} btn-sm float-right mx-3`}><span role="img" aria-label="search">🔍</span> Search</Link>
-            </div>
-          </div>
-          <div><h4 style={{color:dataStoreCommon.GetActiveTemplate("white", "black")}}>History</h4></div>
+    <div className="content-wrapper"  style={{backgroundColor: "#454d55"}}>
+      <div className="px-2 py-2">
+        <h2 className="text-white">History</h2>
 
-          <RenderHistoriesSection />
+        <RenderHistoriesSection />
 
-          <div className="row">
-            <div className="col-6"><h4 style={{color:dataStoreCommon.GetActiveTemplate("white", "black")}}>New Manga{new_manga_check_update}</h4></div>
-          </div>
-          <RenderLoadingBar />
+        <hr className="my-2" />
+        <h2 className="text-white">New Manga {new_manga_check_update}</h2>
 
-          <div className="row">
-            <div className="col-12">
-              <ul className="nav nav-tabs" id="myTab2" role="tablist">
-                <li className="nav-item">
-                  <a className="nav-link active" id="home-tab2" data-toggle="tab" href="#home2" role="tab" aria-controls="home2" aria-selected="true">Top Picks</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" id="profile-tab2" data-toggle="tab" href="#profile2" role="tab" aria-controls="profile2" aria-selected="false">My Read Later</a>
-                </li>
-              </ul>
+        <RenderLoadingBar />
 
-              <div className="tab-content" id="myTabContent">
-                <div className="tab-pane fade" id="profile2" role="tabpanel" aria-labelledby="profile-tab2">
-                  <RenderMyReadLater />
-                </div>
-                <div className="tab-pane fade show active" id="home2" role="tabpanel" aria-labelledby="home-tab2">
-                  <div className="row">
+        <hr className="my-2" />
+        <div className="row">
+          <div className="col-12">
+            <ul className="nav nav-tabs" id="myTab2" role="tablist">
+              <li className="nav-item">
+                <a className="nav-link active" id="home-tab2" data-toggle="tab" href="#home2" role="tab" aria-controls="home2" aria-selected="true">Top Picks</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" id="profile-tab2" data-toggle="tab" href="#profile2" role="tab" aria-controls="profile2" aria-selected="false">My Read Later</a>
+              </li>
+            </ul>
+
+            <div className="tab-content" id="myTabContent">
+              <div className="tab-pane fade" id="profile2" role="tabpanel" aria-labelledby="profile-tab2">
+                <RenderMyReadLater />
+              </div>
+              <div className="tab-pane fade show active" id="home2" role="tabpanel" aria-labelledby="home-tab2">
+                <div className="row">
                     {manga_list.slice(1, manga_list.length).map(manga_title => (
-                      <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_list`} new_manga_carousel={true} />
+                      <div className="col-4 col-md-2 pb-4" key={`${manga_title}-manga_title_history_list`}>
+                        <RenderMangaCardV2
+                          title = {manga_title}
+                          beautified_title = {manga_title.replaceAll("-", " ")}
+                          detail_link = {`/mangas/detail/mangahub/${manga_title}`}
+                          last_chapter = {findLastMangaChapter(manga_title)}
+                          continue_chapter = {findLatestMangaChapter(manga_title)}
+                          util_icon = "fa-angle-double-right"
+                          util_link = {`/mangas/read/mangahub/${manga_title}/1?last_chapter=${findLatestMangaChapter(manga_title)}`}
+                          border_color = "border-primary"
+                        />
+                      </div>
                     ))}
                   </div>
-                </div>
               </div>
             </div>
           </div>
-          {/* <div className="row">
-            <div className="col-12 col-md-8">
-              <h4>Manga List</h4>
-              <div className="row">
-                {manga_list.slice(1, manga_list.length).map(manga_title => (
-                  <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_list`} new_manga_carousel={true} />
-                ))}
-              </div>
-            </div>
-            <div className="col-12 col-md-4">
-              <h4>My Read Later</h4>
-              <RenderMyReadLater />
-            </div>
-          </div> */}
         </div>
       </div>
+
+      <footer className="main-footer bg-dark">
+        ...
+      </footer>
     </div>
   )
 
-  function RenderMangaCard(props) {
-    if (props.manga_title[0] === "-") {return(<div></div>)}
-    if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") {
-      return(
-        <div className="col-4 col-md-2">
-          <div className={`card mb-4 box-shadow shadow border-4 ${generate_manga_airing_status(props.manga_title)}`}>
-            <div style={{height: "170px", backgroundSize: '100% 100%', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(props.manga_title)}), url(${window.location.origin + '/default-book.png'})`}}>
-              <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
-                <small>{`${findLatestMangaChapter(props.manga_title)}/${findLastMangaChapter(props.manga_title)}`}</small>
-                <RenderGoToLatestChapterButton manga_title={props.manga_title} new_manga_carousel={props.new_manga_carousel} />
-              </div>
-              <div className="text-white card-text overflow-auto" style={{"height": "35px", "width": "100%", backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
-                <small>{props.manga_title.replaceAll('-',' ')}</small>
-              </div>
-            </div>
-            {/* <button type="button" className="btn btn-block btn-sm btn-outline-secondary" onClick={(e) => handleSelectedMangaTitle(e.target.value)} value={props.manga_title}>Read</button> */}
-            <div className="row">
-              <div className="col-4 pr-0">
-                <Link type="button" className="btn btn-block btn-sm btn-outline-secondary p-1" to={`/manga-detail-v1/${props.manga_title}`}>ℹ</Link>
-              </div>
-              <div className="col-8 pl-0">
-                <Link type="button" className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${props.manga_title}/${findLatestMangaChapter(props.manga_title)}?last_chapter=${findLastMangaChapter(props.manga_title)}&chapter_size=${ manga_db.get(props.manga_title) ? manga_db.get(props.manga_title).average_page : 100}`}>Read</Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      )
-    }
+  // title
+  // beautified_title
+  // detail_link
+  // last_chapter
+  // continue_chapter
+  // util_icon
+  // util_link
+  // border_color
+  function RenderMangaCardV2(props) {
     return(
-      <div className="col-4 col-md-2">
-        <div className={`card mb-4 box-shadow shadow border-4 ${generate_manga_airing_status(props.manga_title)}`}>
-          <div style={{height: "170px", backgroundSize: '100% 100%', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(props.manga_title)}), url(${window.location.origin + '/default-book.png'})`}}>
-            <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
-              <small>{`${findLatestMangaChapterLoggedIn(props.manga_title)}/${findLastMangaChapter(props.manga_title)}`}</small>
-              <RenderGoToLatestChapterButton manga_title={props.manga_title} new_manga_carousel={props.new_manga_carousel} />
-            </div>
-            <div className="text-white card-text overflow-auto" style={{"height": "35px", "width": "100%", backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
-              <small>{props.manga_title}</small>
-            </div>
+      <div className={`${props.border_color}`}>
+        <div
+          style={{
+            height: (helper.GenerateImageCardHeightByWidth(window.innerWidth) + "px"),
+            backgroundSize: '100% 100%',
+            justifyContent: "space-between",
+            display: "flex",
+            flexDirection: "column",
+            backgroundImage: `url(${generateThumbnailFromTitle(props.title)}), url(${'/default-book.png'})`
+          }}
+        >
+          <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
+            <small>{`${props.continue_chapter}/${props.last_chapter}`}</small>
+            <Link
+              to={props.util_link}
+              className="btn btn-xs btn-outline-danger float-right"
+              style={{ paddingTop: "1px", paddingBottom: "1px", paddingLeft: "3px", paddingRight: "3px" }}
+            >
+              <i className={`fa ${props.util_icon}`}></i>
+            </Link>
           </div>
-          <div className="row">
-            <div className="col-4 pr-0">
-              <Link type="button" className="btn btn-block btn-sm btn-outline-secondary p-1" to={`/manga-detail-v1/${props.manga_title}`}>ℹ</Link>
-            </div>
-            <div className="col-8 pl-0">
-              <Link type="button" className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${props.manga_title}/${findLatestMangaChapterLoggedIn(props.manga_title)}?last_chapter=${findLastMangaChapter(props.manga_title)}&chapter_size=${ manga_db.get(props.manga_title) ? manga_db.get(props.manga_title).average_page : 100}`}>Read</Link>
-            </div>
+          <div className="text-white card-text overflow-auto" style={{"height": "35px", "width": "100%", backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
+            <small>{props.beautified_title}</small>
           </div>
         </div>
+        <table style={{width: "100%"}}>
+          <thead>
+            <tr>
+              <th width="10%">
+                <Link type="button" className="btn btn-block btn-sm btn-outline-light" to={props.detail_link}>ℹ</Link>
+              </th>
+              <th width="35%">
+                <Link className="btn btn-block btn-sm btn-outline-light" to={`/mangas/read/mangahub/${props.title}/1?last_chapter=${props.last_chapter}`}>1</Link>
+              </th>
+              <th width="55%">
+                <Link className="btn btn-block btn-sm btn-outline-light" to={`/mangas/read/mangahub/${props.title}/${props.last_chapter}?last_chapter=${props.last_chapter}`}>{props.last_chapter}</Link>
+              </th>
+            </tr>
+          </thead>
+        </table>
       </div>
-    )
-  }
-
-  function RenderGoToLatestChapterButton(props) {
-    return(
-      <Link to={`/read-manga-only-v1/${props.manga_title}/${findLastMangaChapter(props.manga_title)}?last_chapter=${findLastMangaChapter(props.manga_title)}&chapter_size=${ manga_db.get(props.manga_title) ? manga_db.get(props.manga_title).average_page : 100}`} className="btn btn-xs btn-outline-danger float-right" style={{ paddingTop: "1px", paddingBottom: "1px", paddingLeft: "3px", paddingRight: "3px" }}>▶︎</Link>
     )
   }
 
@@ -421,23 +390,15 @@ function PageMangaLibraryV1() {
     if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") {
       return(
         <div>
-          <div className="row">
-            <div className="col-12">
-              <ul className="nav nav-tabs" id="myTab" role="tablist">
-                <li className="nav-item">
-                  <a className="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Local</a>
-                </li>
-              </ul>
+          <ul className="nav nav-tabs" id="myTab" role="tablist">
+            <li className="nav-item">
+              <a className="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Local</a>
+            </li>
+          </ul>
 
-              <div className="tab-content" id="myTabContent">
-                <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                  <div className="row flex-row flex-nowrap overflow-auto">
-                    {manga_histories.slice(0, 15).map(manga_title => (
-                      <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_history_list`} />
-                    ))}
-                  </div>
-                </div>
-              </div>
+          <div className="tab-content" id="myTabContent">
+            <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+              <RenderNonLoggedInHistory />
             </div>
           </div>
         </div>
@@ -446,29 +407,21 @@ function PageMangaLibraryV1() {
     }
     return(
       <div>
-        <div className="row">
-          <div className="col-12">
-            <ul className="nav nav-tabs" id="myTab" role="tablist">
-              <li className="nav-item">
-                <a className="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Logged In</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Local</a>
-              </li>
-            </ul>
+        <ul className="nav nav-tabs" id="myTab" role="tablist">
+          <li className="nav-item">
+            <a className="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Logged In</a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Local</a>
+          </li>
+        </ul>
 
-            <div className="tab-content" id="myTabContent">
-              <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                <div className="row flex-row flex-nowrap overflow-auto">
-                  {manga_histories.slice(0, 30).map(manga_title => (
-                    <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_history_list`} />
-                  ))}
-                </div>
-              </div>
-              <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                <RenderLoggedInHistory />
-              </div>
-            </div>
+        <div className="tab-content" id="myTabContent">
+          <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <RenderNonLoggedInHistory />
+          </div>
+          <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <RenderLoggedInHistory />
           </div>
         </div>
       </div>
@@ -477,20 +430,73 @@ function PageMangaLibraryV1() {
 
   function RenderLoadingBar() {
     if (page_loading_state === "false") {
+      if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") {
+        return(
+          <div className="row flex-row flex-nowrap overflow-auto">
+            {new_mangas.slice(0, 30).map(manga_title => (
+              <div className="col-4 col-md-2" key={`${manga_title}-manga_title_history_list`}>
+                <RenderMangaCardV2
+                  title = {manga_title}
+                  beautified_title = {manga_title.replaceAll("-", " ")}
+                  detail_link = {`/mangas/detail/mangahub/${manga_title}`}
+                  last_chapter = {findLastMangaChapter(manga_title)}
+                  continue_chapter = {findLatestMangaChapter(manga_title)}
+                  util_icon = "fa-angle-double-right"
+                  util_link = {`/mangas/read/mangahub/${manga_title}/1?last_chapter=${findLatestMangaChapterLoggedIn(manga_title)}`}
+                  border_color = "border-primary"
+                />
+              </div>
+            ))}
+          </div>
+        )
+      }
       return(
         <div className="row flex-row flex-nowrap overflow-auto">
           {new_mangas.slice(0, 30).map(manga_title => (
-            <RenderMangaCard manga_title={manga_title} key={`${manga_title}-manga_title_new_list`} />
+            <div className="col-4 col-md-2" key={`${manga_title}-manga_title_history_list`}>
+              <RenderMangaCardV2
+                title = {manga_title}
+                beautified_title = {manga_title.replaceAll("-", " ")}
+                detail_link = {`/mangas/detail/mangahub/${manga_title}`}
+                last_chapter = {findLastMangaChapter(manga_title)}
+                continue_chapter = {findLatestMangaChapter(manga_title)}
+                util_icon = "fa-angle-double-right"
+                util_link = {`/mangas/read/mangahub/${manga_title}/1?last_chapter=${findLatestMangaChapterLoggedIn(manga_title)}`}
+                border_color = "border-primary"
+              />
+            </div>
           ))}
         </div>
       )
     }
     return(
       <div>
-        {/* <br/><div className="progress progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style={{width: "100%"}}></div><br/> */}
         <div className="row flex-row flex-nowrap overflow-auto">
           {[0,1,2,3,4,5,6].map(manga_title => (
             <RenderMangaCardLoading key={uuidv4()} />
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  function RenderNonLoggedInHistory() {
+    return(
+      <div>
+        <div className="row flex-row flex-nowrap overflow-auto">
+          {manga_histories.slice(0, 30).map(manga_title => (
+            <div className="col-4 col-md-2" key={`${manga_title}-manga_title_history_list`}>
+              <RenderMangaCardV2
+                title = {manga_title}
+                beautified_title = {manga_title.replaceAll("-", " ")}
+                detail_link = {`/mangas/detail/mangahub/${manga_title}`}
+                last_chapter = {findLastMangaChapter(manga_title)}
+                continue_chapter = {findLatestMangaChapter(manga_title)}
+                util_icon = "fa-angle-double-right"
+                util_link = {`/mangas/read/mangahub/${manga_title}/1?last_chapter=${findLatestMangaChapter(manga_title)}`}
+                border_color = "border-primary"
+              />
+            </div>
           ))}
         </div>
       </div>
@@ -501,7 +507,6 @@ function PageMangaLibraryV1() {
     if (history_loading_state === "true") {
       return(
         <div>
-          {/* <br/><div className="progress progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style={{width: "100%"}}></div><br/> */}
           <div className="row flex-row flex-nowrap overflow-auto">
             {[0,1,2,3,4,5,6].map(manga_title => (
               <RenderMangaCardLoading key={uuidv4()} />
@@ -513,26 +518,17 @@ function PageMangaLibraryV1() {
     return(
       <div className="row flex-row flex-nowrap overflow-auto">
         {logged_in_manga_histories.slice(0, 50).map(manga_title => (
-          <div className="col-4 col-md-2" key={"histories_" + manga_title}>
-            <div className={`card mb-4 box-shadow shadow border-4 ${generate_manga_airing_status(manga_title)}`}>
-              <div style={{height: "170px", backgroundSize: '100% 100%', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(manga_title)}), url(${window.location.origin + '/default-book.png'})`}}>
-                <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
-                  <small>{`${findLatestMangaChapterLoggedIn(manga_title)}/${findLastMangaChapter(manga_title) || 150}`}</small>
-                </div>
-                <div className="text-white card-text overflow-auto" style={{"height": "35px", "width": "100%", backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
-                  <small>{manga_title}</small>
-                </div>
-              </div>
-
-              <div className="row">
-                <div className="col-4 pr-0">
-                  <Link type="button" className="btn btn-block btn-sm btn-outline-secondary p-1" to={`/manga-detail-v1/${manga_title}`}>ℹ</Link>
-                </div>
-                <div className="col-8 pl-0">
-                  <Link type="button" className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${manga_title}/${findLatestMangaChapterLoggedIn(manga_title)}?last_chapter=${findLastMangaChapter(manga_title) || 150}&chapter_size=${ manga_db.get(manga_title) ? manga_db.get(manga_title).average_page : 100}`}>Read</Link>
-                </div>
-              </div>
-            </div>
+          <div className="col-4 col-md-2" key={`${manga_title}-manga_title_history_list`}>
+            <RenderMangaCardV2
+              title = {manga_title}
+              beautified_title = {manga_title.replaceAll("-", " ")}
+              detail_link = {`/mangas/detail/mangahub/${manga_title}`}
+              last_chapter = {findLastMangaChapter(manga_title)}
+              continue_chapter = {findLatestMangaChapter(manga_title)}
+              util_icon = "fa-angle-double-right"
+              util_link = {`/mangas/read/mangahub/${manga_title}/1?last_chapter=${findLatestMangaChapterLoggedIn(manga_title)}`}
+              border_color = "border-primary"
+            />
           </div>
         ))}
       </div>
@@ -545,28 +541,17 @@ function PageMangaLibraryV1() {
       <div>
         <div className="row">
           {manga_library_titles.map(manga_title => (
-            <div className="col-4 col-md-2" key={`my-read-later-${manga_title}`}>
-              <div className={`card mb-4 box-shadow shadow border-4 ${generate_manga_airing_status(manga_title)}`}>
-                <div style={{height: "170px", backgroundSize: '100% 100%', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(manga_title)}), url(${window.location.origin + '/default-book.png'})`}}>
-                  <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
-                    <small>{`${findLatestMangaChapterLoggedIn(manga_title)}/${my_read_later.get(manga_title).manga_last_chapter}`}</small>
-
-                    <button className="btn btn-xs btn-outline-danger float-right" style={{ paddingTop: "1px", paddingBottom: "1px", paddingLeft: "3px", paddingRight: "3px" }} onClick={() => removeMangaLibrary(manga_title)}>✕</button>
-                  </div>
-                  <div className="text-white card-text overflow-auto" style={{"height": "35px", "width": "100%", backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
-                    <small>{manga_title}</small>
-                  </div>
-                </div>
-
-                <div className="row">
-                  <div className="col-4 pr-0">
-                    <Link type="button" className="btn btn-block btn-sm btn-outline-secondary p-1" to={`/manga-detail-v1/${manga_title}`}>ℹ</Link>
-                  </div>
-                  <div className="col-8 pl-0">
-                    <Link type="button" className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${manga_title}/${findLatestMangaChapter(manga_title)}?last_chapter=${my_read_later.get(manga_title).manga_last_chapter}&chapter_size=${ my_read_later.get(manga_title) ? my_read_later.get(manga_title).average_page : 100}`}>Read</Link>
-                  </div>
-                </div>
-              </div>
+            <div className="col-4 col-md-2 pb-4" key={`my-read-later-${manga_title}`}>
+              <RenderMangaCardV2
+                title = {manga_title}
+                beautified_title = {manga_title.replaceAll("-", " ")}
+                detail_link = {`/mangas/detail/mangahub/${manga_title}`}
+                last_chapter = {findLastMangaChapter(manga_title)}
+                continue_chapter = {findLatestMangaChapter(manga_title)}
+                util_icon = "fa-angle-double-right"
+                util_link = {`/mangas/read/mangahub/${manga_title}/1?last_chapter=${findLatestMangaChapterLoggedIn(manga_title)}`}
+                border_color = "border-primary"
+              />
             </div>
           ))}
         </div>

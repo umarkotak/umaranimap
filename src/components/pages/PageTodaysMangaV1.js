@@ -1,10 +1,12 @@
 // https://reactjs.org/docs/hooks-effect.html
 // https://stackoverflow.com/questions/54069253/usestate-set-method-not-reflecting-change-immediately
 
-import React, {useState, useEffect} from "react"
+import React, {useState, useEffect, useRef} from "react"
 import Cookies from 'universal-cookie'
 import {Link} from "react-router-dom"
+
 import dataStoreCommon from "../utils/DataStoreCommon"
+import helper from "../utils/Helper"
 
 function PageTodaysMangaV1() {
   const cookies = new Cookies()
@@ -100,7 +102,7 @@ function PageTodaysMangaV1() {
   return (
     <div>
       <div className="content-wrapper" style={{backgroundColor: "#454d55"}}>
-        <div className="row">
+        <div className="mt-2 mx-2">
           <RenderTodaysMangaSection />
         </div>
       </div>
@@ -113,41 +115,43 @@ function PageTodaysMangaV1() {
   function RenderTodaysMangaSection() {
     if (fetch_todays_manga_state === "finished") {
       return(
-        <div className="col-12">
-          <div className="row">
-              {todays_manga_titles && todays_manga_titles.slice(0, 144).map(((value, index) => (
-                <div className="col-4 col-md-2" key={index+value}>
-                  <div className={`card mb-4 box-shadow shadow border-4 ${generate_manga_airing_status(value)}`}>
-                    <div style={{height: "170px", backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(value)})`}}>
-                      <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
-                        <small>{`${todays_manga_db.get(value).manga_last_chapter} / ${todays_manga_db.get(value).manga_last_chapter}`}</small>
-                        <button
-                          className="btn btn-xs btn-outline-danger float-right"
-                          style={{ paddingTop: "1px", paddingBottom: "1px", paddingLeft: "3px", paddingRight: "3px" }}
-                          onClick={(e) => putToMyLibrary(value, todays_manga_db.get(value).manga_last_chapter)}
-                        >
-                          ♥︎
-                        </button>
-                      </div>
-                      <div className="text-white card-text overflow-auto" style={{"height": "35px", "width": "100%", backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
-                        <small>{value}</small>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-3 pr-0">
-                        <Link type="button" className="btn btn-block btn-sm btn-outline-secondary p-1" to={`/manga-detail-v1/${value}`}>ℹ</Link>
-                      </div>
-                      <div className="col-3 px-0">
-                        <Link className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${value}/1?last_chapter=${todays_manga_db.get(value).manga_last_chapter}&chapter_size=75`}>1</Link>
-                      </div>
-                      <div className="col-6 pl-0">
-                        <Link className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${value}/${todays_manga_db.get(value).manga_last_chapter}?last_chapter=${todays_manga_db.get(value).manga_last_chapter}&chapter_size=75`}>{todays_manga_db.get(value).manga_last_chapter}</Link>
-                      </div>
-                    </div>
+        <div className="row">
+          {todays_manga_titles && todays_manga_titles.slice(0, 240).map(((value, index) => (
+            <div className="col-4 col-md-2 mb-4" key={index+value}>
+              <div className="rounded">
+                <div style={{height: (helper.GenerateImageCardHeightByWidth(window.innerWidth) + "px"), backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(value)})`}}>
+                  <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
+                    <small>{`${todays_manga_db.get(value).manga_last_chapter} / ${todays_manga_db.get(value).manga_last_chapter}`}</small>
+                    <button
+                      className="btn btn-xs btn-outline-danger float-right"
+                      style={{ paddingTop: "1px", paddingBottom: "1px", paddingLeft: "3px", paddingRight: "3px" }}
+                      onClick={(e) => putToMyLibrary(value, todays_manga_db.get(value).manga_last_chapter)}
+                    >
+                      ♥︎
+                    </button>
+                  </div>
+                  <div className="text-white card-text overflow-auto" style={{"height": "35px", "width": "100%", backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
+                    <small>{value}</small>
                   </div>
                 </div>
-              )))}
-          </div>
+                <table style={{width: "100%"}}>
+                  <thead>
+                    <tr>
+                      <th width="10%">
+                        <Link type="button" className="btn btn-block btn-sm btn-outline-light" to={`/mangas/detail/mangahub/${value}`}>ℹ</Link>
+                      </th>
+                      <th width="35%">
+                        <Link className="btn btn-block btn-sm btn-outline-light" to={`/mangas/read/mangahub/${value}/1?last_chapter=${todays_manga_db.get(value).manga_last_chapter}&chapter_size=75`}>1</Link>
+                      </th>
+                      <th width="55%">
+                        <Link className="btn btn-block btn-sm btn-outline-light" to={`/mangas/read/mangahub/${value}/${todays_manga_db.get(value).manga_last_chapter}?last_chapter=${todays_manga_db.get(value).manga_last_chapter}&chapter_size=75`}>{todays_manga_db.get(value).manga_last_chapter}</Link>
+                      </th>
+                    </tr>
+                  </thead>
+                </table>
+              </div>
+            </div>
+          )))}
         </div>
       )
     }

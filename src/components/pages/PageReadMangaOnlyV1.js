@@ -105,9 +105,9 @@ function PageReadMangaOnlyV1() {
     // const windowBottom = windowHeight + window.pageYOffset
 
     if (event.keyCode === 39) {
-      history.push(`/read-manga-only-v1/${manga_title}/${next_manga_chapter}?last_chapter=${manga_last_chapter}&chapter_size=${manga_chapter_size}`);
+      history.push(`/mangas/read/mangahub/${manga_title}/${next_manga_chapter}?last_chapter=${manga_last_chapter}&chapter_size=${manga_chapter_size}`);
     } else if (event.keyCode === 37) {
-      history.push(`/read-manga-only-v1/${manga_title}/${prev_manga_chapter}?last_chapter=${manga_last_chapter}&chapter_size=${manga_chapter_size}`);
+      history.push(`/mangas/read/mangahub/${manga_title}/${prev_manga_chapter}?last_chapter=${manga_last_chapter}&chapter_size=${manga_chapter_size}`);
     }
 
     if (window.scrollY === 0) {
@@ -203,7 +203,7 @@ function PageReadMangaOnlyV1() {
   function reconstruct_shareable() {
     var beauty_title = manga_title.replaceAll('-',' ')
     beauty_title = capitalizeTheFirstLetterOfEachWord(beauty_title)
-    var shareLink = `${animapu_host}/read-manga-only-v1/${manga_title}/${manga_chapter}`
+    var shareLink = `${animapu_host}/mangas/read/mangahub/${manga_title}/${manga_chapter}`
     return `Come and read your favorite manga on Animapu! *${beauty_title}* Chapter *${manga_chapter}*. Link: *${shareLink}*`
   }
 
@@ -271,7 +271,7 @@ function PageReadMangaOnlyV1() {
   }
 
   function handleChangeMangaChapter(no_chapter) {
-    history.push(`/read-manga-only-v1/${manga_title}/${no_chapter}?last_chapter=${manga_last_chapter}&chapter_size=${manga_chapter_size}`);
+    history.push(`/mangas/read/mangahub/${manga_title}/${no_chapter}?last_chapter=${manga_last_chapter}&chapter_size=${manga_chapter_size}`);
   }
 
   function generateMangaPages(last_chapter) {
@@ -468,12 +468,12 @@ function PageReadMangaOnlyV1() {
           <thead>
             <tr>
               <th>
-                <Link className="btn btn-light btn-block btn-outline-secondary mx-1 my-1" to={`/read-manga-only-v1/${manga_title}/${prev_manga_chapter}?last_chapter=${manga_last_chapter}&chapter_size=${manga_chapter_size}`}>
+                <Link className="btn btn-light btn-block btn-outline-secondary mx-1 my-1" to={`/mangas/read/mangahub/${manga_title}/${prev_manga_chapter}?last_chapter=${manga_last_chapter}&chapter_size=${manga_chapter_size}`}>
                   Prev
                 </Link>
               </th>
               <th>
-                <Link className="btn btn-light btn-block btn-outline-secondary mx-1 my-1" to="/manga-library-v1">Menu</Link>
+                <Link className="btn btn-light btn-block btn-outline-secondary mx-1 my-1" to="/mangas/library/mangahub">Menu</Link>
               </th>
               <th>
                 <select className="custom-select mx-1 my-1" name="selectedMangaTitle" onChange={(e) => handleChangeMangaChapter(e.target.value)} defaultValue={manga_chapter}>
@@ -483,7 +483,7 @@ function PageReadMangaOnlyV1() {
                 </select>
               </th>
               <th>
-                <Link className="btn btn-light btn-block btn-outline-secondary mx-1 my-1" to={`/read-manga-only-v1/${manga_title}/${next_manga_chapter}?last_chapter=${manga_last_chapter}&chapter_size=${manga_chapter_size}`}>
+                <Link className="btn btn-light btn-block btn-outline-secondary mx-1 my-1" to={`/mangas/read/mangahub/${manga_title}/${next_manga_chapter}?last_chapter=${manga_last_chapter}&chapter_size=${manga_chapter_size}`}>
                   Next
                 </Link>
               </th>

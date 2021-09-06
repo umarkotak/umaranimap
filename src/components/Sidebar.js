@@ -5,24 +5,23 @@ function Sidebar() {
   const history = useHistory()
   useEffect(() => {
     history.listen(() => {
-      setDexpenseSessionToken(localStorage.getItem("DEXPENSE_SESSION_TOKEN"))
       setSideBarItems(RefreshSideBarItems())
     })
   }, [history])
 
-  const [dexpenseSessionToken, setDexpenseSessionToken] = useState(localStorage.getItem("DEXPENSE_SESSION_TOKEN"))
   const [sideBarItems, setSideBarItems] = useState(RefreshSideBarItems())
 
-  var activeName = localStorage.getItem("DEXPENSE_SESSION_USERNAME") || "Guest"
+  var activeName = localStorage.getItem("ANIMAPU_SESSION_USERNAME") || "Guest"
 
   function RefreshSideBarItems() {
     let tempSideBarItems = {}
     if (window.location.pathname === "/") { tempSideBarItems.home = "active" }
     if (window.location.pathname === "/home") { tempSideBarItems.home = "active" }
-    else if (window.location.pathname === "/dashboard") { tempSideBarItems.dashboard = "active" }
-    else if (window.location.pathname.startsWith("/transactions")) { tempSideBarItems.transactions = "active" }
-    else if (window.location.pathname === "/statistics") { tempSideBarItems.statistics = "active" }
-    else if (window.location.pathname.startsWith("/groups")) { tempSideBarItems.groups = "active" }
+    else if (window.location.pathname.startsWith("/animes/seasons")) { tempSideBarItems.animes_seasons = "active" }
+    else if (window.location.pathname.startsWith("/animes/animepahe/watch")) { tempSideBarItems.animes_animepahe_watch = "active" }
+    else if (window.location.pathname.startsWith("/mangas/latest")) { tempSideBarItems.mangas_latest = "active" }
+    else if (window.location.pathname.startsWith("/mangas/library")) { tempSideBarItems.mangas_library = "active" }
+    else if (window.location.pathname.startsWith("/mangas/search")) { tempSideBarItems.mangas_search = "active" }
     return tempSideBarItems
   }
 
@@ -53,7 +52,7 @@ function Sidebar() {
   )
 
   function SideBarItems() {
-    if (dexpenseSessionToken) {
+    if ("" === "") {
       return OnLoggedIn()
     } else {
       return OnPublic()
@@ -76,21 +75,21 @@ function Sidebar() {
 
         <li className="nav-header py-2">ANIME</li>
         <li className="nav-item">
-          <Link to="/animes/seasons" className={`nav-link ${sideBarItems["dashboard"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Seasons</p></Link>
+          <Link to="/animes/seasons" className={`nav-link ${sideBarItems["animes_seasons"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Seasons</p></Link>
         </li>
         <li className="nav-item">
-          <Link to="/animes/animepahe/watch" className={`nav-link ${sideBarItems["dashboard"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Watch</p></Link>
+          <Link to="/animes/animepahe/watch" className={`nav-link ${sideBarItems["animes_animepahe_watch"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Watch</p></Link>
         </li>
 
         <li className="nav-header py-2">MANGA</li>
         <li className="nav-item">
-          <Link to="/todays-manga-v1" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Latest</p></Link>
+          <Link to={`/mangas/latest/${localStorage.getItem("ANIMAPU_ACTIVE_MANGA_SOURCE") || "mangahub"}`} className={`nav-link ${sideBarItems["mangas_latest"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Latest</p></Link>
         </li>
         <li className="nav-item">
-          <Link to="/manga-library-v1" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Library</p></Link>
+          <Link to={`/mangas/library/${localStorage.getItem("ANIMAPU_ACTIVE_MANGA_SOURCE") || "mangahub"}`} className={`nav-link ${sideBarItems["mangas_library"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Library</p></Link>
         </li>
         <li className="nav-item">
-          <Link to="/search-manga-v1" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Search</p></Link>
+          <Link to={`/mangas/search/${localStorage.getItem("ANIMAPU_ACTIVE_MANGA_SOURCE") || "mangahub"}`} className={`nav-link ${sideBarItems["mangas_search"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Search</p></Link>
         </li>
 
         <li className="nav-header py-2">DEV</li>
