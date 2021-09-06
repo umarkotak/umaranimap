@@ -73,7 +73,8 @@ function Sidebar() {
         <li className="nav-item">
           <Link to="/" className={`nav-link ${sideBarItems["home"] || ""}`}><i className="nav-icon fas fa-home"></i> <p>Home</p></Link>
         </li>
-        <li className="nav-header">ANIME</li>
+
+        <li className="nav-header py-2">ANIME</li>
         <li className="nav-item">
           <Link to="/airing-anime-v6" className={`nav-link ${sideBarItems["dashboard"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Seasons</p></Link>
         </li>
@@ -81,7 +82,7 @@ function Sidebar() {
           <Link to="/watch-anime-v2" className={`nav-link ${sideBarItems["dashboard"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Watch</p></Link>
         </li>
 
-        <li className="nav-header">MANGA</li>
+        <li className="nav-header py-2">MANGA</li>
         <li className="nav-item">
           <Link to="/todays-manga-v1" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Latest</p></Link>
         </li>
@@ -92,16 +93,15 @@ function Sidebar() {
           <Link to="/search-manga-v1" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Search</p></Link>
         </li>
 
-        <li className="nav-header">DEV</li>
-
+        <li className="nav-header py-2">DEV</li>
         <li className="nav-item">
           <Link to="#" className="nav-link"><i className="nav-icon fas fa-circle"></i><p>STATS<i className="right fas fa-angle-left"></i></p></Link>
           <ul className="nav nav-treeview">
             <li className="nav-item">
-              <Link to="/todays-manga-v1" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Latest</p></Link>
+              <Link to="/statistics-v1" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Statistics</p></Link>
             </li>
             <li className="nav-item">
-              <Link to="/todays-manga-v1" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Latest</p></Link>
+              <a href="https://app.panelbear.com/sites/2g1FkT5VVgY/overview" target="_blank" rel="noopener noreferrer" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Traffic</p></a>
             </li>
           </ul>
         </li>
@@ -110,29 +110,35 @@ function Sidebar() {
           <Link to="#" className="nav-link"><i className="nav-icon fas fa-circle"></i><p>EXPERIMENTAL<i className="right fas fa-angle-left"></i></p></Link>
           <ul className="nav nav-treeview">
             <li className="nav-item">
-              <Link to="/todays-manga-v1" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Latest</p></Link>
+              <Link to="/tic-tac-toe" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Tic Tac Toe</p></Link>
             </li>
             <li className="nav-item">
-              <Link to="/todays-manga-v1" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Latest</p></Link>
+              <Link to="/global-clipboard-v1" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Online Clipboard</p></Link>
             </li>
             <li className="nav-item">
-              <Link to="/todays-manga-v1" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Latest</p></Link>
+              <Link to="/chatto-v1" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Chats</p></Link>
             </li>
             <li className="nav-item">
-              <Link to="/todays-manga-v1" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Latest</p></Link>
+              <Link to="/socket-game-v1" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>WebSocket Game</p></Link>
             </li>
             <li className="nav-item">
-              <Link to="/todays-manga-v1" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Latest</p></Link>
+              <Link to="/tw-bot-v2" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Tribal War 2 Bot</p></Link>
             </li>
             <li className="nav-item">
-              <Link to="/todays-manga-v1" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Latest</p></Link>
+              <Link to="/repack-games-v2" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Repack Games</p></Link>
             </li>
           </ul>
         </li>
 
-        
-        
+        <li className="nav-header py-2">ALTERNATIVE SERVER</li>
+        <li className="nav-item">
+          <a href="http://animapu.herokuapp.com/" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Heroku</p></a>
+        </li>
+        <li className="nav-item">
+          <a href="https://animapu.netlify.app/" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Netlify</p></a>
+        </li>
 
+        <li className="nav-header"></li>
         <li className="nav-header"></li>
       </ul>
     )

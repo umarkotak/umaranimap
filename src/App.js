@@ -4,8 +4,12 @@ import {BrowserRouter as Router, Switch, Route} from "react-router-dom"
 import Navbar from "./components/Navbar"
 import Sidebar from "./components/Sidebar"
 
+
 import PageHome from "./components/pages/PageHome"
+
 import PageLogin from "./components/pages/PageLogin"
+import PageSignUp from "./components/pages/PageSignUp"
+
 import PageTicTacToe from "./components/pages/PageTicTacToe"
 import PageLearnReact from "./components/pages/PageLearnReact"
 import PageAiringAnimeV6 from "./components/pages/PageAiringAnimeV6"
@@ -26,13 +30,17 @@ import PageRepackGamesV2 from "./components/pages/PageRepackGamesV2"
 function App() {
   return (
     <Router>
-      <div className="dark-mode sidebar-mini layout-fixed">
+      <div className="sidebar-mini layout-fixed">
+        <div className="wrapper" style={{backgroundColor: "#454d55"}}>
           <Navbar />
           <Sidebar />
           <Switch>
             <Route path="/" exact component={PageHome} />
             <Route path="/home" exact component={PageHome} />
+            
             <Route path="/login" exact component={PageLogin} />
+            <Route path="/sign_up" exact component={PageSignUp} />
+            
             <Route path="/tic-tac-toe" exact component={PageTicTacToe} />
             <Route path="/global-clipboard-v1" exact component={PageGlobalClipboardV1} />
             <Route path="/chatto-v1" exact component={PageChattoV1} />
@@ -50,6 +58,7 @@ function App() {
             <Route path="/repack-games-v1" exact component={PageRepackGamesV1} />
             <Route path="/repack-games-v2" exact component={PageRepackGamesV2} />
           </Switch>
+        </div>
       </div>
     </Router>
   )
