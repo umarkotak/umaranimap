@@ -16,10 +16,10 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
-      "manga_last_chapter" : 36,
-      "new_added" : 31,
+      "manga_last_chapter" : 39,
+      "new_added" : 82,
       "status" : "ongoing",
-      "title" : "1-nen-a-gumi-no-monster",
+      "title" : "",
       "weight" : 10000
     },
     "a-rare-marriage-how-to-grill-our-love" : {
@@ -27,10 +27,10 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
-      "manga_last_chapter" : 36,
-      "new_added" : 202,
+      "manga_last_chapter" : 37,
+      "new_added" : 194,
       "status" : "ongoing",
-      "title" : "a-rare-marriage-how-to-grill-our-love",
+      "title" : "",
       "weight" : 10000
     },
     "a-returner-s-magic-should-be-special" : {
@@ -38,8 +38,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 162,
-      "new_added" : 12,
+      "manga_last_chapter" : 164,
+      "new_added" : 82,
       "status" : "ongoing",
       "title" : "",
       "weight" : 1000
@@ -49,8 +49,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 36,
-      "new_added" : 268,
+      "manga_last_chapter" : 37,
+      "new_added" : 108,
       "status" : "ongoing",
       "title" : "",
       "weight" : 10000
@@ -61,7 +61,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 168,
-      "new_added" : 3780,
+      "new_added" : 3995,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -71,8 +71,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 124,
-      "new_added" : 294,
+      "manga_last_chapter" : 125,
+      "new_added" : 56,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -87,6 +87,28 @@
       "status" : "finished",
       "title" : "",
       "weight" : 50
+    },
+    "akatsuki-no-yona" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 213,
+      "new_added" : 107,
+      "status" : "ongoing",
+      "title" : "akatsuki-no-yona",
+      "weight" : 10000
+    },
+    "alcohol-is-for-married-couples" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 83,
+      "new_added" : 82,
+      "status" : "ongoing",
+      "title" : "alcohol-is-for-married-couples",
+      "weight" : 10000
     },
     "ansatsu-kyoushitsu" : {
       "average_page" : 60,
@@ -104,8 +126,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 265,
-      "new_added" : 157,
+      "manga_last_chapter" : 267,
+      "new_added" : 54,
       "status" : "ongoing",
       "title" : "",
       "weight" : 1000
@@ -115,10 +137,10 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
-      "manga_last_chapter" : 49,
-      "new_added" : 121,
+      "manga_last_chapter" : 50,
+      "new_added" : 177,
       "status" : "ongoing",
-      "title" : "are-you-really-getting-married",
+      "title" : "",
       "weight" : 10000
     },
     "arifureta-shokugyou-de-sekai-saikyou" : {
@@ -127,10 +149,21 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 53,
-      "new_added" : 68,
+      "new_added" : 283,
       "status" : "ongoing",
       "title" : "",
       "weight" : 1000
+    },
+    "arte" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 53,
+      "new_added" : 123,
+      "status" : "ongoing",
+      "title" : "arte",
+      "weight" : 10000
     },
     "attack-on-titan" : {
       "average_page" : 50,
@@ -138,7 +171,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 139,
-      "new_added" : 1685,
+      "new_added" : 1900,
       "status" : "ongoing",
       "title" : "",
       "weight" : 2000
@@ -148,8 +181,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 424,
-      "new_added" : 27,
+      "manga_last_chapter" : 425,
+      "new_added" : 164,
       "status" : "ongoing",
       "title" : "",
       "weight" : 1000
@@ -160,9 +193,9 @@
       "finder" : "EXTERNAL",
       "image_url" : "",
       "manga_last_chapter" : 103,
-      "new_added" : 10,
+      "new_added" : 225,
       "status" : "ongoing",
-      "title" : "baki-dou-2018",
+      "title" : "",
       "weight" : 10000
     },
     "ballroom-e-youkoso" : {
@@ -171,7 +204,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 61,
-      "new_added" : 140,
+      "new_added" : 355,
       "status" : "ongoing",
       "title" : "",
       "weight" : 1000
@@ -181,8 +214,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "https://thumb.mghubcdn.com/md/battle-in-5-seconds-after-meeting.jpg",
-      "manga_last_chapter" : 152,
-      "new_added" : 39,
+      "manga_last_chapter" : 155,
+      "new_added" : 82,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -192,8 +225,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 451,
-      "new_added" : 68,
+      "manga_last_chapter" : 453,
+      "new_added" : 130,
       "status" : "ongoing",
       "title" : "",
       "weight" : 10000
@@ -204,7 +237,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 379,
-      "new_added" : 1022,
+      "new_added" : 1237,
       "status" : "ongoing",
       "title" : "",
       "weight" : 2000
@@ -214,8 +247,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 303,
-      "new_added" : 34,
+      "manga_last_chapter" : 304,
+      "new_added" : 175,
       "status" : "ongoing",
       "title" : "",
       "weight" : 2000
@@ -236,10 +269,10 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
-      "manga_last_chapter" : 17,
-      "new_added" : 4,
+      "manga_last_chapter" : 19,
+      "new_added" : 69,
       "status" : "ongoing",
-      "title" : "blue-box",
+      "title" : "",
       "weight" : 10000
     },
     "blue-lock" : {
@@ -247,8 +280,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 142,
-      "new_added" : 79,
+      "manga_last_chapter" : 144,
+      "new_added" : 124,
       "status" : "ongoing",
       "title" : "",
       "weight" : 1000
@@ -258,11 +291,22 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 43,
-      "new_added" : 52,
+      "manga_last_chapter" : 45,
+      "new_added" : 152,
       "status" : "ongoing",
       "title" : "",
       "weight" : 1500
+    },
+    "bocchi-na-bokura-no-renai-jijou" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 14,
+      "new_added" : 85,
+      "status" : "ongoing",
+      "title" : "bocchi-na-bokura-no-renai-jijou",
+      "weight" : 10000
     },
     "boku-girl" : {
       "average_page" : 60,
@@ -280,11 +324,22 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 323,
-      "new_added" : 34,
+      "manga_last_chapter" : 325,
+      "new_added" : 103,
       "status" : "ongoing",
       "title" : "",
       "weight" : 3000
+    },
+    "bokura-no-kiseki" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 111,
+      "new_added" : 123,
+      "status" : "ongoing",
+      "title" : "bokura-no-kiseki",
+      "weight" : 10000
     },
     "bokura-wa-minna-kawaisou" : {
       "average_page" : 50,
@@ -303,7 +358,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 187,
-      "new_added" : 153,
+      "new_added" : 368,
       "status" : "ongoing",
       "title" : "",
       "weight" : 1000
@@ -313,10 +368,10 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
-      "manga_last_chapter" : 29,
-      "new_added" : 30,
+      "manga_last_chapter" : 30,
+      "new_added" : 164,
       "status" : "ongoing",
-      "title" : "bokutachi-wa-hanshoku-wo-yameta",
+      "title" : "",
       "weight" : 10000
     },
     "boruto-naruto-next-generations" : {
@@ -325,7 +380,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 61,
-      "new_added" : 48,
+      "new_added" : 263,
       "status" : "ongoing",
       "title" : "",
       "weight" : 3000
@@ -335,10 +390,21 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
-      "manga_last_chapter" : 25,
-      "new_added" : 253,
+      "manga_last_chapter" : 26,
+      "new_added" : 186,
       "status" : "ongoing",
-      "title" : "bouncer",
+      "title" : "",
+      "weight" : 10000
+    },
+    "boy-s-abyss" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 65,
+      "new_added" : 113,
+      "status" : "ongoing",
+      "title" : "boy-s-abyss",
       "weight" : 10000
     },
     "btooom" : {
@@ -347,7 +413,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 121,
-      "new_added" : 1883,
+      "new_added" : 2098,
       "status" : "ongoing",
       "title" : "",
       "weight" : 10000
@@ -358,10 +424,21 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 94,
-      "new_added" : 211,
+      "new_added" : 426,
       "status" : "ongoing",
       "title" : "",
       "weight" : 3000
+    },
+    "cinderella-wa-sagasanai" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 31,
+      "new_added" : 179,
+      "status" : "ongoing",
+      "title" : "",
+      "weight" : 10000
     },
     "class-ga-isekai-shoukan-sareta-naka-ore-dake-nokotta-n-desu-ga" : {
       "average_page" : 100,
@@ -369,9 +446,9 @@
       "finder" : "EXTERNAL",
       "image_url" : "",
       "manga_last_chapter" : 31,
-      "new_added" : 250,
+      "new_added" : 465,
       "status" : "ongoing",
-      "title" : "class-ga-isekai-shoukan-sareta-naka-ore-dake-nokotta-n-desu-ga",
+      "title" : "",
       "weight" : 10000
     },
     "claymore" : {
@@ -390,10 +467,10 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
-      "manga_last_chapter" : 20,
-      "new_added" : 74,
+      "manga_last_chapter" : 23,
+      "new_added" : 21,
       "status" : "ongoing",
-      "title" : "dandadan",
+      "title" : "",
       "weight" : 10000
     },
     "darwin-s-game" : {
@@ -402,10 +479,21 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 95,
-      "new_added" : 87,
+      "new_added" : 302,
       "status" : "ongoing",
       "title" : "",
       "weight" : 3000
+    },
+    "days" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 320,
+      "new_added" : 72,
+      "status" : "ongoing",
+      "title" : "",
+      "weight" : 10000
     },
     "denpa-kyoushi" : {
       "average_page" : 60,
@@ -413,7 +501,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 153,
-      "new_added" : 2244,
+      "new_added" : 2459,
       "status" : "ongoing",
       "title" : "",
       "weight" : 1000
@@ -424,7 +512,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 1078,
-      "new_added" : 189,
+      "new_added" : 404,
       "status" : "ongoing",
       "title" : "",
       "weight" : 1000
@@ -440,15 +528,26 @@
       "title" : "",
       "weight" : 50
     },
+    "don-t-blush-sekime-san" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 26,
+      "new_added" : 145,
+      "status" : "ongoing",
+      "title" : "don-t-blush-sekime-san",
+      "weight" : 10000
+    },
     "dorei-tensei-sono-dorei-saikyou-no-moto-ouji-ni-tsuki" : {
       "average_page" : 100,
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
-      "manga_last_chapter" : 37,
-      "new_added" : 88,
+      "manga_last_chapter" : 41,
+      "new_added" : 69,
       "status" : "ongoing",
-      "title" : "dorei-tensei-sono-dorei-saikyou-no-moto-ouji-ni-tsuki",
+      "title" : "",
       "weight" : 10000
     },
     "doujima-kun-won-t-be-disturbed" : {
@@ -457,9 +556,20 @@
       "finder" : "EXTERNAL",
       "image_url" : "",
       "manga_last_chapter" : 24,
-      "new_added" : 348,
+      "new_added" : 563,
       "status" : "ongoing",
-      "title" : "doujima-kun-won-t-be-disturbed",
+      "title" : "",
+      "weight" : 10000
+    },
+    "dr-kumahige" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 21,
+      "new_added" : 178,
+      "status" : "ongoing",
+      "title" : "",
       "weight" : 10000
     },
     "dr-stone" : {
@@ -467,8 +577,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 207,
-      "new_added" : 4,
+      "manga_last_chapter" : 209,
+      "new_added" : 69,
       "status" : "ongoing",
       "title" : "",
       "weight" : 3000
@@ -479,7 +589,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 90,
-      "new_added" : 7531,
+      "new_added" : 7746,
       "status" : "ongoing",
       "title" : "",
       "weight" : 2000
@@ -489,11 +599,22 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 155,
-      "new_added" : 76,
+      "manga_last_chapter" : 157,
+      "new_added" : 127,
       "status" : "ongoing",
       "title" : "",
       "weight" : 1000
+    },
+    "exorcist-and-devil-chan" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 43,
+      "new_added" : 192,
+      "status" : "ongoing",
+      "title" : "",
+      "weight" : 10000
     },
     "eyeshield-21" : {
       "average_page" : 50,
@@ -522,8 +643,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 278,
-      "new_added" : 161,
+      "manga_last_chapter" : 280,
+      "new_added" : 152,
       "status" : "ongoing",
       "title" : "",
       "weight" : 3000
@@ -534,9 +655,20 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 62,
-      "new_added" : 650,
+      "new_added" : 865,
       "status" : "ongoing",
       "title" : "",
+      "weight" : 10000
+    },
+    "fukakai-na-boku-no-subete-o-official" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "https://thumb.mghubcdn.com/md/fukakai-na-boku-no-subete-o.jpg",
+      "manga_last_chapter" : 22,
+      "new_added" : 107,
+      "status" : "ongoing",
+      "title" : "fukakai-na-boku-no-subete-o-official",
       "weight" : 10000
     },
     "fukushuu-o-koinegau-saikyou-yuusha-wa-yami-no-chikara-de-senmetsu-musou-suru" : {
@@ -544,10 +676,10 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
-      "manga_last_chapter" : 39,
-      "new_added" : 39,
+      "manga_last_chapter" : 40,
+      "new_added" : 4,
       "status" : "ongoing",
-      "title" : "fukushuu-o-koinegau-saikyou-yuusha-wa-yami-no-chikara-de-senmetsu-musou-suru",
+      "title" : "",
       "weight" : 10000
     },
     "fuuka" : {
@@ -567,7 +699,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 100,
-      "new_added" : 2705,
+      "new_added" : 2920,
       "status" : "ongoing",
       "title" : "",
       "weight" : 1000
@@ -577,8 +709,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 126,
-      "new_added" : 519,
+      "manga_last_chapter" : 127,
+      "new_added" : 173,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -589,7 +721,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 38,
-      "new_added" : 4,
+      "new_added" : 219,
       "status" : "ongoing",
       "title" : "",
       "weight" : 20000
@@ -599,8 +731,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 67,
-      "new_added" : 427,
+      "manga_last_chapter" : 68,
+      "new_added" : 206,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -621,10 +753,10 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
-      "manga_last_chapter" : 62,
-      "new_added" : 300,
+      "manga_last_chapter" : 63,
+      "new_added" : 187,
       "status" : "ongoing",
-      "title" : "goblin-slayer",
+      "title" : "",
       "weight" : 10000
     },
     "goblin-slayer-side-story-year-one" : {
@@ -632,10 +764,10 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
-      "manga_last_chapter" : 58,
-      "new_added" : 513,
+      "manga_last_chapter" : 59,
+      "new_added" : 194,
       "status" : "ongoing",
-      "title" : "goblin-slayer-side-story-year-one",
+      "title" : "",
       "weight" : 10000
     },
     "gokushufudou-the-way-of-the-house-husband" : {
@@ -644,7 +776,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 76,
-      "new_added" : 167,
+      "new_added" : 382,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -654,8 +786,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 287,
-      "new_added" : 27,
+      "manga_last_chapter" : 288,
+      "new_added" : 164,
       "status" : "ongoing",
       "title" : "",
       "weight" : 10000
@@ -666,7 +798,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 233,
-      "new_added" : 788,
+      "new_added" : 1003,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -677,9 +809,9 @@
       "finder" : "EXTERNAL",
       "image_url" : "",
       "manga_last_chapter" : 70,
-      "new_added" : 217,
+      "new_added" : 432,
       "status" : "ongoing",
-      "title" : "grand-blue",
+      "title" : "",
       "weight" : 10000
     },
     "great-teacher-onizuka" : {
@@ -688,9 +820,20 @@
       "finder" : "EXTERNAL",
       "image_url" : "",
       "manga_last_chapter" : 200,
-      "new_added" : 538,
+      "new_added" : 753,
       "status" : "ongoing",
-      "title" : "great-teacher-onizuka",
+      "title" : "",
+      "weight" : 10000
+    },
+    "hachinan-tte-sore-wa-nai-deshou" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 61,
+      "new_added" : 107,
+      "status" : "ongoing",
+      "title" : "hachinan-tte-sore-wa-nai-deshou",
       "weight" : 10000
     },
     "haikyuu" : {
@@ -699,10 +842,32 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 402,
-      "new_added" : 7536,
+      "new_added" : 7751,
       "status" : "ongoing",
       "title" : "",
       "weight" : 3000
+    },
+    "hanazono-twins" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 36,
+      "new_added" : 164,
+      "status" : "ongoing",
+      "title" : "",
+      "weight" : 10000
+    },
+    "hanging-out-with-a-gamer-girl" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 88,
+      "new_added" : 4,
+      "status" : "ongoing",
+      "title" : "hanging-out-with-a-gamer-girl",
+      "weight" : 10000
     },
     "hardcore-leveling-warrior" : {
       "average_page" : 50,
@@ -710,10 +875,21 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 288,
-      "new_added" : 551,
+      "new_added" : 766,
       "status" : "ongoing",
       "title" : "",
       "weight" : 1000
+    },
+    "hell-mode-yarikomi-suki-no-gamer-wa-haisettei-no-isekai-de-musou-suru" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "https://thumb.mghubcdn.com/md/hell-mode-yarikomi-suki-no-gamer-wa-hai-settei-no-isekai-de-musou-suru.jpg",
+      "manga_last_chapter" : 11,
+      "new_added" : 86,
+      "status" : "ongoing",
+      "title" : "hell-mode-yarikomi-suki-no-gamer-wa-haisettei-no-isekai-de-musou-suru",
+      "weight" : 10000
     },
     "hibi-chouchou" : {
       "average_page" : 60,
@@ -743,7 +919,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 87,
-      "new_added" : 329,
+      "new_added" : 544,
       "status" : "ongoing",
       "title" : "",
       "weight" : 10000
@@ -754,7 +930,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 122,
-      "new_added" : 2534,
+      "new_added" : 2749,
       "status" : "ongoing",
       "title" : "",
       "weight" : 3000
@@ -765,7 +941,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 95,
-      "new_added" : 1979,
+      "new_added" : 2194,
       "status" : "ongoing",
       "title" : "",
       "weight" : 1500
@@ -776,7 +952,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 391,
-      "new_added" : 7482,
+      "new_added" : 7697,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -787,10 +963,54 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 143,
-      "new_added" : 911,
+      "new_added" : 1126,
       "status" : "ongoing",
       "title" : "",
       "weight" : 3000
+    },
+    "i-became-the-strongest-with-the-failure-frame-abnormal-state-skill-as-i-devastated-everything" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 21,
+      "new_added" : 99,
+      "status" : "ongoing",
+      "title" : "i-became-the-strongest-with-the-failure-frame-abnormal-state-skill-as-i-devastated-everything",
+      "weight" : 10000
+    },
+    "i-m-a-former-slave-but-i-tried-to-buy-an-oni-slave-who-i-later-found-to-have-too-much-energy-so-i-want-to-throw-him-away" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 6,
+      "new_added" : 144,
+      "status" : "ongoing",
+      "title" : "i-m-a-former-slave-but-i-tried-to-buy-an-oni-slave-who-i-later-found-to-have-too-much-energy-so-i-want-to-throw-him-away",
+      "weight" : 10000
+    },
+    "i-m-a-middle-aged-man-who-got-my-adventurer-license-revoked" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 28,
+      "new_added" : 113,
+      "status" : "ongoing",
+      "title" : "i-m-a-middle-aged-man-who-got-my-adventurer-license-revoked",
+      "weight" : 10000
+    },
+    "i-m-around-thirty-and-finally-in-love" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 53,
+      "new_added" : 67,
+      "status" : "ongoing",
+      "title" : "i-m-around-thirty-and-finally-in-love",
+      "weight" : 10000
     },
     "i-was-trash" : {
       "average_page" : 60,
@@ -798,7 +1018,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 216,
-      "new_added" : 1949,
+      "new_added" : 2164,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -809,7 +1029,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 44,
-      "new_added" : 1877,
+      "new_added" : 2092,
       "status" : "ongoing",
       "title" : "",
       "weight" : 15000
@@ -820,9 +1040,9 @@
       "finder" : "EXTERNAL",
       "image_url" : "",
       "manga_last_chapter" : 49,
-      "new_added" : 555,
+      "new_added" : 770,
       "status" : "ongoing",
-      "title" : "isekai-kenkokuki",
+      "title" : "",
       "weight" : 10000
     },
     "isekai-nonbiri-nouka" : {
@@ -830,8 +1050,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 149,
-      "new_added" : 563,
+      "manga_last_chapter" : 150,
+      "new_added" : 8,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -842,9 +1062,9 @@
       "finder" : "EXTERNAL",
       "image_url" : "",
       "manga_last_chapter" : 69,
-      "new_added" : 196,
+      "new_added" : 411,
       "status" : "ongoing",
-      "title" : "isekai-tensei-soudouki",
+      "title" : "",
       "weight" : 10000
     },
     "it-s-not-meguro-san-s-first-time" : {
@@ -852,10 +1072,10 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
-      "manga_last_chapter" : 46,
-      "new_added" : 344,
+      "manga_last_chapter" : 47,
+      "new_added" : 162,
       "status" : "ongoing",
-      "title" : "it-s-not-meguro-san-s-first-time",
+      "title" : "",
       "weight" : 10000
     },
     "jagaaaaaan" : {
@@ -863,8 +1083,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 139,
-      "new_added" : 156,
+      "manga_last_chapter" : 140,
+      "new_added" : 179,
       "status" : "ongoing",
       "title" : "",
       "weight" : 2000
@@ -874,10 +1094,21 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
-      "manga_last_chapter" : 58,
-      "new_added" : 48,
+      "manga_last_chapter" : 59,
+      "new_added" : 173,
       "status" : "ongoing",
-      "title" : "jichou-shinai-motoyuusha-no-tsuyokute-tanoshii-new-game",
+      "title" : "",
+      "weight" : 10000
+    },
+    "jigoku-kurayami-hana-mo-naki" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 9,
+      "new_added" : 107,
+      "status" : "ongoing",
+      "title" : "jigoku-kurayami-hana-mo-naki",
       "weight" : 10000
     },
     "jishou-heibon-mazoku-no-eiyuu-life-b-kyuu-mazoku-nano-ni-cheat-dungeon-wo-tsukutteshimatta-kekka" : {
@@ -886,9 +1117,9 @@
       "finder" : "EXTERNAL",
       "image_url" : "",
       "manga_last_chapter" : 25,
-      "new_added" : 348,
+      "new_added" : 563,
       "status" : "ongoing",
-      "title" : "jishou-heibon-mazoku-no-eiyuu-life-b-kyuu-mazoku-nano-ni-cheat-dungeon-wo-tsukutteshimatta-kekka",
+      "title" : "",
       "weight" : 10000
     },
     "jk-kara-yarinaosu-silver-plan" : {
@@ -897,7 +1128,7 @@
       "finder" : "",
       "image_url" : "https://thumb.mghubcdn.com/mf/jk-kara-yarinaosu-silver-plan.jpg",
       "manga_last_chapter" : 18,
-      "new_added" : 1889,
+      "new_added" : 2104,
       "status" : "ongoing",
       "title" : "",
       "weight" : 20000
@@ -907,8 +1138,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 155,
-      "new_added" : 34,
+      "manga_last_chapter" : 157,
+      "new_added" : 103,
       "status" : "ongoing",
       "title" : "",
       "weight" : 1000
@@ -929,8 +1160,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 234,
-      "new_added" : 39,
+      "manga_last_chapter" : 236,
+      "new_added" : 110,
       "status" : "ongoing",
       "title" : "",
       "weight" : 2000
@@ -941,7 +1172,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 178,
-      "new_added" : 2056,
+      "new_added" : 2271,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -951,10 +1182,10 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
-      "manga_last_chapter" : 87,
-      "new_added" : 357,
+      "manga_last_chapter" : 88,
+      "new_added" : 194,
       "status" : "ongoing",
-      "title" : "kakegurui",
+      "title" : "",
       "weight" : 10000
     },
     "kakkou-no-iinazuke" : {
@@ -962,8 +1193,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "https://thumb.mghubcdn.com/mf/kakkou-no-iinazuke.jpg",
-      "manga_last_chapter" : 74,
-      "new_added" : 172,
+      "manga_last_chapter" : 76,
+      "new_added" : 181,
       "status" : "ongoing",
       "title" : "",
       "weight" : 10000
@@ -974,9 +1205,9 @@
       "finder" : "EXTERNAL",
       "image_url" : "",
       "manga_last_chapter" : 34,
-      "new_added" : 534,
+      "new_added" : 749,
       "status" : "ongoing",
-      "title" : "kakukaku-shikajika",
+      "title" : "",
       "weight" : 10000
     },
     "kanojo-okarishimasu" : {
@@ -984,8 +1215,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 200,
-      "new_added" : 68,
+      "manga_last_chapter" : 202,
+      "new_added" : 127,
       "status" : "ongoing",
       "title" : "",
       "weight" : 2000
@@ -995,8 +1226,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 193,
-      "new_added" : 12,
+      "manga_last_chapter" : 195,
+      "new_added" : 4,
       "status" : "ongoing",
       "title" : "",
       "weight" : 2000
@@ -1007,10 +1238,21 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 149,
-      "new_added" : 92,
+      "new_added" : 307,
       "status" : "ongoing",
       "title" : "",
       "weight" : 2000
+    },
+    "kawaisugiru-danshi-ga-ouchi-de-matteimasu" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "https://thumb.mghubcdn.com/md/kawaisugiru-danshi-ga-ouchi-de-matteimasu.jpg",
+      "manga_last_chapter" : 8,
+      "new_added" : 77,
+      "status" : "ongoing",
+      "title" : "kawaisugiru-danshi-ga-ouchi-de-matteimasu",
+      "weight" : 10000
     },
     "kekkaishi" : {
       "average_page" : 70,
@@ -1039,8 +1281,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 121,
-      "new_added" : 123,
+      "manga_last_chapter" : 124,
+      "new_added" : 98,
       "status" : "ongoing",
       "title" : "",
       "weight" : 2000
@@ -1050,8 +1292,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 61,
-      "new_added" : 403,
+      "manga_last_chapter" : 62,
+      "new_added" : 177,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -1072,10 +1314,21 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
-      "manga_last_chapter" : 22,
-      "new_added" : 312,
+      "manga_last_chapter" : 23,
+      "new_added" : 213,
       "status" : "ongoing",
-      "title" : "kimi-ga-shinu-natsu-ni",
+      "title" : "",
+      "weight" : 10000
+    },
+    "kimi-no-okaasan-wo-boku-ni-kudasai" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 27,
+      "new_added" : 166,
+      "status" : "ongoing",
+      "title" : "",
       "weight" : 10000
     },
     "kingdom" : {
@@ -1083,19 +1336,30 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 688,
-      "new_added" : 184,
+      "manga_last_chapter" : 689,
+      "new_added" : 202,
       "status" : "ongoing",
       "title" : "",
       "weight" : 4000
+    },
+    "kiruru-kill-me" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 15,
+      "new_added" : 178,
+      "status" : "ongoing",
+      "title" : "",
+      "weight" : 10000
     },
     "knights-magic" : {
       "average_page" : 60,
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 110,
-      "new_added" : 109,
+      "manga_last_chapter" : 111,
+      "new_added" : 168,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -1127,8 +1391,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 317,
-      "new_added" : 51,
+      "manga_last_chapter" : 319,
+      "new_added" : 130,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -1139,7 +1403,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 77,
-      "new_added" : 26,
+      "new_added" : 241,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -1150,9 +1414,9 @@
       "finder" : "EXTERNAL",
       "image_url" : "",
       "manga_last_chapter" : 99,
-      "new_added" : 174,
+      "new_added" : 389,
       "status" : "ongoing",
-      "title" : "kono-bijutsubu-ni-wa-mondai-ga-aru",
+      "title" : "",
       "weight" : 10000
     },
     "kono-kaisha-ni-suki-na-hito-ga-imasu" : {
@@ -1160,10 +1424,10 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
-      "manga_last_chapter" : 39,
-      "new_added" : 251,
+      "manga_last_chapter" : 41,
+      "new_added" : 162,
       "status" : "ongoing",
-      "title" : "kono-kaisha-ni-suki-na-hito-ga-imasu",
+      "title" : "",
       "weight" : 10000
     },
     "kono-oto-tomare" : {
@@ -1172,7 +1436,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 104,
-      "new_added" : 392,
+      "new_added" : 607,
       "status" : "ongoing",
       "title" : "",
       "weight" : 3000
@@ -1182,10 +1446,43 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
-      "manga_last_chapter" : 18,
-      "new_added" : 355,
+      "manga_last_chapter" : 19,
+      "new_added" : 173,
       "status" : "ongoing",
-      "title" : "konyaku-haki-sareta-reijo-wo-hirotta-ore-ga-ikenai-koto-wo-oshiekomu-oishi-mono-wo-tabesasete-oshare-wo-sasete-sekaichi-shiawasena-shojo-ni-produce",
+      "title" : "",
+      "weight" : 10000
+    },
+    "kouryakuhon-o-kushi-suru-saikyou-no-mahoutsukai-meirei-sa-sero-to-wa-iwa-senai-oreryuu-mao-tobatsu-saizen-ruuto" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 23,
+      "new_added" : 9,
+      "status" : "ongoing",
+      "title" : "kouryakuhon-o-kushi-suru-saikyou-no-mahoutsukai-meirei-sa-sero-to-wa-iwa-senai-oreryuu-mao-tobatsu-saizen-ruuto",
+      "weight" : 10000
+    },
+    "kuro-no-shoukanshi" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 74,
+      "new_added" : 98,
+      "status" : "ongoing",
+      "title" : "",
+      "weight" : 10000
+    },
+    "kurosaki-kun-no-iinari-ni-nante-naranai" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 63,
+      "new_added" : 147,
+      "status" : "ongoing",
+      "title" : "kurosaki-kun-no-iinari-ni-nante-naranai",
       "weight" : 10000
     },
     "last-game" : {
@@ -1198,6 +1495,28 @@
       "status" : "finished",
       "title" : "",
       "weight" : 50
+    },
+    "let-s-be-an-adventurer-defeating-dungeons-with-a-skill-board" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 25,
+      "new_added" : 99,
+      "status" : "ongoing",
+      "title" : "let-s-be-an-adventurer-defeating-dungeons-with-a-skill-board",
+      "weight" : 10000
+    },
+    "lost-man" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 48,
+      "new_added" : 180,
+      "status" : "ongoing",
+      "title" : "",
+      "weight" : 10000
     },
     "love-so-life" : {
       "average_page" : 60,
@@ -1216,7 +1535,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 46,
-      "new_added" : 382,
+      "new_added" : 597,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -1227,7 +1546,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 27,
-      "new_added" : 1979,
+      "new_added" : 2194,
       "status" : "ongoing",
       "title" : "",
       "weight" : 1000
@@ -1238,7 +1557,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 60,
-      "new_added" : 643,
+      "new_added" : 858,
       "status" : "ongoing",
       "title" : "",
       "weight" : 1000
@@ -1259,8 +1578,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 214,
-      "new_added" : 29,
+      "manga_last_chapter" : 218,
+      "new_added" : 87,
       "status" : "ongoing",
       "title" : "",
       "weight" : 1000
@@ -1282,7 +1601,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 79,
-      "new_added" : 557,
+      "new_added" : 772,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -1292,8 +1611,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 216,
-      "new_added" : 35,
+      "manga_last_chapter" : 218,
+      "new_added" : 69,
       "status" : "ongoing",
       "title" : "",
       "weight" : 20000
@@ -1304,9 +1623,9 @@
       "finder" : "EXTERNAL",
       "image_url" : "",
       "manga_last_chapter" : 7,
-      "new_added" : 340,
+      "new_added" : 555,
       "status" : "ongoing",
-      "title" : "makai-kaeri-no-rettou-nouryokusha",
+      "title" : "",
       "weight" : 10000
     },
     "maou-gun-saikyou-no-majutsushi-wa-ningen-datta" : {
@@ -1315,9 +1634,9 @@
       "finder" : "EXTERNAL",
       "image_url" : "",
       "manga_last_chapter" : 19,
-      "new_added" : 512,
+      "new_added" : 727,
       "status" : "ongoing",
-      "title" : "maou-gun-saikyou-no-majutsushi-wa-ningen-datta",
+      "title" : "",
       "weight" : 10000
     },
     "maou-sama-no-machizukuri-saikyou-no-dungeon-wa-kindai-toshi" : {
@@ -1325,10 +1644,21 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
-      "manga_last_chapter" : 30,
-      "new_added" : 282,
+      "manga_last_chapter" : 32,
+      "new_added" : 105,
       "status" : "ongoing",
-      "title" : "maou-sama-no-machizukuri-saikyou-no-dungeon-wa-kindai-toshi",
+      "title" : "",
+      "weight" : 10000
+    },
+    "marginal-operation" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 44,
+      "new_added" : 146,
+      "status" : "ongoing",
+      "title" : "marginal-operation",
       "weight" : 10000
     },
     "masamune-kun-no-revenge" : {
@@ -1348,9 +1678,9 @@
       "finder" : "EXTERNAL",
       "image_url" : "",
       "manga_last_chapter" : 22,
-      "new_added" : 512,
+      "new_added" : 727,
       "status" : "ongoing",
-      "title" : "may-i-ask-for-one-final-thing",
+      "title" : "",
       "weight" : 10000
     },
     "miharashi-sou-no-6-nin-no-hanayome" : {
@@ -1359,9 +1689,9 @@
       "finder" : "EXTERNAL",
       "image_url" : "",
       "manga_last_chapter" : 13,
-      "new_added" : 344,
+      "new_added" : 559,
       "status" : "ongoing",
-      "title" : "miharashi-sou-no-6-nin-no-hanayome",
+      "title" : "",
       "weight" : 10000
     },
     "minpou-kaisei-nihon-wa-ipputasaisei-ni-natta" : {
@@ -1370,9 +1700,9 @@
       "finder" : "EXTERNAL",
       "image_url" : "",
       "manga_last_chapter" : 35,
-      "new_added" : 229,
+      "new_added" : 444,
       "status" : "ongoing",
-      "title" : "minpou-kaisei-nihon-wa-ipputasaisei-ni-natta",
+      "title" : "",
       "weight" : 10000
     },
     "moriarty-the-patriot" : {
@@ -1380,10 +1710,10 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "https://thumb.mghubcdn.com/md/moriarty-the-patriot.jpg",
-      "manga_last_chapter" : 61,
-      "new_added" : 187,
+      "manga_last_chapter" : 62,
+      "new_added" : 26,
       "status" : "ongoing",
-      "title" : "moriarty-the-patriot",
+      "title" : "",
       "weight" : 10000
     },
     "murabito-desu-ga-nani-ka" : {
@@ -1391,8 +1721,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 45,
-      "new_added" : 394,
+      "manga_last_chapter" : 46,
+      "new_added" : 177,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -1403,7 +1733,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 74,
-      "new_added" : 153,
+      "new_added" : 368,
       "status" : "ongoing",
       "title" : "",
       "weight" : 1000
@@ -1413,10 +1743,21 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
-      "manga_last_chapter" : 13,
-      "new_added" : 54,
+      "manga_last_chapter" : 14,
+      "new_added" : 191,
       "status" : "ongoing",
-      "title" : "my-charms-are-wasted-on-kuroiwa-medaka",
+      "title" : "",
+      "weight" : 10000
+    },
+    "my-gift-lvl-9999-unlimited-gacha" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "https://thumb.mghubcdn.com/rem/my-gift-lvl-9999-unlimited-gacha.jpg",
+      "manga_last_chapter" : 13,
+      "new_added" : 139,
+      "status" : "ongoing",
+      "title" : "my-gift-lvl-9999-unlimited-gacha",
       "weight" : 10000
     },
     "my-wife-is-a-demon-queen" : {
@@ -1424,8 +1765,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 296,
-      "new_added" : 9,
+      "manga_last_chapter" : 297,
+      "new_added" : 164,
       "status" : "ongoing",
       "title" : "",
       "weight" : 2000
@@ -1435,8 +1776,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 124,
-      "new_added" : 88,
+      "manga_last_chapter" : 125,
+      "new_added" : 164,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -1447,7 +1788,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 346,
-      "new_added" : 7482,
+      "new_added" : 7697,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -1468,10 +1809,21 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "https://thumb.mghubcdn.com/m4l/neru-way-of-the-martial-artist.jpg",
-      "manga_last_chapter" : 6,
-      "new_added" : 3,
+      "manga_last_chapter" : 8,
+      "new_added" : 69,
       "status" : "ongoing",
-      "title" : "neru-way-of-the-martial-artist",
+      "title" : "",
+      "weight" : 10000
+    },
+    "new-game" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 141,
+      "new_added" : 88,
+      "status" : "ongoing",
+      "title" : "new-game",
       "weight" : 10000
     },
     "newton-s-flower-buds" : {
@@ -1480,9 +1832,9 @@
       "finder" : "EXTERNAL",
       "image_url" : "",
       "manga_last_chapter" : 46,
-      "new_added" : 348,
+      "new_added" : 563,
       "status" : "ongoing",
-      "title" : "newton-s-flower-buds",
+      "title" : "",
       "weight" : 10000
     },
     "nisekoi" : {
@@ -1491,7 +1843,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 229,
-      "new_added" : 7488,
+      "new_added" : 7703,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -1512,11 +1864,22 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 95,
-      "new_added" : 678,
+      "manga_last_chapter" : 96,
+      "new_added" : 69,
       "status" : "ongoing",
       "title" : "",
       "weight" : 2000
+    },
+    "noraneko-to-ookami" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 3,
+      "new_added" : 165,
+      "status" : "ongoing",
+      "title" : "",
+      "weight" : 10000
     },
     "ohayou-ibarahime" : {
       "average_page" : 100,
@@ -1524,9 +1887,9 @@
       "finder" : "EXTERNAL",
       "image_url" : "",
       "manga_last_chapter" : 26,
-      "new_added" : 535,
+      "new_added" : 750,
       "status" : "ongoing",
-      "title" : "ohayou-ibarahime",
+      "title" : "",
       "weight" : 10000
     },
     "omniscient-reader-s-viewpoint" : {
@@ -1534,8 +1897,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 69,
-      "new_added" : 12,
+      "manga_last_chapter" : 71,
+      "new_added" : 82,
       "status" : "ongoing",
       "title" : "",
       "weight" : 2000
@@ -1545,8 +1908,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 1022,
-      "new_added" : 35,
+      "manga_last_chapter" : 1024,
+      "new_added" : 103,
       "status" : "ongoing",
       "title" : "",
       "weight" : 4000
@@ -1557,20 +1920,42 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 149,
-      "new_added" : 659,
+      "new_added" : 874,
       "status" : "ongoing",
       "title" : "",
       "weight" : 3000
+    },
+    "onii-chan-is-done-for" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 55,
+      "new_added" : 148,
+      "status" : "ongoing",
+      "title" : "onii-chan-is-done-for",
+      "weight" : 10000
     },
     "ore-no-ie-ga-maryoku-spot-datta-ken-sundeiru-dake-de-sekai-saikyou" : {
       "average_page" : 100,
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
-      "manga_last_chapter" : 87,
-      "new_added" : 168,
+      "manga_last_chapter" : 88,
+      "new_added" : 108,
       "status" : "ongoing",
-      "title" : "ore-no-ie-ga-maryoku-spot-datta-ken-sundeiru-dake-de-sekai-saikyou",
+      "title" : "",
+      "weight" : 10000
+    },
+    "orient" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 104,
+      "new_added" : 99,
+      "status" : "ongoing",
+      "title" : "orient",
       "weight" : 10000
     },
     "out-makoto-mizuta" : {
@@ -1578,8 +1963,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 184,
-      "new_added" : 1161,
+      "manga_last_chapter" : 197,
+      "new_added" : 88,
       "status" : "ongoing",
       "title" : "",
       "weight" : 3000
@@ -1590,9 +1975,9 @@
       "finder" : "EXTERNAL",
       "image_url" : "",
       "manga_last_chapter" : 104,
-      "new_added" : 536,
+      "new_added" : 751,
       "status" : "ongoing",
-      "title" : "pandora-hearts",
+      "title" : "",
       "weight" : 10000
     },
     "peerless-dad" : {
@@ -1600,8 +1985,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 184,
-      "new_added" : 74,
+      "manga_last_chapter" : 185,
+      "new_added" : 119,
       "status" : "ongoing",
       "title" : "",
       "weight" : 1000
@@ -1612,7 +1997,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 194,
-      "new_added" : 3545,
+      "new_added" : 3760,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -1622,10 +2007,10 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
-      "manga_last_chapter" : 27,
-      "new_added" : 66,
+      "manga_last_chapter" : 28,
+      "new_added" : 7,
       "status" : "ongoing",
-      "title" : "prince-of-genius-rise-worst-kingdom-yes-treason-it-will-do",
+      "title" : "",
       "weight" : 10000
     },
     "radiation-house" : {
@@ -1633,10 +2018,10 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
-      "manga_last_chapter" : 66,
-      "new_added" : 28,
+      "manga_last_chapter" : 68,
+      "new_added" : 60,
       "status" : "ongoing",
-      "title" : "radiation-house",
+      "title" : "",
       "weight" : 10000
     },
     "ranker-who-lives-a-second-time" : {
@@ -1644,8 +2029,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 94,
-      "new_added" : 138,
+      "manga_last_chapter" : 97,
+      "new_added" : 7,
       "status" : "ongoing",
       "title" : "",
       "weight" : 2000
@@ -1655,11 +2040,33 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 50,
-      "new_added" : 321,
+      "manga_last_chapter" : 51,
+      "new_added" : 142,
       "status" : "ongoing",
       "title" : "",
       "weight" : 3000
+    },
+    "regarding-that-we-decided-to-live-in-the-countryside-with-the-female-knight-who-came-to-us" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 59,
+      "new_added" : 149,
+      "status" : "ongoing",
+      "title" : "regarding-that-we-decided-to-live-in-the-countryside-with-the-female-knight-who-came-to-us",
+      "weight" : 10000
+    },
+    "regarding-the-display-of-an-outrageous-skill-which-has-incredible-powers-novel" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 44,
+      "new_added" : 152,
+      "status" : "ongoing",
+      "title" : "regarding-the-display-of-an-outrageous-skill-which-has-incredible-powers-novel",
+      "weight" : 10000
     },
     "relife" : {
       "average_page" : 50,
@@ -1672,15 +2079,26 @@
       "title" : "",
       "weight" : 50
     },
+    "rikudou" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 100,
+      "new_added" : 123,
+      "status" : "ongoing",
+      "title" : "rikudou",
+      "weight" : 10000
+    },
     "romantica-clock" : {
       "average_page" : 100,
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
       "manga_last_chapter" : 24,
-      "new_added" : 19,
+      "new_added" : 234,
       "status" : "ongoing",
-      "title" : "romantica-clock",
+      "title" : "",
       "weight" : 10000
     },
     "rurouni-kenshin" : {
@@ -1689,7 +2107,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 258,
-      "new_added" : 7482,
+      "new_added" : 7697,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -1699,10 +2117,21 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
-      "manga_last_chapter" : 18,
-      "new_added" : 499,
+      "manga_last_chapter" : 20,
+      "new_added" : 213,
       "status" : "ongoing",
-      "title" : "saenai-riman-to-yankee-joshi-kousei",
+      "title" : "",
+      "weight" : 10000
+    },
+    "samayoeru-tensei-sha-tachi-no-relive-game" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 26,
+      "new_added" : 127,
+      "status" : "ongoing",
+      "title" : "",
       "weight" : 10000
     },
     "satanofani" : {
@@ -1711,9 +2140,9 @@
       "finder" : "EXTERNAL",
       "image_url" : "",
       "manga_last_chapter" : 94,
-      "new_added" : 28,
+      "new_added" : 243,
       "status" : "ongoing",
-      "title" : "satanofani",
+      "title" : "",
       "weight" : 10000
     },
     "saving-80-000-gold-coins-in-the-different-world-for-my-old-age" : {
@@ -1721,10 +2150,32 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
-      "manga_last_chapter" : 61,
-      "new_added" : 168,
+      "manga_last_chapter" : 62,
+      "new_added" : 159,
       "status" : "ongoing",
-      "title" : "saving-80-000-gold-coins-in-the-different-world-for-my-old-age",
+      "title" : "",
+      "weight" : 10000
+    },
+    "scary-face-high-schooler-and-miss-plain-jane" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 10,
+      "new_added" : 110,
+      "status" : "ongoing",
+      "title" : "scary-face-high-schooler-and-miss-plain-jane",
+      "weight" : 10000
+    },
+    "school-zone-ningiyau" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 87,
+      "new_added" : 113,
+      "status" : "ongoing",
+      "title" : "school-zone-ningiyau",
       "weight" : 10000
     },
     "senryuu-shoujo" : {
@@ -1733,7 +2184,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 173,
-      "new_added" : 2630,
+      "new_added" : 2845,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -1744,7 +2195,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 300,
-      "new_added" : 7488,
+      "new_added" : 7703,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -1754,10 +2205,10 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
-      "manga_last_chapter" : 52,
-      "new_added" : 62,
+      "manga_last_chapter" : 54,
+      "new_added" : 127,
       "status" : "ongoing",
-      "title" : "shangri-la-frontier-kusoge-hunter-kamige-ni-idoman-to-su",
+      "title" : "",
       "weight" : 10000
     },
     "she-is-still-cute-today" : {
@@ -1766,9 +2217,9 @@
       "finder" : "EXTERNAL",
       "image_url" : "",
       "manga_last_chapter" : 98,
-      "new_added" : 123,
+      "new_added" : 338,
       "status" : "ongoing",
-      "title" : "she-is-still-cute-today",
+      "title" : "",
       "weight" : 10000
     },
     "shigatsu-wa-kimi-no-uso" : {
@@ -1782,13 +2233,24 @@
       "title" : "",
       "weight" : 50
     },
+    "shijou-saikyou-no-daimaou-murabito-a-ni-tensei-suru" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 12,
+      "new_added" : 113,
+      "status" : "ongoing",
+      "title" : "shijou-saikyou-no-daimaou-murabito-a-ni-tensei-suru",
+      "weight" : 10000
+    },
     "shikkaku-mon-no-saikyou-kenja" : {
       "average_page" : 60,
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 37,
-      "new_added" : 7461,
+      "new_added" : 7676,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -1799,9 +2261,20 @@
       "finder" : "EXTERNAL",
       "image_url" : "",
       "manga_last_chapter" : 21,
-      "new_added" : 237,
+      "new_added" : 452,
       "status" : "ongoing",
-      "title" : "shinmai-ossan-bouken-sha-saikyou-paati-ni-shinu-hodo-kitae-rarete-muteki-ni-naru",
+      "title" : "",
+      "weight" : 10000
+    },
+    "shoki-skill-ga-benri-sugite-isekai-seikatsu-ga-tanoshisugiru" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 10,
+      "new_added" : 107,
+      "status" : "ongoing",
+      "title" : "shoki-skill-ga-benri-sugite-isekai-seikatsu-ga-tanoshisugiru",
       "weight" : 10000
     },
     "shokugeki-no-soma" : {
@@ -1820,10 +2293,21 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "https://thumb.mghubcdn.com/md/shounin-yuusha-wa-isekai-wo-gyuujiru-saibai-skill-de-nandemo-fuyashi-chaimasu.jpg",
-      "manga_last_chapter" : 22,
-      "new_added" : 254,
+      "manga_last_chapter" : 23,
+      "new_added" : 88,
       "status" : "ongoing",
-      "title" : "shounin-yuusha-wa-isekai-wo-gyuujiru",
+      "title" : "",
+      "weight" : 10000
+    },
+    "shy" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 81,
+      "new_added" : 192,
+      "status" : "ongoing",
+      "title" : "",
       "weight" : 10000
     },
     "slam-dunk" : {
@@ -1837,24 +2321,46 @@
       "title" : "",
       "weight" : 50
     },
+    "sokushi-cheat-ga-saikyou-sugite-isekai-no-yatsura-ga-marude-aite-ni-naranai-n-desu-ga" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "https://thumb.mghubcdn.com/md/sokushi-cheat-ga-saikyou-sugite-isekai-no-yatsura-ga-marude-aite-ni-naranai-n-desu-ga.jpg",
+      "manga_last_chapter" : 31,
+      "new_added" : 107,
+      "status" : "ongoing",
+      "title" : "sokushi-cheat-ga-saikyou-sugite-isekai-no-yatsura-ga-marude-aite-ni-naranai-n-desu-ga",
+      "weight" : 10000
+    },
     "solo-leveling" : {
       "average_page" : 250,
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 163,
-      "new_added" : 48,
+      "manga_last_chapter" : 165,
+      "new_added" : 121,
       "status" : "ongoing",
       "title" : "",
       "weight" : 4000
+    },
+    "sotodura-danshi-no-shimizu-kun" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "https://thumb.mghubcdn.com/btt/sotodura-danshi-no-shimizu-kun.jpeg",
+      "manga_last_chapter" : 8,
+      "new_added" : 9,
+      "status" : "ongoing",
+      "title" : "sotodura-danshi-no-shimizu-kun",
+      "weight" : 10000
     },
     "sousei-no-onmyouji" : {
       "average_page" : 60,
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 96,
-      "new_added" : 229,
+      "manga_last_chapter" : 98,
+      "new_added" : 109,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -1864,10 +2370,10 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
-      "manga_last_chapter" : 62,
-      "new_added" : 57,
+      "manga_last_chapter" : 64,
+      "new_added" : 129,
       "status" : "ongoing",
-      "title" : "sousou-no-frieren",
+      "title" : "",
       "weight" : 10000
     },
     "spy-x-family" : {
@@ -1875,8 +2381,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 51,
-      "new_added" : 172,
+      "manga_last_chapter" : 52,
+      "new_added" : 69,
       "status" : "ongoing",
       "title" : "",
       "weight" : 1000
@@ -1887,9 +2393,20 @@
       "finder" : "EXTERNAL",
       "image_url" : "",
       "manga_last_chapter" : 25,
-      "new_added" : 215,
+      "new_added" : 430,
       "status" : "ongoing",
-      "title" : "suki-koso-momo-no-jouzu-nare",
+      "title" : "",
+      "weight" : 10000
+    },
+    "sweat-and-soap" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "https://thumb.mghubcdn.com/mro/sweat-and-soap.jpg",
+      "manga_last_chapter" : 71,
+      "new_added" : 138,
+      "status" : "ongoing",
+      "title" : "sweat-and-soap",
       "weight" : 10000
     },
     "taiyou-no-ie" : {
@@ -1909,7 +2426,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 206,
-      "new_added" : 172,
+      "new_added" : 387,
       "status" : "ongoing",
       "title" : "",
       "weight" : 1000
@@ -1920,10 +2437,21 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 78,
-      "new_added" : 659,
+      "new_added" : 874,
       "status" : "ongoing",
       "title" : "",
       "weight" : 2000
+    },
+    "teihen-ryoushu-no-kanchigai-eiyuutan" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 16,
+      "new_added" : 115,
+      "status" : "ongoing",
+      "title" : "teihen-ryoushu-no-kanchigai-eiyuutan",
+      "weight" : 10000
     },
     "tensei-shitara-dai-nana-ouji-dattanode-kimamani-majutsu-o-kiwamemasu" : {
       "average_page" : 100,
@@ -1931,9 +2459,9 @@
       "finder" : "EXTERNAL",
       "image_url" : "",
       "manga_last_chapter" : 56,
-      "new_added" : 109,
+      "new_added" : 324,
       "status" : "ongoing",
-      "title" : "tensei-shitara-dai-nana-ouji-dattanode-kimamani-majutsu-o-kiwamemasu",
+      "title" : "",
       "weight" : 10000
     },
     "tensei-shitara-slime-datta-ken" : {
@@ -1941,21 +2469,32 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 86,
-      "new_added" : 329,
+      "manga_last_chapter" : 87,
+      "new_added" : 173,
       "status" : "ongoing",
       "title" : "",
       "weight" : 1000
+    },
+    "that-dragon-exchange-student-stands-out-more-than-me" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 12,
+      "new_added" : 208,
+      "status" : "ongoing",
+      "title" : "",
+      "weight" : 10000
     },
     "the-100-girlfriends-who-really-really-really-really-really-love-you" : {
       "average_page" : 100,
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
-      "manga_last_chapter" : 67,
-      "new_added" : 145,
+      "manga_last_chapter" : 69,
+      "new_added" : 82,
       "status" : "ongoing",
-      "title" : "the-100-girlfriends-who-really-really-really-really-really-love-you",
+      "title" : "",
       "weight" : 10000
     },
     "the-beginning-after-the-end" : {
@@ -1963,8 +2502,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 117,
-      "new_added" : 31,
+      "manga_last_chapter" : 119,
+      "new_added" : 98,
       "status" : "ongoing",
       "title" : "",
       "weight" : 2000
@@ -1974,10 +2513,21 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
-      "manga_last_chapter" : 31,
-      "new_added" : 281,
+      "manga_last_chapter" : 32,
+      "new_added" : 168,
       "status" : "ongoing",
-      "title" : "the-eminence-in-shadow",
+      "title" : "",
+      "weight" : 10000
+    },
+    "the-gemini-are-my-age" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 5,
+      "new_added" : 86,
+      "status" : "ongoing",
+      "title" : "the-gemini-are-my-age",
       "weight" : 10000
     },
     "the-god-of-high-school" : {
@@ -1986,7 +2536,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 526,
-      "new_added" : 302,
+      "new_added" : 517,
       "status" : "ongoing",
       "title" : "",
       "weight" : 1000
@@ -1996,10 +2546,10 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "https://thumb.mghubcdn.com/mrc/the-healer-who-was-banished-from-his-party-is-in-fact-the-strongest.jpg",
-      "manga_last_chapter" : 15,
-      "new_added" : 145,
+      "manga_last_chapter" : 16,
+      "new_added" : 8,
       "status" : "ongoing",
-      "title" : "the-healer-who-was-banished-from-his-party-is-in-fact-the-strongest",
+      "title" : "",
       "weight" : 10000
     },
     "the-hunters-guild-red-hood" : {
@@ -2007,10 +2557,10 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
-      "manga_last_chapter" : 7,
-      "new_added" : 2,
+      "manga_last_chapter" : 9,
+      "new_added" : 69,
       "status" : "ongoing",
-      "title" : "the-hunters-guild-red-hood",
+      "title" : "",
       "weight" : 10000
     },
     "the-irregular-of-the-royal-academy-of-magic" : {
@@ -2018,10 +2568,10 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
-      "manga_last_chapter" : 25,
-      "new_added" : 171,
+      "manga_last_chapter" : 27,
+      "new_added" : 117,
       "status" : "ongoing",
-      "title" : "the-irregular-of-the-royal-academy-of-magic",
+      "title" : "",
       "weight" : 10000
     },
     "the-legendary-moonlight-sculptor" : {
@@ -2030,7 +2580,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 169,
-      "new_added" : 3354,
+      "new_added" : 3569,
       "status" : "ongoing",
       "title" : "",
       "weight" : 3000
@@ -2041,9 +2591,9 @@
       "finder" : "EXTERNAL",
       "image_url" : "",
       "manga_last_chapter" : 21,
-      "new_added" : 355,
+      "new_added" : 570,
       "status" : "ongoing",
-      "title" : "the-rain-of-teardrops-and-serenade",
+      "title" : "",
       "weight" : 10000
     },
     "the-reincarnated-inferior-magic-swordsman" : {
@@ -2052,9 +2602,9 @@
       "finder" : "EXTERNAL",
       "image_url" : "",
       "manga_last_chapter" : 44,
-      "new_added" : 54,
+      "new_added" : 269,
       "status" : "ongoing",
-      "title" : "the-reincarnated-inferior-magic-swordsman",
+      "title" : "",
       "weight" : 10000
     },
     "the-ride-on-king" : {
@@ -2062,10 +2612,10 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
-      "manga_last_chapter" : 35,
-      "new_added" : 276,
+      "manga_last_chapter" : 36,
+      "new_added" : 164,
       "status" : "ongoing",
-      "title" : "the-ride-on-king",
+      "title" : "",
       "weight" : 10000
     },
     "the-rise-of-the-unemployed-wise-man" : {
@@ -2074,9 +2624,9 @@
       "finder" : "EXTERNAL",
       "image_url" : "",
       "manga_last_chapter" : 43,
-      "new_added" : 522,
+      "new_added" : 737,
       "status" : "ongoing",
-      "title" : "the-rise-of-the-unemployed-wise-man",
+      "title" : "",
       "weight" : 10000
     },
     "the-romcom-where-the-childhood-friend-won-t-lose" : {
@@ -2084,10 +2634,10 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
-      "manga_last_chapter" : 20,
-      "new_added" : 215,
+      "manga_last_chapter" : 21,
+      "new_added" : 135,
       "status" : "ongoing",
-      "title" : "the-romcom-where-the-childhood-friend-won-t-lose",
+      "title" : "",
       "weight" : 10000
     },
     "the-seven-deadly-sins-four-knights-of-the-apocalypse" : {
@@ -2095,10 +2645,54 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "https://thumb.mghubcdn.com/rem/the-seven-deadly-sins-four-knights-of-the-apocalypse.png",
-      "manga_last_chapter" : 27,
-      "new_added" : 62,
+      "manga_last_chapter" : 29,
+      "new_added" : 127,
       "status" : "ongoing",
-      "title" : "the-seven-deadly-sins-four-knights-of-the-apocalypse",
+      "title" : "",
+      "weight" : 10000
+    },
+    "the-story-of-an-engaged-couple-that-doesn-t-get-along" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 27,
+      "new_added" : 140,
+      "status" : "ongoing",
+      "title" : "",
+      "weight" : 10000
+    },
+    "the-story-of-an-onee-san-who-wants-to-keep-a-high-school-boy" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 245,
+      "new_added" : 165,
+      "status" : "ongoing",
+      "title" : "",
+      "weight" : 10000
+    },
+    "the-swordsman-called-the-countless-swords-sorcerer" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 26,
+      "new_added" : 84,
+      "status" : "ongoing",
+      "title" : "the-swordsman-called-the-countless-swords-sorcerer",
+      "weight" : 10000
+    },
+    "the-teacher-can-not-tell-me-love" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 40,
+      "new_added" : 9,
+      "status" : "ongoing",
+      "title" : "the-teacher-can-not-tell-me-love",
       "weight" : 10000
     },
     "the-world-god-only-knows" : {
@@ -2112,15 +2706,26 @@
       "title" : "",
       "weight" : 50
     },
+    "the-world-of-otome-games-is-tough-for-mobs" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 35,
+      "new_added" : 113,
+      "status" : "ongoing",
+      "title" : "the-world-of-otome-games-is-tough-for-mobs",
+      "weight" : 10000
+    },
     "tokyo-babel" : {
       "average_page" : 100,
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
       "manga_last_chapter" : 5,
-      "new_added" : 50,
+      "new_added" : 265,
       "status" : "ongoing",
-      "title" : "tokyo-babel",
+      "title" : "",
       "weight" : 10000
     },
     "tokyo-ghoul-re" : {
@@ -2139,10 +2744,10 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "https://thumb.mghubcdn.com/mh/tokyo-revengers.jpg",
-      "manga_last_chapter" : 218,
-      "new_added" : 76,
+      "manga_last_chapter" : 220,
+      "new_added" : 130,
       "status" : "ongoing",
-      "title" : "tokyo-revengers",
+      "title" : "",
       "weight" : 10000
     },
     "tomo-chan-wa-onnanoko" : {
@@ -2151,7 +2756,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 954,
-      "new_added" : 7488,
+      "new_added" : 7703,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -2162,7 +2767,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 51,
-      "new_added" : 7488,
+      "new_added" : 7703,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -2183,11 +2788,22 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 504,
-      "new_added" : 87,
+      "manga_last_chapter" : 507,
+      "new_added" : 8,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
+    },
+    "tricks-dedicated-to-witches" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 29,
+      "new_added" : 8,
+      "status" : "ongoing",
+      "title" : "",
+      "weight" : 10000
     },
     "tsubaki-chou-lonely-planet" : {
       "average_page" : 60,
@@ -2200,15 +2816,26 @@
       "title" : "",
       "weight" : 50
     },
+    "tsuihou-no-kenja-sekai-wo-shiru-osanajimi-yuusha-no-atsuryoku-kara-nigete-jiyuu-ni-natta-ore" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "https://thumb.mghubcdn.com/mrc/tsuihou-no-kenja-sekai-wo-shiru-osanajimi-yuusha-no-atsuryoku-kara-nigete-jiyuu-ni-natta-ore.jpeg",
+      "manga_last_chapter" : 9,
+      "new_added" : 92,
+      "status" : "ongoing",
+      "title" : "tsuihou-no-kenja-sekai-wo-shiru-osanajimi-yuusha-no-atsuryoku-kara-nigete-jiyuu-ni-natta-ore",
+      "weight" : 10000
+    },
     "tsuki-no-oki-ni-mesu-mama" : {
       "average_page" : 100,
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
       "manga_last_chapter" : 27,
-      "new_added" : 258,
+      "new_added" : 473,
       "status" : "ongoing",
-      "title" : "tsuki-no-oki-ni-mesu-mama",
+      "title" : "",
       "weight" : 10000
     },
     "tsuyokute-new-saga" : {
@@ -2217,7 +2844,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 89,
-      "new_added" : 310,
+      "new_added" : 525,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -2227,10 +2854,10 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "https://thumb.mghubcdn.com/md/uma-musume-cinderella-gray.jpg",
-      "manga_last_chapter" : 23,
-      "new_added" : 8,
+      "manga_last_chapter" : 25,
+      "new_added" : 79,
       "status" : "ongoing",
-      "title" : "uma-musume-cinderella-gray",
+      "title" : "",
       "weight" : 10000
     },
     "umarekawatte-mo-mata-watashi-to-kekkon-shite-kuremasu-ka" : {
@@ -2239,7 +2866,7 @@
       "finder" : "",
       "image_url" : "https://thumb.mghubcdn.com/mf/umarekawatte-mo-mata-watashi-to-kekkon-shite-kuremasu-ka.jpg",
       "manga_last_chapter" : 22,
-      "new_added" : 1838,
+      "new_added" : 2053,
       "status" : "ongoing",
       "title" : "",
       "weight" : 1000
@@ -2250,7 +2877,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 185,
-      "new_added" : 310,
+      "new_added" : 525,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -2260,11 +2887,22 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 229,
-      "new_added" : 29,
+      "manga_last_chapter" : 233,
+      "new_added" : 130,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
+    },
+    "we-may-be-an-inexperienced-couple-but" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 80,
+      "new_added" : 146,
+      "status" : "ongoing",
+      "title" : "we-may-be-an-inexperienced-couple-but",
+      "weight" : 10000
     },
     "when-i-rescued-a-beautiful-girl-who-was-about-to-be-mol-sted-it-was-my-childhood-friend-sitting-next-to-me" : {
       "average_page" : 100,
@@ -2272,9 +2910,9 @@
       "finder" : "EXTERNAL",
       "image_url" : "",
       "manga_last_chapter" : 28,
-      "new_added" : 196,
+      "new_added" : 411,
       "status" : "ongoing",
-      "title" : "when-i-rescued-a-beautiful-girl-who-was-about-to-be-mol-sted-it-was-my-childhood-friend-sitting-next-to-me",
+      "title" : "",
       "weight" : 10000
     },
     "while-killing-slimes-for-300-years-i-became-the-max-level-unknowingly" : {
@@ -2283,7 +2921,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 34,
-      "new_added" : 788,
+      "new_added" : 1003,
       "status" : "ongoing",
       "title" : "",
       "weight" : 1000
@@ -2294,7 +2932,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 70,
-      "new_added" : 1540,
+      "new_added" : 1755,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -2305,7 +2943,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 45,
-      "new_added" : 7488,
+      "new_added" : 7703,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -2332,15 +2970,26 @@
       "title" : "",
       "weight" : 50
     },
+    "yankee-jk-kuzuhana-chan" : {
+      "average_page" : 100,
+      "compact_title" : "",
+      "finder" : "EXTERNAL",
+      "image_url" : "",
+      "manga_last_chapter" : 71,
+      "new_added" : 113,
+      "status" : "ongoing",
+      "title" : "yankee-jk-kuzuhana-chan",
+      "weight" : 10000
+    },
     "yokohama-kaidashi-kikou" : {
       "average_page" : 100,
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
       "manga_last_chapter" : 141,
-      "new_added" : 537,
+      "new_added" : 752,
       "status" : "ongoing",
-      "title" : "yokohama-kaidashi-kikou",
+      "title" : "",
       "weight" : 10000
     },
     "yong-heng-zhi-zun" : {
@@ -2348,8 +2997,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 289,
-      "new_added" : 316,
+      "manga_last_chapter" : 299,
+      "new_added" : 45,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -2360,7 +3009,7 @@
       "finder" : "",
       "image_url" : "",
       "manga_last_chapter" : 54,
-      "new_added" : 1979,
+      "new_added" : 2194,
       "status" : "ongoing",
       "title" : "",
       "weight" : 1000
@@ -2370,8 +3019,8 @@
       "compact_title" : "",
       "finder" : "",
       "image_url" : "",
-      "manga_last_chapter" : 447,
-      "new_added" : 76,
+      "manga_last_chapter" : 449,
+      "new_added" : 161,
       "status" : "ongoing",
       "title" : "",
       "weight" : 50
@@ -2392,12 +3041,12 @@
       "compact_title" : "",
       "finder" : "EXTERNAL",
       "image_url" : "",
-      "manga_last_chapter" : 54,
-      "new_added" : 43,
+      "manga_last_chapter" : 55,
+      "new_added" : 164,
       "status" : "ongoing",
-      "title" : "yuusha-party-wo-tsuihou-sareta-beast-tamer-saikyou-shuzoku-nekomimi-shojo-to-deau",
+      "title" : "",
       "weight" : 10000
     }
   }
-  
+
 }

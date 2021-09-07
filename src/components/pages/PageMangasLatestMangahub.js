@@ -98,9 +98,6 @@ function PageTodaysMangaV1() {
           <RenderTodaysMangaSection />
         </div>
       </div>
-      <footer className="main-footer bg-dark">
-        ...
-      </footer>
     </div>
   )
 

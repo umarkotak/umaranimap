@@ -110,9 +110,8 @@ function PageAnimesSeasons() {
 
   return (
     <div>
-      <div className="content-wrapper" style={{backgroundColor: "#454d55"}}>
+      <div className="content-wrapper px-2" style={{backgroundColor: "#454d55"}}>
         <div className="row">
-
           <div className="col-12 col-lg-9">
             <div className="sticky-top">
               <RenderYouTube anime={item} />
