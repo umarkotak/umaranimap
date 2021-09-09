@@ -16,7 +16,7 @@ function PageMangaLibraryV1() {
   var manga_list = generateMangaListFromDB()
 
   const [page_loading_state, set_page_loading_state] = useState("true")
-  const [new_manga_check_update, set_new_manga_check_update] = useState(" - finding new chapter . . .")
+  const [new_manga_check_update, set_new_manga_check_update] = useState("block")
   // const [manga_histories, set_manga_histories] = useState(generateHistoriesSection())
   const manga_histories = generateHistoriesSection()
   const [logged_in_manga_histories, set_logged_in_manga_histories] = useState([])
@@ -69,7 +69,7 @@ function PageMangaLibraryV1() {
       new_mangas.sort((a, b) => a.order - b.order)
 
       set_new_mangas(new_mangas.map(val => val.title))
-      set_new_manga_check_update("")
+      set_new_manga_check_update("none")
     }
     updateData()
   }, [])
@@ -238,7 +238,12 @@ function PageMangaLibraryV1() {
         <RenderHistoriesSection />
 
         <hr className="my-2" />
-        <h2 className="text-white">New Updates {new_manga_check_update}</h2>
+        <div className="row"><div className="col-6">
+          <h2 className="text-white">New Updates</h2>
+        </div><div className="col-6">
+          <img src="/Iphone-spinner-2.gif" className="float-right border rounded-circle" style={{display: new_manga_check_update, height: "36px"}}></img>
+        </div></div>
+
         <RenderLatestUpdateSection />
 
         <hr className="my-2" />
