@@ -10,7 +10,7 @@ class MangadexAPI {
   }
 
   async GetMangaList() {
-    var uri = `${this.MangadexApiHost}/manga`
+    var uri = `${this.MangadexApiHost}/manga?includes[]=cover_art`
     const response = await fetch(uri, {
       method: 'GET',
       headers: {
@@ -31,6 +31,16 @@ class MangadexAPI {
       }
     })
     return response
+  }
+
+  ConstructCoverArtOriginal(mangaID, coverFileName) {
+    var result = `https://uploads.mangadex.org/covers/${mangaID}/${coverFileName}`
+    return result
+  }
+
+  ConstructCoverArtCompressed(mangaID, coverFileName, size) {
+    var result = `https://uploads.mangadex.org/covers/${mangaID}/${coverFileName}.${size}.jpg`
+    return result
   }
 }
 

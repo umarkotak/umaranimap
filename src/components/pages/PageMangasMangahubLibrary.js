@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react"
 import mangaDB from "../utils/MangaDB"
 import Cookies from 'universal-cookie'
 import {Link} from "react-router-dom"
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid'
 
 import helper from "../utils/Helper"
 import dataStoreCommon from "../utils/DataStoreCommon"
