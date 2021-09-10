@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react"
 import {Link} from "react-router-dom"
+import InfiniteScroll from 'react-infinite-scroll-component'
 
 import mangadexApi from "../apis/MangadexAPI"
 import helper from "../utils/Helper"
@@ -7,19 +8,36 @@ import helper from "../utils/Helper"
 function PageMangasLatestMangadex() {
 
   const [mangaList, setMangaList] = useState([])
+  var offset = 0
 
   async function fetchMangaList() {
     try {
-      var response = await mangadexApi.GetMangaList()
+      var params = {
+        offset: offset
+      }
+      var response = await mangadexApi.GetMangaList(params)
       var status = await response.status
       var body = await response.json()
 
-      console.log(status, body)
-
-      setMangaList(body.results)
+      if (status === 200) {
+        setMangaList(mangaList.concat(body.results))
+      }
     } catch(e) {
       console.log(e)
     }
+  }
+
+  const maxCount = 600
+  const [hasMore, setHasMore] = useState(true)
+
+  const getMoreData = () => {
+    if (mangaList.length >= maxCount) {
+      setHasMore(false)
+      return
+    }
+    setTimeout(() => {
+      fetchMangaList()
+    }, 500)
   }
 
   useEffect(() => {
@@ -27,30 +45,38 @@ function PageMangasLatestMangadex() {
   // eslint-disable-next-line
   }, [])
 
+  useEffect(() => {
+    fetchMangaList()
+  // eslint-disable-next-line
+  }, [offset])
+
   return(
     <div>
       <div className="content-wrapper p-2" style={{backgroundColor: "#454d55"}}>
         <div className="mt-2 mx-2">
-          <div className="row">
-            {mangaList.slice(0, 1000).map(((manga, index) => (
-              <div className="col-4 col-md-2 mb-4" key={`LATEST-MANGA-CARD-${index}`}>
-                <RenderMangaCard
-                  manga = {manga}
-                  continue_chapter = {0}
-                  util_icon = "fa-share"
-                  util_link = {`#`}
-                />
-              </div>
-            )))}
+          <div>
+            <InfiniteScroll
+              dataLength={mangaList.length}
+              next={getMoreData}
+              hasMore={hasMore}
+              loader={<hr />}
+              className="row"
+              endMessage={<p className="text-white"><b>End of list</b></p>}
+            >
+              {mangaList.slice(0, 1000).map(((manga, index) => (
+                <div className="col-4 col-md-2 mb-4" key={`LATEST-MANGA-CARD-${index}`}>
+                  <RenderMangaCard
+                    manga = {manga}
+                    continue_chapter = {0}
+                    util_icon = "fa-share"
+                    util_link = {`#`}
+                  />
+                </div>
+              )))}
+            </InfiniteScroll>
           </div>
         </div>
       </div>
-
-      <footer className="main-footer bg-dark">
-        <div className="float-right">
-          ANIMAPU 2021 | Version: 2
-        </div>
-      </footer>
     </div>
   )
 

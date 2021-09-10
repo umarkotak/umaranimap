@@ -9,8 +9,8 @@ class MangadexAPI {
     this.MangadexBearerToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ0eXAiOiJyZWZyZXNoIiwiaXNzIjoibWFuZ2FkZXgub3JnIiwiYXVkIjoibWFuZ2FkZXgub3JnIiwiaWF0IjoxNjMxMTg5MjMyLCJuYmYiOjE2MzExODkyMzIsImV4cCI6MTYzMzc4MTIzMiwidWlkIjoiYzEzMWRlNmMtNjBmYi00ZmYxLWEyOWEtZTE3ZmI4MmY3MDdlIiwic2lkIjoiNTE2NzRlMzQtM2ZlYy00ZmE5LTlkODQtOTBmMGZiOTEzYjlkIn0.YAN4tuEf3YW50mTdQoTMT_w0k8k5AhLAU72N8eGI6IqPXEFZfzjtZ22Ao96Jvv5YJazJeyVhPKrZ2CfzOxXnQ3zWgpV32zRmJkRgSERIw8H3h484hpCVGiWR7bqcFnieVIfbdYi_BEU-k_OwVjuRVExjg8ukhhRXBzQEjSjT3E-wjTAnB5zin49KaN2Zov3Y4YO1B8836wCq43wMiqTiAYBNbrE1277ljgiDXh3U42g7rB7qm5nEdGImAS3qMq095eoJEwW-_u8TwB0Egtu2PzljOfPRiA1LBXf_Kf0YqhbhgzM7-lYbRIj5PALXYsuf7GALNylp3gA9giHr7GLrZKaXHQDaquFTx_QatF84haQMY0x9lmrxjVR-hAcCuLpbd3Rg8EQiUz_JuuczB3L7TVc7mKJU3mVLiuUepdDa9lkBprLkfVuV2WlXAaYlsBctZktxZ8ExoJETA0SDPQ9iOMXvk9GYqZPHSKed4yCYOz1M_Utgke5lsEaU1OYejgHr-4oGdepPMLHOwRPOLUEnQf92K35sTA4Eqo6aNJ5lZTvCJncox1vDlgLoWbcy70S7MgFNDpiTfDeOc1MxSxecdfAatBKODS208MsG7iNjFCgRRMozOx8esoCCFT7_dtFlTL6i37pvxZvQzm8WF8VEDJ56Oh4h9f-_xoyhzbCN1VI"
   }
 
-  async GetMangaList() {
-    var uri = `${this.MangadexApiHost}/manga?includes[]=cover_art`
+  async GetMangaList(params) {
+    var uri = `${this.MangadexApiHost}/manga?limit=90&offset=${params.offset}&includes[]=cover_art`
     const response = await fetch(uri, {
       method: 'GET',
       headers: {
