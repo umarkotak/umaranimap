@@ -13,11 +13,13 @@ import PageSignUp from "./components/pages/PageSignUp"
 import PageAnimesSeasons from "./components/pages/PageAnimesSeasons"
 import PageAnimesAnimepaheWatch from "./components/pages/PageAnimesAnimepaheWatch"
 
-import PageMangasLatestMangahub from "./components/pages/PageMangasLatestMangahub"
-import PageMangasLibraryMangahub from "./components/pages/PageMangasLibraryMangahub"
-import PageMangasSearchMangahub from "./components/pages/PageMangasSearchMangahub"
-import PageMangasDetailMangahub from "./components/pages/PageMangasDetailMangahub"
-import PageMangasReadMangahub from "./components/pages/PageMangasReadMangahub"
+import PageMangasLatestMangahub from "./components/pages/PageMangasMangahubLatest"
+import PageMangasLibraryMangahub from "./components/pages/PageMangasMangahubLibrary"
+import PageMangasSearchMangahub from "./components/pages/PageMangasMangahubSearch"
+import PageMangasDetailMangahub from "./components/pages/PageMangasMangahubDetail"
+import PageMangasReadMangahub from "./components/pages/PageMangasMangahubRead"
+
+import PageMangasLatestMangadex from "./components/pages/PageMangasMangadexLatest"
 
 import PageTicTacToe from "./components/pages/PageTicTacToe"
 import PageLearnReact from "./components/pages/PageLearnReact"
@@ -53,6 +55,8 @@ function App() {
             <Route path="/mangas/search/mangahub" exact component={PageMangasSearchMangahub} />
             <Route path="/mangas/read/mangahub/:path_title/:path_chapter" exact component={PageMangasReadMangahub} />
             <Route path="/mangas/detail/mangahub/:manga_title" exact component={PageMangasDetailMangahub} />
+
+            <Route path="/mangas/latest/mangadex" exact component={PageMangasLatestMangadex} />
 
             <Route path="/statistics-v1" exact component={PageStatisticsV1} />
 

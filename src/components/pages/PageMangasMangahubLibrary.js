@@ -241,7 +241,7 @@ function PageMangaLibraryV1() {
         <div className="row"><div className="col-6">
           <h2 className="text-white">New Updates</h2>
         </div><div className="col-6">
-          <img src="/Iphone-spinner-2.gif" className="float-right border rounded-circle" style={{display: new_manga_check_update, height: "36px"}}></img>
+          <img src="/Iphone-spinner-2.gif" alt="spinner" className="float-right border rounded-circle" style={{display: new_manga_check_update, height: "36px"}}></img>
         </div></div>
 
         <RenderLatestUpdateSection />

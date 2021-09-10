@@ -8,6 +8,10 @@ function Navbar() {
   function handleChangeSource(source) {
     if (source === "maid_my") {
       localStorage.setItem("ANIMAPU_ACTIVE_MANGA_SOURCE", "maid_my")
+    } else if (source === "mangahub") {
+      localStorage.setItem("ANIMAPU_ACTIVE_MANGA_SOURCE", "mangahub")
+    } else if (source === "mangadex") {
+      localStorage.setItem("ANIMAPU_ACTIVE_MANGA_SOURCE", "mangadex")
     } else {
       localStorage.setItem("ANIMAPU_ACTIVE_MANGA_SOURCE", "mangahub")
     }
@@ -46,6 +50,7 @@ function Navbar() {
   function OnLoggedIn() {
     return(
       <ul className="navbar-nav ml-auto">
+        <MangaSources />
         <li className="nav-item" id="nav-items-3">
           <button className="btn btn-sm btn-danger" onClick={() => handleLogout()}><i className="fa fa-sign-out-alt"></i> logout</button>
         </li>
@@ -56,10 +61,7 @@ function Navbar() {
   function OnPublic() {
     return(
       <ul className="navbar-nav ml-auto">
-        <select className="form-select float-left mr-2" name="selectedMangaTitle" onChange={(e) => handleChangeSource(e.target.value)} defaultValue={localStorage.getItem("ANIMAPU_ACTIVE_MANGA_SOURCE")}>
-          <option key="mangahub" value="mangahub"> mangahub (ENG) </option>
-          <option key="maid_my" value="maid_my"> maid_my (INDO) </option>
-        </select>
+        <MangaSources />
         <li className="nav-item">
           <Link to="/sign_up" className="btn btn-sm btn-outline-light mr-2"><i className="fa fa-user-plus"></i> Sign Up</Link>
         </li>
@@ -67,6 +69,21 @@ function Navbar() {
           <Link to="/login" className="btn btn-sm btn-primary text-white"><i className="fa fa-sign-in-alt"></i> Login</Link>
         </li>
       </ul>
+    )
+  }
+
+  function MangaSources() {
+    return(
+      <select
+        className="form-select float-left mr-2"
+        name="selectedMangaTitle"
+        onChange={(e) => handleChangeSource(e.target.value)}
+        defaultValue={localStorage.getItem("ANIMAPU_ACTIVE_MANGA_SOURCE")}
+      >
+        <option key="mangadex" value="mangadex"> mangadex (ENG) </option>
+        <option key="mangahub" value="mangahub"> mangahub (ENG) </option>
+        <option key="maid_my" value="maid_my"> maid_my (INDO) </option>
+      </select>
     )
   }
 }

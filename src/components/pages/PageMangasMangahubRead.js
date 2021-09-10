@@ -65,7 +65,6 @@ function PageReadMangaOnlyV1() {
     var api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", `/mangas_detail?manga_title=${manga_title}`)
     const response = await fetch(api)
     const results = await response.json()
-    // console.log(results)
 
     if (!Array.isArray(results.chapters)) {
       results.chapters=[]
@@ -81,9 +80,13 @@ function PageReadMangaOnlyV1() {
 
   useEffect(() => {
     async function fetchData() {
-      var results = await fetchMangaDetail()
+      try {
+        var results = await fetchMangaDetail()
+  
+        set_manga_chapter_list(results.chapters)
+      } catch (e) {
 
-      set_manga_chapter_list(results.chapters)
+      }
     }
     fetchData()
     // eslint-disable-next-line
@@ -412,7 +415,6 @@ function PageReadMangaOnlyV1() {
                   src={generateImageURL(value)}
                   alt=""
                   onError={(e) => handleImageFallback(value, e)}
-                  style={{maxWidth: "1100px"}}
                 />
               </div>
             )))}
