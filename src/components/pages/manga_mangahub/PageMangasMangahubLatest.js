@@ -5,8 +5,8 @@ import React, {useState, useEffect} from "react"
 import Cookies from 'universal-cookie'
 import {Link} from "react-router-dom"
 
-import dataStoreCommon from "../utils/DataStoreCommon"
-import helper from "../utils/Helper"
+import dataStoreCommon from "../../utils/DataStoreCommon"
+import helper from "../../utils/Helper"
 
 function PageTodaysMangaV1() {
   const cookies = new Cookies()

@@ -3,7 +3,8 @@
 
 import React, {useState, useEffect} from "react"
 import {Link} from "react-router-dom"
-import dataStoreCommon from "../utils/DataStoreCommon"
+
+import dataStoreCommon from "../../utils/DataStoreCommon"
 
 function PageSearchManga() {
   const [searching_state, set_searching_state] = useState("standby")

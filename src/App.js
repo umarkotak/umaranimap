@@ -13,15 +13,16 @@ import PageSignUp from "./components/pages/PageSignUp"
 import PageAnimesSeasons from "./components/pages/PageAnimesSeasons"
 import PageAnimesAnimepaheWatch from "./components/pages/PageAnimesAnimepaheWatch"
 
-import PageMangasLatestMangahub from "./components/pages/PageMangasMangahubLatest"
-import PageMangasLibraryMangahub from "./components/pages/PageMangasMangahubLibrary"
-import PageMangasSearchMangahub from "./components/pages/PageMangasMangahubSearch"
-import PageMangasDetailMangahub from "./components/pages/PageMangasMangahubDetail"
-import PageMangasReadMangahub from "./components/pages/PageMangasMangahubRead"
+import PageMangasLatestMangahub from "./components/pages/manga_mangahub/PageMangasMangahubLatest"
+import PageMangasLibraryMangahub from "./components/pages/manga_mangahub/PageMangasMangahubLibrary"
+import PageMangasSearchMangahub from "./components/pages/manga_mangahub/PageMangasMangahubSearch"
+import PageMangasDetailMangahub from "./components/pages/manga_mangahub/PageMangasMangahubDetail"
+import PageMangasReadMangahub from "./components/pages/manga_mangahub/PageMangasMangahubRead"
 
-import PageMangasLatestMangadex from "./components/pages/PageMangasMangadexLatest"
-import PageMangasDetailMangadex from "./components/pages/PageMangasMangadexDetail"
-import PageMangasReadMangadex from "./components/pages/PageMangasMangadexRead"
+import PageMangasLatestMangadex from "./components/pages/manga_mangadex/PageMangasMangadexLatest"
+import PageMangasDetailMangadex from "./components/pages/manga_mangadex/PageMangasMangadexDetail"
+import PageMangasReadMangadex from "./components/pages/manga_mangadex/PageMangasMangadexRead"
+import PageMangasSearchMangadex from "./components/pages/manga_mangadex/PageMangasMangadexSearch"
 
 import PageTicTacToe from "./components/pages/PageTicTacToe"
 import PageLearnReact from "./components/pages/PageLearnReact"
@@ -61,6 +62,7 @@ function App() {
             <Route path="/mangas/latest/mangadex" exact component={PageMangasLatestMangadex} />
             <Route path="/mangas/read/mangadex/:manga_id/:chapter_id/:chapter_hash" exact component={PageMangasReadMangadex} />
             <Route path="/mangas/detail/mangadex/:manga_id" exact component={PageMangasDetailMangadex} />
+            <Route path="/mangas/search/mangadex" exact component={PageMangasSearchMangadex} />
 
             <Route path="/statistics-v1" exact component={PageStatisticsV1} />
 

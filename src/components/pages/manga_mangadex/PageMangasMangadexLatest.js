@@ -2,8 +2,8 @@ import React, {useState, useEffect} from "react"
 import {Link} from "react-router-dom"
 import InfiniteScroll from 'react-infinite-scroll-component'
 
-import mangadexApi from "../apis/MangadexAPI"
-import helper from "../utils/Helper"
+import mangadexApi from "../../apis/MangadexAPI"
+import helper from "../../utils/Helper"
 
 function PageMangasLatestMangadex() {
 
@@ -66,9 +66,9 @@ function PageMangasLatestMangadex() {
                 <div className="col-4 col-md-2 mb-4" key={`LATEST-MANGA-CARD-${index}`}>
                   <RenderMangaCard
                     manga = {manga}
-                    continue_chapter = {0}
+                    continue_chapter = {"-"}
                     util_icon = "fa-share"
-                    util_link = {`#`}
+                    util_link = {`/mangas/detail/mangadex/${manga.data.id}`}
                   />
                 </div>
               )))}
@@ -113,10 +113,10 @@ function PageMangasLatestMangadex() {
                 <Link type="button" className="btn btn-block btn-sm btn-outline-light" to={`/mangas/detail/mangadex/${props.manga.data.id}`}><i className="fa fa-info-circle"></i></Link>
               </th>
               <th width="35%">
-                <Link className="btn btn-block btn-sm btn-outline-light" to={`#`}>1</Link>
+                <Link className="btn btn-block btn-sm btn-outline-light" to={`/mangas/detail/mangadex/${props.manga.data.id}`}>1</Link>
               </th>
               <th width="55%">
-                <Link className="btn btn-block btn-sm btn-outline-light" to={`#`}>{props.manga.data.attributes.lastChapter || "-"}</Link>
+                <Link className="btn btn-block btn-sm btn-outline-light" to={`/mangas/detail/mangadex/${props.manga.data.id}`}>{props.manga.data.attributes.lastChapter || "-"}</Link>
               </th>
             </tr>
           </thead>

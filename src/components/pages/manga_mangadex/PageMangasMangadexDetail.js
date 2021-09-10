@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react"
 import {Link, useParams} from "react-router-dom"
 
-import mangadexApi from "../apis/MangadexAPI"
+import mangadexApi from "../../apis/MangadexAPI"
 
 function PageMangasDetailMangadex() {
   let { manga_id } = useParams()

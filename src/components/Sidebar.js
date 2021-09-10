@@ -18,6 +18,10 @@ function Sidebar() {
 
   function RefreshSideBarItems() {
     let tempSideBarItems = {}
+
+    if (window.location.href.includes("heroku")) { tempSideBarItems.server_heroku = "active" }
+    else if (window.location.href.includes("netlify")) { tempSideBarItems.server_netlify = "active" }
+    
     if (window.location.pathname === "/") { tempSideBarItems.home = "active" }
     if (window.location.pathname === "/home") { tempSideBarItems.home = "active" }
     else if (window.location.pathname.startsWith("/animes/seasons")) { tempSideBarItems.animes_seasons = "active" }
@@ -134,10 +138,10 @@ function Sidebar() {
 
         <li className="nav-header py-2">ALTERNATIVE SERVER</li>
         <li className="nav-item">
-          <a href="http://animapu.herokuapp.com/" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Heroku</p></a>
+          <a href="http://animapu.herokuapp.com/" className={`nav-link ${sideBarItems["server_heroku"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Heroku</p></a>
         </li>
         <li className="nav-item">
-          <a href="https://animapu.netlify.app/" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Netlify</p></a>
+          <a href="https://animapu.netlify.app/" className={`nav-link ${sideBarItems["server_netlify"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Netlify</p></a>
         </li>
 
         <li className="nav-header"></li>

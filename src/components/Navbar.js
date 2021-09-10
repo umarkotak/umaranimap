@@ -12,17 +12,34 @@ function Navbar() {
       localStorage.setItem("ANIMAPU_ACTIVE_MANGA_SOURCE", "mangahub")
     } else if (source === "mangadex") {
       localStorage.setItem("ANIMAPU_ACTIVE_MANGA_SOURCE", "mangadex")
+      localStorage.setItem("ANIMAPU_MANGADEX_LANG", "en")
+    } else if (source === "mangadex_id") {
+      localStorage.setItem("ANIMAPU_ACTIVE_MANGA_SOURCE", "mangadex")
+      localStorage.setItem("ANIMAPU_MANGADEX_LANG", "id")
     } else {
       localStorage.setItem("ANIMAPU_ACTIVE_MANGA_SOURCE", "mangahub")
     }
-    window.location.reload()
+    window.location.href = "/"
   }
 
   function handleLogout() {
     cookies.remove("GO_ANIMAPU_LOGGED_IN")
     cookies.remove("GO_ANIMAPU_USERNAME")
     cookies.remove("GO_ANIMAPU_LOGIN_TOKEN")
-    window.location.reload()
+    window.location.href = "/"
+  }
+
+  function mangaSourceDefaultValueDecider() {
+    var mangaSource = localStorage.getItem("ANIMAPU_ACTIVE_MANGA_SOURCE")
+    var mangadexLang = localStorage.getItem("ANIMAPU_MANGADEX_LANG")
+
+    if (!mangaSource) { return "mangahub" }
+    if (mangaSource === "mangadex") {
+      if (!mangadexLang) { return "mangadex" }
+      if (mangadexLang === "id") { return "mangadex_id" }
+      return "mangadex"
+    }
+    return localStorage.getItem("ANIMAPU_ACTIVE_MANGA_SOURCE")
   }
 
   return (
@@ -78,11 +95,12 @@ function Navbar() {
         className="form-select float-left mr-2"
         name="selectedMangaTitle"
         onChange={(e) => handleChangeSource(e.target.value)}
-        defaultValue={localStorage.getItem("ANIMAPU_ACTIVE_MANGA_SOURCE")}
+        defaultValue={mangaSourceDefaultValueDecider()}
       >
-        <option key="mangadex" value="mangadex"> mangadex (ENG) </option>
-        <option key="mangahub" value="mangahub"> mangahub (ENG) </option>
-        <option key="maid_my" value="maid_my"> maid_my (INDO) </option>
+        <option key="mangadex" value="mangadex"> (EN) mangadex </option>
+        <option key="mangahub" value="mangahub"> (EN) mangahub </option>
+        <option key="mangadex_id" value="mangadex_id"> (ID) mangadex </option>
+        <option key="maid_my" value="maid_my"> (ID) maid_my </option>
       </select>
     )
   }

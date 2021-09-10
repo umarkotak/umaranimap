@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react"
 import {Link, useParams} from "react-router-dom"
-import dataStoreCommon from "../utils/DataStoreCommon"
+
+import dataStoreCommon from "../../utils/DataStoreCommon"
 
 var go_animapu_host = dataStoreCommon.GetConf().GO_ANIMAPU_HOST
 

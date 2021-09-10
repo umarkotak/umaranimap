@@ -1,8 +1,10 @@
-import React, {useState, useEffect} from "react"
+import React, {useState, useEffect, useCallback} from "react"
 import {useParams, useHistory} from "react-router-dom"
 import Select from 'react-select'
 
-import mangadexApi from "../apis/MangadexAPI"
+import mangadexApi from "../../apis/MangadexAPI"
+
+var y_pos = 0
 
 function PageMangasDetailMangadex() {
   const history = useHistory()
@@ -16,6 +18,7 @@ function PageMangasDetailMangadex() {
   const [chapterOptions, setChapterOptions] = useState([
     { value: 'N/A', label: 'Loading...' }
   ])
+  const [showMangaNav, setShowMangaNav] = useState(true)
 
   async function fetchMangaChapters() {
     try {
@@ -67,19 +70,57 @@ function PageMangasDetailMangadex() {
     history.push(`/mangas/read/mangadex/${manga_id}/${e.value}`)
   }
 
+  function toPrevChapter() {
+    if (!chapterOptions[currentChapterIDX-1]) { return }
+    history.push(`/mangas/read/mangadex/${manga_id}/${chapterOptions[currentChapterIDX-1].value}`)
+  }
+
+  function toNextChapter() {
+    if (!chapterOptions[currentChapterIDX+1]) { return }
+    history.push(`/mangas/read/mangadex/${manga_id}/${chapterOptions[currentChapterIDX+1].value}`)
+  }
+
   useEffect(() => {
-    console.log("TRIGGERED")
     fetchMangaChapters()
     fetchChapterPages()
   // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
-    history.listen(() => {
-      history.go(0)
-    })
+    history.listen(() => { history.go(0) })
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [history])
+
+  // HIDING MANGA NAV START
+  const escFunction = useCallback((event) => {
+    console.log("SCROLLER START", window.scrollY, y_pos)
+    
+    if (window.scrollY === 0) {
+      console.log("SCROLLER-1")
+      setShowMangaNav(true)
+      // eslint-disable-next-line
+      y_pos = window.scrollY
+    } else if (window.scrollY > y_pos + 75) {
+      console.log("SCROLLER-2")
+      setShowMangaNav(false)
+      y_pos = window.scrollY
+    } else if (window.scrollY <= y_pos) {
+      console.log("SCROLLER-3")
+      setShowMangaNav(true)
+      y_pos = window.scrollY
+    }
+    console.log("SCROLLER END", window.scrollY, y_pos)
+
+    // eslint-disable-next-line
+  }, [showMangaNav])
+
+  useEffect(() => {
+    document.addEventListener("scroll", escFunction, false)
+    return () => {
+      document.removeEventListener("scroll", escFunction, false)
+    }
+  }, [escFunction])
+  // HIDING MANGA NAV END
 
   return(
     <div>
@@ -102,19 +143,26 @@ function PageMangasDetailMangadex() {
   )
 
   function RenderFooter() {
+    if (showMangaNav === false) return(<div></div>)
     return(
       <footer className="main-footer bg-dark">
         <table style={{width: "100%"}}>
           <thead>
             <tr>
               <th>
+                <button className="btn btn-light btn-block btn-outline-secondary mx-1 my-1" onClick={() => toPrevChapter()}><i className="fa fa-reply"></i></button>
+              </th>
+              <th>
                 <Select
                   options={chapterOptions}
                   menuPlacement={"top"}
-                  className="text-black bg-white"
+                  className="text-black bg-white ml-3 mr-2 my-1"
                   defaultValue={chapterOptions[currentChapterIDX]}
                   onChange={(e) => handleSelectChapter(e)}
                 />
+              </th>
+              <th>
+                <button className="btn btn-light btn-block btn-outline-secondary mx-1 my-1" onClick={() => toNextChapter()}><i className="fa fa-share"></i></button>
               </th>
             </tr>
           </thead>

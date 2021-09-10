@@ -3,7 +3,8 @@ import Cookies from 'universal-cookie'
 import {Link, useParams, useHistory} from "react-router-dom"
 import {WhatsappShareButton} from "react-share"
 import InfiniteScroll from 'react-infinite-scroll-component';
-import dataStoreCommon from "../utils/DataStoreCommon"
+
+import dataStoreCommon from "../../utils/DataStoreCommon"
 
 const cookies = new Cookies()
 var cdn_host = dataStoreCommon.ConstructURI("MANGAHUB_CDN_HOST", "/file/imghub")
