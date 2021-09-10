@@ -25,7 +25,31 @@ class MangadexAPI {
   }
 
   async GetMangaDetail(mangaID) {
-    var uri = `${this.MangadexApiHost}/manga/${mangaID}/feed`
+    var uri = `${this.MangadexApiHost}/manga/${mangaID}?&includes[]=cover_art`
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': this.MangadexSessionToken
+      }
+    })
+    return response
+  }
+
+  async GetMangaChapters(mangaID) {
+    var uri = `${this.MangadexApiHost}/manga/${mangaID}/feed?translatedLanguage[]=en`
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': this.MangadexSessionToken
+      }
+    })
+    return response
+  }
+
+  async GetMangaChapterDetail(params) {
+    var uri = `${this.MangadexApiHost}/chapter/${params.chapterID}`
     const response = await fetch(uri, {
       method: 'GET',
       headers: {
@@ -43,6 +67,22 @@ class MangadexAPI {
 
   ConstructCoverArtCompressed(mangaID, coverFileName, size) {
     var result = `https://uploads.mangadex.org/covers/${mangaID}/${coverFileName}.${size}.jpg`
+    return result
+  }
+
+  ConstructChapterPage(host, mode, chapterHash, fileName) {
+    if (host === "") { host = "https://uploads.mangadex.org" }
+    if (mode === "") { mode = "data" }
+
+    var result = `${host}/${mode}/${chapterHash}/${fileName}`
+    return result
+  }
+
+  ConstructChapterPageCompressed(host, mode, chapterHash, fileName) {
+    if (host === "") { host = "https://uploads.mangadex.org" }
+    if (mode === "") { mode = "data" }
+
+    var result = `${host}/${mode}/${chapterHash}/${fileName}`
     return result
   }
 }

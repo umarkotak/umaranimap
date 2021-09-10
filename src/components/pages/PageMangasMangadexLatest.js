@@ -8,6 +8,7 @@ import helper from "../utils/Helper"
 function PageMangasLatestMangadex() {
 
   const [mangaList, setMangaList] = useState([])
+  var limit = 90
   var offset = 0
 
   async function fetchMangaList() {
@@ -38,6 +39,7 @@ function PageMangasLatestMangadex() {
       return
     }
     setTimeout(() => {
+      offset += limit
       fetchMangaList()
     }, 500)
   }
@@ -46,11 +48,6 @@ function PageMangasLatestMangadex() {
     fetchMangaList()
   // eslint-disable-next-line
   }, [])
-
-  useEffect(() => {
-    fetchMangaList()
-  // eslint-disable-next-line
-  }, [offset])
 
   return(
     <div>
@@ -65,7 +62,7 @@ function PageMangasLatestMangadex() {
               className="row"
               endMessage={<p className="text-white"><b>End of list</b></p>}
             >
-              {mangaList.slice(0, 1000).map(((manga, index) => (
+              {mangaList.map(((manga, index) => (
                 <div className="col-4 col-md-2 mb-4" key={`LATEST-MANGA-CARD-${index}`}>
                   <RenderMangaCard
                     manga = {manga}
@@ -113,7 +110,7 @@ function PageMangasLatestMangadex() {
           <thead>
             <tr>
               <th width="10%">
-                <Link type="button" className="btn btn-block btn-sm btn-outline-light" to={`#`}><i className="fa fa-info-circle"></i></Link>
+                <Link type="button" className="btn btn-block btn-sm btn-outline-light" to={`/mangas/detail/mangadex/${props.manga.data.id}`}><i className="fa fa-info-circle"></i></Link>
               </th>
               <th width="35%">
                 <Link className="btn btn-block btn-sm btn-outline-light" to={`#`}>1</Link>

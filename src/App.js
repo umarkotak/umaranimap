@@ -20,6 +20,8 @@ import PageMangasDetailMangahub from "./components/pages/PageMangasMangahubDetai
 import PageMangasReadMangahub from "./components/pages/PageMangasMangahubRead"
 
 import PageMangasLatestMangadex from "./components/pages/PageMangasMangadexLatest"
+import PageMangasDetailMangadex from "./components/pages/PageMangasMangadexDetail"
+import PageMangasReadMangadex from "./components/pages/PageMangasMangadexRead"
 
 import PageTicTacToe from "./components/pages/PageTicTacToe"
 import PageLearnReact from "./components/pages/PageLearnReact"
@@ -57,6 +59,8 @@ function App() {
             <Route path="/mangas/detail/mangahub/:manga_title" exact component={PageMangasDetailMangahub} />
 
             <Route path="/mangas/latest/mangadex" exact component={PageMangasLatestMangadex} />
+            <Route path="/mangas/read/mangadex/:manga_id/:chapter_id/:chapter_hash" exact component={PageMangasReadMangadex} />
+            <Route path="/mangas/detail/mangadex/:manga_id" exact component={PageMangasDetailMangadex} />
 
             <Route path="/statistics-v1" exact component={PageStatisticsV1} />
 
