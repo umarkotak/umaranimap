@@ -4,9 +4,11 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 
 import mangadexApi from "../../apis/MangadexAPI"
 import helper from "../../utils/Helper"
+import LoadingBar from "../../ui-components/LoadingBar"
 
 function PageMangasLatestMangadex() {
 
+  const [isLoading, setIsLoading] = useState(true)
   const [mangaList, setMangaList] = useState([])
   var limit = 90
   var offset = 0
@@ -24,6 +26,7 @@ function PageMangasLatestMangadex() {
 
       if (status === 200) {
         setMangaList(mangaList.concat(body.results))
+        setIsLoading(false)
       }
     } catch(e) {
       console.log(e)
@@ -53,6 +56,7 @@ function PageMangasLatestMangadex() {
     <div>
       <div className="content-wrapper p-2" style={{backgroundColor: "#454d55"}}>
         <div className="mt-2 mx-2">
+          <LoadingBar isLoading={isLoading} />
           <div>
             <InfiniteScroll
               dataLength={mangaList.length}

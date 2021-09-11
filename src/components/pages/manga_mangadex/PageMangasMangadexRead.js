@@ -124,7 +124,7 @@ function PageMangasDetailMangadex() {
 
   return(
     <div>
-      <div className="content-wrapper p-2" style={{backgroundColor: "#454d55"}}>
+      <div className="content-wrapper py-2" style={{backgroundColor: "#454d55"}}>
         {chapterPages.map(((pageFileName, index) => (
           <div className="bg-dark border-left border-right border-dark rounded" key={`MANGA-CHAPTER-IMAGE-${index}`}>
             <img

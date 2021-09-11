@@ -4,9 +4,11 @@ import Select from 'react-select'
 
 import mangadexApi from "../../apis/MangadexAPI"
 import helper from "../../utils/Helper"
+import LoadingBar from "../../ui-components/LoadingBar"
 
 function PageMangasSearchMangadex() {
 
+  const [isLoading, setIsLoading] = useState(false)
   const [mangaList, setMangaList] = useState([])
   var limit = 90
   var offset = 0
@@ -42,6 +44,7 @@ function PageMangasSearchMangadex() {
       console.log(status, body)
 
       if (status === 200) {
+        setIsLoading(false)
         if (append) {
           setMangaList(mangaList.concat(body.results))
         } else {
@@ -54,6 +57,7 @@ function PageMangasSearchMangadex() {
   }
 
   async function submitSearch() {
+    setIsLoading(true)
     setMangaList([])
     fetchMangaListWithQuery(false)
   }
@@ -110,6 +114,7 @@ function PageMangasSearchMangadex() {
             </div>
           </div>
           <hr className="my-2" />
+          <LoadingBar isLoading={isLoading} />
           <div className="row">
             {mangaList.map(((manga, index) => (
               <div className="col-4 col-md-2 mb-4" key={`LATEST-MANGA-CARD-${index}`}>
@@ -124,10 +129,11 @@ function PageMangasSearchMangadex() {
           </div>
         </div>
 
+        <hr />
         <div className="row">
           <div className="col-12">
             <div className="form-group px-2">
-              <button className="btn btn-success btn-block" onClick={() => handleLoadMore()}>Load More</button>
+              <button className="btn btn-success btn-block" onClick={() => handleLoadMore()} disabled="false">Load More</button>
             </div>
           </div>
         </div>
