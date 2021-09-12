@@ -31,7 +31,7 @@ function PageAnimesAnimepaheWatch() {
             "display": "block",
             "border": "none",
             "overflow": "hidden",
-            "height": "150vh",
+            "height": "550vh",
             "width": "100%"
           }}
           height="150%"
@@ -40,10 +40,6 @@ function PageAnimesAnimepaheWatch() {
         >
         </iframe>
       </div>
-
-      <footer className="main-footer bg-dark">
-        ...
-      </footer>
     </div>
   )
 }

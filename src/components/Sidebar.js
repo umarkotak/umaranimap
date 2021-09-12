@@ -29,6 +29,7 @@ function Sidebar() {
     else if (window.location.pathname.startsWith("/mangas/latest")) { tempSideBarItems.mangas_latest = "active" }
     else if (window.location.pathname.startsWith("/mangas/library")) { tempSideBarItems.mangas_library = "active" }
     else if (window.location.pathname.startsWith("/mangas/search")) { tempSideBarItems.mangas_search = "active" }
+    else if (window.location.pathname.startsWith("/original_sources")) { tempSideBarItems.original_sources = "active" }
     return tempSideBarItems
   }
 
@@ -134,6 +135,9 @@ function Sidebar() {
               <Link to="/repack-games-v2" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Repack Games</p></Link>
             </li>
           </ul>
+        </li>
+        <li className="nav-item">
+          <a href="/original_sources" className={`nav-link ${sideBarItems["original_sources"] || ""}`}><i className="nav-icon fa fa-folder text-info"></i> <p>Original Sources</p></a>
         </li>
 
         <li className="nav-header py-2">ALTERNATIVE SERVER</li>

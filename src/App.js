@@ -36,6 +36,8 @@ import PageRepackGamesV2 from "./components/pages/PageRepackGamesV2"
 
 import PageNotFound from "./components/pages/PageNotFound"
 
+import PageOriginalSources from "./components/pages/PageOriginalSources"
+
 function App() {
   return (
     <Router>
@@ -63,6 +65,8 @@ function App() {
             <Route path="/mangas/read/mangadex/:manga_id/:chapter_id/:chapter_hash" exact component={PageMangasReadMangadex} />
             <Route path="/mangas/detail/mangadex/:manga_id" exact component={PageMangasDetailMangadex} />
             <Route path="/mangas/search/mangadex" exact component={PageMangasSearchMangadex} />
+
+            <Route path="/original_sources" exact component={PageOriginalSources} />
 
             <Route path="/statistics-v1" exact component={PageStatisticsV1} />
 
