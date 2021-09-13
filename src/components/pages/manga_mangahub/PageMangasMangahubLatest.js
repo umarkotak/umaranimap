@@ -20,7 +20,14 @@ function PageTodaysMangaV1() {
       if (todays_manga_db.get(title).image_url !== "") {
         return todays_manga_db.get(title).image_url
       } else {
-        return dataStoreCommon.ConstructURI("MANGAHUB_CDN_HOST", `/mn/${title}.jpg`)
+        var sources = []
+        sources.push(`url(${`https://thumb.mghubcdn.com/m4l/${title}.jpg`})`)
+        sources.push(`url(${`https://thumb.mghubcdn.com/mn/${title}.jpg`})`)
+        sources.push(`url(${`https://thumb.mghubcdn.com/md/${title}.jpg`})`)
+        sources.push(`url(${dataStoreCommon.ConstructURI("MANGAHUB_CDN_HOST", `/mn/${title}.jpg`)})`)
+
+        sources.push(`url(/default-book.png)`)
+        return sources.join(",")
       }
     } catch {
       return dataStoreCommon.ConstructURI("MANGAHUB_CDN_HOST", `/mn/${title}.jpg`)
@@ -33,6 +40,7 @@ function PageTodaysMangaV1() {
       api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", "/mangas/maid_my/home")
     } else {
       api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", "/mangas/todays_v1")
+      api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", "/mangaupdates/releases")
     }
 
     const response = await fetch(api)
@@ -105,10 +113,17 @@ function PageTodaysMangaV1() {
     if (fetch_todays_manga_state === "finished") {
       return(
         <div className="row">
-          {todays_manga_titles && todays_manga_titles.slice(0, 240).map(((value, index) => (
+          {todays_manga_titles && todays_manga_titles.slice(0, 480).map(((value, index) => (
             <div className="col-4 col-md-2 mb-4" key={index+value}>
               <div className="rounded">
-                <div style={{height: (helper.GenerateImageCardHeightByWidth(window.innerWidth) + "px"), backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(value)})`}}>
+                <div style={{
+                  height: (helper.GenerateImageCardHeightByWidth(window.innerWidth) + "px"),
+                  backgroundSize: 'contain',
+                  justifyContent: "space-between",
+                  display: "flex",
+                  flexDirection: "column",
+                  backgroundImage: `${generateThumbnailFromTitle(value)}`}}
+                >
                   <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
                     <small>{`${todays_manga_db.get(value).manga_last_chapter} / ${todays_manga_db.get(value).manga_last_chapter}`}</small>
                     <button

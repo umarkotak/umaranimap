@@ -83,7 +83,7 @@ function PageReadMangaOnlyV1() {
     async function fetchData() {
       try {
         var results = await fetchMangaDetail()
-  
+
         set_manga_chapter_list(results.chapters)
       } catch (e) {
 
@@ -292,7 +292,7 @@ function PageReadMangaOnlyV1() {
     return `${cdn_host}/${manga_title}/${manga_chapter}/${page_no}.jpg`
   }
 
-  function generateImageErrorUrl(page_no) {
+  function generateImagePNG(page_no) {
     return `${cdn_host}/${manga_title}/${manga_chapter}/${page_no}.png`
   }
 
@@ -385,7 +385,7 @@ function PageReadMangaOnlyV1() {
 
     if (hist[val] && !hist[val]["png"]) {
       hist[val]["png"] = "tried"
-      e.target.src = generateImageErrorUrl(val)
+      e.target.src = generateImagePNG(val)
     } else if (hist[val] && !hist[val]["jpeg"]) {
       hist[val]["jpeg"] = "tried"
       e.target.src = generateImageJPEG(val)
