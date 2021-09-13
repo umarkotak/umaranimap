@@ -9,26 +9,27 @@ const SOURCE_OPTIONS = [
   {idx: 1, value: "manga_komiku", view_port: "1000vh", source: "https://komiku.id/", label: "Manga | Komiku"},
   {idx: 2, value: "manga_komikid", view_port: "850vh", source: "https://www.komikid.com/", label: "Manga | KomikID"},
   {idx: 3, value: "manga_maidmy", view_port: "550vh", source: "https://www.maid.my.id/", label: "Manga | MaidMy"},
-  {idx: 4, value: "anime_animepahe", view_port: "200vh", source: "https://animepahe.com/", label: "Anime | Animepahe"}
+  {idx: 4, value: "manga_mangahere", view_port: "550vh", source: "http://mangahere.today/", label: "Manga | MangaHere"},
+  {idx: 5, value: "anime_animepahe", view_port: "200vh", source: "https://animepahe.com/", label: "Anime | Animepahe"}
 ]
 
 function PageOriginalSources() {
   const [sourceUrl, setSourceUrl] = useState(SOURCE_OPTIONS[defaultIndex].source)
   const [activeHeight, setActiveHeight] = useState(SOURCE_OPTIONS[defaultIndex].view_port)
   const [activeValueIndex, setActiveValueIndex] = useState(0)
-  
+
   function handleSelectSource(e) {
     console.log("SOURCE SELECTED", e)
     setActiveValueIndex(e.idx)
     setSourceUrl(e.source)
     setActiveHeight(e.view_port)
   }
-  
+
   // HIDING MANGA NAV START
   const [showMangaNav, setShowMangaNav] = useState(true)
   const escFunction = useCallback((event) => {
     console.log("SCROLLER START", window.scrollY, y_pos)
-    
+
     if (window.scrollY === 0) {
       console.log("SCROLLER-1")
       setShowMangaNav(true)
@@ -55,7 +56,7 @@ function PageOriginalSources() {
     }
   }, [escFunction])
   // HIDING MANGA NAV END
-  
+
   return (
     <div>
       <div className="content-wrapper p-2" style={{backgroundColor: "#454d55"}}>

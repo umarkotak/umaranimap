@@ -8,7 +8,7 @@ class DataStoreCommon {
       mal_host = "https://api.jikan.moe"
     } else {
       go_animapu_host = "http://go-animapu.herokuapp.com"
-      // go_animapu_host = "http://localhost:4000"
+      go_animapu_host = "http://localhost:4000"
       go_animapu_ws = "ws://go-animapu.herokuapp.com"
       mal_host = "https://api.jikan.moe"
     }
@@ -31,10 +31,6 @@ class DataStoreCommon {
       return dark_val
     }
     return light_val
-  }
-
-  MAL() {
-
   }
 }
 
