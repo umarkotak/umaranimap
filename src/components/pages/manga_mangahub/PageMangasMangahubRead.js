@@ -2,7 +2,7 @@ import React, {useState, useCallback, useEffect, useRef} from "react"
 import Cookies from 'universal-cookie'
 import {Link, useParams, useHistory} from "react-router-dom"
 import {WhatsappShareButton} from "react-share"
-import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll from 'react-infinite-scroll-component'
 
 import dataStoreCommon from "../../utils/DataStoreCommon"
 
@@ -19,10 +19,10 @@ function query_chapter_size() {
 }
 
 function PageReadMangaOnlyV1() {
-  let history = useHistory();
+  let history = useHistory()
 
-  let { path_title } = useParams();
-  let { path_chapter } = useParams();
+  let { path_title } = useParams()
+  let { path_chapter } = useParams()
 
   const manga_title = path_title
   const [manga_chapter, set_manga_chapter] = useState(path_chapter)
@@ -36,12 +36,12 @@ function PageReadMangaOnlyV1() {
     prev: 0,
     next: loadCount
   })
-  const [hasMore, setHasMore] = useState(true);
+  const [hasMore, setHasMore] = useState(true)
   const [current, setCurrent] = useState(manga_pages.slice(count.prev, count.next))
   const getMoreData = () => {
     if (current.length === manga_chapter_size) {
-      setHasMore(false);
-      return;
+      setHasMore(false)
+      return
     }
     setTimeout(() => {
       // console.log("triggered")
@@ -109,9 +109,9 @@ function PageReadMangaOnlyV1() {
     // const windowBottom = windowHeight + window.pageYOffset
 
     if (event.keyCode === 39) {
-      history.push(`/mangas/read/mangahub/${manga_title}/${next_manga_chapter}?last_chapter=${manga_last_chapter}&chapter_size=${manga_chapter_size}`);
+      history.push(`/mangas/read/mangahub/${manga_title}/${next_manga_chapter}?last_chapter=${manga_last_chapter}&chapter_size=${manga_chapter_size}`)
     } else if (event.keyCode === 37) {
-      history.push(`/mangas/read/mangahub/${manga_title}/${prev_manga_chapter}?last_chapter=${manga_last_chapter}&chapter_size=${manga_chapter_size}`);
+      history.push(`/mangas/read/mangahub/${manga_title}/${prev_manga_chapter}?last_chapter=${manga_last_chapter}&chapter_size=${manga_chapter_size}`)
     }
 
     if (window.scrollY === 0) {
@@ -196,12 +196,12 @@ function PageReadMangaOnlyV1() {
   }
 
   function capitalizeTheFirstLetterOfEachWord(words) {
-    var separateWord = words.toLowerCase().split(' ');
+    var separateWord = words.toLowerCase().split(' ')
     for (var i = 0; i < separateWord.length; i++) {
        separateWord[i] = separateWord[i].charAt(0).toUpperCase() +
-       separateWord[i].substring(1);
+       separateWord[i].substring(1)
     }
-    return separateWord.join(' ');
+    return separateWord.join(' ')
  }
 
   function reconstruct_shareable() {
@@ -275,7 +275,7 @@ function PageReadMangaOnlyV1() {
   }
 
   function handleChangeMangaChapter(no_chapter) {
-    history.push(`/mangas/read/mangahub/${manga_title}/${no_chapter}?last_chapter=${manga_last_chapter}&chapter_size=${manga_chapter_size}`);
+    history.push(`/mangas/read/mangahub/${manga_title}/${no_chapter}?last_chapter=${manga_last_chapter}&chapter_size=${manga_chapter_size}`)
   }
 
   function generateMangaPages(last_chapter) {

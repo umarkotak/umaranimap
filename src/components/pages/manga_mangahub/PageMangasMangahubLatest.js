@@ -35,34 +35,39 @@ function PageTodaysMangaV1() {
   }
 
   async function fetchTodayMangaData() {
-    var api
-    if (manga_source === "maid_my") {
-      api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", "/mangas/maid_my/home")
-    } else {
-      api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", "/mangas/todays_v1")
-      api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", "/mangaupdates/releases")
+    try {
+      var api
+      if (manga_source === "maid_my") {
+        api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", "/mangas/maid_my/home")
+      } else {
+        api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", "/mangas/todays_v1")
+        api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", "/mangaupdates/releases")
+      }
+
+      const response = await fetch(api)
+      const results = await response.json()
+      var converted_manga_db = new Map(Object.entries(results.manga_db))
+      console.log("INCOMING DATA", converted_manga_db)
+      set_todays_manga_db(converted_manga_db)
+
+      var new_mangas = []
+      converted_manga_db.forEach((num, key) => {
+        new_mangas.push({title: key, order: num.new_added, weight: num.weight})
+      })
+      new_mangas.sort((a, b) => b.weight - a.weight)
+
+      set_todays_manga_titles(new_mangas.map(val => val.title))
+      set_fetch_todays_manga_state("finished")
+    } catch (e) {
+      console.log("fetchTodayMangaData", e)
+      set_fetch_todays_manga_state("failed")
     }
-
-    const response = await fetch(api)
-    const results = await response.json()
-    var converted_manga_db = new Map(Object.entries(results.manga_db))
-    console.log("INCOMING DATA", converted_manga_db)
-    set_todays_manga_db(converted_manga_db)
-
-    var new_mangas = []
-    converted_manga_db.forEach((num, key) => {
-      new_mangas.push({title: key, order: num.new_added, weight: num.weight})
-    })
-    new_mangas.sort((a, b) => b.weight - a.weight)
-
-    set_todays_manga_titles(new_mangas.map(val => val.title))
-    set_fetch_todays_manga_state("finished")
   }
 
   useEffect(() => {
     fetchTodayMangaData()
   // eslint-disable-next-line
-  }, []);
+  }, [])
 
   async function putToMyLibrary(manga_title, manga_last_chapter) {
     if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") {
@@ -89,13 +94,13 @@ function PageTodaysMangaV1() {
       if (status === 200) {
         alert("manga successfully added to library!")
       } else {
-        alert(results.message);
+        alert(results.message)
       }
 
       console.log("PUT MANGA TO MY LIBRARY", status, results)
 
     } catch (e) {
-      alert(e.message);
+      alert(e.message)
     }
   }
 
@@ -113,12 +118,14 @@ function PageTodaysMangaV1() {
     if (fetch_todays_manga_state === "finished") {
       return(
         <div className="row">
-          {todays_manga_titles && todays_manga_titles.slice(0, 480).map(((value, index) => (
+          {todays_manga_titles && todays_manga_titles.slice(0, 6*40).map(((value, index) => (
             <div className="col-4 col-md-2 mb-4" key={index+value}>
               <div className="rounded">
                 <div style={{
                   height: (helper.GenerateImageCardHeightByWidth(window.innerWidth) + "px"),
                   backgroundSize: 'contain',
+                  backgroundPosition: 'center',
+                  backgroundRepeat: 'repeat',
                   justifyContent: "space-between",
                   display: "flex",
                   flexDirection: "column",
@@ -158,6 +165,9 @@ function PageTodaysMangaV1() {
           )))}
         </div>
       )
+    }
+    if (fetch_todays_manga_state === "failed") {
+      return(<div><h2 className="text-white">Failed to load</h2></div>)
     }
     return(<RenderLoadingBar />)
   }
