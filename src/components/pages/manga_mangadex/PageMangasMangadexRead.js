@@ -29,14 +29,14 @@ function PageMangasDetailMangadex() {
       console.log("CHAPTERS", status, body)
 
       if (status === 200) {
-        var tempResults = body.results
-        tempResults = tempResults.sort((a,b) => (parseFloat(a.data.attributes.chapter) > parseFloat(b.data.attributes.chapter)) ? 1 : ((parseFloat(b.data.attributes.chapter) > parseFloat(a.data.attributes.chapter)) ? -1 : 0))
+        var tempResults = body.data
+        tempResults = tempResults.sort((a,b) => (parseFloat(a.attributes.chapter) > parseFloat(b.attributes.chapter)) ? 1 : ((parseFloat(b.attributes.chapter) > parseFloat(a.attributes.chapter)) ? -1 : 0))
 
         tempResults = tempResults.map((val, idx) => {
-          if (val.data.id === chapter_id) {
+          if (val.id === chapter_id) {
             setCurrentChapterIDX(idx)
           }
-          return { value: `${val.data.id}/${val.data.attributes.hash}`, label: val.data.attributes.chapter }
+          return { value: `${val.id}/${val.attributes.hash}`, label: val.attributes.chapter }
         })
         setChapterOptions(tempResults)
       }
@@ -94,7 +94,7 @@ function PageMangasDetailMangadex() {
   // HIDING MANGA NAV START
   const escFunction = useCallback((event) => {
     console.log("SCROLLER START", window.scrollY, y_pos)
-    
+
     if (window.scrollY === 0) {
       console.log("SCROLLER-1")
       setShowMangaNav(true)
