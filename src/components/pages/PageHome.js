@@ -21,7 +21,7 @@ function PageHome() {
 
       <footer className="main-footer bg-dark">
         <div className="float-right">
-          ANIMAPU 2021 | Version: 2.2
+          ANIMAPU 2021 | Version: 2.3
         </div>
       </footer>
     </div>
