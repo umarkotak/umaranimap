@@ -7,27 +7,21 @@ import {Link} from "react-router-dom"
 
 import dataStoreCommon from "../../utils/DataStoreCommon"
 import helper from "../../utils/Helper"
+import goAnimapuApi from "../../apis/GoAnimapuAPI"
+import mangahubAPI from "../../apis/MangahubAPI"
 
 function PageTodaysMangaV1() {
   const cookies = new Cookies()
   const [fetch_todays_manga_state, set_fetch_todays_manga_state] = useState("finding")
   const [todays_manga_db, set_todays_manga_db] = useState(new Map())
   const [todays_manga_titles, set_todays_manga_titles] = useState([])
-  const manga_source = localStorage.getItem("ANIMAPU_ACTIVE_MANGA_SOURCE")
 
   function generateThumbnailFromTitle(title) {
     try {
       if (todays_manga_db.get(title).image_url !== "") {
         return todays_manga_db.get(title).image_url
       } else {
-        var sources = []
-        sources.push(`url(${`https://thumb.mghubcdn.com/m4l/${title}.jpg`})`)
-        sources.push(`url(${`https://thumb.mghubcdn.com/mn/${title}.jpg`})`)
-        sources.push(`url(${`https://thumb.mghubcdn.com/md/${title}.jpg`})`)
-        sources.push(`url(${dataStoreCommon.ConstructURI("MANGAHUB_CDN_HOST", `/mn/${title}.jpg`)})`)
-
-        sources.push(`url(/default-book.png)`)
-        return sources.join(",")
+        return mangahubAPI.GenerateBackgroundThumbnailFromTitle(title)
       }
     } catch {
       return dataStoreCommon.ConstructURI("MANGAHUB_CDN_HOST", `/mn/${title}.jpg`)
@@ -36,16 +30,9 @@ function PageTodaysMangaV1() {
 
   async function fetchTodayMangaData() {
     try {
-      var api
-      if (manga_source === "maid_my") {
-        api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", "/mangas/maid_my/home")
-      } else {
-        api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", "/mangas/todays_v1")
-        api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", "/mangaupdates/releases")
-      }
-
-      const response = await fetch(api)
+      const response = await goAnimapuApi.MangaupdatesReleases()
       const results = await response.json()
+
       var converted_manga_db = new Map(Object.entries(results.manga_db))
       console.log("INCOMING DATA", converted_manga_db)
       set_todays_manga_db(converted_manga_db)
@@ -75,18 +62,10 @@ function PageTodaysMangaV1() {
     }
 
     try {
-      var api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", "/users/add_manga_library")
-      const response = await fetch(api, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': cookies.get("GO_ANIMAPU_LOGIN_TOKEN")
-        },
-        body: JSON.stringify({
-          manga_title: manga_title,
-          manga_last_chapter: manga_last_chapter,
-          image_url: ''
-        })
+      const response = await goAnimapuApi.UserAddMangaToLibrary(cookies.get("GO_ANIMAPU_LOGIN_TOKEN"), {
+        manga_title: manga_title,
+        manga_last_chapter: manga_last_chapter,
+        image_url: ''
       })
       const results = await response.json()
       const status = await response.status
@@ -123,7 +102,7 @@ function PageTodaysMangaV1() {
               <div className="rounded">
                 <div style={{
                   height: (helper.GenerateImageCardHeightByWidth(window.innerWidth) + "px"),
-                  backgroundSize: 'contain',
+                  backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   backgroundRepeat: 'repeat',
                   justifyContent: "space-between",

@@ -34,8 +34,8 @@ function PageMangasDetailMangadex() {
       console.log("CHAPTERS", status, body)
 
       if (status === 200) {
-        var tempResults = body.results
-        tempResults = tempResults.sort((a,b) => (parseFloat(a.data.attributes.chapter) > parseFloat(b.data.attributes.chapter)) ? 1 : ((parseFloat(b.data.attributes.chapter) > parseFloat(a.data.attributes.chapter)) ? -1 : 0))
+        var tempResults = body.data
+        tempResults = tempResults.sort((a,b) => (parseFloat(a.attributes.chapter) > parseFloat(b.attributes.chapter)) ? 1 : ((parseFloat(b.attributes.chapter) > parseFloat(a.attributes.chapter)) ? -1 : 0))
         setMangaChapters(tempResults)
       }
     } catch(e) {
@@ -71,10 +71,10 @@ function PageMangasDetailMangadex() {
                 {mangaChapters.map(((mangaChapter, index) => (
                   <div className="col-2 px-1" key={`MANGA-CHAPTER-${index}`}>
                     <Link
-                      to={`/mangas/read/mangadex/${mangaDetail.id}/${mangaChapter.data.id}/${mangaChapter.data.attributes.hash}`}
+                      to={`/mangas/read/mangadex/${mangaDetail.id}/${mangaChapter.id}/${mangaChapter.attributes.hash}`}
                       className="btn btn-primary btn-block mb-1"
                     >
-                      {mangaChapter.data.attributes.chapter}
+                      {mangaChapter.attributes.chapter}
                     </Link>
                   </div>
                 )))}

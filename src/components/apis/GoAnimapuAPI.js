@@ -5,7 +5,7 @@ class GoAnimapuAPI {
       // this.GoAnimapuAPIHOST = "https://go-animapu2.herokuapp.com"
     } else {
       this.GoAnimapuAPIHOST = "https://go-animapu.herokuapp.com"
-      // this.GoAnimapuAPIHOST = "http://localhost:4000"
+      this.GoAnimapuAPIHOST = "http://localhost:4000"
     }
   }
 
@@ -29,6 +29,52 @@ class GoAnimapuAPI {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(params)
+    })
+    return response
+  }
+
+  async UserAddMangaToLibrary(token, params) {
+    var uri = `${this.GoAnimapuAPIHOST}/users/add_manga_library`
+    const response = await fetch(uri, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+      body: JSON.stringify(params)
+    })
+    return response
+  }
+
+  async MangahubTodaysManga() {
+    var uri = `${this.GoAnimapuAPIHOST}/mangas/todays_v1`
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    return response
+  }
+
+  async MangaupdatesReleases() {
+    var uri = `${this.GoAnimapuAPIHOST}/mangaupdates/releases`
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    return response
+  }
+
+  async MaidMyHome() {
+    var uri = `${this.GoAnimapuAPIHOST}/mangas/maid_my/home`
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
     return response
   }

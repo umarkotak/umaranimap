@@ -28,7 +28,7 @@ function PageMangasSearchMangadex() {
     }
   }
 
-  async function fetchMangaListWithQuery(append = false) {
+  async function fetchMangaListWithQuery(append) {
     try {
       if (append) {
         offset += limit
