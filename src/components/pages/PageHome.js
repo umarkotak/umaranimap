@@ -49,7 +49,7 @@ function PageHome() {
         </thead>
         <tbody>
           <tr className="bg-dark">
-            <td className="p-1">Mangahub</td>
+            <td className="p-1"><a href="https://mangahub.io/">Mangahub</a></td>
             <td className="p-1"><i className="fa text-success fa-check"></i></td>
             <td className="p-1"><i className="fa text-success fa-check"></i></td>
             <td className="p-1"><i className="fa text-success fa-check"></i></td>
@@ -57,7 +57,7 @@ function PageHome() {
             <td className="p-1"><i className="fa text-success fa-check"></i></td>
           </tr>
           <tr className="bg-dark">
-            <td className="p-1">Mangadex</td>
+            <td className="p-1"><a href="https://mangadex.org/">Mangadex</a></td>
             <td className="p-1"><i className="fa text-success fa-check"></i></td>
             <td className="p-1"><i className="fa text-success fa-check"></i></td>
             <td className="p-1"><i className="fa text-success fa-check"></i></td>
@@ -65,8 +65,16 @@ function PageHome() {
             <td className="p-1"><i className="fa text-danger fa-times"></i></td>
           </tr>
           <tr className="bg-dark">
-            <td className="p-1">Maid My</td>
+            <td className="p-1"><a href="https://www.maid.my.id/">Maid My</a></td>
             <td className="p-1"><i className="fa text-success fa-check"></i></td>
+            <td className="p-1"><i className="fa text-danger fa-times"></i></td>
+            <td className="p-1"><i className="fa text-danger fa-times"></i></td>
+            <td className="p-1"><i className="fa text-danger fa-times"></i></td>
+            <td className="p-1"><i className="fa text-danger fa-times"></i></td>
+          </tr>
+          <tr className="bg-dark">
+            <td className="p-1"><a href="https://klikmanga.com/">Klik Manga</a></td>
+            <td className="p-1"><i className="fa text-danger fa-times"></i></td>
             <td className="p-1"><i className="fa text-danger fa-times"></i></td>
             <td className="p-1"><i className="fa text-danger fa-times"></i></td>
             <td className="p-1"><i className="fa text-danger fa-times"></i></td>
