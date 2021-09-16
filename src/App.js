@@ -61,7 +61,7 @@ function App() {
             <Route path="/mangas/library/mangahub" exact component={PageMangasLibraryMangahub} />
             <Route path="/mangas/search/mangahub" exact component={PageMangasSearchMangahub} />
             <Route path="/mangas/read/mangahub/:path_title/:path_chapter" exact component={PageMangasReadMangahub} />
-            <Route path="/mangas/detail/mangahub/:manga_title" exact component={PageMangasDetailMangahub} />
+            <Route path="/mangas/detail/mangahub/:manga_id" exact component={PageMangasDetailMangahub} />
 
             <Route path="/mangas/latest/mangadex" exact component={PageMangasLatestMangadex} />
             <Route path="/mangas/read/mangadex/:manga_id/:chapter_id/:chapter_hash" exact component={PageMangasReadMangadex} />

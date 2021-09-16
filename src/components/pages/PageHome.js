@@ -52,7 +52,7 @@ function PageHome() {
             <td className="p-1">Mangahub</td>
             <td className="p-1"><i className="fa text-success fa-check"></i></td>
             <td className="p-1"><i className="fa text-success fa-check"></i></td>
-            <td className="p-1"><i className="fa text-danger fa-times"></i></td>
+            <td className="p-1"><i className="fa text-success fa-check"></i></td>
             <td className="p-1"><i className="fa text-success fa-check"></i></td>
             <td className="p-1"><i className="fa text-success fa-check"></i></td>
           </tr>
@@ -66,7 +66,7 @@ function PageHome() {
           </tr>
           <tr className="bg-dark">
             <td className="p-1">Maid My</td>
-            <td className="p-1"><i className="fa text-danger fa-times"></i></td>
+            <td className="p-1"><i className="fa text-success fa-check"></i></td>
             <td className="p-1"><i className="fa text-danger fa-times"></i></td>
             <td className="p-1"><i className="fa text-danger fa-times"></i></td>
             <td className="p-1"><i className="fa text-danger fa-times"></i></td>

@@ -127,7 +127,7 @@ function PageMangasLatestMangahub() {
                   <thead>
                     <tr>
                       <th width="10%">
-                        <Link type="button" className="btn btn-block btn-sm btn-outline-light" to={`/mangas/detail/mangahub/${value}`}><i className={`fa fa-info-circle`}></i></Link>
+                        <Link type="button" className="btn btn-block btn-sm btn-outline-light" to={`/mangas/detail/mangahub/${todays_manga_db.get(value).manga_updates_id}`}><i className={`fa fa-info-circle`}></i></Link>
                       </th>
                       <th width="35%">
                         <Link className="btn btn-block btn-sm btn-outline-light" to={`/mangas/read/mangahub/${value}/1?last_chapter=${todays_manga_db.get(value).manga_last_chapter}&chapter_size=75`}>1</Link>

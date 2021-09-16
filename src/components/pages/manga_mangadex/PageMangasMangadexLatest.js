@@ -22,8 +22,6 @@ function PageMangasLatestMangadex() {
       var status = await response.status
       var body = await response.json()
 
-      console.log(status, body)
-
       if (status === 200) {
         console.log("MANGA LIST", body)
         setMangaList(mangaList.concat(body.data))

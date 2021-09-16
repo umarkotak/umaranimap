@@ -83,8 +83,9 @@ function PageReadMangaOnlyV1() {
     async function fetchData() {
       try {
         var results = await fetchMangaDetail()
-
-        set_manga_chapter_list(results.chapters)
+        if (results.chapters.length > manga_chapter_list.length) {
+          set_manga_chapter_list(results.chapters)
+        }
       } catch (e) {
 
       }
