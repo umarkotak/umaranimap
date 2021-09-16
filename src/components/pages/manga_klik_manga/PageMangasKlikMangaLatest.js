@@ -3,16 +3,17 @@ import {Link} from "react-router-dom"
 
 import helper from "../../utils/Helper"
 import goAnimapuApi from "../../apis/GoAnimapuAPI"
+import mangahubApi from "../../apis/MangahubAPI"
 import LoadingBar from "../../ui-components/LoadingBar"
 
-function PageMangasLatestMaidMy() {
+function PageMangasLatestKlikManga() {
   const [isLoading, setIsLoading] = useState(true)
   const [mangaDB, setMangaDB] = useState({})
   const [mangaList, setMangaList] = useState([])
 
   async function fetchMangaList() {
     try {
-      var response = await goAnimapuApi.MaidMyHome()
+      var response = await goAnimapuApi.KlikMangaHome()
       var status = await response.status
       var body = await response.json()
 
@@ -64,7 +65,7 @@ function PageMangasLatestMaidMy() {
             justifyContent: "space-between",
             display: "flex",
             flexDirection: "column",
-            backgroundImage: `url(${props.manga.image_url})`
+            backgroundImage: mangahubApi.GenerateBackgroundThumbnailFromTitle(props.manga.title)
           }}
         >
           <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
@@ -101,4 +102,4 @@ function PageMangasLatestMaidMy() {
   }
 }
 
-export default PageMangasLatestMaidMy
+export default PageMangasLatestKlikManga

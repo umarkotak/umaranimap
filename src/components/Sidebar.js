@@ -21,7 +21,7 @@ function Sidebar() {
 
     if (window.location.href.includes("heroku")) { tempSideBarItems.server_heroku = "active" }
     else if (window.location.href.includes("netlify")) { tempSideBarItems.server_netlify = "active" }
-    
+
     if (window.location.pathname === "/") { tempSideBarItems.home = "active" }
     if (window.location.pathname === "/home") { tempSideBarItems.home = "active" }
     else if (window.location.pathname.startsWith("/animes/seasons")) { tempSideBarItems.animes_seasons = "active" }
@@ -47,7 +47,7 @@ function Sidebar() {
               <img src="/default_avatar.png" className="img-circle elevation-2" alt="User" />
             </div>
             <div className="info">
-              <Link to="/dashboard" className="d-block">Hello, <b>{activeName}</b> !</Link>
+              <Link to="/home" className="d-block">Hello, <b>{activeName}</b> !</Link>
             </div>
           </div>
 

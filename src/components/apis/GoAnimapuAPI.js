@@ -100,6 +100,50 @@ class GoAnimapuAPI {
     })
     return response
   }
+
+  async MaidMyDetail(title) {
+    var uri = `${this.GoAnimapuAPIHOST}/mangas/maid_my/manga_detail?manga_title=${title}`
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    return response
+  }
+
+  async MaidMyChapter(chapter_title) {
+    var uri = `${this.GoAnimapuAPIHOST}/mangas/maid_my/manga_chapter_detail?manga_chapter=${chapter_title}`
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    return response
+  }
+
+  async MaidMySearch(params) {
+    var uri = `${this.GoAnimapuAPIHOST}/mangas/maid_my/search?query=${params.title}`
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    return response
+  }
+
+  async KlikMangaHome() {
+    var uri = `${this.GoAnimapuAPIHOST}/mangas/klik_manga/home`
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    return response
+  }
 }
 
 const goAnimapuApi = new GoAnimapuAPI()

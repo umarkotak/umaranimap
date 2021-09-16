@@ -2,40 +2,72 @@ import React, {useState, useEffect} from "react"
 import {Link} from "react-router-dom"
 
 import helper from "../../utils/Helper"
-import goAnimapuApi from "../../apis/GoAnimapuAPI"
 import LoadingBar from "../../ui-components/LoadingBar"
+import goAnimapuApi from "../../apis/GoAnimapuAPI"
 
-function PageMangasLatestMaidMy() {
-  const [isLoading, setIsLoading] = useState(true)
+function PageMangasSearchMaidMy() {
+
+  const [isLoading, setIsLoading] = useState(false)
   const [mangaDB, setMangaDB] = useState({})
   const [mangaList, setMangaList] = useState([])
+  const [body, setBody] = useState({manga_data_keys: []})
 
-  async function fetchMangaList() {
+  const [searchParams, setSearchParams] = useState({
+    "title": ""
+  })
+  function handleSearchParamsChanges(e) {
     try {
-      var response = await goAnimapuApi.MaidMyHome()
+      const { name, value } = e.target
+      setSearchParams(searchParams => ({...searchParams, [name]: value}))
+    } catch (err) {
+      setSearchParams(searchParams => ({...searchParams, [e.name]: e.value}))
+    }
+  }
+
+  async function fetchMangaListWithQuery() {
+    try {
+      var response = await goAnimapuApi.MaidMySearch(searchParams)
       var status = await response.status
-      var body = await response.json()
+      var resJson = await response.json()
+
+      console.log("MANGA LIST", resJson)
 
       if (status === 200) {
-        console.log("MANGA LIST", body)
-        setMangaDB(body.manga_db)
-        setMangaList(body.manga_data_keys)
         setIsLoading(false)
+        setBody(resJson)
+        setMangaDB(resJson.manga_db)
+        setMangaList(resJson.manga_data_keys)
       }
     } catch(e) {
       console.log(e)
     }
   }
 
+  async function submitSearch() {
+    setMangaList([])
+    setIsLoading(true)
+    fetchMangaListWithQuery()
+  }
+
   useEffect(() => {
-    fetchMangaList()
+    setMangaList(body.manga_data_keys)
   // eslint-disable-next-line
-  }, [])
+  }, [body])
 
   return(
     <div>
       <div className="content-wrapper p-2" style={{backgroundColor: "#454d55"}}>
         <div className="mt-2 mx-2">
+          <h1 className="text-white">Search</h1>
+          <div className="row">
+            <div className="col-12">
+              <div className="form-group">
+                <label className="text-white">Title</label>
+                <input className="form-control" rows="2" name="title" onChange={(e) => handleSearchParamsChanges(e)} />
+              </div>
+            </div>
+          </div>
+          <hr className="my-2" />
           <LoadingBar isLoading={isLoading} />
           <div className="row">
             {mangaList.map(((title, index) => (
@@ -44,13 +76,31 @@ function PageMangasLatestMaidMy() {
                   manga = {mangaDB[title]}
                   continue_chapter = {"-"}
                   util_icon = "fa-share"
-                  util_link = {`/mangas/detail/maid_my/${title}`}
+                  util_link = {`/mangas/detail/maid_my/${mangaDB[title].title}`}
                 />
               </div>
             )))}
           </div>
         </div>
       </div>
+
+      <Link
+        to="#"
+        className="bg-primary"
+        onClick={() => submitSearch()}
+        style={{
+          position:"fixed",
+          width:"50px",
+          height:"50px",
+          bottom:"70px",
+          right:"30px",
+          color:"#FFF",
+          borderRadius:"50px",
+          textAlign:"center"
+        }}
+      >
+        <i className="fa fa-search my-float" style={{marginTop:"17px"}}></i>
+      </Link>
     </div>
   )
 
@@ -101,4 +151,4 @@ function PageMangasLatestMaidMy() {
   }
 }
 
-export default PageMangasLatestMaidMy
+export default PageMangasSearchMaidMy

@@ -14,10 +14,10 @@ import PageAnimesSeasons from "./components/pages/PageAnimesSeasons"
 import PageAnimesAnimepaheWatch from "./components/pages/PageAnimesAnimepaheWatch"
 
 import PageMangasLatestMangahub from "./components/pages/manga_mangahub/PageMangasMangahubLatest"
-import PageMangasLibraryMangahub from "./components/pages/manga_mangahub/PageMangasMangahubLibrary"
-import PageMangasSearchMangahub from "./components/pages/manga_mangahub/PageMangasMangahubSearch"
 import PageMangasDetailMangahub from "./components/pages/manga_mangahub/PageMangasMangahubDetail"
 import PageMangasReadMangahub from "./components/pages/manga_mangahub/PageMangasMangahubRead"
+import PageMangasSearchMangahub from "./components/pages/manga_mangahub/PageMangasMangahubSearch"
+import PageMangasLibraryMangahub from "./components/pages/manga_mangahub/PageMangasMangahubLibrary"
 
 import PageMangasLatestMangadex from "./components/pages/manga_mangadex/PageMangasMangadexLatest"
 import PageMangasDetailMangadex from "./components/pages/manga_mangadex/PageMangasMangadexDetail"
@@ -25,6 +25,14 @@ import PageMangasReadMangadex from "./components/pages/manga_mangadex/PageMangas
 import PageMangasSearchMangadex from "./components/pages/manga_mangadex/PageMangasMangadexSearch"
 
 import PageMangasLatestMaidMy from "./components/pages/manga_maid_my/PageMangasMaidMyLatest"
+import PageMangasDetailMaidMy from "./components/pages/manga_maid_my/PageMangasMaidMyDetail"
+import PageMangasReadMaidMy from "./components/pages/manga_maid_my/PageMangasMaidMyRead"
+import PageMangasSearchMaidMy from "./components/pages/manga_maid_my/PageMangasMaidMySearch"
+
+import PageMangasLatestKlikManga from "./components/pages/manga_klik_manga/PageMangasKlikMangaLatest"
+import PageMangasDetailKlikManga from "./components/pages/manga_klik_manga/PageMangasKlikMangaDetail"
+import PageMangasReadKlikManga from "./components/pages/manga_klik_manga/PageMangasKlikMangaRead"
+import PageMangasSearchKlikManga from "./components/pages/manga_klik_manga/PageMangasKlikMangaSearch"
 
 import PageTicTacToe from "./components/pages/PageTicTacToe"
 import PageLearnReact from "./components/pages/PageLearnReact"
@@ -57,18 +65,29 @@ function App() {
             <Route path="/animes/seasons" exact component={PageAnimesSeasons} />
             <Route path="/animes/animepahe/watch" exact component={PageAnimesAnimepaheWatch} />
 
-            <Route path="/mangas/latest/mangahub" exact component={PageMangasLatestMangahub} />
-            <Route path="/mangas/library/mangahub" exact component={PageMangasLibraryMangahub} />
-            <Route path="/mangas/search/mangahub" exact component={PageMangasSearchMangahub} />
             <Route path="/mangas/read/mangahub/:path_title/:path_chapter" exact component={PageMangasReadMangahub} />
             <Route path="/mangas/detail/mangahub/:manga_id" exact component={PageMangasDetailMangahub} />
+            <Route path="/mangas/latest/mangahub" exact component={PageMangasLatestMangahub} />
+            <Route path="/mangas/search/mangahub" exact component={PageMangasSearchMangahub} />
+            <Route path="/mangas/library/mangahub" exact component={PageMangasLibraryMangahub} />
 
-            <Route path="/mangas/latest/mangadex" exact component={PageMangasLatestMangadex} />
             <Route path="/mangas/read/mangadex/:manga_id/:chapter_id/:chapter_hash" exact component={PageMangasReadMangadex} />
             <Route path="/mangas/detail/mangadex/:manga_id" exact component={PageMangasDetailMangadex} />
+            <Route path="/mangas/latest/mangadex" exact component={PageMangasLatestMangadex} />
             <Route path="/mangas/search/mangadex" exact component={PageMangasSearchMangadex} />
+            <Route path="/mangas/library/mangadex" exact component={PageMangasSearchMangadex} />
 
+            <Route path="/mangas/read/maid_my/:manga_title/:chapter_title" exact component={PageMangasReadMaidMy} />
+            <Route path="/mangas/detail/maid_my/:manga_title" exact component={PageMangasDetailMaidMy} />
             <Route path="/mangas/latest/maid_my" exact component={PageMangasLatestMaidMy} />
+            <Route path="/mangas/search/maid_my" exact component={PageMangasSearchMaidMy} />
+            <Route path="/mangas/library/maid_my" exact component={PageMangasSearchMaidMy} />
+
+            <Route path="/mangas/read/klik_manga/:manga_title/:chapter_title" exact component={PageMangasReadKlikManga} />
+            <Route path="/mangas/detail/klik_manga/:manga_title" exact component={PageMangasDetailKlikManga} />
+            <Route path="/mangas/latest/klik_manga" exact component={PageMangasLatestKlikManga} />
+            <Route path="/mangas/search/klik_manga" exact component={PageMangasSearchKlikManga} />
+            <Route path="/mangas/library/klik_manga" exact component={PageMangasSearchKlikManga} />
 
             <Route path="/original_sources" exact component={PageOriginalSources} />
 
