@@ -5,12 +5,12 @@ var y_pos = 0
 
 const defaultIndex = 0
 const SOURCE_OPTIONS = [
-  {idx: 0, value: "manga_mangahub", view_port: "13000vh", source: "https://mangahub.io/", label: "Manga | Mangahub"},
-  {idx: 1, value: "manga_komiku", view_port: "1000vh", source: "https://komiku.id/", label: "Manga | Komiku"},
-  {idx: 2, value: "manga_komikid", view_port: "850vh", source: "https://www.komikid.com/", label: "Manga | KomikID"},
-  {idx: 3, value: "manga_maidmy", view_port: "550vh", source: "https://www.maid.my.id/", label: "Manga | MaidMy"},
-  {idx: 4, value: "manga_mangahere", view_port: "550vh", source: "http://mangahere.today/", label: "Manga | MangaHere"},
-  {idx: 5, value: "anime_animepahe", view_port: "200vh", source: "https://animepahe.com/", label: "Anime | Animepahe"}
+  {idx: 0, value: "manga_mangahub", view_port: "13000vh", source: "https://mangahub.io/", label: "Manga | EN | Mangahub"},
+  {idx: 1, value: "manga_komiku", view_port: "1000vh", source: "https://komiku.id/", label: "Manga | ID | Komiku"},
+  {idx: 2, value: "manga_komikid", view_port: "850vh", source: "https://www.komikid.com/", label: "Manga | ID | KomikID"},
+  {idx: 3, value: "manga_maidmy", view_port: "550vh", source: "https://www.maid.my.id/", label: "Manga | ID | MaidMy"},
+  {idx: 4, value: "manga_mangahere", view_port: "550vh", source: "http://mangahere.today/", label: "Manga | EN | MangaHere"},
+  {idx: 5, value: "anime_animepahe", view_port: "200vh", source: "https://animepahe.com/", label: "Anime | EN | Animepahe"}
 ]
 
 function PageOriginalSources() {

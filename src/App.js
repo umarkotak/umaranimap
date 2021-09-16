@@ -24,6 +24,8 @@ import PageMangasDetailMangadex from "./components/pages/manga_mangadex/PageMang
 import PageMangasReadMangadex from "./components/pages/manga_mangadex/PageMangasMangadexRead"
 import PageMangasSearchMangadex from "./components/pages/manga_mangadex/PageMangasMangadexSearch"
 
+import PageMangasLatestMaidMy from "./components/pages/manga_maid_my/PageMangasMaidMyLatest"
+
 import PageTicTacToe from "./components/pages/PageTicTacToe"
 import PageLearnReact from "./components/pages/PageLearnReact"
 import PageGlobalClipboardV1 from "./components/pages/PageGlobalClipboardV1"
@@ -65,6 +67,8 @@ function App() {
             <Route path="/mangas/read/mangadex/:manga_id/:chapter_id/:chapter_hash" exact component={PageMangasReadMangadex} />
             <Route path="/mangas/detail/mangadex/:manga_id" exact component={PageMangasDetailMangadex} />
             <Route path="/mangas/search/mangadex" exact component={PageMangasSearchMangadex} />
+
+            <Route path="/mangas/latest/maid_my" exact component={PageMangasLatestMaidMy} />
 
             <Route path="/original_sources" exact component={PageOriginalSources} />
 

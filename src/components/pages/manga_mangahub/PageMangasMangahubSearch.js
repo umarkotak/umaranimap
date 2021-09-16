@@ -4,14 +4,15 @@
 import React, {useState, useEffect} from "react"
 import {Link} from "react-router-dom"
 
-import dataStoreCommon from "../../utils/DataStoreCommon"
+import helper from "../../utils/Helper"
+import goAnimapuApi from "../../apis/GoAnimapuAPI"
+import mangahubAPI from "../../apis/MangahubAPI"
 
 function PageSearchManga() {
   const [searching_state, set_searching_state] = useState("standby")
   const [search_query, set_search_query] = useState("")
   const [search_result_db, set_search_result_db] = useState(new Map())
   const [result_titles, set_result_titles] = useState([])
-  const [manga_source, set_manga_source] = useState(localStorage.getItem("MANGA_SOURCE"))
 
   function handleSearchManga(event) {
     event.preventDefault()
@@ -20,40 +21,18 @@ function PageSearchManga() {
     execute_search_manga(search_query)
   }
 
-  function handleClearManga(event) {
-    event.preventDefault()
-
-    set_searching_state("standby")
-    set_search_query("")
-  }
-
   async function execute_search_manga(search_query) {
-    var api
-    if (manga_source === "maid_my") {
-      api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", `/mangas/maid_my/search?query=${search_query}`)
-    } else {
-      api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", `/mangas/search_v1?title=${search_query}`)
-    }
-
-    const response = await fetch(api)
+    const response = await goAnimapuApi.MangaupdatesSearch(search_query)
     const results = await response.json()
     var converted_search_result_db = new Map(Object.entries(results.manga_db))
     set_search_result_db(converted_search_result_db)
     set_searching_state("finished")
 
-    console.log("done execute_search_manga")
+    console.log("SEARCH RESULT", results)
   }
 
   function generateThumbnailFromTitle(title) {
-    return dataStoreCommon.ConstructURI("MANGAHUB_CDN_HOST", `/mn/${title}.jpg`)
-  }
-
-  function generate_manga_airing_status(manga_title) {
-    try {
-      return (search_result_db.get(manga_title).status === "ongoing") ? "border-primary" : "border-success"
-    } catch (error) {
-      return "border-primary"
-    }
+    return mangahubAPI.GenerateBackgroundThumbnailFromTitle(title)
   }
 
   useEffect(() => {
@@ -66,54 +45,40 @@ function PageSearchManga() {
     set_result_titles(manga_title_list.map(val => val.title))
   }, [search_result_db])
 
-  function handleChangeSource(source) {
-    if (source === "maid_my") {
-      localStorage.setItem("MANGA_SOURCE", "maid_my")
-      set_manga_source("maid_my")
-    } else {
-      localStorage.setItem("MANGA_SOURCE", "mangahub")
-      set_manga_source("mangahub")
-    }
-    window.location.reload()
-  }
-
   return (
-    <div className="content-wrapper wrapper">
-      <hr/>
-      <div className="row">
-        <div className="col-12">
-          <select className="form-select float-left" name="selectedMangaTitle" onChange={(e) => handleChangeSource(e.target.value)} defaultValue={localStorage.getItem("MANGA_SOURCE")}>
-            <option key="mangahub" value="mangahub"> mangahub (ENG) </option>
-            <option key="maid_my" value="maid_my"> maid_my (INDO) </option>
-          </select>
-          <Link to="/manga-library-v1" className={`btn ${dataStoreCommon.GetActiveTemplate("btn-success", "btn-outline-success")} btn-sm float-right`}><span role="img" aria-label="library">📘</span> Library</Link>
-          <Link to="/todays-manga-v1" className={`btn ${dataStoreCommon.GetActiveTemplate("btn-success", "btn-outline-success")} btn-sm float-right mx-3`}><span role="img" aria-label="book">📔</span> Latest</Link>
+    <div>
+      <div className="content-wrapper p-2" style={{backgroundColor: "#454d55"}}>
+        <h1 className="text-white">Search</h1>
+        <div className="row">
+          <div className="col-12"><input
+            type="text" name="search_text" className="form-control"
+            value={search_query}
+            onChange={(e) => set_search_query(e.target.value)}
+          ></input></div>
         </div>
-        <div className="col-12"><h4 style={{color:dataStoreCommon.GetActiveTemplate("white", "black")}}>Search</h4></div>
-        <div className="col-12 col-lg-9"><input
-          type="text" name="search_text" className="form-control"
-          value={search_query}
-          onChange={(e) => set_search_query(e.target.value)}
-        ></input></div>
-        <div className="col-6 col-lg-2"><input
-          type="button"
-          name="search_submit"
-          className={`btn ${dataStoreCommon.GetActiveTemplate("btn-success", "btn-outline-success")} btn-block`}
-          value="search"
-          onClick={(e) => handleSearchManga(e)}
-        ></input></div>
-        <div className="col-6 col-lg-1"><input
-          type="button"
-          name="search_submit"
-          className={`btn ${dataStoreCommon.GetActiveTemplate("btn-success", "btn-outline-success")} btn-block`}
-          value="clear"
-          onClick={(e) => handleClearManga(e)}
-        ></input></div>
+
+        <div className="row mb-5">
+          <RenderSearchSection />
+        </div>
       </div>
 
-      <div className="row mb-5">
-        <RenderSearchSection />
-      </div>
+      <Link
+        to="#"
+        className="bg-primary"
+        onClick={(e) => handleSearchManga(e)}
+        style={{
+          position:"fixed",
+          width:"50px",
+          height:"50px",
+          bottom:"70px",
+          right:"30px",
+          color:"#FFF",
+          borderRadius:"50px",
+          textAlign:"center"
+        }}
+      >
+        <i className="fa fa-search my-float" style={{marginTop:"17px"}}></i>
+      </Link>
     </div>
   )
 
@@ -130,35 +95,45 @@ function PageSearchManga() {
     return(
       <div>
         <hr/>
-        <h4>Results</h4>
-        <hr/>
         <div className="row">
-          {result_titles.map(value => (
-            <div className="col-4 col-md-2">
-              <div className={`card mb-4 box-shadow shadow border-4 ${generate_manga_airing_status(value)}`}>
-                <div style={{height: "170px", backgroundSize: 'cover', justifyContent: "space-between", display: "flex", flexDirection: "column", backgroundImage: `url(${generateThumbnailFromTitle(value)})`}}>
+          {result_titles && result_titles.map(((value, index) => (
+            <div className="col-4 col-md-2 mb-4" key={index+value}>
+              <div className="rounded">
+                <div style={{
+                  height: (helper.GenerateImageCardHeightByWidth(window.innerWidth) + "px"),
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  backgroundRepeat: 'repeat',
+                  justifyContent: "space-between",
+                  display: "flex",
+                  flexDirection: "column",
+                  backgroundImage: `${generateThumbnailFromTitle(value)}`}}
+                >
                   <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
-                    <small>{`( 1 / ${search_result_db.get(value).manga_last_chapter})`}</small>
+                    <small>{`- / -`}</small>
                   </div>
                   <div className="text-white card-text overflow-auto" style={{"height": "35px", "width": "100%", backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
                     <small>{value}</small>
                   </div>
                 </div>
-                {/* <Link to={`/read-manga-v8?title=${value}&chapter=1`} className="btn btn-block btn-sm btn-outline-secondary">Read Manga</Link> */}
-                <div className="row">
-                  <div className="col-4 pr-0">
-                    <Link type="button" className="btn btn-block btn-sm btn-outline-secondary p-1" to={`/manga-detail-v1/${value}`}>ℹ</Link>
-                  </div>
-                  <div className="col-4 px-0">
-                    <Link className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${value}/${search_result_db.get(value).manga_last_chapter}?last_chapter=${search_result_db.get(value).manga_last_chapter}&chapter_size=75`}>{search_result_db.get(value).manga_last_chapter}</Link>
-                  </div>
-                  <div className="col-4 pl-0">
-                    <Link className="btn btn-block btn-sm btn-outline-secondary" to={`/read-manga-only-v1/${value}/1?last_chapter=${search_result_db.get(value).manga_last_chapter}&chapter_size=75`}>1</Link>
-                  </div>
-                </div>
+                <table style={{width: "100%"}}>
+                  <thead>
+                    <tr>
+                      <th width="10%">
+                        <Link type="button" className="btn btn-block btn-sm btn-outline-light" to={`/mangas/detail/mangahub/${search_result_db.get(value).manga_updates_id}`}><i className={`fa fa-info-circle`}></i></Link>
+                      </th>
+                      <th width="35%">
+                        <Link className="btn btn-block btn-sm btn-outline-light" to={`/mangas/read/mangahub/${value}/1`}>1</Link>
+                      </th>
+                      <th width="55%">
+                        <Link className="btn btn-block btn-sm btn-outline-light" to={`/mangas/read/mangahub/${value}/1`}>1</Link>
+                      </th>
+                    </tr>
+                  </thead>
+                </table>
               </div>
             </div>
-          ))}
+          )))}
         </div>
       </div>
     )

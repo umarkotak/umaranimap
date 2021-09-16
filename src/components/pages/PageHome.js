@@ -17,6 +17,13 @@ function PageHome() {
           <h1>Welcome To Animapu</h1>
           <small>This site is dedicated for learning purpose, please enjoy and give us your feedback!</small>
         </div>
+
+        <hr className="my-2 bg-white" />
+
+        <div>
+          <h3 className="text-white">Feature Map</h3>
+          <FeatureMap />
+        </div>
       </div>
 
       <footer className="main-footer bg-dark">
@@ -26,6 +33,49 @@ function PageHome() {
       </footer>
     </div>
   )
+
+  function FeatureMap() {
+    return(
+      <table className="table table-bordered border-light">
+        <thead>
+          <tr className="bg-secondary">
+            <th className="p-1">Source Name</th>
+            <th className="p-1">Latest</th>
+            <th className="p-1">Search</th>
+            <th className="p-1">Detail</th>
+            <th className="p-1">Read</th>
+            <th className="p-1">Library</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr className="bg-dark">
+            <td className="p-1">Mangahub</td>
+            <td className="p-1"><i className="fa text-success fa-check"></i></td>
+            <td className="p-1"><i className="fa text-success fa-check"></i></td>
+            <td className="p-1"><i className="fa text-danger fa-times"></i></td>
+            <td className="p-1"><i className="fa text-success fa-check"></i></td>
+            <td className="p-1"><i className="fa text-success fa-check"></i></td>
+          </tr>
+          <tr className="bg-dark">
+            <td className="p-1">Mangadex</td>
+            <td className="p-1"><i className="fa text-success fa-check"></i></td>
+            <td className="p-1"><i className="fa text-success fa-check"></i></td>
+            <td className="p-1"><i className="fa text-success fa-check"></i></td>
+            <td className="p-1"><i className="fa text-success fa-check"></i></td>
+            <td className="p-1"><i className="fa text-danger fa-times"></i></td>
+          </tr>
+          <tr className="bg-dark">
+            <td className="p-1">Maid My</td>
+            <td className="p-1"><i className="fa text-danger fa-times"></i></td>
+            <td className="p-1"><i className="fa text-danger fa-times"></i></td>
+            <td className="p-1"><i className="fa text-danger fa-times"></i></td>
+            <td className="p-1"><i className="fa text-danger fa-times"></i></td>
+            <td className="p-1"><i className="fa text-danger fa-times"></i></td>
+          </tr>
+        </tbody>
+      </table>
+    )
+  }
 }
 
 export default PageHome

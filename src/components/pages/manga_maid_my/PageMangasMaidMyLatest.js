@@ -9,7 +9,7 @@ import helper from "../../utils/Helper"
 import goAnimapuApi from "../../apis/GoAnimapuAPI"
 import mangahubAPI from "../../apis/MangahubAPI"
 
-function PageMangasLatestMangahub() {
+function PageMangasLatestMaidMy() {
   const cookies = new Cookies()
   const [fetch_todays_manga_state, set_fetch_todays_manga_state] = useState("finding")
   const [todays_manga_db, set_todays_manga_db] = useState(new Map())
@@ -167,4 +167,4 @@ function PageMangasLatestMangahub() {
   }
 }
 
-export default PageMangasLatestMangahub
+export default PageMangasLatestMaidMy

@@ -68,6 +68,17 @@ class GoAnimapuAPI {
     return response
   }
 
+  async MangaupdatesSearch(title) {
+    var uri = `${this.GoAnimapuAPIHOST}/mangaupdates/search?title=${title}`
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    return response
+  }
+
   async MaidMyHome() {
     var uri = `${this.GoAnimapuAPIHOST}/mangas/maid_my/home`
     const response = await fetch(uri, {

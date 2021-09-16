@@ -1,7 +1,7 @@
 class MangahubAPI {
-  constructor() {
+  // constructor() {
 
-  }
+  // }
 
   GenerateBackgroundThumbnailFromTitle(title) {
     var sources = []
