@@ -21,18 +21,18 @@ function PageMangasReadKlikManga() {
 
   async function fetchMangaDetail() {
     try {
-      var response = await goAnimapuApi.MaidMyDetail(manga_title)
+      var response = await goAnimapuApi.KlikMangaMangaDetail({manga_title: manga_title, manga_chapter: chapter_title})
       var status = await response.status
       var body = await response.json()
 
       console.log("DETAIL", status, body)
 
       if (status === 200) {
-        var tempChapterOptions = body.chapter_links.map((chapter_link, idx) => {
-          if (chapter_link === chapter_title) {
+        var tempChapterOptions = body.chapters.map((chapter, idx) => {
+          if (chapter === chapter_title) {
             setCurrentChapterIDX(idx)
           }
-          return { value: `${chapter_link}`, label: body.chapters[idx] }
+          return { value: `${chapter}`, label: body.chapters[idx] }
         })
         setChapterOptions(tempChapterOptions)
       }
@@ -45,7 +45,7 @@ function PageMangasReadKlikManga() {
     try {
       if (!chapter_title) {return}
 
-      var response = await goAnimapuApi.MaidMyChapter(chapter_title)
+      var response = await goAnimapuApi.KlikMangaChapterDetail({manga_title: manga_title, manga_chapter: chapter_title})
       var status = await response.status
       var body = await response.json()
 
@@ -60,17 +60,17 @@ function PageMangasReadKlikManga() {
   }
 
   function handleSelectChapter(e) {
-    history.push(`/mangas/read/maid_my/${manga_title}/${e.value}`)
+    history.push(`/mangas/read/klik_manga/${manga_title}/${e.value}`)
   }
 
   function toPrevChapter() {
     if (!chapterOptions[currentChapterIDX+1]) { return }
-    history.push(`/mangas/read/maid_my/${manga_title}/${chapterOptions[currentChapterIDX+1].value}`)
+    history.push(`/mangas/read/klik_manga/${manga_title}/${chapterOptions[currentChapterIDX+1].value}`)
   }
 
   function toNextChapter() {
     if (!chapterOptions[currentChapterIDX-1]) { return }
-    history.push(`/mangas/read/maid_my/${manga_title}/${chapterOptions[currentChapterIDX-1].value}`)
+    history.push(`/mangas/read/klik_manga/${manga_title}/${chapterOptions[currentChapterIDX-1].value}`)
   }
 
   useEffect(() => {

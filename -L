@@ -1,0 +1,198 @@
+== Info: Could not resolve host: GET
+== Info: Closing connection 0
+== Info:   Trying 142.250.4.102...
+== Info: TCP_NODELAY set
+== Info: Connected to google.com (142.250.4.102) port 443 (#1)
+== Info: ALPN, offering h2
+== Info: ALPN, offering http/1.1
+== Info: successfully set certificate verify locations:
+== Info:   CAfile: /etc/ssl/cert.pem
+  CApath: none
+== Info: TLSv1.2 (OUT), TLS handshake, Client hello (1):
+=> Send SSL data, 224 bytes (0xe0)
+0000: ......jW.X.....Y....k..X...<i..C.../Pd..\.0.,.(.$.......k.9.....
+0040: ............=.5...../.+.'.#.......g.3...E...<./...A.............
+0080: ........W.........google.com....................................
+00c0: .....................h2.http/1.1
+== Info: TLSv1.2 (IN), TLS handshake, Server hello (2):
+<= Recv SSL data, 96 bytes (0x60)
+0000: ...\..aDA.WG-..=.zwnjSg....._.DOWNGRD. _q.,|....!....3...!....a.
+0040: ..............................h2
+== Info: TLSv1.2 (IN), TLS handshake, Certificate (11):
+<= Recv SSL data, 6360 bytes (0x18d8)
+0000: ..........0...0...........F.....a........0...*.H........0F1.0...
+0040: U....US1"0 ..U....Google Trust Services LLC1.0...U....GTS CA 1C3
+0080: 0...210830013608Z..211122013607Z0.1.0...U....*.google.com0Y0...*
+00c0: .H.=....*.H.=....B..6...........+.=....~.......,....v..-l.0@cm..
+0100: X..;_.$..Y.7...K..n.....0...0...U...........0...U.%..0...+......
+0140: .0...U.......0.0...U...........c...CS.f#.M !L.0...U.#..0....t..
+0180: ....=...F..q5.'0j..+........^0\0'..+.....0...http://ocsp.pki.goo
+01c0: g/gts1c301..+.....0..%http://pki.goog/repo/certs/gts1c3.der0..V.
+0200: .U.....M0..I..*.google.com..*.appengine.google.com..*.bdn.dev..*
+0240: .cloud.google.com..*.crowdsource.google.com..*.datacompute.googl
+0280: e.com..*.google.ca..*.google.cl..*.google.co.in..*.google.co.jp.
+02c0: .*.google.co.uk..*.google.com.ar..*.google.com.au..*.google.com.
+0300: br..*.google.com.co..*.google.com.mx..*.google.com.tr..*.google.
+0340: com.vn..*.google.de..*.google.es..*.google.fr..*.google.hu..*.go
+0380: ogle.it..*.google.nl..*.google.pl..*.google.pt..*.googleadapis.c
+03c0: om..*.googleapis.cn..*.googlevideo.com..*.gstatic.cn..*.gstatic-
+0400: cn.com..*.gstaticcnapps.cn..googlecnapps.cn..*.googlecnapps.cn..
+0440: googleapps-cn.com..*.googleapps-cn.com..gkecnapps.cn..*.gkecnapp
+0480: s.cn..googledownloads.cn..*.googledownloads.cn..recaptcha.net.cn
+04c0: ..*.recaptcha.net.cn..widevine.cn..*.widevine.cn..ampproject.org
+0500: .cn..*.ampproject.org.cn..ampproject.net.cn..*.ampproject.net.cn
+0540: ..google-analytics-cn.com..*.google-analytics-cn.com..googleadse
+0580: rvices-cn.com..*.googleadservices-cn.com..googlevads-cn.com..*.g
+05c0: ooglevads-cn.com..googleapis-cn.com..*.googleapis-cn.com..google
+0600: optimize-cn.com..*.googleoptimize-cn.com..doubleclick-cn.net..*.
+0640: doubleclick-cn.net..*.fls.doubleclick-cn.net..*.g.doubleclick-cn
+0680: .net..doubleclick.cn..*.doubleclick.cn..*.fls.doubleclick.cn..*.
+06c0: g.doubleclick.cn..dartsearch-cn.net..*.dartsearch-cn.net..google
+0700: traveladservices-cn.com..*.googletraveladservices-cn.com..google
+0740: tagservices-cn.com..*.googletagservices-cn.com..googletagmanager
+0780: -cn.com..*.googletagmanager-cn.com..googlesyndication-cn.com..*.
+07c0: googlesyndication-cn.com.$*.safeframe.googlesyndication-cn.com..
+0800: app-measurement-cn.com..*.app-measurement-cn.com..gvt1-cn.com..*
+0840: .gvt1-cn.com..gvt2-cn.com..*.gvt2-cn.com..2mdn-cn.net..*.2mdn-cn
+0880: .net..googleflights-cn.net..*.googleflights-cn.net..admob-cn.com
+08c0: ..*.admob-cn.com..*.gstatic.com..*.metric.gstatic.com..*.gvt1.co
+0900: m..*.gcpcdn.gvt1.com..*.gvt2.com..*.gcp.gvt2.com..*.url.google.c
+0940: om..*.youtube-nocookie.com..*.ytimg.com..android.com..*.android.
+0980: com..*.flash.android.com..g.cn..*.g.cn..g.co..*.g.co..goo.gl..ww
+09c0: w.goo.gl..google-analytics.com..*.google-analytics.com..google.c
+0a00: om..googlecommerce.com..*.googlecommerce.com..ggpht.cn..*.ggpht.
+0a40: cn..urchin.com..*.urchin.com..youtu.be..youtube.com..*.youtube.c
+0a80: om..youtubeeducation.com..*.youtubeeducation.com..youtubekids.co
+0ac0: m..*.youtubekids.com..yt.be..*.yt.be..android.clients.google.com
+0b00: ..developer.android.google.cn..developers.android.google.cn..sou
+0b40: rce.android.google.cn0!..U. ..0.0...g.....0...+.....y...0<..U...
+0b80: 50301./.-.+http://crls.pki.goog/gts1c3/zdATt0Ex_Fk.crl0.....+...
+0bc0: ..y............v..\./.w0".T..0.V..M..3.../ ..N.d....{.........G0
+0c00: E.!... :...3..$w..r..............C... i..D.=Yq`..Imp."'{1n......
+0c40: ;2.%?..v.D.e......@....(.......1.?.3........{.........G0E.!..+;.
+0c80: 6...8v..</HH...I]=...#....... 2o....0..7.k..Y.....`....6Jo..jz0.
+0cc0: ..*.H...............KS.K,.......`....6~...z.1'.t?f6..1...h.3$sV.
+0d00: F..x..k.x.3.M...<....-,.7...........7........K.`n....*...h..9#..
+0d40: .M'..E..+..'#...`../."...D.*..Z..;....;7.....P...@../.>;..E`.#l!
+0d80: E.yH....@...?r........'w+.....5..O..2..RbC...&..(C.N._..m\h.+.1.
+0dc0: sp.s..7.....Nw.enj...0...0..~..........SYk4....Pf0...*.H........
+0e00: 0G1.0...U....US1"0 ..U....Google Trust Services LLC1.0...U....GT
+0e40: S Root R10...200813000042Z..270930000042Z0F1.0...U....US1"0 ..U.
+0e80: ...Google Trust Services LLC1.0...U....GTS CA 1C30.."0...*.H....
+0ec0: .........0............b..7.7B.l...e.%...k..m.Z#.........|....B.
+0f00: ^V$.z3....i..t.WLfh.w7US.9.M.4._%w7;...<......C...G..D.c..A..A0H
+0f40: ......E.!..B...+eV4.&....}....H|7M?.....u..yW\.Wn.........%..,.
+0f80: ..*....c.<PI...._.+Y.....Q..w....O.pI.\m .......w.-...k....+....
+0fc0: ....'....Q.................0..|0...U...........0...U.%..0...+...
+1000: ......+.......0...U.......0.......0...U.......t......=...F..q5.
+1040: '0...U.#..0.....+&q.+H'./Rf,....q>0h..+........\0Z0&..+.....0...
+1080: http://ocsp.pki.goog/gtsr100..+.....0..$http://pki.goog/repo/cer
+10c0: ts/gtsr1.der04..U...-0+0).'.%.#http://crl.pki.goog/gtsr1/gtsr1.c
+1100: rl0W..U. .P0N08..+.....y...0*0(..+.........https://pki.goog/repo
+1140: sitory/0...g.....0...g.....0...*.H..............}. \.<...W......
+1180: .rq.6...@..L.F...$..Pq"...n..jo......_.l.......b....[.f........
+11c0: .i>z.FI_F.A...Me4...?O.lI..SA..!.....D[*P..M.S6.B..T..wS.d8'...
+1200: X..|9-[..........S$....y.&.a.SR.B..f+?...........q.5($.....-.H.=
+1240: Y.Q.t..|...[..4..........."....q....s$.7S...?..\.6..;.)...:b;lc.
+1280: ..Yq.c'.L....s..*....l2.3...Qq.4...].QX......Y.q..M(..m......F..
+12c0: .k.w.....#.........D..u#.4.. ..^...RF.....!pQ.....U.+.3w.KB..w..
+1300: s.....7?..*f.s.2.2l2....#.[}Mep.+.=...m.2.....c...]...q^*..."..e
+1340: :...e.....[.Y.G.-.$:...&....7..o....Q......Q....f0..b0..J......
+1380: .w..l.6...!...X..0...*.H........0W1.0...U....BE1.0...U....Global
+13c0: Sign nv-sa1.0...U....Root CA1.0...U....GlobalSign Root CA0...200
+1400: 619000042Z..280128000042Z0G1.0...U....US1"0 ..U....Google Trust 
+1440: Services LLC1.0...U....GTS Root R10.."0...*.H.............0.....
+1480: ..........w.;...>...@<....}2..q.......j.....K.+................
+14c0: ...^..R..#'....c...~..^.h...ZG.M.3.N.....lK......d)%#....=.`....
+1500: ...H.M..z.....Y........1.......ml....~&.E.=.y..(..&......<h.S..
+1540: :.+.....z..u....Vd..Oh.=......@..\....5l..P..L... .3.R..2.).%*.
+1580: H.r..d...........8f..c...x.{\w.v......y.W..&..............U.....
+15c0: K)...2%N*.eD.....I...|..@{.C..l..}...L......K.....E.v..@+.S....;
+1600: ......1..w.o{>...".....2..c.Qr.]....)h3.:f...&...Wex'.^I......!
+1640: ............lH<@.~.Z.V<.....K.9K..?.U.n$..q..........A...=:..z.7
+1680: ...........80..40...U...........0...U.......0....0...U........+&
+16c0: q.+H'./Rf,....q>0...U.#..0...`{f.E....P/}..4....K0`..+........T0
+1700: R0%..+.....0...http://ocsp.pki.goog/gsr10)..+.....0...http://pki
+1740: .goog/gsr1/gsr1.crt02..U...+0)0'.%.#.!http://crl.pki.goog/gsr1/g
+1780: sr1.crl0;..U. .4020...g.....0...g.....0...+.....y....0...+.....y
+17c0: ....0...*.H.............4...(...v..1z!..R>..t.A..=5......\_...|.
+1800: .....W.&o[..Fh.7okz...7.%Q..h...I.Z...#...+.....Ij.u.......XHW.5
+1840: .....o..o.......*..Ni..-.h..+s....".7..f.I..U.g.2..&.p.=.gm=|.4.
+1880: .2..n.jo.....K.;..7..D.~.l..F.....!.f...Ul.)...f[.wIH(....3rS..5
+18c0: .b..$...9..~*A.R.......?
+== Info: TLSv1.2 (IN), TLS handshake, Server key exchange (12):
+<= Recv SSL data, 116 bytes (0x74)
+0000: ...p... ]eWG...L.. %.\......../}(.6...%...H0F.!.....}...8...L..
+0040: .F....,..oH).y..v.!.......~9.S.{.f.......g.......A..
+== Info: TLSv1.2 (IN), TLS handshake, Server finished (14):
+<= Recv SSL data, 4 bytes (0x4)
+0000: ....
+== Info: TLSv1.2 (OUT), TLS handshake, Client key exchange (16):
+=> Send SSL data, 37 bytes (0x25)
+0000: ...! .(...ql.Gi..q....o.X@.N.4l.....!
+== Info: TLSv1.2 (OUT), TLS change cipher, Change cipher spec (1):
+=> Send SSL data, 1 bytes (0x1)
+0000: .
+== Info: TLSv1.2 (OUT), TLS handshake, Finished (20):
+=> Send SSL data, 16 bytes (0x10)
+0000: ........IA.....v
+== Info: TLSv1.2 (IN), TLS change cipher, Change cipher spec (1):
+<= Recv SSL data, 1 bytes (0x1)
+0000: .
+== Info: TLSv1.2 (IN), TLS handshake, Finished (20):
+<= Recv SSL data, 16 bytes (0x10)
+0000: ....t8vKzv7.~.gd
+== Info: SSL connection using TLSv1.2 / ECDHE-ECDSA-CHACHA20-POLY1305
+== Info: ALPN, server accepted to use h2
+== Info: Server certificate:
+== Info:  subject: CN=*.google.com
+== Info:  start date: Aug 30 01:36:08 2021 GMT
+== Info:  expire date: Nov 22 01:36:07 2021 GMT
+== Info:  subjectAltName: host "google.com" matched cert's "google.com"
+== Info:  issuer: C=US; O=Google Trust Services LLC; CN=GTS CA 1C3
+== Info:  SSL certificate verify ok.
+== Info: Using HTTP2, server supports multi-use
+== Info: Connection state changed (HTTP/2 confirmed)
+== Info: Copying HTTP/2 data in stream buffer to connection buffer after upgrade: len=0
+== Info: Using Stream ID: 1 (easy handle 0x7fcf2b80ca00)
+=> Send header, 72 bytes (0x48)
+0000: GET / HTTP/2
+000e: Host: google.com
+0020: User-Agent: curl/7.64.1
+0039: Accept: */*
+0046: 
+== Info: Connection state changed (MAX_CONCURRENT_STREAMS == 100)!
+<= Recv header, 13 bytes (0xd)
+0000: HTTP/2 301 
+<= Recv header, 35 bytes (0x23)
+0000: location: https://www.google.com/
+<= Recv header, 40 bytes (0x28)
+0000: content-type: text/html; charset=UTF-8
+<= Recv header, 37 bytes (0x25)
+0000: date: Fri, 17 Sep 2021 07:21:18 GMT
+<= Recv header, 40 bytes (0x28)
+0000: expires: Sun, 17 Oct 2021 07:21:18 GMT
+<= Recv header, 40 bytes (0x28)
+0000: cache-control: public, max-age=2592000
+<= Recv header, 13 bytes (0xd)
+0000: server: gws
+<= Recv header, 21 bytes (0x15)
+0000: content-length: 220
+<= Recv header, 21 bytes (0x15)
+0000: x-xss-protection: 0
+<= Recv header, 29 bytes (0x1d)
+0000: x-frame-options: SAMEORIGIN
+<= Recv header, 200 bytes (0xc8)
+0000: alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000,h3-T051=
+0040: ":443"; ma=2592000,h3-Q050=":443"; ma=2592000,h3-Q046=":443"; ma
+0080: =2592000,h3-Q043=":443"; ma=2592000,quic=":443"; ma=2592000; v="
+00c0: 46,43"
+<= Recv header, 2 bytes (0x2)
+0000: 
+<= Recv data, 220 bytes (0xdc)
+0000: <HTML><HEAD><meta http-equiv="content-type" content="text/html;c
+0040: harset=utf-8">.<TITLE>301 Moved</TITLE></HEAD><BODY>.<H1>301 Mov
+0080: ed</H1>.The document has moved.<A HREF="https://www.google.com/"
+00c0: >here</A>.
+00cc: </BODY></HTML>
+== Info: Connection #1 to host google.com left intact

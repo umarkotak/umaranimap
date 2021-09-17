@@ -144,6 +144,28 @@ class GoAnimapuAPI {
     })
     return response
   }
+
+  async KlikMangaMangaDetail(params) {
+    var uri = `${this.GoAnimapuAPIHOST}/mangas/klik_manga/manga/${params.manga_title}`
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    return response
+  }
+
+  async KlikMangaChapterDetail(params) {
+    var uri = `${this.GoAnimapuAPIHOST}/mangas/klik_manga/manga/${params.manga_title}/${params.manga_chapter}`
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    return response
+  }
 }
 
 const goAnimapuApi = new GoAnimapuAPI()

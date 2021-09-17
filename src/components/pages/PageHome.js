@@ -3,9 +3,9 @@ import React from "react"
 function PageHome() {
   return (
     <div>
-      <div className="content-wrapper p-2" style={{backgroundColor: "#454d55"}}>
+      <div className="content-wrapper pt-2 px-2" style={{backgroundColor: "#454d55"}}>
         <div className="position-relative">
-          <img src="/dashboard.png" alt="welcome" className="img-fluid" style={{width: "100%"}} />
+          <img src="/dashboard.png" alt="welcome" style={{width: "100%", maxHeight: "270px", objectFit: "cover"}} />
 
           <div className="ribbon-wrapper ribbon-lg">
             <div className="ribbon bg-success text-lg">
@@ -29,7 +29,7 @@ function PageHome() {
 
       <footer className="main-footer bg-dark">
         <div className="float-right">
-          ANIMAPU 2021 | Version: 2.3
+          ANIMAPU 2021 | Version: 2.4
         </div>
       </footer>
     </div>
@@ -76,8 +76,8 @@ function PageHome() {
           <tr className="bg-dark">
             <td className="p-1"><a href="https://klikmanga.com/">Klik Manga</a></td>
             <td className="p-1"><i className="fa text-success fa-check"></i></td>
-            <td className="p-1"><i className="fa text-danger fa-times"></i></td>
-            <td className="p-1"><i className="fa text-danger fa-times"></i></td>
+            <td className="p-1"><i className="fa text-success fa-check"></i></td>
+            <td className="p-1"><i className="fa text-success fa-check"></i></td>
             <td className="p-1"><i className="fa text-danger fa-times"></i></td>
             <td className="p-1"><i className="fa text-danger fa-times"></i></td>
           </tr>

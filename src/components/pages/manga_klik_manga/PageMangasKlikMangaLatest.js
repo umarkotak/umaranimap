@@ -45,7 +45,7 @@ function PageMangasLatestKlikManga() {
                   manga = {mangaDB[title]}
                   continue_chapter = {"-"}
                   util_icon = "fa-share"
-                  util_link = {`/mangas/detail/maid_my/${title}`}
+                  util_link = {`/mangas/detail/klik_manga/${title}`}
                 />
               </div>
             )))}
@@ -86,13 +86,13 @@ function PageMangasLatestKlikManga() {
           <thead>
             <tr>
               <th width="10%">
-                <Link type="button" className="btn btn-block btn-sm btn-outline-light" to={`/mangas/detail/maid_my/${props.manga.title}`}><i className="fa fa-info-circle"></i></Link>
+                <Link type="button" className="btn btn-block btn-sm btn-outline-light" to={`/mangas/detail/klik_manga/${props.manga.title}`}><i className="fa fa-info-circle"></i></Link>
               </th>
               <th width="35%">
-                <Link className="btn btn-block btn-sm btn-outline-light" to={`/mangas/detail/maid_my/${props.manga.title}`}>1</Link>
+                <Link className="btn btn-block btn-sm btn-outline-light" to={`/mangas/detail/klik_manga/${props.manga.title}`}>1</Link>
               </th>
               <th width="55%">
-                <Link className="btn btn-block btn-sm btn-outline-light" to={`/mangas/detail/maid_my/${props.manga.title}`}>{props.manga.manga_last_chapter || "-"}</Link>
+                <Link className="btn btn-block btn-sm btn-outline-light" to={`/mangas/detail/klik_manga/${props.manga.title}`}>{props.manga.manga_last_chapter || "-"}</Link>
               </th>
             </tr>
           </thead>

@@ -11,7 +11,7 @@ function PageMangasDetailKlikManga() {
 
   async function fetchMangaDetail() {
     try {
-      var response = await goAnimapuApi.MaidMyDetail(manga_title)
+      var response = await goAnimapuApi.KlikMangaMangaDetail({manga_title: manga_title})
       var status = await response.status
       var body = await response.json()
 
@@ -31,6 +31,19 @@ function PageMangasDetailKlikManga() {
   // eslint-disable-next-line
   }, [])
 
+  var hist = {}
+  function handleImageFallback(val, e) {
+    if (!hist["1"]) {
+      hist["1"] = true
+      e.target.src = `https://thumb.mghubcdn.com/m4l/${val}.jpg`
+    } else if (!hist["2"]) {
+      hist["2"] = true
+      e.target.src = `https://thumb.mghubcdn.com/mn/${val}.jpg`
+    } else {
+      e.target.src = "/default-image.png"
+    }
+  }
+
   return(
     <div>
       <div className="content-wrapper p-2" style={{backgroundColor: "#454d55"}}>
@@ -45,6 +58,7 @@ function PageMangasDetailKlikManga() {
                 src={mangaDetail.title ? mangaDetail.image_url : "/default-book.png"}
                 alt="cover"
                 style={{width: "100%"}}
+                onError={(e) => handleImageFallback(mangaDetail.title, e)}
               ></img>
               <div className="text-white text-justify">
                 <p>{mangaDetail.genres}</p>
@@ -57,7 +71,7 @@ function PageMangasDetailKlikManga() {
                 {mangaChapters.map(((chapter, index) => (
                   <div className="col-2 px-1" key={`MANGA-CHAPTER-${index}`}>
                     <Link
-                      to={`/mangas/read/maid_my/${manga_title}/${mangaDetail.chapter_links[index]}`}
+                      to={`/mangas/read/klik_manga/${manga_title}/${mangaDetail.chapters[index]}`}
                       className="btn btn-primary btn-block mb-1"
                     >
                       {chapter}
