@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback} from "react"
-import {useParams, useHistory} from "react-router-dom"
+import {useParams, useHistory, Link} from "react-router-dom"
 import Select from 'react-select'
 
 import goAnimapuApi from "../../apis/GoAnimapuAPI"
@@ -126,6 +126,44 @@ function PageMangasReadKlikManga() {
       </div>
 
       <RenderFooter />
+
+      <button
+        to={window.location.pathname}
+        className="bg-primary"
+        onClick={() => window.scrollTo(0, 0)}
+        style={{
+          display: (showMangaNav === false ? "none" : "block"),
+          position:"fixed",
+          width:"50px",
+          height:"50px",
+          bottom:"155px",
+          right:"30px",
+          color:"#FFF",
+          borderRadius:"50px",
+          paddingBottom: "30px",
+          textAlign:"center"
+        }}
+      >
+        <i className="fa fa-arrow-up" style={{marginTop:"17px"}}></i>
+      </button>
+      <Link
+        to="/mangas/latest/klik_manga"
+        className="bg-primary"
+        onClick={() => history.push("/mangas/latest/klik_manga")}
+        style={{
+          display: (showMangaNav === false ? "none" : "block"),
+          position:"fixed",
+          width:"50px",
+          height:"50px",
+          bottom:"95px",
+          right:"30px",
+          color:"#FFF",
+          borderRadius:"50px",
+          textAlign:"center"
+        }}
+      >
+        <i className="fa fa-home" style={{marginTop:"17px"}}></i>
+      </Link>
     </div>
   )
 

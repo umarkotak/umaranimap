@@ -69,7 +69,7 @@ function PageMangasLatestKlikManga() {
           }}
         >
           <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
-            <small>{`-/-`}</small>
+            <small>{`-/${props.manga.manga_last_chapter || "-"}`}</small>
             <Link
               to={props.util_link}
               className="btn btn-sm btn-light float-right"
@@ -92,7 +92,7 @@ function PageMangasLatestKlikManga() {
                 <Link className="btn btn-block btn-sm btn-outline-light" to={`/mangas/detail/klik_manga/${props.manga.title}`}>1</Link>
               </th>
               <th width="55%">
-                <Link className="btn btn-block btn-sm btn-outline-light" to={`/mangas/detail/klik_manga/${props.manga.title}`}>{props.manga.manga_last_chapter || "-"}</Link>
+                <Link className="btn btn-block btn-sm btn-outline-light" to={`/mangas/read/klik_manga/${props.manga.title}/${props.manga.last_chapter_id}`}>{props.manga.manga_last_chapter || "-"}</Link>
               </th>
             </tr>
           </thead>

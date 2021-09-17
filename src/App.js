@@ -33,6 +33,7 @@ import PageMangasLatestKlikManga from "./components/pages/manga_klik_manga/PageM
 import PageMangasDetailKlikManga from "./components/pages/manga_klik_manga/PageMangasKlikMangaDetail"
 import PageMangasReadKlikManga from "./components/pages/manga_klik_manga/PageMangasKlikMangaRead"
 import PageMangasSearchKlikManga from "./components/pages/manga_klik_manga/PageMangasKlikMangaSearch"
+import PageMangasLibraryKlikManga from "./components/pages/manga_klik_manga/PageMangasKlikMangaLibrary"
 
 import PageTicTacToe from "./components/pages/PageTicTacToe"
 import PageLearnReact from "./components/pages/PageLearnReact"
@@ -87,7 +88,7 @@ function App() {
             <Route path="/mangas/detail/klik_manga/:manga_title" exact component={PageMangasDetailKlikManga} />
             <Route path="/mangas/latest/klik_manga" exact component={PageMangasLatestKlikManga} />
             <Route path="/mangas/search/klik_manga" exact component={PageMangasSearchKlikManga} />
-            <Route path="/mangas/library/klik_manga" exact component={PageMangasSearchKlikManga} />
+            <Route path="/mangas/library/klik_manga" exact component={PageMangasLibraryKlikManga} />
 
             <Route path="/original_sources" exact component={PageOriginalSources} />
 

@@ -62,12 +62,12 @@ function PageMangasDetailKlikManga() {
               ></img>
               <div className="text-white text-justify">
                 <p>{mangaDetail.genres}</p>
-                <p style={{height: "450px"}} className="overflow-auto">{mangaDetail.description}</p>
+                <p style={{maxHeight: "450px"}} className="overflow-auto">{mangaDetail.description}</p>
               </div>
             </div>
 
             <div className="col-12 col-lg-9">
-              <div className="row">
+              <div className="row pt-2">
                 {mangaChapters.map(((chapter, index) => (
                   <div className="col-2 px-1" key={`MANGA-CHAPTER-${index}`}>
                     <Link

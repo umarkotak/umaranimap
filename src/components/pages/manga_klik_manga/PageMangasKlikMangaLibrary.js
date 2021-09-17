@@ -1,126 +1,39 @@
 import React, {useState, useEffect} from "react"
 import {Link} from "react-router-dom"
-import Select from 'react-select'
 
 import helper from "../../utils/Helper"
 import LoadingBar from "../../ui-components/LoadingBar"
-import goAnimapuApi from "../../apis/GoAnimapuAPI"
 import mangahubApi from "../../apis/MangahubAPI"
 
-function PageMangasSearchKlikManga() {
+function PageMangasLibraryKlikManga() {
 
   const [isLoading, setIsLoading] = useState(false)
   const [mangaDB, setMangaDB] = useState({})
   const [mangaList, setMangaList] = useState([])
   const [body, setBody] = useState({manga_data_keys: []})
 
-  const [searchParams, setSearchParams] = useState({
-    "title": "",
-    "genre": "",
-    "status": ""
-  })
-  function handleSearchParamsChanges(e) {
-    try {
-      const { name, value } = e.target
-      setSearchParams(searchParams => ({...searchParams, [name]: value}))
-    } catch (err) {
-      setSearchParams(searchParams => ({...searchParams, [e.name]: e.value}))
-    }
-  }
-
-  async function fetchMangaListWithQuery() {
-    try {
-      var response = await goAnimapuApi.KlikMangaSearch(searchParams)
-      var status = await response.status
-      var resJson = await response.json()
-
-      console.log("MANGA LIST", resJson)
-
-      if (status === 200) {
-        setIsLoading(false)
-        setBody(resJson)
-        setMangaDB(resJson.manga_db)
-        setMangaList(resJson.manga_data_keys)
-      }
-    } catch(e) {
-      console.log(e)
-    }
-  }
-
   async function submitSearch() {
     setMangaList([])
     setIsLoading(true)
-    fetchMangaListWithQuery()
   }
+
+  useEffect(() => {
+    setMangaDB({})
+    setBody({manga_data_keys: []})
+  // eslint-disable-next-line
+  }, [])
 
   useEffect(() => {
     setMangaList(body.manga_data_keys)
   // eslint-disable-next-line
   }, [body])
 
-  var statusOptions = [
-    { name: 'status', value: 'any', label: 'Any' },
-    { name: 'status', value: 'end', label: 'Finished' },
-    { name: 'status', value: 'on-going', label: 'On Going' },
-    { name: 'status', value: 'canceled', label: 'Cancelled' },
-    { name: 'status', value: 'on-hold', label: 'On Hold' }
-  ]
-
-  var genreOptions = [
-    { name: 'genre', value: 'any', label: 'Any' },
-    { name: 'genre', value: 'action', label: 'action' },
-    { name: 'genre', value: 'adventure', label: 'adventure' },
-    { name: 'genre', value: 'comedy', label: 'comedy' },
-    { name: 'genre', value: 'drama', label: 'drama' },
-    { name: 'genre', value: 'fantasy', label: 'fantasy' },
-    { name: 'genre', value: 'isekai', label: 'isekai' },
-    { name: 'genre', value: 'martial-arts', label: 'martial-arts' },
-    { name: 'genre', value: 'mecha', label: 'mecha' },
-    { name: 'genre', value: 'mystery', label: 'mystery' },
-    { name: 'genre', value: 'oneshot', label: 'oneshot' },
-    { name: 'genre', value: 'romance', label: 'romance' },
-    { name: 'genre', value: 'school-life', label: 'school-life' },
-    { name: 'genre', value: 'sci-fi', label: 'sci-fi' },
-    { name: 'genre', value: 'seinen', label: 'seinen' },
-    { name: 'genre', value: 'shoujo', label: 'shoujo' },
-    { name: 'genre', value: 'shounen', label: 'shounen' },
-    { name: 'genre', value: 'slice-of-life', label: 'slice-of-life' },
-    { name: 'genre', value: 'sports', label: 'sports' },
-    { name: 'genre', value: 'supernatural', label: 'supernatural' }
-  ]
-
   return(
     <div>
       <div className="content-wrapper p-2" style={{backgroundColor: "#454d55"}}>
         <div className="mt-2 mx-2">
-          <h1 className="text-white">Search</h1>
+          <h1 className="text-white">History</h1>
           <div className="row">
-            <div className="col-12 col-lg-6">
-              <div className="form-group">
-                <label className="text-white">Title</label>
-                <input className="form-control" rows="2" name="title" onChange={(e) => handleSearchParamsChanges(e)} />
-              </div>
-            </div>
-            <div className="col-12 col-lg-3">
-              <div className="form-group">
-                <label className="text-white">Status</label>
-                <Select
-                  options={statusOptions}
-                  defaultValue={statusOptions[0]}
-                  onChange={(e) => handleSearchParamsChanges(e)}
-                />
-              </div>
-            </div>
-            <div className="col-12 col-lg-3">
-              <div className="form-group">
-                <label className="text-white">Genre</label>
-                <Select
-                  options={genreOptions}
-                  defaultValue={genreOptions[0]}
-                  onChange={(e) => handleSearchParamsChanges(e)}
-                />
-              </div>
-            </div>
           </div>
           <hr className="my-2" />
           <LoadingBar isLoading={isLoading} />
@@ -206,4 +119,4 @@ function PageMangasSearchKlikManga() {
   }
 }
 
-export default PageMangasSearchKlikManga
+export default PageMangasLibraryKlikManga

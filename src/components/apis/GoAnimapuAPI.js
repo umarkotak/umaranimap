@@ -166,6 +166,20 @@ class GoAnimapuAPI {
     })
     return response
   }
+
+  async KlikMangaSearch(params) {
+    if (params.status === "any") { params.status = "" }
+    if (params.genre === "any") { params.genre = "" }
+
+    var uri = `${this.GoAnimapuAPIHOST}/mangas/klik_manga/search?title=${params.title}&genre=${params.genre}&status=${params.status}`
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    return response
+  }
 }
 
 const goAnimapuApi = new GoAnimapuAPI()
