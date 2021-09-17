@@ -168,10 +168,13 @@ class GoAnimapuAPI {
   }
 
   async KlikMangaSearch(params) {
-    if (params.status === "any") { params.status = "" }
-    if (params.genre === "any") { params.genre = "" }
+    var statusQuery = ""
+    var genreQuery = ""
 
-    var uri = `${this.GoAnimapuAPIHOST}/mangas/klik_manga/search?title=${params.title}&genre=${params.genre}&status=${params.status}`
+    if (params.status !== "any") { statusQuery = `&status=${params.status}` }
+    if (params.genre !== "any") { genreQuery = `&genre=${params.genre}` }
+
+    var uri = `${this.GoAnimapuAPIHOST}/mangas/klik_manga/search?title=${params.title}${genreQuery}${statusQuery}`
     const response = await fetch(uri, {
       method: 'GET',
       headers: {
