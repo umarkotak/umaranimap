@@ -5,7 +5,7 @@ import {Link} from "react-router-dom"
 import { v4 as uuidv4 } from 'uuid'
 
 import helper from "../../utils/Helper"
-import dataStoreCommon from "../../utils/DataStoreCommon"
+import goAnimapuApi from "../../apis/GoAnimapuAPI"
 
 const cookies = new Cookies()
 
@@ -30,8 +30,7 @@ function PageMangaLibraryV1() {
 
   useEffect(() => {
     async function fetchData() {
-      var api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", "/mangas/firebase")
-      const response = await fetch(api)
+      const response = await goAnimapuApi.GetGlobalMangaFromFirebase()
       const results = await response.json()
       var converted_manga_db = new Map(Object.entries(results.manga_db))
       set_manga_db(converted_manga_db)
@@ -54,8 +53,7 @@ function PageMangaLibraryV1() {
 
   useEffect(() => {
     async function updateData() {
-      var api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", "/mangas/firebase/update")
-      const response = await fetch(api)
+      const response = await goAnimapuApi.UpdateGlobalMangaToFirebase()
       const results = await response.json()
       var converted_manga_db = new Map(Object.entries(results.manga_db))
       set_manga_db(converted_manga_db)
@@ -79,14 +77,7 @@ function PageMangaLibraryV1() {
       return
     }
 
-    var api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", "/users/detail")
-    const response = await fetch(api, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': cookies.get("GO_ANIMAPU_LOGIN_TOKEN")
-      }
-    })
+    const response = await goAnimapuApi.GetUserDetail(cookies.get("GO_ANIMAPU_LOGIN_TOKEN"))
     const results = await response.json()
 
     var manga_title_histories = []
@@ -120,15 +111,8 @@ function PageMangaLibraryV1() {
       return
     }
 
-    var api = dataStoreCommon.ConstructURI("GO_ANIMAPU_HOST", "/users/manga_library")
     try {
-      const response = await fetch(api, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': cookies.get("GO_ANIMAPU_LOGIN_TOKEN")
-        }
-      })
+      const response = await goAnimapuApi.GetUserMangaLibrary(cookies.get("GO_ANIMAPU_LOGIN_TOKEN"))
       const results = await response.json()
 
       if (!results.my_libraries) {

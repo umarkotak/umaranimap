@@ -5,6 +5,7 @@ import helper from "../../utils/Helper"
 import goAnimapuApi from "../../apis/GoAnimapuAPI"
 import mangahubApi from "../../apis/MangahubAPI"
 import LoadingBar from "../../ui-components/LoadingBar"
+import ScrollToTop from "../../ui-components/ScrollToTop"
 
 function PageMangasLatestKlikManga() {
   const [isLoading, setIsLoading] = useState(true)
@@ -28,10 +29,36 @@ function PageMangasLatestKlikManga() {
     }
   }
 
+  var nextPage = 1
+  async function fetchMangaListNextPage() {
+    try {
+      var response = await goAnimapuApi.KlikMangaHomeNextPage({next_page: nextPage})
+      var status = await response.status
+      var body = await response.json()
+
+      if (status === 200) {
+        console.log("NEXT PAGE MANGA LIST", body)
+        setMangaDB({...mangaDB, ...body.manga_db})
+        setMangaList(mangaList.concat(body.manga_data_keys))
+        setIsLoading(false)
+        nextPage++
+      }
+    } catch(e) {
+      console.log(e)
+    }
+  }
+
   useEffect(() => {
     fetchMangaList()
   // eslint-disable-next-line
   }, [])
+
+  useEffect(() => {
+    if (mangaList.length <= 0) { return }
+    if (mangaList.length >= 90) { return }
+    fetchMangaListNextPage()
+  // eslint-disable-next-line
+  }, [mangaList])
 
   return(
     <div>
@@ -52,6 +79,8 @@ function PageMangasLatestKlikManga() {
           </div>
         </div>
       </div>
+
+      <ScrollToTop show={true} />
     </div>
   )
 

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react"
+import React, {useState} from "react"
 import {Link} from "react-router-dom"
 import Select from 'react-select'
 
@@ -8,11 +8,11 @@ import goAnimapuApi from "../../apis/GoAnimapuAPI"
 import mangahubApi from "../../apis/MangahubAPI"
 
 function PageMangasSearchKlikManga() {
+  var page = 1
 
   const [isLoading, setIsLoading] = useState(false)
   const [mangaDB, setMangaDB] = useState({})
   const [mangaList, setMangaList] = useState([])
-  const [body, setBody] = useState({manga_data_keys: []})
 
   const [searchParams, setSearchParams] = useState({
     "title": "",
@@ -38,9 +38,29 @@ function PageMangasSearchKlikManga() {
 
       if (status === 200) {
         setIsLoading(false)
-        setBody(resJson)
         setMangaDB(resJson.manga_db)
         setMangaList(resJson.manga_data_keys)
+        page = 1
+      }
+    } catch(e) {
+      console.log(e)
+    }
+  }
+
+  async function fetchMangaListWithQueryNextPage() {
+    try {
+      searchParams.next_page = page
+      var response = await goAnimapuApi.KlikMangaSearchNextPage(searchParams)
+      var status = await response.status
+      var resJson = await response.json()
+
+      console.log("MANGA LIST", resJson)
+
+      if (status === 200) {
+        setIsLoading(false)
+        setMangaDB({...mangaDB, ...resJson.manga_db})
+        setMangaList(mangaList.concat(resJson.manga_data_keys))
+        page++
       }
     } catch(e) {
       console.log(e)
@@ -53,10 +73,11 @@ function PageMangasSearchKlikManga() {
     fetchMangaListWithQuery()
   }
 
-  useEffect(() => {
-    setMangaList(body.manga_data_keys)
-  // eslint-disable-next-line
-  }, [body])
+  async function submitNextPage() {
+    window.scrollTo(0,document.body.scrollHeight)
+    setIsLoading(true)
+    fetchMangaListWithQueryNextPage()
+  }
 
   var statusOptions = [
     { name: 'status', value: 'any', label: 'Any' },
@@ -123,7 +144,6 @@ function PageMangasSearchKlikManga() {
             </div>
           </div>
           <hr className="my-2" />
-          <LoadingBar isLoading={isLoading} />
           <div className="row">
             {mangaList.map(((title, index) => (
               <div className="col-4 col-md-2 mb-4" key={`LATEST-MANGA-CARD-${index}`}>
@@ -136,9 +156,28 @@ function PageMangasSearchKlikManga() {
               </div>
             )))}
           </div>
+          <LoadingBar isLoading={isLoading} />
+          <hr className="my-2" />
         </div>
       </div>
 
+      <Link
+        to="#"
+        className="bg-primary"
+        onClick={() => submitNextPage()}
+        style={{
+          position:"fixed",
+          width:"50px",
+          height:"50px",
+          bottom:"135px",
+          right:"30px",
+          color:"#FFF",
+          borderRadius:"50px",
+          textAlign:"center"
+        }}
+      >
+        <i className="fa fa-angle-double-down my-float" style={{marginTop:"17px"}}></i>
+      </Link>
       <Link
         to="#"
         className="bg-primary"

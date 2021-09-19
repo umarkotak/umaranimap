@@ -1,10 +1,13 @@
 import React, {useState, useEffect, useCallback} from "react"
 import {useParams, useHistory, Link} from "react-router-dom"
 import Select from 'react-select'
+import Cookies from 'universal-cookie'
 
 import goAnimapuApi from "../../apis/GoAnimapuAPI"
+import ScrollToTop from "../../ui-components/ScrollToTop"
 
 var y_pos = 0
+const cookies = new Cookies()
 
 function PageMangasReadKlikManga() {
   const history = useHistory()
@@ -18,6 +21,7 @@ function PageMangasReadKlikManga() {
     { value: 'N/A', label: 'Loading...' }
   ])
   const [showMangaNav, setShowMangaNav] = useState(true)
+  const [mangaDetail, setMangaDetail] = useState({})
 
   async function fetchMangaDetail() {
     try {
@@ -28,6 +32,7 @@ function PageMangasReadKlikManga() {
       console.log("DETAIL", status, body)
 
       if (status === 200) {
+        setMangaDetail(body)
         var tempChapterOptions = body.chapters.map((chapter, idx) => {
           if (chapter === chapter_title) {
             setCurrentChapterIDX(idx)
@@ -79,6 +84,39 @@ function PageMangasReadKlikManga() {
   // eslint-disable-next-line
   }, [])
 
+  async function setUserKlikMangaHistory() {
+    try {
+      if (mangaDetail.length <= 0) { return }
+      if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") { return }
+
+      var params = {
+        "title": manga_title,
+        "compact_title": mangaDetail.compact_title,
+        "image_url": mangaDetail.image_url,
+        "last_read_chapter_int": 0,
+        "last_read_chapter_id": chapter_title,
+        "last_chapter_int": mangaDetail.last_chapter_int,
+        "last_chapter_id": mangaDetail.last_chapter
+      }
+      var response = await goAnimapuApi.SetUserKlikMangaHistory(cookies.get("GO_ANIMAPU_LOGIN_TOKEN"), params)
+      var status = await response.status
+      var body = await response.json()
+
+      console.log("PAGES", status, body)
+
+      if (status === 200) {
+        setChapterPages(body.data.attributes.data)
+      }
+    } catch(e) {
+      console.log(e)
+    }
+  }
+
+  useEffect(() => {
+    setUserKlikMangaHistory()
+  // eslint-disable-next-line
+  }, [mangaDetail])
+
   useEffect(() => {
     history.listen(() => { history.go(0) })
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -127,25 +165,7 @@ function PageMangasReadKlikManga() {
 
       <RenderFooter />
 
-      <button
-        to={window.location.pathname}
-        className="bg-primary"
-        onClick={() => window.scrollTo(0, 0)}
-        style={{
-          display: (showMangaNav === false ? "none" : "block"),
-          position:"fixed",
-          width:"50px",
-          height:"50px",
-          bottom:"155px",
-          right:"30px",
-          color:"#FFF",
-          borderRadius:"50px",
-          paddingBottom: "30px",
-          textAlign:"center"
-        }}
-      >
-        <i className="fa fa-arrow-up" style={{marginTop:"17px"}}></i>
-      </button>
+      <ScrollToTop show={showMangaNav} />
       <Link
         to="/mangas/latest/klik_manga"
         className="bg-primary"
