@@ -32,7 +32,6 @@ function PageMangasReadKlikManga() {
       console.log("DETAIL", status, body)
 
       if (status === 200) {
-        setMangaDetail(body)
         var tempChapterOptions = body.chapters.map((chapter, idx) => {
           if (chapter === chapter_title) {
             setCurrentChapterIDX(idx)
@@ -40,6 +39,7 @@ function PageMangasReadKlikManga() {
           return { value: `${chapter}`, label: body.chapters[idx] }
         })
         setChapterOptions(tempChapterOptions)
+        setMangaDetail(body)
       }
     } catch(e) {
       console.log(e)
@@ -86,14 +86,14 @@ function PageMangasReadKlikManga() {
 
   async function setUserKlikMangaHistory() {
     try {
-      if (mangaDetail.length <= 0) { return }
+      if (!mangaDetail.title) { return }
       if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") { return }
 
       var params = {
         "title": manga_title,
         "compact_title": mangaDetail.compact_title,
         "image_url": mangaDetail.image_url,
-        "last_read_chapter_int": 0,
+        "last_read_chapter_int": mangaDetail.last_chapter_int - currentChapterIDX,
         "last_read_chapter_id": chapter_title,
         "last_chapter_int": mangaDetail.last_chapter_int,
         "last_chapter_id": mangaDetail.last_chapter
@@ -101,12 +101,8 @@ function PageMangasReadKlikManga() {
       var response = await goAnimapuApi.SetUserKlikMangaHistory(cookies.get("GO_ANIMAPU_LOGIN_TOKEN"), params)
       var status = await response.status
       var body = await response.json()
+      console.log("SAVING!", status, body)
 
-      console.log("PAGES", status, body)
-
-      if (status === 200) {
-        setChapterPages(body.data.attributes.data)
-      }
     } catch(e) {
       console.log(e)
     }

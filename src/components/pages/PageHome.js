@@ -29,7 +29,7 @@ function PageHome() {
 
       <footer className="main-footer bg-dark">
         <div className="float-right">
-          ANIMAPU 2021 | Version: 2.4
+          ANIMAPU 2021 | Version: 2.5
         </div>
       </footer>
     </div>
@@ -79,7 +79,7 @@ function PageHome() {
             <td className="p-1"><i className="fa text-success fa-check"></i></td>
             <td className="p-1"><i className="fa text-success fa-check"></i></td>
             <td className="p-1"><i className="fa text-success fa-check"></i></td>
-            <td className="p-1"><i className="fa text-danger fa-times"></i></td>
+            <td className="p-1"><i className="fa text-success fa-check"></i></td>
           </tr>
         </tbody>
       </table>

@@ -1,74 +1,66 @@
 import React, {useState, useEffect} from "react"
 import {Link} from "react-router-dom"
+import Cookies from 'universal-cookie'
 
 import helper from "../../utils/Helper"
 import LoadingBar from "../../ui-components/LoadingBar"
 import mangahubApi from "../../apis/MangahubAPI"
+import goAnimapuApi from "../../apis/GoAnimapuAPI"
+
+const cookies = new Cookies()
 
 function PageMangasLibraryKlikManga() {
-
-  const [isLoading, setIsLoading] = useState(false)
-  const [mangaDB, setMangaDB] = useState({})
+  const [isLoading, setIsLoading] = useState(true)
   const [mangaList, setMangaList] = useState([])
-  const [body, setBody] = useState({manga_data_keys: []})
 
-  async function submitSearch() {
-    setMangaList([])
-    setIsLoading(true)
+  async function fetchUserKlikMangaLibrary() {
+    if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") { setIsLoading(false); return }
+
+    try {
+      var response = await goAnimapuApi.GetUserKlikMangaHistories(cookies.get("GO_ANIMAPU_LOGIN_TOKEN"))
+      var status = await response.status
+      var body = await response.json()
+
+      if (status === 200) {
+        console.log("HISTORY MANGA LIST", body)
+        setMangaList(body.klik_manga_histories_list)
+        // setMangaDB(body.klik_manga_histories_map)
+        setIsLoading(false)
+      }
+    } catch(e) {
+      console.log(e)
+    }
   }
 
   useEffect(() => {
-    setMangaDB({})
-    setBody({manga_data_keys: []})
+    fetchUserKlikMangaLibrary()
   // eslint-disable-next-line
   }, [])
-
-  useEffect(() => {
-    setMangaList(body.manga_data_keys)
-  // eslint-disable-next-line
-  }, [body])
 
   return(
     <div>
       <div className="content-wrapper p-2" style={{backgroundColor: "#454d55"}}>
         <div className="mt-2 mx-2">
-          <h1 className="text-white">History</h1>
+          <h1 className="text-white">Library</h1>
+          <h4 className="text-white">Read History</h4>
           <div className="row">
           </div>
           <hr className="my-2" />
           <LoadingBar isLoading={isLoading} />
           <div className="row">
-            {mangaList.map(((title, index) => (
-              <div className="col-4 col-md-2 mb-4" key={`LATEST-MANGA-CARD-${index}`}>
+            {mangaList.map(((mangaHistoryObj, index) => (
+              <div className="col-4 col-md-2 mb-4" key={`HISTORY-MANGA-CARD-${index}`}>
                 <RenderMangaCard
-                  manga = {mangaDB[title]}
+                  manga = {mangaHistoryObj}
                   continue_chapter = {"-"}
                   util_icon = "fa-share"
-                  util_link = {`/mangas/detail/klik_manga/${mangaDB[title].title}`}
+                  util_link = {`/mangas/detail/klik_manga/${mangaHistoryObj.title}/${mangaHistoryObj.last_read_chapter_id}`}
                 />
               </div>
             )))}
           </div>
         </div>
       </div>
-
-      <Link
-        to="#"
-        className="bg-primary"
-        onClick={() => submitSearch()}
-        style={{
-          position:"fixed",
-          width:"50px",
-          height:"50px",
-          bottom:"70px",
-          right:"30px",
-          color:"#FFF",
-          borderRadius:"50px",
-          textAlign:"center"
-        }}
-      >
-        <i className="fa fa-search my-float" style={{marginTop:"17px"}}></i>
-      </Link>
     </div>
   )
 
@@ -86,7 +78,7 @@ function PageMangasLibraryKlikManga() {
           }}
         >
           <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
-            <small>{`-/${props.manga.manga_last_chapter || "-"}`}</small>
+            <small>{`${props.manga.last_read_chapter_int || "-"}/${props.manga.last_chapter_int || "-"}`}</small>
             <Link
               to={props.util_link}
               className="btn btn-sm btn-light float-right"
@@ -109,7 +101,7 @@ function PageMangasLibraryKlikManga() {
                 <Link className="btn btn-block btn-sm btn-outline-light" to={`/mangas/detail/klik_manga/${props.manga.title}`}>1</Link>
               </th>
               <th width="55%">
-                <Link className="btn btn-block btn-sm btn-outline-light" to={`/mangas/read/klik_manga/${props.manga.title}/${props.manga.last_chapter_id}`}>{props.manga.manga_last_chapter || "-"}</Link>
+                <Link className="btn btn-block btn-sm btn-outline-light" to={`/mangas/read/klik_manga/${props.manga.title}/${props.manga.last_chapter_id}`}>{props.manga.last_chapter_int || "-"}</Link>
               </th>
             </tr>
           </thead>
