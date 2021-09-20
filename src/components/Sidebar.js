@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react"
 import {Link, useHistory} from "react-router-dom"
 import Cookies from 'universal-cookie'
+import { GoogleLogin, GoogleLogout } from 'react-google-login'
 
 const cookies = new Cookies()
 
@@ -31,6 +32,14 @@ function Sidebar() {
     else if (window.location.pathname.startsWith("/mangas/search")) { tempSideBarItems.mangas_search = "active" }
     else if (window.location.pathname.startsWith("/original_sources")) { tempSideBarItems.original_sources = "active" }
     return tempSideBarItems
+  }
+
+  function handleGoogleCallback(response) {
+    console.log("GOOGLE LOGIN", response)
+  }
+
+  function handleGoogleLogoutCallback(response) {
+    console.log("GOOGLE LOGOUT", response)
   }
 
   return (
@@ -83,26 +92,26 @@ function Sidebar() {
 
         <li className="nav-header py-2">ANIME</li>
         <li className="nav-item">
-          <Link to="/animes/seasons" className={`nav-link ${sideBarItems["animes_seasons"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Seasons</p></Link>
+          <Link to="/animes/seasons" className={`nav-link ${sideBarItems["animes_seasons"] || ""}`}><i className="nav-icon fa fa-apple-alt"></i> <p>Seasons</p></Link>
         </li>
         <li className="nav-item">
-          <Link to="/animes/animepahe/watch" className={`nav-link ${sideBarItems["animes_animepahe_watch"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Watch</p></Link>
+          <Link to="/animes/animepahe/watch" className={`nav-link ${sideBarItems["animes_animepahe_watch"] || ""}`}><i className="nav-icon fa fa-video"></i> <p>Watch</p></Link>
         </li>
 
         <li className="nav-header py-2">MANGA</li>
         <li className="nav-item">
-          <Link to={`/mangas/latest/${localStorage.getItem("ANIMAPU_ACTIVE_MANGA_SOURCE") || "mangahub"}`} className={`nav-link ${sideBarItems["mangas_latest"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Latest</p></Link>
+          <Link to={`/mangas/latest/${localStorage.getItem("ANIMAPU_ACTIVE_MANGA_SOURCE") || "mangahub"}`} className={`nav-link ${sideBarItems["mangas_latest"] || ""}`}><i className="nav-icon fa fa-rss"></i> <p>Latest</p></Link>
         </li>
         <li className="nav-item">
-          <Link to={`/mangas/library/${localStorage.getItem("ANIMAPU_ACTIVE_MANGA_SOURCE") || "mangahub"}`} className={`nav-link ${sideBarItems["mangas_library"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Library</p></Link>
+          <Link to={`/mangas/library/${localStorage.getItem("ANIMAPU_ACTIVE_MANGA_SOURCE") || "mangahub"}`} className={`nav-link ${sideBarItems["mangas_library"] || ""}`}><i className="nav-icon fa fa-book"></i> <p>Library</p></Link>
         </li>
         <li className="nav-item">
-          <Link to={`/mangas/search/${localStorage.getItem("ANIMAPU_ACTIVE_MANGA_SOURCE") || "mangahub"}`} className={`nav-link ${sideBarItems["mangas_search"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Search</p></Link>
+          <Link to={`/mangas/search/${localStorage.getItem("ANIMAPU_ACTIVE_MANGA_SOURCE") || "mangahub"}`} className={`nav-link ${sideBarItems["mangas_search"] || ""}`}><i className="nav-icon fa fa-search"></i> <p>Search</p></Link>
         </li>
 
         <li className="nav-header py-2">DEV</li>
         <li className="nav-item">
-          <Link to="#" className="nav-link"><i className="nav-icon fas fa-circle"></i><p>STATS<i className="right fas fa-angle-left"></i></p></Link>
+          <Link to="#" className="nav-link"><i className="nav-icon fa fa-chart-bar"></i><p>STATS<i className="right fas fa-angle-left"></i></p></Link>
           <ul className="nav nav-treeview">
             <li className="nav-item">
               <Link to="/statistics-v1" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Statistics</p></Link>
@@ -114,7 +123,7 @@ function Sidebar() {
         </li>
 
         <li className="nav-item">
-          <Link to="#" className="nav-link"><i className="nav-icon fas fa-circle"></i><p>EXPERIMENTAL<i className="right fas fa-angle-left"></i></p></Link>
+          <Link to="#" className="nav-link"><i className="nav-icon fa fa-flask"></i><p>EXPERIMENTAL<i className="right fas fa-angle-left"></i></p></Link>
           <ul className="nav nav-treeview">
             <li className="nav-item">
               <Link to="/tic-tac-toe" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Tic Tac Toe</p></Link>
@@ -137,17 +146,44 @@ function Sidebar() {
           </ul>
         </li>
         <li className="nav-item">
-          <a href="/original_sources" className={`nav-link ${sideBarItems["original_sources"] || ""}`}><i className="nav-icon fa fa-folder text-info"></i> <p>Original Sources</p></a>
+          <a href="/original_sources" className={`nav-link ${sideBarItems["original_sources"] || ""}`}><i className="nav-icon fa fa-folder"></i> <p>Original Sources</p></a>
         </li>
 
         <li className="nav-header py-2">ALTERNATIVE SERVER</li>
         <li className="nav-item">
-          <a href="http://animapu.herokuapp.com/" className={`nav-link ${sideBarItems["server_heroku"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Heroku</p></a>
+          <a href="http://animapu.herokuapp.com/" className={`nav-link ${sideBarItems["server_heroku"] || ""}`}><i className="nav-icon fa fa-server"></i> <p>Heroku</p></a>
         </li>
         <li className="nav-item">
-          <a href="https://animapu.netlify.app/" className={`nav-link ${sideBarItems["server_netlify"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Netlify</p></a>
+          <a href="https://animapu.netlify.app/" className={`nav-link ${sideBarItems["server_netlify"] || ""}`}><i className="nav-icon fa fa-server"></i> <p>Netlify</p></a>
         </li>
-
+        <li className="nav-item">
+          <GoogleLogin
+            clientId="334886517586-djci4jil803sqjk042f6nne3016bngni.apps.googleusercontent.com"
+            buttonText="Login"
+            onSuccess={handleGoogleCallback}
+            onFailure={handleGoogleCallback}
+            cookiePolicy={'single_host_origin'}
+            render={renderProps => (
+              <a href="." className="nav-link" onClick={renderProps.onClick} disabled={renderProps.disabled}>
+                <i className="nav-icon fab fa-google text-primary"></i> Login With Google
+              </a>
+            )}
+          />
+        </li>
+        <li className="nav-item">
+          <GoogleLogout
+            clientId="334886517586-djci4jil803sqjk042f6nne3016bngni.apps.googleusercontent.com"
+            buttonText="Logout"
+            onLogoutSuccess={handleGoogleLogoutCallback}
+            onFailure={handleGoogleLogoutCallback}
+            render={renderProps => (
+              <a href="." className="nav-link" onClick={renderProps.onClick} disabled={renderProps.disabled}>
+                <i className="nav-icon fab fa-google text-danger"></i> Logout From Google
+              </a>
+            )}
+          >
+          </GoogleLogout>
+        </li>
         <li className="nav-header"></li>
         <li className="nav-header"></li>
       </ul>
