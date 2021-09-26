@@ -13,10 +13,13 @@ import mangahubAPI from "../../apis/MangahubAPI"
 const cookies = new Cookies()
 
 function PageSearchManga() {
-  const [searching_state, set_searching_state] = useState("standby")
+  var baseMangaDB = mangaDB.GetMangaDB()
+  var baseMangaDBKeys = Array.from(baseMangaDB.keys())
+
+  const [searching_state, set_searching_state] = useState("finished")
   const [search_query, set_search_query] = useState("")
-  const [search_result_db, set_search_result_db] = useState(new Map())
-  const [result_titles, set_result_titles] = useState([])
+  const [search_result_db, set_search_result_db] = useState(baseMangaDB)
+  const [result_titles, set_result_titles] = useState(baseMangaDBKeys)
   const [searchLabel, setSearchLabel] = useState("Recomendations")
 
   function handleSearchManga(event) {

@@ -16,7 +16,6 @@ function PageMangaLibraryV1() {
   const [new_mangas, set_new_mangas] = useState(mangaDB.GetNewManga())
 
   const [currentHistoriesList, setCurrentHistoriesList] = useState([])
-  var manga_list = generateMangaListFromDB()
 
   const [page_loading_state, set_page_loading_state] = useState("true")
   const [new_manga_check_update, set_new_manga_check_update] = useState("block")
@@ -137,6 +136,7 @@ function PageMangaLibraryV1() {
 
     getUserDetailFromFirebase()
     getMyReadLater()
+  // eslint-disable-next-line
   }, [])
 
   function findLatestMangaChapter(title) {
@@ -179,14 +179,6 @@ function PageMangaLibraryV1() {
       last_chapter = 150
     }
     return last_chapter
-  }
-
-  function generateMangaListFromDB() {
-    var manga_title_list = []
-    for (let manga_title of manga_db.keys()) {
-      manga_title_list.push(manga_title)
-    }
-    return manga_title_list
   }
 
   function generateThumbnailFromTitle(title) {
@@ -430,59 +422,6 @@ function PageMangaLibraryV1() {
             />
           </div>
         ))}
-      </div>
-    )
-  }
-
-  function RenderTopPicksSection() {
-    if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") {
-      return(<div><RenderNonLoggedInTopPicks /></div>)
-    }
-    return(<div><RenderLoggedInTopPicks /></div>)
-  }
-
-  function RenderNonLoggedInTopPicks() {
-    return(
-      <div>
-        <div className="row">
-          {manga_list.slice(1, manga_list.length).map(manga_title => (
-            <div className="col-4 col-md-2 mb-2" key={`${manga_title}-manga_title_history_list`}>
-              <RenderMangaCardV2
-                title = {manga_title}
-                beautified_title = {manga_title.replaceAll("-", " ")}
-                detail_link = {`/mangas/detail/mangahub/${manga_title}`}
-                last_chapter = {findLastMangaChapter(manga_title)}
-                continue_chapter = {findLatestMangaChapter(manga_title)}
-                util_icon = "fa-share"
-                util_link = {`/mangas/read/mangahub/${manga_title}/1?last_chapter=${findLatestMangaChapter(manga_title)}`}
-                border_color = "border-primary"
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-    )
-  }
-
-  function RenderLoggedInTopPicks() {
-    return(
-      <div>
-        <div className="row">
-          {manga_list.slice(1, manga_list.length).map(manga_title => (
-            <div className="col-4 col-md-2 pb-4" key={`${manga_title}-manga_title_history_list`}>
-              <RenderMangaCardV2
-                title = {manga_title}
-                beautified_title = {manga_title.replaceAll("-", " ")}
-                detail_link = {`/mangas/detail/mangahub/${manga_title}`}
-                last_chapter = {findLastMangaChapter(manga_title)}
-                continue_chapter = {findLatestMangaChapterLoggedIn(manga_title)}
-                util_icon = "fa-share"
-                util_link = {`/mangas/read/mangahub/${manga_title}/${findLatestMangaChapterLoggedIn(manga_title)}?last_chapter=${findLastMangaChapter(manga_title)}`}
-                border_color = "border-primary"
-              />
-            </div>
-          ))}
-        </div>
       </div>
     )
   }
