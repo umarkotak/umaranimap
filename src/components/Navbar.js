@@ -8,20 +8,30 @@ function Navbar() {
   function handleChangeSource(source) {
     if (source === "maid_my") {
       localStorage.setItem("ANIMAPU_ACTIVE_MANGA_SOURCE", "maid_my")
+      window.location.href = "/mangas/latest/maid_my"
+
     } else if (source === "mangahub") {
       localStorage.setItem("ANIMAPU_ACTIVE_MANGA_SOURCE", "mangahub")
+      window.location.href = "/mangas/latest/mangahub"
+
     } else if (source === "klik_manga") {
       localStorage.setItem("ANIMAPU_ACTIVE_MANGA_SOURCE", "klik_manga")
+      window.location.href = "/mangas/latest/klik_manga"
+
     } else if (source === "mangadex") {
       localStorage.setItem("ANIMAPU_ACTIVE_MANGA_SOURCE", "mangadex")
       localStorage.setItem("ANIMAPU_MANGADEX_LANG", "en")
+      window.location.href = "/mangas/latest/mangadex"
+
     } else if (source === "mangadex_id") {
       localStorage.setItem("ANIMAPU_ACTIVE_MANGA_SOURCE", "mangadex")
       localStorage.setItem("ANIMAPU_MANGADEX_LANG", "id")
+      window.location.href = "/mangas/latest/mangadex"
+
     } else {
       localStorage.setItem("ANIMAPU_ACTIVE_MANGA_SOURCE", "mangahub")
+      window.location.href = "/"
     }
-    window.location.href = "/"
   }
 
   function handleLogout() {

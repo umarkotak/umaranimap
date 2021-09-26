@@ -8,28 +8,31 @@ function PageHome() {
           <img src="/dashboard.png" alt="welcome" style={{width: "100%", maxHeight: "270px", objectFit: "cover"}} />
 
           <div className="ribbon-wrapper ribbon-lg">
-            <div className="ribbon bg-success text-lg">
+            <div className="ribbon bg-primary text-lg">
               ANIMAPU
             </div>
           </div>
         </div>
 
         <div className="text-white">
-          <h1>Welcome To Animapu</h1>
-          <small>This site is dedicated for learning purpose, please enjoy and give us your feedback!</small>
+          <h1><span className="badge badge-pill badge-primary">Welcome To Animapu</span></h1>
+          <small>This site is dedicated for learning purpose, please enjoy and give us your feedback!, </small>
+          <small className="text-warning">Please login if you want to access the full features of this sites ^^</small>
         </div>
 
         <hr className="my-2 bg-white" />
 
         <div>
-          <h3 className="text-white">Feature Map</h3>
+          <h3 className="text-white"><span className="badge badge-pill badge-primary">Feature Map</span></h3>
           <FeatureMap />
+          <small className="badge badge-pill badge-danger">*All manga data is provided by 3rd party</small>
         </div>
       </div>
 
       <footer className="main-footer bg-dark">
         <div className="float-right">
-          ANIMAPU 2021 | Version: 2.5
+          <span className="badge badge-pill badge-primary mr-2">ANIMAPU 2021</span>
+          <span className="badge badge-pill badge-primary">Version: 2.6</span>
         </div>
       </footer>
     </div>
@@ -39,7 +42,7 @@ function PageHome() {
     return(
       <table className="table table-bordered border-light">
         <thead>
-          <tr className="bg-secondary">
+          <tr className="bg-lightblue">
             <th className="p-1">Source Name</th>
             <th className="p-1">Latest</th>
             <th className="p-1">Detail</th>
@@ -50,7 +53,7 @@ function PageHome() {
         </thead>
         <tbody>
           <tr className="bg-dark">
-            <td className="p-1"><a href="https://mangahub.io/">Mangahub</a></td>
+            <td className="p-1"><a href="https://mangahub.io/"><span className="badge badge-pill badge-primary">Mangahub</span></a></td>
             <td className="p-1"><i className="fa text-success fa-check"></i></td>
             <td className="p-1"><i className="fa text-success fa-check"></i></td>
             <td className="p-1"><i className="fa text-success fa-check"></i></td>
@@ -58,7 +61,7 @@ function PageHome() {
             <td className="p-1"><i className="fa text-success fa-check"></i></td>
           </tr>
           <tr className="bg-dark">
-            <td className="p-1"><a href="https://mangadex.org/">Mangadex</a></td>
+            <td className="p-1"><a href="https://mangadex.org/"><span className="badge badge-pill badge-primary">Mangadex</span></a></td>
             <td className="p-1"><i className="fa text-success fa-check"></i></td>
             <td className="p-1"><i className="fa text-success fa-check"></i></td>
             <td className="p-1"><i className="fa text-success fa-check"></i></td>
@@ -66,7 +69,7 @@ function PageHome() {
             <td className="p-1"><i className="fa text-danger fa-times"></i></td>
           </tr>
           <tr className="bg-dark">
-            <td className="p-1"><a href="https://www.maid.my.id/">Maid My</a></td>
+            <td className="p-1"><a href="https://www.maid.my.id/"><span className="badge badge-pill badge-primary">Maid My</span></a></td>
             <td className="p-1"><i className="fa text-success fa-check"></i></td>
             <td className="p-1"><i className="fa text-success fa-check"></i></td>
             <td className="p-1"><i className="fa text-success fa-check"></i></td>
@@ -74,7 +77,7 @@ function PageHome() {
             <td className="p-1"><i className="fa text-danger fa-times"></i></td>
           </tr>
           <tr className="bg-dark">
-            <td className="p-1"><a href="https://klikmanga.com/">Klik Manga</a></td>
+            <td className="p-1"><a href="https://klikmanga.com/"><span className="badge badge-pill badge-primary">Klik Manga</span></a></td>
             <td className="p-1"><i className="fa text-success fa-check"></i></td>
             <td className="p-1"><i className="fa text-success fa-check"></i></td>
             <td className="p-1"><i className="fa text-success fa-check"></i></td>

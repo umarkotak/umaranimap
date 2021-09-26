@@ -1,18 +1,21 @@
 import React, {useState, useEffect} from "react"
-import mangaDB from "../../utils/MangaDB"
 import Cookies from 'universal-cookie'
 import {Link} from "react-router-dom"
 import { v4 as uuidv4 } from 'uuid'
 
+import mangaDB from "../../utils/MangaDB"
 import helper from "../../utils/Helper"
 import goAnimapuApi from "../../apis/GoAnimapuAPI"
 
 const cookies = new Cookies()
 
 function PageMangaLibraryV1() {
+  var currentHistoryPage = 0
+  const maxHistoriesCount = 240
   const [manga_db, set_manga_db] = useState(mangaDB.GetMangaDB())
   const [new_mangas, set_new_mangas] = useState(mangaDB.GetNewManga())
 
+  const [currentHistoriesList, setCurrentHistoriesList] = useState([])
   var manga_list = generateMangaListFromDB()
 
   const [page_loading_state, set_page_loading_state] = useState("true")
@@ -23,54 +26,41 @@ function PageMangaLibraryV1() {
   const [history_loading_state, set_history_loading_state] = useState("true")
   // const [manga_source, set_manga_source] = useState(localStorage.getItem("MANGA_SOURCE"))
 
-  useEffect(() => {
-    // console.log("RUN ONCE")
-    window.scrollTo(0, 0)
-  }, [])
+  async function fetchData() {
+    const response = await goAnimapuApi.GetGlobalMangaFromFirebase()
+    const results = await response.json()
+    var converted_manga_db = new Map(Object.entries(results.manga_db))
+    set_manga_db(converted_manga_db)
 
-  useEffect(() => {
-    async function fetchData() {
-      const response = await goAnimapuApi.GetGlobalMangaFromFirebase()
-      const results = await response.json()
-      var converted_manga_db = new Map(Object.entries(results.manga_db))
-      set_manga_db(converted_manga_db)
+    var new_mangas = []
+    converted_manga_db.forEach((num, key) => {
+      if (num.new_added > 0) {
+        new_mangas.push({title: key, order: num.new_added})
+      }
+    })
+    new_mangas.sort((a, b) => a.order - b.order)
 
-      var new_mangas = []
-      converted_manga_db.forEach((num, key) => {
-        if (num.new_added > 0) {
-          new_mangas.push({title: key, order: num.new_added})
-        }
-      })
-      new_mangas.sort((a, b) => a.order - b.order)
+    set_new_mangas(new_mangas.map(val => val.title))
+    set_page_loading_state("false")
+  }
 
-      set_new_mangas(new_mangas.map(val => val.title))
-      set_page_loading_state("false")
-    }
-    getUserDetailFromFirebase()
-    getMyReadLater()
-    fetchData()
-  }, [])
+  async function updateData() {
+    const response = await goAnimapuApi.UpdateGlobalMangaToFirebase()
+    const results = await response.json()
+    var converted_manga_db = new Map(Object.entries(results.manga_db))
+    set_manga_db(converted_manga_db)
 
-  useEffect(() => {
-    async function updateData() {
-      const response = await goAnimapuApi.UpdateGlobalMangaToFirebase()
-      const results = await response.json()
-      var converted_manga_db = new Map(Object.entries(results.manga_db))
-      set_manga_db(converted_manga_db)
+    var new_mangas = []
+    converted_manga_db.forEach((num, key) => {
+      if (num.new_added > 0) {
+        new_mangas.push({title: key, order: num.new_added})
+      }
+    })
+    new_mangas.sort((a, b) => a.order - b.order)
 
-      var new_mangas = []
-      converted_manga_db.forEach((num, key) => {
-        if (num.new_added > 0) {
-          new_mangas.push({title: key, order: num.new_added})
-        }
-      })
-      new_mangas.sort((a, b) => a.order - b.order)
-
-      set_new_mangas(new_mangas.map(val => val.title))
-      set_new_manga_check_update("none")
-    }
-    updateData()
-  }, [])
+    set_new_mangas(new_mangas.map(val => val.title))
+    set_new_manga_check_update("none")
+  }
 
   async function getUserDetailFromFirebase() {
     if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") {
@@ -102,6 +92,9 @@ function PageMangaLibraryV1() {
     })
     manga_title_histories.sort((a, b) => b.last_read_time_i - a.last_read_time_i)
     var mapped_title_histories = manga_title_histories.map(val => val.manga_title)
+
+    setCurrentHistoriesList(currentHistoriesList.concat(mapped_title_histories.slice(0, maxHistoriesCount)))
+
     set_logged_in_manga_histories(mapped_title_histories)
     set_history_loading_state("false")
   }
@@ -135,6 +128,16 @@ function PageMangaLibraryV1() {
     }
 
   }
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+
+    fetchData()
+    updateData()
+
+    getUserDetailFromFirebase()
+    getMyReadLater()
+  }, [])
 
   function findLatestMangaChapter(title) {
     var key = `${title}/last_read_chapter`
@@ -214,14 +217,17 @@ function PageMangaLibraryV1() {
     }
   }
 
+  function handleNextHistoryPage() {
+    console.log("handleNextHistoryPage", logged_in_manga_histories)
+    window.scrollTo(0,document.body.scrollHeight)
+    currentHistoryPage = currentHistoryPage + maxHistoriesCount
+    var next = currentHistoryPage + maxHistoriesCount
+    setCurrentHistoriesList(currentHistoriesList.concat(logged_in_manga_histories.slice(currentHistoryPage, next)))
+  }
+
   return (
     <div className="content-wrapper"  style={{backgroundColor: "#454d55"}}>
       <div className="px-2 py-2">
-
-        <h2 className="text-white">History</h2>
-        <RenderHistoriesSection />
-
-        <hr className="my-2" />
         <div className="row"><div className="col-6">
           <h2 className="text-white">New Updates</h2>
         </div><div className="col-6">
@@ -231,8 +237,12 @@ function PageMangaLibraryV1() {
         <RenderLatestUpdateSection />
 
         <hr className="my-2" />
+        <h2 className="text-white">History</h2>
+        <RenderHistoriesSection />
+
+        {/* <hr className="my-2" />
         <h2 className="text-white">Top Picks</h2>
-        <RenderTopPicksSection />
+        <RenderTopPicksSection /> */}
 
       </div>
     </div>
@@ -288,6 +298,24 @@ function PageMangaLibraryV1() {
             </tr>
           </thead>
         </table>
+
+        <Link
+          to="#"
+          className="bg-primary"
+          onClick={() => handleNextHistoryPage()}
+          style={{
+            position:"fixed",
+            width:"50px",
+            height:"50px",
+            bottom:"70px",
+            right:"30px",
+            color:"#FFF",
+            borderRadius:"50px",
+            textAlign:"center"
+          }}
+        >
+          <i className="fa fa-angle-double-down my-float" style={{marginTop:"17px"}}></i>
+        </Link>
       </div>
     )
   }
@@ -304,7 +332,7 @@ function PageMangaLibraryV1() {
       if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") {
         return(
           <div className="row flex-row flex-nowrap overflow-auto">
-            {new_mangas.slice(0, 30).map(manga_title => (
+            {new_mangas.slice(0, 90).map(manga_title => (
               <div className="col-4 col-md-2" key={`${manga_title}-manga_title_history_list`}>
                 <RenderMangaCardV2
                   title = {manga_title}
@@ -323,7 +351,7 @@ function PageMangaLibraryV1() {
       }
       return(
         <div className="row flex-row flex-nowrap overflow-auto">
-          {new_mangas.slice(0, 30).map(manga_title => (
+          {new_mangas.slice(0, 90).map(manga_title => (
             <div className="col-4 col-md-2" key={`${manga_title}-manga_title_history_list`}>
               <RenderMangaCardV2
                 title = {manga_title}
@@ -354,9 +382,9 @@ function PageMangaLibraryV1() {
   function RenderNonLoggedInHistory() {
     return(
       <div>
-        <div className="row flex-row flex-nowrap overflow-auto">
-          {manga_histories.slice(0, 30).map(manga_title => (
-            <div className="col-4 col-md-2" key={`${manga_title}-manga_title_history_list`}>
+        <div className="row">
+          {manga_histories.slice(0, maxHistoriesCount).map(manga_title => (
+            <div className="col-4 col-md-2 mb-4" key={`${manga_title}-manga_title_history_list`}>
               <RenderMangaCardV2
                 title = {manga_title}
                 beautified_title = {manga_title.replaceAll("-", " ")}
@@ -378,7 +406,7 @@ function PageMangaLibraryV1() {
     if (history_loading_state === "true") {
       return(
         <div>
-          <div className="row flex-row flex-nowrap overflow-auto">
+          <div className="row">
             {[0,1,2,3,4,5,6].map(manga_title => (
               <RenderMangaCardLoading key={uuidv4()} />
             ))}
@@ -387,9 +415,9 @@ function PageMangaLibraryV1() {
       )
     }
     return(
-      <div className="row flex-row flex-nowrap overflow-auto">
-        {logged_in_manga_histories.slice(0, 50).map(manga_title => (
-          <div className="col-4 col-md-2" key={`${manga_title}-manga_title_history_list`}>
+      <div className="row">
+        {currentHistoriesList.map(manga_title => (
+          <div className="col-4 col-md-2 mb-4" key={`${manga_title}-manga_title_history_list`}>
             <RenderMangaCardV2
               title = {manga_title}
               beautified_title = {manga_title.replaceAll("-", " ")}

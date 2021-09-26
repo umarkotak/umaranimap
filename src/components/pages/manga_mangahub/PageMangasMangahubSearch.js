@@ -3,16 +3,21 @@
 
 import React, {useState, useEffect} from "react"
 import {Link} from "react-router-dom"
+import Cookies from 'universal-cookie'
 
+import mangaDB from "../../utils/MangaDB"
 import helper from "../../utils/Helper"
 import goAnimapuApi from "../../apis/GoAnimapuAPI"
 import mangahubAPI from "../../apis/MangahubAPI"
+
+const cookies = new Cookies()
 
 function PageSearchManga() {
   const [searching_state, set_searching_state] = useState("standby")
   const [search_query, set_search_query] = useState("")
   const [search_result_db, set_search_result_db] = useState(new Map())
   const [result_titles, set_result_titles] = useState([])
+  const [searchLabel, setSearchLabel] = useState("Recomendations")
 
   function handleSearchManga(event) {
     event.preventDefault()
@@ -25,6 +30,7 @@ function PageSearchManga() {
     const response = await goAnimapuApi.MangaupdatesSearch(search_query)
     const results = await response.json()
     var converted_search_result_db = new Map(Object.entries(results.manga_db))
+    setSearchLabel("Results")
     set_search_result_db(converted_search_result_db)
     set_searching_state("finished")
 
@@ -32,6 +38,9 @@ function PageSearchManga() {
   }
 
   function generateThumbnailFromTitle(title) {
+    if (search_result_db.get(title).image_url !== "") {
+      return `url(${search_result_db.get(title).image_url})`
+    }
     return mangahubAPI.GenerateBackgroundThumbnailFromTitle(title)
   }
 
@@ -44,6 +53,32 @@ function PageSearchManga() {
 
     set_result_titles(manga_title_list.map(val => val.title))
   }, [search_result_db])
+
+  async function fetchTopMangaDB() {
+    const response = await goAnimapuApi.GetGlobalMangaFromFirebase()
+    const results = await response.json()
+    var converted_manga_db = new Map(Object.entries(results.manga_db))
+    console.log("fetchTopMangaDB", converted_manga_db)
+    set_search_result_db(converted_manga_db)
+    set_result_titles(converted_manga_db.keys())
+    set_searching_state("finished")
+  }
+  useEffect(() => {
+    fetchTopMangaDB()
+  }, [])
+
+  function findLatestReadChapter(title) {
+    var key
+    if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") {
+      key = `${title}/last_read_chapter`
+    } else {
+      key = `${title}/last_read_chapter_logged_in`
+    }
+
+    var chapter = localStorage.getItem(key)
+    if (chapter) { return parseInt(chapter) }
+    return 1
+  }
 
   return (
     <div>
@@ -95,22 +130,31 @@ function PageSearchManga() {
     return(
       <div>
         <hr/>
+        <h1 className="text-white">{searchLabel}</h1>
         <div className="row">
           {result_titles && result_titles.map(((value, index) => (
             <div className="col-4 col-md-2 mb-4" key={index+value}>
               <div className="rounded">
                 <div style={{
-                  height: (helper.GenerateImageCardHeightByWidth(window.innerWidth) + "px"),
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  backgroundRepeat: 'repeat',
-                  justifyContent: "space-between",
-                  display: "flex",
-                  flexDirection: "column",
-                  backgroundImage: `${generateThumbnailFromTitle(value)}`}}
+                    height: (helper.GenerateImageCardHeightByWidth(window.innerWidth) + "px"),
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'repeat',
+                    justifyContent: "space-between",
+                    display: "flex",
+                    flexDirection: "column",
+                    backgroundImage: `${generateThumbnailFromTitle(value)}`
+                  }}
                 >
                   <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
-                    <small>{`- / -`}</small>
+                    <small>{findLatestReadChapter(value)} / {search_result_db.get(value).manga_last_chapter || "-"}</small>
+                    <Link
+                      to={`/mangas/read/mangahub/${findLatestReadChapter(value)}`}
+                      className="btn btn-sm btn-light float-right"
+                      style={{ paddingTop: "1px", paddingBottom: "1px", paddingLeft: "3px", paddingRight: "3px" }}
+                    >
+                      <i className={`fa fa-share`}></i>
+                    </Link>
                   </div>
                   <div className="text-white card-text overflow-auto" style={{"height": "35px", "width": "100%", backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
                     <small>{value}</small>
@@ -126,7 +170,7 @@ function PageSearchManga() {
                         <Link className="btn btn-block btn-sm btn-outline-light" to={`/mangas/read/mangahub/${value}/1`}>1</Link>
                       </th>
                       <th width="55%">
-                        <Link className="btn btn-block btn-sm btn-outline-light" to={`/mangas/read/mangahub/${value}/1`}>1</Link>
+                        <Link className="btn btn-block btn-sm btn-outline-light" to={`/mangas/read/mangahub/${value}/${search_result_db.get(value).manga_last_chapter || 1}`}>{search_result_db.get(value).manga_last_chapter || "-"}</Link>
                       </th>
                     </tr>
                   </thead>
