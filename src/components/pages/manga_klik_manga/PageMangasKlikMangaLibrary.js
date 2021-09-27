@@ -52,9 +52,9 @@ function PageMangasLibraryKlikManga() {
               <div className="col-4 col-md-2 mb-4" key={`HISTORY-MANGA-CARD-${index}`}>
                 <RenderMangaCard
                   manga = {mangaHistoryObj}
-                  continue_chapter = {"-"}
+                  continue_chapter = {mangaHistoryObj.last_read_chapter_id}
                   util_icon = "fa-share"
-                  util_link = {`/mangas/detail/klik_manga/${mangaHistoryObj.title}/${mangaHistoryObj.last_read_chapter_id}`}
+                  util_link = {`/mangas/read/klik_manga/${mangaHistoryObj.title}/${mangaHistoryObj.last_read_chapter_id}`}
                 />
               </div>
             )))}
@@ -78,7 +78,7 @@ function PageMangasLibraryKlikManga() {
           }}
         >
           <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
-            <small>{`${props.manga.last_read_chapter_int || "-"}/${props.manga.last_chapter_int || "-"}`}</small>
+            <small>{`${props.continue_chapter || "-"}`}</small>
             <Link
               to={props.util_link}
               className="btn btn-sm btn-light float-right"

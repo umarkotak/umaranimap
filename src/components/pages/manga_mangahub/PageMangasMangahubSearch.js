@@ -123,7 +123,7 @@ function PageSearchManga() {
   function RenderSearchSection() {
     if (searching_state === "searching") {
       return(<RenderLoadingBar />)
-    }  else if (searching_state === "finished") {
+    } else if (searching_state === "finished") {
       return(<div className="col-12"><RenderSearchResults /></div>)
     }
     return(<div></div>)

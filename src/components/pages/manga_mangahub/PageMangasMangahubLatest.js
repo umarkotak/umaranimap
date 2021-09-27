@@ -120,7 +120,7 @@ function PageMangasLatestMangahub() {
                     </button>
                   </div>
                   <div className="text-white card-text overflow-auto" style={{"height": "35px", "width": "100%", backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
-                    <small>{value}</small>
+                    <small>{todays_manga_db.get(value).compact_title}</small>
                   </div>
                 </div>
                 <table style={{width: "100%"}}>
