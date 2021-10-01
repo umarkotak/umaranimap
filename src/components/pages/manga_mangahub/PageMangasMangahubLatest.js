@@ -8,6 +8,7 @@ import {Link} from "react-router-dom"
 import helper from "../../utils/Helper"
 import goAnimapuApi from "../../apis/GoAnimapuAPI"
 import mangahubAPI from "../../apis/MangahubAPI"
+import ScrollToTop from "../../ui-components/ScrollToTop"
 
 function PageMangasLatestMangahub() {
   const cookies = new Cookies()
@@ -89,6 +90,8 @@ function PageMangasLatestMangahub() {
           <RenderTodaysMangaSection />
         </div>
       </div>
+
+      <ScrollToTop show={true} />
     </div>
   )
 
@@ -96,7 +99,7 @@ function PageMangasLatestMangahub() {
     if (fetch_todays_manga_state === "finished") {
       return(
         <div className="row">
-          {todays_manga_titles && todays_manga_titles.slice(0, 6*40).map(((value, index) => (
+          {todays_manga_titles && todays_manga_titles.slice(0, 6*80).map(((value, index) => (
             <div className="col-4 col-md-2 mb-4" key={index+value}>
               <div className="rounded">
                 <div style={{

@@ -99,6 +99,7 @@ class MangadexAPI {
   }
 
   ConstructCoverArtCompressed(mangaID, coverFileName, size) {
+    if (coverFileName === "") { return "/default-book.png" }
     var result = `https://uploads.mangadex.org/covers/${mangaID}/${coverFileName}.${size}.jpg`
     return result
   }
@@ -117,6 +118,15 @@ class MangadexAPI {
 
     var result = `${host}/${mode}/${chapterHash}/${fileName}`
     return result
+  }
+
+  ExtractFileNameFromManga(manga) {
+    try {
+      return manga.relationships.at(-1).attributes.fileName
+    } catch (e) {
+      console.log(`ERR: ${e}; ${JSON.stringify(manga.relationships.at(-1))}`)
+      return ""
+    }
   }
 }
 

@@ -4,6 +4,7 @@ import {Link} from "react-router-dom"
 import helper from "../../utils/Helper"
 import goAnimapuApi from "../../apis/GoAnimapuAPI"
 import LoadingBar from "../../ui-components/LoadingBar"
+import ScrollToTop from "../../ui-components/ScrollToTop"
 
 function PageMangasLatestMaidMy() {
   const [isLoading, setIsLoading] = useState(true)
@@ -51,6 +52,8 @@ function PageMangasLatestMaidMy() {
           </div>
         </div>
       </div>
+
+      <ScrollToTop show={true} />
     </div>
   )
 

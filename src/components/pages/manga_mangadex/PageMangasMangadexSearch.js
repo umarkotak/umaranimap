@@ -170,11 +170,11 @@ function PageMangasSearchMangadex() {
             justifyContent: "space-between",
             display: "flex",
             flexDirection: "column",
-            backgroundImage: `url(${mangadexApi.ConstructCoverArtCompressed(props.manga.id, props.manga.relationships.at(-1).attributes.fileName, 256)})`
+            backgroundImage: `url(${mangadexApi.ConstructCoverArtCompressed(props.manga.id, mangadexApi.ExtractFileNameFromManga(props.manga), 256)})`
           }}
         >
           <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
-            <small>{`${props.continue_chapter}/${props.manga.attributes.lastChapter || "-"}`}</small>
+            <small>{`${props.manga.attributes.lastChapter || ""}`}</small>
             <Link
               to={props.util_link}
               className="btn btn-sm btn-light float-right"
@@ -190,15 +190,15 @@ function PageMangasSearchMangadex() {
         <table style={{width: "100%"}}>
           <thead>
             <tr>
-              <th width="10%">
+              <th width="100%">
                 <Link type="button" className="btn btn-block btn-sm btn-outline-light" to={`/mangas/detail/mangadex/${props.manga.id}`}><i className="fa fa-info-circle"></i></Link>
               </th>
-              <th width="35%">
+              {/* <th width="35%">
                 <Link className="btn btn-block btn-sm btn-outline-light" to={`/mangas/detail/mangadex/${props.manga.id}`}>1</Link>
               </th>
               <th width="55%">
                 <Link className="btn btn-block btn-sm btn-outline-light" to={`/mangas/detail/mangadex/${props.manga.id}`}>{props.manga.attributes.lastChapter || "-"}</Link>
-              </th>
+              </th> */}
             </tr>
           </thead>
         </table>
