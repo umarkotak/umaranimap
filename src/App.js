@@ -92,14 +92,14 @@ function App() {
 
             <Route path="/original_sources" exact component={PageOriginalSources} />
 
-            <Route path="/statistics-v1" exact component={PageStatisticsV1} />
+            <Route path="/stats/manga_hit_counts" exact component={PageStatisticsV1} />
 
-            <Route path="/tic-tac-toe" exact component={PageTicTacToe} />
-            <Route path="/global-clipboard-v1" exact component={PageGlobalClipboardV1} />
-            <Route path="/chatto-v1" exact component={PageChattoV1} />
-            <Route path="/socket-game-v1" exact component={PageSocketGameV1} />
-            <Route path="/tw-bot-v2" exact component={PageTWBotV2} />
-            <Route path="/repack-games-v2" exact component={PageRepackGamesV2} />
+            <Route path="/experiments/tic-tac-toe" exact component={PageTicTacToe} />
+            <Route path="/experiments/global-clipboard-v1" exact component={PageGlobalClipboardV1} />
+            <Route path="/experiments/chatto-v1" exact component={PageChattoV1} />
+            <Route path="/experiments/socket-game-v1" exact component={PageSocketGameV1} />
+            <Route path="/experiments/tw-bot-v2" exact component={PageTWBotV2} />
+            <Route path="/experiments/repack-games-v2" exact component={PageRepackGamesV2} />
 
             <Route path="/learn-react" exact component={PageLearnReact} />
             <Route path="/repack-games-v1" exact component={PageRepackGamesV1} />

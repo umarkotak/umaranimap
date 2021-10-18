@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from "react"
 import ReactPlayer from 'react-player'
 import {Link} from "react-router-dom"
+
 import dataStoreCommon from "../utils/DataStoreCommon"
+import ScrollToTop from "../ui-components/ScrollToTop"
 
 function PageAnimesSeasons() {
   var valid_seasons = ["winter", "spring", "summer", "fall"]
@@ -83,9 +85,9 @@ function PageAnimesSeasons() {
     window.scrollTo(0, 0)
   }
 
-  function sanitizeTitle(title) {
-    return title.replace(/\W/g, '')
-  }
+  // function sanitizeTitle(title) {
+  //   return title.replace(/\W/g, '')
+  // }
 
   function getNextSeason() {
     if(selected_season === "fall") {
@@ -113,12 +115,14 @@ function PageAnimesSeasons() {
       <div className="content-wrapper px-2" style={{backgroundColor: "#454d55"}}>
         <div className="row">
           <div className="col-12 col-lg-9">
-            <div className="sticky-top">
+            <div className="sticky-top pt-4 px-2">
               <RenderYouTube anime={item} />
               <div className="text-white">
                 <h1>{item.title}</h1>
                 <hr className="my-1 bg-white" />
-                <p>{item.source} | {item.status} | Rank {item.rank}</p>
+                <span className="badge badge-pill badge-primary">{item.source}</span>
+                <span className="badge badge-pill badge-primary ml-2">{item.status}</span>
+                <span className="badge badge-pill badge-primary ml-2">#{item.rank}</span>
                 <p style={{"textAlign":"justify"}}>{item.synopsis}</p>
               </div>
             </div>
@@ -161,7 +165,7 @@ function PageAnimesSeasons() {
                           </td>
                           <td className="p-1">
                             <Link
-                              to={`/watch-anime-v2?mal_id=${item.mal_id}&title=${sanitizeTitle(item.title)}&raw_title=${item.title}`}
+                              to={`#`}
                               className={ "btn btn-block btn-sm btn-outline-primary" }
                             >
                               { "▶︎ Watch" }
@@ -205,6 +209,8 @@ function PageAnimesSeasons() {
           </thead>
         </table>
       </footer>
+
+      <ScrollToTop />
     </div>
   )
 }
@@ -213,22 +219,24 @@ function RenderYouTube(props) {
   const videoId = props.anime.trailer_url
 
   return (
-    <ReactPlayer
-      playsInline
-      url={videoId}
-      playing={true}
-      width={'100%'}
-      height={window.innerHeight / 1.5 + "px"}
-      // height={'1000px'}
-      config={{
-        youtube: {
-          playerVars: {
-            showinfo: 1,
-            controls: 1
+    <div>
+      <ReactPlayer
+        playsInline
+        url={videoId}
+        playing={true}
+        width={'100%'}
+        height={window.innerHeight / 1.5 + "px"}
+        // height={'1000px'}
+        config={{
+          youtube: {
+            playerVars: {
+              showinfo: 1,
+              controls: 1
+            }
           }
-        }
-      }}
-    />
+        }}
+      />
+    </div>
   )
 }
 

@@ -54,23 +54,24 @@ function PageGlobalClipboardV1() {
   }
 
   return (
-    <div className="content-wrapper wrapper">
-        <div className="page-header">
+    <div className="content-wrapper wrapper" style={{backgroundColor: "#454d55"}}>
+      <div className="p-4">
+        <div className="page-header text-white">
           <h1 id="timeline">Global Clipboard</h1>
         </div>
 
         <div className="row">
           <div className="col-12">
-            <div className="form-group">
+            <div className="form-group bg-white">
               <label>Write your content</label>
               {/* <textarea className="form-control" rows="5" value={message} onChange={(e) => set_message(e.target.value)} /> */}
               <ReactQuill theme="snow" value={message} onChange={set_message} style={{height: "250px"}}/>
             </div>
           </div>
           <div className="col-12">
-            <div className="form-group">
-              <br />
-              <br />
+            <div className="form-group bg-white">
+              <br className="bg-white" />
+              <br className="bg-white" />
               <button className="btn btn-success btn-md float-right" disabled={is_sending} onClick={sendClip}>send content</button>
             </div>
           </div>
@@ -79,7 +80,7 @@ function PageGlobalClipboardV1() {
         <div className="row">
           {clip_keys.map(clip_key => (
             <div className="col-12 my-2" key={clip_key}>
-              <div className="container border border-secondary shadow py-1 rounded">
+              <div className="container border border-secondary shadow py-1 rounded bg-white">
                 <label><b>code : </b> {clip_key}</label>
                 <button className="btn btn-danger btn-sm float-right">delete</button>
 
@@ -92,6 +93,7 @@ function PageGlobalClipboardV1() {
             </div>
           ))}
         </div>
+      </div>
     </div>
   )
 }

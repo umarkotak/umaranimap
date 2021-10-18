@@ -54,13 +54,17 @@ function PageStatisticsV1() {
   };
 
   return (
-    <div className="content-wrapper wrapper">
-      <div className="page-header">
-        <h2 style={{color:dataStoreCommon.GetActiveTemplate("white", "black")}}>Statistics</h2>
-      </div>
+    <div>
+      <div className="content-wrapper p-2" style={{backgroundColor: "#454d55"}}>
+        <div className="mt-2 mx-2">
+          <div className="page-header">
+            <h2 className="text-white">Statistics</h2>
+          </div>
 
-      <div className="bg-white">
-        <HorizontalBar data={data} height={500} />
+          <div className="bg-white">
+            <HorizontalBar data={data} height={500} />
+          </div>
+        </div>
       </div>
     </div>
   )

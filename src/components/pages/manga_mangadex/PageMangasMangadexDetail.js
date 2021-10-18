@@ -60,7 +60,7 @@ function PageMangasDetailMangadex() {
 
             <div className="col-12 col-lg-3">
               <img
-                src={mangaDetail.id ? mangadexApi.ConstructCoverArtOriginal(mangaDetail.id, mangaDetail.relationships.at(-1).attributes.fileName) : "/default-book.png"}
+                src={mangaDetail.id ? mangadexApi.ConstructCoverArtCompressed(mangaDetail.id, mangadexApi.ExtractFileNameFromManga(mangaDetail), 256) : "/default-book.png"}
                 alt="cover"
                 style={{width: "100%"}}
               ></img>

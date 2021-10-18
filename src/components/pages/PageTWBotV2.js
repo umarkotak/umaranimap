@@ -1366,951 +1366,953 @@ function PageTWBotV2() {
 
   return(
     <div className="content-wrapper wrapper">
-      <h1>Tribal War Script</h1>
+      <div className="p-3">
+        <h1>Tribal War Script</h1>
 
-      <div className="row my-1">
-        <div className="col-12">
-          <div className="card">
-            <div className="card-header bg-info"></div>
-            <div className="card-body p-2">
-              <div className="row">
-                <div className="col-12 col-lg-4">
-                  <div className="form-group">
-                    <label >Username</label>
-                    <input className="form-control" onChange={(e) => setUserName(e.target.value)} value={userName} />
+        <div className="row my-1">
+          <div className="col-12">
+            <div className="card">
+              <div className="card-header bg-info"></div>
+              <div className="card-body p-2">
+                <div className="row">
+                  <div className="col-12 col-lg-4">
+                    <div className="form-group">
+                      <label >Username</label>
+                      <input className="form-control" onChange={(e) => setUserName(e.target.value)} value={userName} />
+                    </div>
+                    <div className="form-group">
+                      <label >User Token</label>
+                      <input className="form-control" onChange={(e) => setUserToken(e.target.value)} value={userToken} />
+                    </div>
                   </div>
-                  <div className="form-group">
-                    <label >User Token</label>
-                    <input className="form-control" onChange={(e) => setUserToken(e.target.value)} value={userToken} />
-                  </div>
-                </div>
 
-                <div className="col-12 col-lg-4">
-                  <div className="form-group">
-                    <label >User ID</label>
-                    <input className="form-control" onChange={(e) => setUserID(e.target.value)} value={userID} />
+                  <div className="col-12 col-lg-4">
+                    <div className="form-group">
+                      <label >User ID</label>
+                      <input className="form-control" onChange={(e) => setUserID(e.target.value)} value={userID} />
+                    </div>
+                    <div className="form-group">
+                      <label >World ID</label>
+                      <input className="form-control" onChange={(e) => setWorldID(e.target.value)} value={worldID} />
+                    </div>
                   </div>
-                  <div className="form-group">
-                    <label >World ID</label>
-                    <input className="form-control" onChange={(e) => setWorldID(e.target.value)} value={worldID} />
+
+                  <div className="col-12 col-lg-4">
+                    <button className="btn btn-block btn-sm btn-outline-primary disabled">{connectionStatus}</button>
+                    <button className="btn btn-block btn-sm btn-outline-primary" onClick={() => executeAutoLogin()}>➤ Login</button>
+                    <button className="btn btn-block btn-sm btn-outline-danger" onClick={() => handleClearConfig()}>X Logout</button>
+                    <a className="btn btn-block btn-sm btn-success" target="_blank" href="https://trakteer.id/marumaru" rel="noopener noreferrer"><span role="img" aria-label="">🤝</span> Give Support</a>
+                    {/* <button className="btn btn-block btn-sm btn-outline-primary" onClick={() => ws.current.close()}>DC</button> */}
                   </div>
-                </div>
 
-                <div className="col-12 col-lg-4">
-                  <button className="btn btn-block btn-sm btn-outline-primary disabled">{connectionStatus}</button>
-                  <button className="btn btn-block btn-sm btn-outline-primary" onClick={() => executeAutoLogin()}>➤ Login</button>
-                  <button className="btn btn-block btn-sm btn-outline-danger" onClick={() => handleClearConfig()}>X Logout</button>
-                  <a className="btn btn-block btn-sm btn-success" target="_blank" href="https://trakteer.id/marumaru" rel="noopener noreferrer"><span role="img" aria-label="">🤝</span> Give Support</a>
-                  {/* <button className="btn btn-block btn-sm btn-outline-primary" onClick={() => ws.current.close()}>DC</button> */}
-                </div>
-
-                <div className="col-12">
-                  <div className="progress">
-                    <div className="progress-bar" role="progressbar" style={{width: `${loginProgress}%`}} aria-valuenow={loginProgress} aria-valuemin="0" aria-valuemax="100">{`${loginProgress}`}%</div>
+                  <div className="col-12">
+                    <div className="progress">
+                      <div className="progress-bar" role="progressbar" style={{width: `${loginProgress}%`}} aria-valuenow={loginProgress} aria-valuemin="0" aria-valuemax="100">{`${loginProgress}`}%</div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="row my-1">
-        <div className="col-12">
-          <div className="card">
-            <div className="card-header bg-info p-2 text-white">
-              controller
-            </div>
-            <div className="card-body">
-              <div className="row border rounded">
-                <div className="col-12 col-lg-4 p-2 overflow-auto" style={{maxHeight: "300px"}}>
-                  <table className="table table-bordered">
-                    <tbody>
-                      <tr>
-                        <th className="p-1">ID</th>
-                        <th className="p-1">Name</th>
-                        <th className="p-1">X</th>
-                        <th className="p-1">Y</th>
-                      </tr>
-                      {myVillages.map((myVillage, idx) => (
-                        <tr key={`my-village-info-${idx}`}>
-                          <td className="p-1">
-                            <button className="btn btn-sm btn-rounded btn-primary" onClick={(e) => sendVillageDetailRequest(myVillage.id, e)}>
-                              {myVillage.id}
-                            </button>
-                          </td>
-                          <td className="p-1">{myVillage.name}</td>
-                          <td className="p-1">{myVillage.x}</td>
-                          <td className="p-1">{myVillage.y}</td>
+        <div className="row my-1">
+          <div className="col-12">
+            <div className="card">
+              <div className="card-header bg-info p-2 text-white">
+                controller
+              </div>
+              <div className="card-body">
+                <div className="row border rounded">
+                  <div className="col-12 col-lg-4 p-2 overflow-auto" style={{maxHeight: "300px"}}>
+                    <table className="table table-bordered">
+                      <tbody>
+                        <tr>
+                          <th className="p-1">ID</th>
+                          <th className="p-1">Name</th>
+                          <th className="p-1">X</th>
+                          <th className="p-1">Y</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-                <div className="col-12 col-lg-8 py-2">
-                  <table className="table table-bordered">
-                    <tbody>
-                      <tr>
-                        <th className="p-1">Active Village</th>
-                        <th className="p-1">Outgoing</th>
-                        <th className="p-1">Prov X</th>
-                        <th className="p-1">Prov Y</th>
-                        <th className="p-1">Prov Name</th>
-                      </tr>
-                      <tr>
-                        <td className="p-1">{myActiveVillageID}</td>
-                        <td className="p-1">{myActiveVillageOutgoingArmy}</td>
-                        <td className="p-1">{myActiveVillageProvinceX}</td>
-                        <td className="p-1">{myActiveVillageProvinceY}</td>
-                        <td className="p-1">{myActiveVillageProvinceName}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <table className="table table-bordered">
-                    <tbody>
-                      <tr>
-                        <th className="p-1">Troops</th>
-                        <th className="p-1">Spear</th>
-                        <th className="p-1">Sword</th>
-                        <th className="p-1">Axe</th>
-                        <th className="p-1">Archer</th>
-                        <th className="p-1">MA</th>
-                        <th className="p-1">LC</th>
-                        <th className="p-1">HC</th>
-                      </tr>
-                      <tr>
-                        <td className="p-1">In</td>
-                        <td className="p-1">{myActiveVillageUnits.spear || 0}</td>
-                        <td className="p-1">{myActiveVillageUnits.sword || 0}</td>
-                        <td className="p-1">{myActiveVillageUnits.axe || 0}</td>
-                        <td className="p-1">{myActiveVillageUnits.archer || 0}</td>
-                        <td className="p-1">{myActiveVillageUnits.mounted_archer || 0}</td>
-                        <td className="p-1">{myActiveVillageUnits.light_cavalry || 0}</td>
-                        <td className="p-1">{myActiveVillageUnits.heavy_cavalry || 0}</td>
-                      </tr>
-                      <tr>
-                        <td className="p-1">Out</td>
-                        <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.spear || 0}</td>
-                        <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.sword || 0}</td>
-                        <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.axe || 0}</td>
-                        <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.archer || 0}</td>
-                        <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.mounted_archer || 0}</td>
-                        <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.light_cavalry || 0}</td>
-                        <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.heavy_cavalry || 0}</td>
-                      </tr>
-                      <tr>
-                        <td className="p-1">Total</td>
-                        <td className="p-1">{(myActiveVillageSummarizedOutgoingArmy.spear || 0) + (myActiveVillageUnits.spear || 0)}</td>
-                        <td className="p-1">{(myActiveVillageSummarizedOutgoingArmy.sword || 0) + (myActiveVillageUnits.sword || 0)}</td>
-                        <td className="p-1">{(myActiveVillageSummarizedOutgoingArmy.axe || 0) + (myActiveVillageUnits.axe || 0)}</td>
-                        <td className="p-1">{(myActiveVillageSummarizedOutgoingArmy.archer || 0) + (myActiveVillageUnits.archer || 0)}</td>
-                        <td className="p-1">{(myActiveVillageSummarizedOutgoingArmy.mounted_archer || 0) + (myActiveVillageUnits.mounted_archer || 0)}</td>
-                        <td className="p-1">{(myActiveVillageSummarizedOutgoingArmy.light_cavalry || 0) + (myActiveVillageUnits.light_cavalry || 0)}</td>
-                        <td className="p-1">{(myActiveVillageSummarizedOutgoingArmy.heavy_cavalry || 0) + (myActiveVillageUnits.heavy_cavalry || 0)}</td>
-                      </tr>
-                      <tr>
-                        <td className="p-1">Avg/50</td>
-                        <td className="p-1">{Math.floor((myActiveVillageUnits.spear || 0) / 50)}</td>
-                        <td className="p-1">{Math.floor((myActiveVillageUnits.sword || 0) / 50)}</td>
-                        <td className="p-1">{Math.floor((myActiveVillageUnits.axe || 0) / 50)}</td>
-                        <td className="p-1">{Math.floor((myActiveVillageUnits.archer || 0) / 50)}</td>
-                        <td className="p-1">{Math.floor((myActiveVillageUnits.mounted_archer || 0) / 50)}</td>
-                        <td className="p-1">{Math.floor((myActiveVillageUnits.light_cavalry || 0) / 50)}</td>
-                        <td className="p-1">{Math.floor((myActiveVillageUnits.heavy_cavalry || 0) / 50)}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              <div className="row">
-                <ul className="nav nav-tabs" id="myTab" role="tablist">
-                  <li className="nav-item">
-                    <a className="nav-link active" id="main-tab" data-toggle="tab" href="#main" role="tab" aria-controls="main" aria-selected="true"><span role="img" aria-label="">🏠</span> MAIN</a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link" id="one-for-all-tab" data-toggle="tab" href="#one-for-all" role="tab" aria-controls="one-for-all" aria-selected="false"><span role="img" aria-label="">🔥</span> ONE FOR ALL</a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link" id="live-time-report-tab" data-toggle="tab" href="#live-time-report" role="tab" aria-controls="live-time-report" aria-selected="false"><span role="img" aria-label="">🧾</span> LIVE TIME REPORT</a>
-                  </li>
-                  <li className="nav-item">
-                    <a className="nav-link" id="raid-overflow-tab" data-toggle="tab" href="#raid-overflow" role="tab" aria-controls="raid-overflow" aria-selected="false"><span role="img" aria-label="">☸︎</span> RAID OVERFLOW</a>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="tab-content" id="myTabContent">
-                <div className="tab-pane fade show active" id="main" role="tabpanel" aria-labelledby="main-tab">
-                </div>
-
-                <div className="tab-pane fade pb-3" id="one-for-all" role="tabpanel" aria-labelledby="one-for-all-tab">
-                  <div className="row">
-                    <div className="col-12 col-md-6 px-1">
-                      <div className="input-group mb-2">
-                        <div className="input-group-prepend">
-                          <span className="input-group-text">One For All Interval (Ms)</span>
-                        </div>
-                        <input type="number" className="form-control" value={autoOneForAllInterval} onChange={(e) => {setAutoOneForAllInterval(e.target.value); localStorage.setItem("autoOneForAllInterval", e.target.value)}} />
-                      </div>
-                    </div>
-                    <div className="col-12 col-md-6 px-1">
-                      <button className="btn btn-outline-success btn-md float-right" onClick={() => attackAllPreviousVillage()}><span role="img" aria-label="">😈</span> Attack!</button>
-                      <button className="btn btn-outline-danger btn-md float-right" onClick={() => {setEnableAutoOneForAll("false"); localStorage.setItem("enableAutoOneForAll", "false")}}>Disable Auto Attack</button>
-                    </div>
-                    <div className="col-12 px-1 overflow-auto" style={{maxHeight: "550px"}}>
-                      <table className="table table-bordered">
-                        <thead>
-                          <tr>
-                            <th className="p-1" colSpan="2">Auto One For All</th>
-                            <th className="p-1" colSpan="3">Last Attack Time</th>
-                            <th className="p-1" colSpan="3">Next Attack Time</th>
-                            <th className="p-1" colSpan="2">Count Down</th>
-                            <th className="p-1" colSpan="2">Total Cycle</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td className="p-1" colSpan="2">{enableAutoOneForAll}</td>
-                            <td className="p-1" colSpan="3">{new Date(autoOneForAllLastAttackTime).toString().substr(0, 25)}</td>
-                            <td className="p-1" colSpan="3">{new Date(autoOneForAllNextAttackTime).toString().substr(0, 25)}</td>
-                            <td className="p-1" colSpan="2">{autoOneForAllRemainingAttackTime}</td>
-                            <td className="p-1" colSpan="2">{autoOneForAllCycle}</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      <table className="table table-bordered">
-                        <thead>
-                          <tr>
-                            <th className="p-1">ID</th>
-                            <th className="p-1">Name</th>
-                            <th className="p-1">Target Count</th>
-                            <th className="p-1">Targets</th>
-                            <th className="p-1">Spear</th>
-                            <th className="p-1">Sword</th>
-                            <th className="p-1">Axe</th>
-                            <th className="p-1">Knight</th>
-                            <th className="p-1">LC</th>
-                            <th className="p-1">MA</th>
-                            <th className="p-1">HC</th>
-                            <th className="p-1">Action</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {myVillages.map((myVillage, idx) => (
-                          <tr key={`bulkAttacking-${idx}`}>
-                            <td className="p-1">{myVillage.id}</td>
-                            <td className="p-1">{myVillage.name}</td>
-                            <td className="p-1">{(getVillageLastAttack(myVillage.id) || "").split(",").length}</td>
+                        {myVillages.map((myVillage, idx) => (
+                          <tr key={`my-village-info-${idx}`}>
                             <td className="p-1">
-                              <pre style={{width: "115px", height: "35px"}}>
-                                {(getVillageLastAttack(myVillage.id) || "").substring(0, 100)}
-                              </pre>
-                            </td>
-                            <td className="p-1">{getArmyLastAttack(myVillage.id, "spear") || 0}</td>
-                            <td className="p-1">{getArmyLastAttack(myVillage.id, "sword") || 0}</td>
-                            <td className="p-1">{getArmyLastAttack(myVillage.id, "axe") || 0}</td>
-                            <td className="p-1">{getArmyLastAttack(myVillage.id, "knight") || 0}</td>
-                            <td className="p-1">{getArmyLastAttack(myVillage.id, "lightCavalry") || 0}</td>
-                            <td className="p-1">{getArmyLastAttack(myVillage.id, "mountedArcher") || 0}</td>
-                            <td className="p-1">{getArmyLastAttack(myVillage.id, "heavyCavalry") || 0}</td>
-                            <td className="p-1">
-                              <button className="btn btn-block btn-outline-success btn-sm" onClick={() => attackPreviousVillage(myVillage.id)}>
-                                <span role="img" aria-label="">⚔️</span>
+                              <button className="btn btn-sm btn-rounded btn-primary" onClick={(e) => sendVillageDetailRequest(myVillage.id, e)}>
+                                {myVillage.id}
                               </button>
                             </td>
-                          </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                    <div className="col-12 px-1">
-                      <div className="progress">
-                        <div className="progress-bar" role="progressbar" style={{width: `${attackAllVillageProgress}%`}} aria-valuenow={attackAllVillageProgress} aria-valuemin="0" aria-valuemax="100">{`${attackAllVillageProgress}`}%</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="tab-pane fade pb-3" id="live-time-report" role="tabpanel" aria-labelledby="live-time-report-tab">
-                  <div className="row">
-                    <div className="col-12 px-1 overflow-auto" style={{maxHeight: "550px"}}>
-                      <table className="table table-bordered">
-                        <thead>
-                          <tr>
-                            <th className="p-1">ID</th>
-                            <th className="p-1">Name</th>
-                            <th className="p-1">Wood</th>
-                            <th className="p-1">Clay</th>
-                            <th className="p-1">Iron</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {myVillages.map((myVillage, idx) => (
-                          <tr key={`LIVE_TIME_REPORT:${idx}`}>
-                            <td className="p-1">{myVillage.id}</td>
                             <td className="p-1">{myVillage.name}</td>
-                            <td className="p-1">{new Intl.NumberFormat('de-DE').format(getLiveTimeResources(myVillage.id, "wood"))}</td>
-                            <td className="p-1">{new Intl.NumberFormat('de-DE').format(getLiveTimeResources(myVillage.id, "clay"))}</td>
-                            <td className="p-1">{new Intl.NumberFormat('de-DE').format(getLiveTimeResources(myVillage.id, "iron"))}</td>
+                            <td className="p-1">{myVillage.x}</td>
+                            <td className="p-1">{myVillage.y}</td>
                           </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="col-12 col-lg-8 py-2">
+                    <table className="table table-bordered">
+                      <tbody>
+                        <tr>
+                          <th className="p-1">Active Village</th>
+                          <th className="p-1">Outgoing</th>
+                          <th className="p-1">Prov X</th>
+                          <th className="p-1">Prov Y</th>
+                          <th className="p-1">Prov Name</th>
+                        </tr>
+                        <tr>
+                          <td className="p-1">{myActiveVillageID}</td>
+                          <td className="p-1">{myActiveVillageOutgoingArmy}</td>
+                          <td className="p-1">{myActiveVillageProvinceX}</td>
+                          <td className="p-1">{myActiveVillageProvinceY}</td>
+                          <td className="p-1">{myActiveVillageProvinceName}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <table className="table table-bordered">
+                      <tbody>
+                        <tr>
+                          <th className="p-1">Troops</th>
+                          <th className="p-1">Spear</th>
+                          <th className="p-1">Sword</th>
+                          <th className="p-1">Axe</th>
+                          <th className="p-1">Archer</th>
+                          <th className="p-1">MA</th>
+                          <th className="p-1">LC</th>
+                          <th className="p-1">HC</th>
+                        </tr>
+                        <tr>
+                          <td className="p-1">In</td>
+                          <td className="p-1">{myActiveVillageUnits.spear || 0}</td>
+                          <td className="p-1">{myActiveVillageUnits.sword || 0}</td>
+                          <td className="p-1">{myActiveVillageUnits.axe || 0}</td>
+                          <td className="p-1">{myActiveVillageUnits.archer || 0}</td>
+                          <td className="p-1">{myActiveVillageUnits.mounted_archer || 0}</td>
+                          <td className="p-1">{myActiveVillageUnits.light_cavalry || 0}</td>
+                          <td className="p-1">{myActiveVillageUnits.heavy_cavalry || 0}</td>
+                        </tr>
+                        <tr>
+                          <td className="p-1">Out</td>
+                          <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.spear || 0}</td>
+                          <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.sword || 0}</td>
+                          <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.axe || 0}</td>
+                          <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.archer || 0}</td>
+                          <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.mounted_archer || 0}</td>
+                          <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.light_cavalry || 0}</td>
+                          <td className="p-1">{myActiveVillageSummarizedOutgoingArmy.heavy_cavalry || 0}</td>
+                        </tr>
+                        <tr>
+                          <td className="p-1">Total</td>
+                          <td className="p-1">{(myActiveVillageSummarizedOutgoingArmy.spear || 0) + (myActiveVillageUnits.spear || 0)}</td>
+                          <td className="p-1">{(myActiveVillageSummarizedOutgoingArmy.sword || 0) + (myActiveVillageUnits.sword || 0)}</td>
+                          <td className="p-1">{(myActiveVillageSummarizedOutgoingArmy.axe || 0) + (myActiveVillageUnits.axe || 0)}</td>
+                          <td className="p-1">{(myActiveVillageSummarizedOutgoingArmy.archer || 0) + (myActiveVillageUnits.archer || 0)}</td>
+                          <td className="p-1">{(myActiveVillageSummarizedOutgoingArmy.mounted_archer || 0) + (myActiveVillageUnits.mounted_archer || 0)}</td>
+                          <td className="p-1">{(myActiveVillageSummarizedOutgoingArmy.light_cavalry || 0) + (myActiveVillageUnits.light_cavalry || 0)}</td>
+                          <td className="p-1">{(myActiveVillageSummarizedOutgoingArmy.heavy_cavalry || 0) + (myActiveVillageUnits.heavy_cavalry || 0)}</td>
+                        </tr>
+                        <tr>
+                          <td className="p-1">Avg/50</td>
+                          <td className="p-1">{Math.floor((myActiveVillageUnits.spear || 0) / 50)}</td>
+                          <td className="p-1">{Math.floor((myActiveVillageUnits.sword || 0) / 50)}</td>
+                          <td className="p-1">{Math.floor((myActiveVillageUnits.axe || 0) / 50)}</td>
+                          <td className="p-1">{Math.floor((myActiveVillageUnits.archer || 0) / 50)}</td>
+                          <td className="p-1">{Math.floor((myActiveVillageUnits.mounted_archer || 0) / 50)}</td>
+                          <td className="p-1">{Math.floor((myActiveVillageUnits.light_cavalry || 0) / 50)}</td>
+                          <td className="p-1">{Math.floor((myActiveVillageUnits.heavy_cavalry || 0) / 50)}</td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
 
-                <div className="tab-pane fade pb-3" id="raid-overflow" role="tabpanel" aria-labelledby="raid-overflow-tab">
-                  <div className="row">
-                    <div className="col-12">
-                      <label><b>Enabled</b>: {enableRaidOverFlow}</label>
-
-                      <button className="btn btn-outline-success btn-md float-right" onClick={() => { localStorage.setItem("enableRaidOverFlow", "true"); setEnableRaidOverFlow("true") }}>Enable</button>
-                      <button className="btn btn-outline-danger btn-md float-right" onClick={() => { localStorage.setItem("enableRaidOverFlow", "false"); setEnableRaidOverFlow("false") }}>Disable</button>
-                    </div>
-                    <div className="col-12">
-                      <table className="table table-bordered">
-                        <thead>
-                          <tr>
-                            <th className="p-1">Village ID</th>
-                            <th className="p-1">Total Cycle</th>
-                            <th className="p-1">Total Attack</th>
-                            <th className="p-1">Next IDx</th>
-                            <th className="p-1">Next Village</th>
-                            <th className="p-1">Target Cnt</th>
-                            <th className="p-1">Outgoing Cnt</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {Object.keys(raidOverFlow).map((raidOverFlowID, idx) => (
-                          <tr key={`RAID_OVERFLOW:${idx}`}>
-                            <td className="p-1">{raidOverFlowID}</td>
-                            <td className="p-1">{raidOverFlow[raidOverFlowID].totalCycle}</td>
-                            <td className="p-1">{raidOverFlow[raidOverFlowID].totalAttack}</td>
-                            <td className="p-1">{raidOverFlow[raidOverFlowID].nextIdx}</td>
-                            <td className="p-1">{raidOverFlow[raidOverFlowID].nextVillage}</td>
-                            <td className="p-1">{raidOverFlow[raidOverFlowID].targetCnt}</td>
-                            <td className="p-1">{raidOverFlow[raidOverFlowID].outgoingCnt}</td>
-                          </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="row">
-                <div className="col-12 border rounded py-2 ">
-                  <div className="row pb-0">
-                    <div className="col-12 col-md-2">
-                      <div className="input-group">
-                        <div className="input-group-prepend">
-                          <span className="input-group-text">X</span>
-                        </div>
-                        <input type="number" className="form-control" value={selectedMapCoordX} onChange={(e) => setSelectedMapCoordX(e.target.value)} />
-                      </div>
-                    </div>
-                    <div className="col-12 col-md-2">
-                      <div className="input-group">
-                        <div className="input-group-prepend">
-                          <span className="input-group-text">Y</span>
-                        </div>
-                        <input type="number" className="form-control" value={selectedMapCoordY} onChange={(e) => setSelectedMapCoordY(e.target.value)} />
-                      </div>
-                    </div>
-                    <div className="col-12 col-md-3">
-                      <div className="input-group">
-                        <div className="input-group-prepend">
-                          <span className="input-group-text">Height</span>
-                        </div>
-                        <input type="number" className="form-control" value={selectedMapHeight} onChange={(e) => setSelectedMapHeight(e.target.value)} />
-                      </div>
-                    </div>
-                    <div className="col-12 col-md-3">
-                      <div className="input-group">
-                        <div className="input-group-prepend">
-                          <span className="input-group-text">Width</span>
-                        </div>
-                        <input type="number" className="form-control" value={selectedMapWidth} onChange={(e) => setSelectedMapWidth(e.target.value)} />
-                      </div>
-                    </div>
-                    <div className="col-12 col-md-2">
-                      <button className="btn btn-outline-success btn-sm btn-block my-1" onClick={ () => sendVillagesByAreaRequest() }><span role="img" aria-label="">🔎</span> Fetch Map</button>
-                    </div>
-                    {/* BATAS MENUS PER 12 */}
-                    <div className="col-12 col-md-3 py-1">
-                      <div className="input-group mb-2">
-                        <div className="input-group-prepend">
-                          <span className="input-group-text">Province X</span>
-                        </div>
-                        <input type="number" className="form-control" value={selectedProvinceX} onChange={(e) => setSelectedProvinceX(e.target.value)} />
-                      </div>
-                    </div>
-                    <div className="col-12 col-md-3 py-1">
-                      <div className="input-group mb-2">
-                        <div className="input-group-prepend">
-                          <span className="input-group-text">Province Y</span>
-                        </div>
-                        <input type="number" className="form-control" value={selectedProvinceY} onChange={(e) => setSelectedProvinceY(e.target.value)} />
-                      </div>
-                    </div>
-                    <div className="col-12 col-md-3 py-1">
-                      <div className="input-group mb-2">
-                        <div className="input-group-prepend">
-                          <span className="input-group-text">Name</span>
-                        </div>
-                        <input type="text" className="form-control" value={selectedProvinceName} disabled />
-                      </div>
-                    </div>
-                    <div className="col-12 col-md-3 py-1">
-                      <button className="btn btn-outline-success btn-sm btn-block my-1" onClick={ () => sendVillagesByProvinceRequest() }><span role="img" aria-label="">🔎</span> Fetch Province</button>
-                    </div>
-                  </div>
-
+                <div className="row">
                   <ul className="nav nav-tabs" id="myTab" role="tablist">
                     <li className="nav-item">
-                      <a className="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Barbarian Villages</a>
+                      <a className="nav-link active" id="main-tab" data-toggle="tab" href="#main" role="tab" aria-controls="main" aria-selected="true"><span role="img" aria-label="">🏠</span> MAIN</a>
                     </li>
                     <li className="nav-item">
-                      <a className="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">My Villages</a>
+                      <a className="nav-link" id="one-for-all-tab" data-toggle="tab" href="#one-for-all" role="tab" aria-controls="one-for-all" aria-selected="false"><span role="img" aria-label="">🔥</span> ONE FOR ALL</a>
                     </li>
                     <li className="nav-item">
-                      <a className="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Player Villages</a>
+                      <a className="nav-link" id="live-time-report-tab" data-toggle="tab" href="#live-time-report" role="tab" aria-controls="live-time-report" aria-selected="false"><span role="img" aria-label="">🧾</span> LIVE TIME REPORT</a>
                     </li>
                     <li className="nav-item">
-                      <a className="nav-link" id="contact-tab" data-toggle="tab" href="#safeVillage" role="tab" aria-controls="contact" aria-selected="false">Low Point Player Villages</a>
+                      <a className="nav-link" id="raid-overflow-tab" data-toggle="tab" href="#raid-overflow" role="tab" aria-controls="raid-overflow" aria-selected="false"><span role="img" aria-label="">☸︎</span> RAID OVERFLOW</a>
                     </li>
                   </ul>
+                </div>
 
-                  <div className="tab-content overflow-auto" id="myTabContent" style={{maxHeight: "600px"}}>
-                    <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                      <table className="table table-bordered">
-                        <tbody>
-                          <tr>
-                            <td className="p-1" colSpan="2">
-                              <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => addAllVillageIds(nearbyBarbarianVillages)}>
-                                Add All
-                              </button>
-                            </td>
-                            <td className="p-1" colSpan="2">
-                              <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyBarbarianVillages(sortIDAsc(nearbyBarbarianVillages))}>
-                                ID Asc
-                              </button>
-                            </td>
-                            <td className="p-1"></td>
-                            <td className="p-1"></td>
-                            <td className="p-1" colSpan="5"  align="right">
-                              <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyBarbarianVillages(sortTimeAsc(nearbyBarbarianVillages))}>
-                                Time Asc
-                              </button>
-                              <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyBarbarianVillages(sortTimeDesc(nearbyBarbarianVillages))}>
-                                Time Desc
-                              </button>
-                              <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyBarbarianVillages(sortDistAsc(nearbyBarbarianVillages))}>
-                                Dist Asc
-                              </button>
-                              <button className="btn btn-sm btn-rounded btn-primary" onClick={(e) => setNearbyBarbarianVillages(sortDistDesc(nearbyBarbarianVillages))}>
-                                Dist Desc
-                              </button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <th className="p-1">ID</th>
-                            <th className="p-1">No</th>
-                            <th className="p-1">X</th>
-                            <th className="p-1">Y</th>
-                            <th className="p-1">Village Name</th>
-                            <th className="p-1">Points</th>
-                            <th className="p-1">Report</th>
-                            <th className="p-1">Time</th>
-                            <th className="p-1">Province</th>
-                            <th className="p-1">Dist</th>
-                          </tr>
-                          {nearbyBarbarianVillages.map ((village, idx) => (
-                            <tr key={`barbarian-${idx}`}>
+                <div className="tab-content" id="myTabContent">
+                  <div className="tab-pane fade show active" id="main" role="tabpanel" aria-labelledby="main-tab">
+                  </div>
+
+                  <div className="tab-pane fade pb-3" id="one-for-all" role="tabpanel" aria-labelledby="one-for-all-tab">
+                    <div className="row">
+                      <div className="col-12 col-md-6 px-1">
+                        <div className="input-group mb-2">
+                          <div className="input-group-prepend">
+                            <span className="input-group-text">One For All Interval (Ms)</span>
+                          </div>
+                          <input type="number" className="form-control" value={autoOneForAllInterval} onChange={(e) => {setAutoOneForAllInterval(e.target.value); localStorage.setItem("autoOneForAllInterval", e.target.value)}} />
+                        </div>
+                      </div>
+                      <div className="col-12 col-md-6 px-1">
+                        <button className="btn btn-outline-success btn-md float-right" onClick={() => attackAllPreviousVillage()}><span role="img" aria-label="">😈</span> Attack!</button>
+                        <button className="btn btn-outline-danger btn-md float-right" onClick={() => {setEnableAutoOneForAll("false"); localStorage.setItem("enableAutoOneForAll", "false")}}>Disable Auto Attack</button>
+                      </div>
+                      <div className="col-12 px-1 overflow-auto" style={{maxHeight: "550px"}}>
+                        <table className="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th className="p-1" colSpan="2">Auto One For All</th>
+                              <th className="p-1" colSpan="3">Last Attack Time</th>
+                              <th className="p-1" colSpan="3">Next Attack Time</th>
+                              <th className="p-1" colSpan="2">Count Down</th>
+                              <th className="p-1" colSpan="2">Total Cycle</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td className="p-1" colSpan="2">{enableAutoOneForAll}</td>
+                              <td className="p-1" colSpan="3">{new Date(autoOneForAllLastAttackTime).toString().substr(0, 25)}</td>
+                              <td className="p-1" colSpan="3">{new Date(autoOneForAllNextAttackTime).toString().substr(0, 25)}</td>
+                              <td className="p-1" colSpan="2">{autoOneForAllRemainingAttackTime}</td>
+                              <td className="p-1" colSpan="2">{autoOneForAllCycle}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <table className="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th className="p-1">ID</th>
+                              <th className="p-1">Name</th>
+                              <th className="p-1">Target Count</th>
+                              <th className="p-1">Targets</th>
+                              <th className="p-1">Spear</th>
+                              <th className="p-1">Sword</th>
+                              <th className="p-1">Axe</th>
+                              <th className="p-1">Knight</th>
+                              <th className="p-1">LC</th>
+                              <th className="p-1">MA</th>
+                              <th className="p-1">HC</th>
+                              <th className="p-1">Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {myVillages.map((myVillage, idx) => (
+                            <tr key={`bulkAttacking-${idx}`}>
+                              <td className="p-1">{myVillage.id}</td>
+                              <td className="p-1">{myVillage.name}</td>
+                              <td className="p-1">{(getVillageLastAttack(myVillage.id) || "").split(",").length}</td>
                               <td className="p-1">
-                                <button className="btn btn-sm btn-rounded btn-primary" onClick={(e) => addVillageToTargets(village.id, e)}>
-                                  {village.id}
+                                <pre style={{width: "115px", height: "35px"}}>
+                                  {(getVillageLastAttack(myVillage.id) || "").substring(0, 100)}
+                                </pre>
+                              </td>
+                              <td className="p-1">{getArmyLastAttack(myVillage.id, "spear") || 0}</td>
+                              <td className="p-1">{getArmyLastAttack(myVillage.id, "sword") || 0}</td>
+                              <td className="p-1">{getArmyLastAttack(myVillage.id, "axe") || 0}</td>
+                              <td className="p-1">{getArmyLastAttack(myVillage.id, "knight") || 0}</td>
+                              <td className="p-1">{getArmyLastAttack(myVillage.id, "lightCavalry") || 0}</td>
+                              <td className="p-1">{getArmyLastAttack(myVillage.id, "mountedArcher") || 0}</td>
+                              <td className="p-1">{getArmyLastAttack(myVillage.id, "heavyCavalry") || 0}</td>
+                              <td className="p-1">
+                                <button className="btn btn-block btn-outline-success btn-sm" onClick={() => attackPreviousVillage(myVillage.id)}>
+                                  <span role="img" aria-label="">⚔️</span>
                                 </button>
                               </td>
-                              <td className="p-1">{idx+1}</td>
-                              <td className="p-1">{village.x}</td>
-                              <td className="p-1">{village.y}</td>
-                              <td className="p-1">{village.name}</td>
-                              <td className="p-1">{village.points}</td>
-                              <td className="p-1">{village.report_title}</td>
-                              <td className="p-1">{new Date(village.report_time_created * 1000).toLocaleString('en-GB', { hour12: false })}</td>
-                              <td className="p-1">{village.province_name}</td>
-                              <td className="p-1">{village.dist}</td>
                             </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-
-                    <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                      <table className="table table-bordered">
-                        <tbody>
-                          <tr>
-                            <th className="p-1">ID</th>
-                            <th className="p-1">X</th>
-                            <th className="p-1">Y</th>
-                            <th className="p-1">Char ID</th>
-                            <th className="p-1">Char Name</th>
-                            <th className="p-1">Village Name</th>
-                            <th className="p-1">Tribe Name</th>
-                            <th className="p-1">Points</th>
-                          </tr>
-                          {nearbyMyVillages.map ((village, idx) => (
-                            <tr key={`my-${idx}`}>
-                              <td className="p-1">{village.id}</td>
-                              <td className="p-1">{village.x}</td>
-                              <td className="p-1">{village.y}</td>
-                              <td className="p-1">{village.character_id}</td>
-                              <td className="p-1">{village.character_name}</td>
-                              <td className="p-1">{village.name}</td>
-                              <td className="p-1">{village.tribe_name}</td>
-                              <td className="p-1">{village.points}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-
-                    <div className="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                      <table className="table table-bordered">
-                        <tbody>
-                          <tr>
-                            <td className="p-1" colSpan="2">
-                              <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => addAllVillageIds(nearbyPlayerVillages)}>
-                                Add All
-                              </button>
-                            </td>
-                            <td className="p-1" colSpan="2">
-                              <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyPlayerVillages(sortIDAsc(nearbyPlayerVillages))}>
-                                ID Asc
-                              </button>
-                            </td>
-                            <td className="p-1"></td>
-                            <td className="p-1"></td>
-                            <td className="p-1" colSpan="6"  align="right">
-                              <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyPlayerVillages(sortTimeAsc(nearbyPlayerVillages))}>
-                                Time Asc
-                              </button>
-                              <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyPlayerVillages(sortTimeDesc(nearbyPlayerVillages))}>
-                                Time Desc
-                              </button>
-                              <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyPlayerVillages(sortDistAsc(nearbyPlayerVillages))}>
-                                Dist Asc
-                              </button>
-                              <button className="btn btn-sm btn-rounded btn-primary" onClick={(e) => setNearbyPlayerVillages(sortDistDesc(nearbyPlayerVillages))}>
-                                Dist Desc
-                              </button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <th className="p-1">ID</th>
-                            <th className="p-1">X</th>
-                            <th className="p-1">Y</th>
-                            <th className="p-1">Char ID</th>
-                            <th className="p-1">Char Name</th>
-                            <th className="p-1">Village Name</th>
-                            <th className="p-1">Tribe Name</th>
-                            <th className="p-1">Points</th>
-                            <th className="p-1">Report Title</th>
-                            <th className="p-1">Time</th>
-                            <th className="p-1">Province</th>
-                            <th className="p-1">Dist</th>
-                          </tr>
-                          {nearbyPlayerVillages.map ((village, idx) => (
-                            <tr key={`players-${idx}`}>
-                              <td className="p-1">
-                                <button className="btn btn-sm btn-rounded btn-primary" onClick={(e) => addVillageToTargets(village.id, e)}>
-                                  {village.id}
-                                </button>
-                              </td>
-                              <td className="p-1">{village.x}</td>
-                              <td className="p-1">{village.y}</td>
-                              <td className="p-1">{village.character_id}</td>
-                              <td className="p-1">{village.character_name}</td>
-                              <td className="p-1">{village.name}</td>
-                              <td className="p-1">{village.tribe_name}</td>
-                              <td className="p-1">{village.points}</td>
-                              <td className="p-1">{village.report_title}</td>
-                              <td className="p-1">{new Date(village.report_time_created * 1000).toLocaleString('en-GB', { hour12: false })}</td>
-                              <td className="p-1">{village.province_name}</td>
-                              <td className="p-1">{village.dist}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-
-                    <div className="tab-pane fade" id="safeVillage" role="tabpanel" aria-labelledby="safeVillage-tab">
-                      <table className="table table-bordered">
-                        <tbody>
-                          <tr>
-                            <td className="p-1" colSpan="2">
-                              <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => addAllVillageIds(nearbyPassivePlayerVillages)}>
-                                Add All
-                              </button>
-                            </td>
-                            <td className="p-1" colSpan="2">
-                              <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyPassivePlayerVillages(sortIDAsc(nearbyPassivePlayerVillages))}>
-                                ID Asc
-                              </button>
-                            </td>
-                            <td className="p-1"></td>
-                            <td className="p-1"></td>
-                            <td className="p-1" colSpan="6"  align="right">
-                              <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyPassivePlayerVillages(sortTimeAsc(nearbyPassivePlayerVillages))}>
-                                Time Asc
-                              </button>
-                              <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyPassivePlayerVillages(sortTimeDesc(nearbyPassivePlayerVillages))}>
-                                Time Desc
-                              </button>
-                              <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyPassivePlayerVillages(sortDistAsc(nearbyPassivePlayerVillages))}>
-                                Dist Asc
-                              </button>
-                              <button className="btn btn-sm btn-rounded btn-primary" onClick={(e) => setNearbyPassivePlayerVillages(sortDistDesc(nearbyPassivePlayerVillages))}>
-                                Dist Desc
-                              </button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <th className="p-1">ID</th>
-                            <th className="p-1">X</th>
-                            <th className="p-1">Y</th>
-                            <th className="p-1">Char ID</th>
-                            <th className="p-1">Char Name</th>
-                            <th className="p-1">Village Name</th>
-                            <th className="p-1">Tribe Name</th>
-                            <th className="p-1">Points</th>
-                            <th className="p-1">Report Title</th>
-                            <th className="p-1">Time</th>
-                            <th className="p-1">Province</th>
-                            <th className="p-1">Dist</th>
-                          </tr>
-                          {/* <tr>
-                            <td className="p-1">
-                              <button className="btn btn-sm btn-rounded btn-primary" onClick={(e) => addAllVillageIds(nearbyPassivePlayerVillages)}>
-                                Add All
-                              </button>
-                            </td>
-                          </tr> */}
-                          {nearbyPassivePlayerVillages.map ((village, idx) => (
-                            <tr key={`players-${idx}`}>
-                              <td className="p-1">
-                                <button className="btn btn-sm btn-rounded btn-primary" onClick={(e) => addVillageToTargets(village.id, e)}>
-                                  {village.id}
-                                </button>
-                              </td>
-                              <td className="p-1">{village.x}</td>
-                              <td className="p-1">{village.y}</td>
-                              <td className="p-1">{village.character_id}</td>
-                              <td className="p-1">{village.character_name}</td>
-                              <td className="p-1">{village.name}</td>
-                              <td className="p-1">{village.tribe_name}</td>
-                              <td className="p-1">{village.points}</td>
-                              <td className="p-1">{village.report_title}</td>
-                              <td className="p-1">{new Date(village.report_time_created * 1000).toLocaleString('en-GB', { hour12: false })}</td>
-                              <td className="p-1">{village.province_name}</td>
-                              <td className="p-1">{village.dist}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                      <div className="col-12 px-1">
+                        <div className="progress">
+                          <div className="progress-bar" role="progressbar" style={{width: `${attackAllVillageProgress}%`}} aria-valuenow={attackAllVillageProgress} aria-valuemin="0" aria-valuemax="100">{`${attackAllVillageProgress}`}%</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="row">
-                    <div className="col-12 col-lg-3">
-                      <div className="input-group mb-3">
-                        <div className="input-group-prepend">
-                          <span className="input-group-text">Village ID</span>
-                        </div>
-                        <input type="number" className="form-control" placeholder="" value={myActiveVillageID} onChange={(e) => setMyActiveVillageID(e.target.value)} />
+                  <div className="tab-pane fade pb-3" id="live-time-report" role="tabpanel" aria-labelledby="live-time-report-tab">
+                    <div className="row">
+                      <div className="col-12 px-1 overflow-auto" style={{maxHeight: "550px"}}>
+                        <table className="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th className="p-1">ID</th>
+                              <th className="p-1">Name</th>
+                              <th className="p-1">Wood</th>
+                              <th className="p-1">Clay</th>
+                              <th className="p-1">Iron</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {myVillages.map((myVillage, idx) => (
+                            <tr key={`LIVE_TIME_REPORT:${idx}`}>
+                              <td className="p-1">{myVillage.id}</td>
+                              <td className="p-1">{myVillage.name}</td>
+                              <td className="p-1">{new Intl.NumberFormat('de-DE').format(getLiveTimeResources(myVillage.id, "wood"))}</td>
+                              <td className="p-1">{new Intl.NumberFormat('de-DE').format(getLiveTimeResources(myVillage.id, "clay"))}</td>
+                              <td className="p-1">{new Intl.NumberFormat('de-DE').format(getLiveTimeResources(myVillage.id, "iron"))}</td>
+                            </tr>
+                            ))}
+                          </tbody>
+                        </table>
                       </div>
                     </div>
-                    <div className="col-12 col-lg-3">
-                      <div className="input-group mb-3">
-                        <div className="input-group-prepend">
-                          <span className="input-group-text">Spear</span>
-                        </div>
-                        <input type="number" className="form-control" placeholder="0" value={spear} onChange={(e) => setSpear(e.target.value)} />
+                  </div>
+
+                  <div className="tab-pane fade pb-3" id="raid-overflow" role="tabpanel" aria-labelledby="raid-overflow-tab">
+                    <div className="row">
+                      <div className="col-12">
+                        <label><b>Enabled</b>: {enableRaidOverFlow}</label>
+
+                        <button className="btn btn-outline-success btn-md float-right" onClick={() => { localStorage.setItem("enableRaidOverFlow", "true"); setEnableRaidOverFlow("true") }}>Enable</button>
+                        <button className="btn btn-outline-danger btn-md float-right" onClick={() => { localStorage.setItem("enableRaidOverFlow", "false"); setEnableRaidOverFlow("false") }}>Disable</button>
                       </div>
-                    </div>
-                    <div className="col-12 col-lg-3">
-                      <div className="input-group mb-3">
-                        <div className="input-group-prepend">
-                          <span className="input-group-text">Sword</span>
-                        </div>
-                        <input type="number" className="form-control" placeholder="0" value={sword} onChange={(e) => setSword(e.target.value)} />
+                      <div className="col-12">
+                        <table className="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th className="p-1">Village ID</th>
+                              <th className="p-1">Total Cycle</th>
+                              <th className="p-1">Total Attack</th>
+                              <th className="p-1">Next IDx</th>
+                              <th className="p-1">Next Village</th>
+                              <th className="p-1">Target Cnt</th>
+                              <th className="p-1">Outgoing Cnt</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {Object.keys(raidOverFlow).map((raidOverFlowID, idx) => (
+                            <tr key={`RAID_OVERFLOW:${idx}`}>
+                              <td className="p-1">{raidOverFlowID}</td>
+                              <td className="p-1">{raidOverFlow[raidOverFlowID].totalCycle}</td>
+                              <td className="p-1">{raidOverFlow[raidOverFlowID].totalAttack}</td>
+                              <td className="p-1">{raidOverFlow[raidOverFlowID].nextIdx}</td>
+                              <td className="p-1">{raidOverFlow[raidOverFlowID].nextVillage}</td>
+                              <td className="p-1">{raidOverFlow[raidOverFlowID].targetCnt}</td>
+                              <td className="p-1">{raidOverFlow[raidOverFlowID].outgoingCnt}</td>
+                            </tr>
+                            ))}
+                          </tbody>
+                        </table>
                       </div>
-                    </div>
-                    <div className="col-12 col-lg-3">
-                      <div className="input-group mb-3">
-                        <div className="input-group-prepend">
-                          <span className="input-group-text">Axe</span>
-                        </div>
-                        <input type="number" className="form-control" placeholder="0" value={axe} onChange={(e) => setAxe(e.target.value)} />
-                      </div>
-                    </div>
-                    <div className="col-12 col-lg-3">
-                      <div className="input-group mb-3">
-                        <div className="input-group-prepend">
-                          <span className="input-group-text">Knight</span>
-                        </div>
-                        <input type="number" className="form-control" placeholder="0" value={knight} onChange={(e) => setKnight(e.target.value)} />
-                      </div>
-                    </div>
-                    <div className="col-12 col-lg-3">
-                      <div className="input-group mb-3">
-                        <div className="input-group-prepend">
-                          <span className="input-group-text">Light Caval</span>
-                        </div>
-                        <input type="number" className="form-control" placeholder="0" value={lightCavalry} onChange={(e) => setLightCavalry(e.target.value)} />
-                      </div>
-                    </div>
-                    <div className="col-12 col-lg-3">
-                      <div className="input-group mb-3">
-                        <div className="input-group-prepend">
-                          <span className="input-group-text">Mount Arch</span>
-                        </div>
-                        <input type="number" className="form-control" placeholder="0" value={mountedArcher} onChange={(e) => setMountedArcher(e.target.value)} />
-                      </div>
-                    </div>
-                    <div className="col-12 col-lg-3">
-                      <div className="input-group mb-3">
-                        <div className="input-group-prepend">
-                          <span className="input-group-text">Heavy Caval</span>
-                        </div>
-                        <input type="number" className="form-control" placeholder="0" value={heavyCavalry} onChange={(e) => setHeavyCavalry(e.target.value)} />
-                      </div>
-                    </div>
-                    <div className="col-12">
-                      <div className="form-group">
-                        <label>Target Village IDs</label><label className="float-right">{`Count: ${targetVillagesCount}`}</label>
-                        <textarea className="form-control" rows="4" placeholder="" value={targetVillageIDs} onChange={(e) => setTargetVillageIDs(e.target.value)}></textarea>
-                      </div>
-                    </div>
-                    <div className={"col-12 col-lg-2 border " + ((sendAttackWithRandomInterval) ? "border-success" : "border-danger")}>
-                      <div>
-                        <label>Random interval</label>
-                        <Form.Radio label=" On" checked={sendAttackWithRandomInterval === true} value={`true`} onClick={() => setSendAttackWithRandomInterval(true)} />
-                        <Form.Radio label=" Off" checked={sendAttackWithRandomInterval === false} value={`false`} onClick={() => setSendAttackWithRandomInterval(false)} />
-                      </div>
-                    </div>
-                    <div className={"col-12 col-lg-2 border " + ((sendAttackToAllNearbyRandomBarbarian) ? "border-success" : "border-danger")}>
-                      <div>
-                        <label>Send all even army to 45 random barbarian</label>
-                        <Form.Radio label=" On" checked={sendAttackToAllNearbyRandomBarbarian === true} value={`true`} onClick={() => setSendAttackToAllNearbyRandomBarbarian(true)} />
-                        <Form.Radio label=" Off" checked={sendAttackToAllNearbyRandomBarbarian === false} value={`false`} onClick={() => setSendAttackToAllNearbyRandomBarbarian(false)} />
-                      </div>
-                    </div>
-                    <div className={"col-12 col-lg-2 border " + ((enableAutoResourceCollector === "true") ? "border-success" : "border-danger")}>
-                      <div>
-                        <label>Auto resource collector</label>
-                        <Form.Radio
-                          name="enableAutoResourceCollector"
-                          label="On"
-                          value="true"
-                          checked={enableAutoResourceCollector === "true"}
-                          onClick={() => setEnableAutoResourceCollector("true")} />
-                        <Form.Radio
-                          name="enableAutoResourceCollector"
-                          label="Off"
-                          value="false"
-                          checked={enableAutoResourceCollector === "false"}
-                          onClick={() => setEnableAutoResourceCollector("false")} />
-                      </div>
-                    </div>
-                    <div className={"col-12 col-lg-2 border " + ((enableAutoArmySender === "true") ? "border-success" : "border-danger")}>
-                      <div>
-                        <label>Auto army sender</label>
-                        <Form.Radio
-                          name="enableAutoArmySender"
-                          label="On"
-                          value="true"
-                          checked={enableAutoArmySender === "true"}
-                          onClick={() => setEnableAutoArmySender("true")} />
-                        <Form.Radio
-                          name="enableAutoArmySender"
-                          label="Off"
-                          value="false"
-                          checked={enableAutoArmySender === "false"}
-                          onClick={() => setEnableAutoArmySender("false")} />
-                      </div>
-                    </div>
-                    <div className={"col-12 col-lg-2 border " + ((enableAutoBuildConstruction === "true") ? "border-success" : "border-danger")}>
-                      <div>
-                        <label>Auto build construction</label>
-                        <Form.Radio
-                          name="enableAutoBuildConstruction"
-                          label="On"
-                          value="true"
-                          checked={enableAutoBuildConstruction === "true"}
-                          onClick={() => setEnableAutoBuildConstruction("true")} />
-                        <Form.Radio
-                          name="enableAutoBuildConstruction"
-                          label="Off"
-                          value="false"
-                          checked={enableAutoBuildConstruction === "false"}
-                          onClick={() => setEnableAutoBuildConstruction("false")} />
-                      </div>
-                    </div>
-                    <div className="col-12 col-lg-2 border border-primary py-2">
-                      <div className="progress">
-                        <div className="progress-bar" role="progressbar" style={{width: `${raidPercentage}%`}} aria-valuenow={raidPercentage} aria-valuemin="0" aria-valuemax="100">{`${raidPercentage}`}%</div>
-                      </div>
-                      <hr/>
-                      <button className="btn btn-outline-success btn-lg btn-block" disabled={enableAutoArmySender === "true"} onClick={ () => executeBulkAttack() }><span role="img" aria-label="">👊</span> Start Raid!</button>
-                      <button className="btn btn-outline-success btn-sm btn-block" disabled={enableAutoArmySender === "true"} onClick={ () => saveAttackPreset() }>save preset</button>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="row">
-                <div className="col-12 py-2 px-1">
-                  <label><b>Automated Army Progress</b></label>
-                  <div className="row">
-                    <div className="col-12 col-lg-6">
-                      <div className="input-group mb-3">
-                        <div className="input-group-prepend">
-                          <span className="input-group-text">Max Outgoing Cnt</span>
+
+                <div className="row">
+                  <div className="col-12 border rounded py-2 ">
+                    <div className="row pb-0">
+                      <div className="col-12 col-md-2">
+                        <div className="input-group">
+                          <div className="input-group-prepend">
+                            <span className="input-group-text">X</span>
+                          </div>
+                          <input type="number" className="form-control" value={selectedMapCoordX} onChange={(e) => setSelectedMapCoordX(e.target.value)} />
                         </div>
-                        <input type="number" className="form-control" placeholder="0" value={autoArmyMaxOutgoing} onChange={(e) => setAutoArmyMaxOutgoing(e.target.value)} />
+                      </div>
+                      <div className="col-12 col-md-2">
+                        <div className="input-group">
+                          <div className="input-group-prepend">
+                            <span className="input-group-text">Y</span>
+                          </div>
+                          <input type="number" className="form-control" value={selectedMapCoordY} onChange={(e) => setSelectedMapCoordY(e.target.value)} />
+                        </div>
+                      </div>
+                      <div className="col-12 col-md-3">
+                        <div className="input-group">
+                          <div className="input-group-prepend">
+                            <span className="input-group-text">Height</span>
+                          </div>
+                          <input type="number" className="form-control" value={selectedMapHeight} onChange={(e) => setSelectedMapHeight(e.target.value)} />
+                        </div>
+                      </div>
+                      <div className="col-12 col-md-3">
+                        <div className="input-group">
+                          <div className="input-group-prepend">
+                            <span className="input-group-text">Width</span>
+                          </div>
+                          <input type="number" className="form-control" value={selectedMapWidth} onChange={(e) => setSelectedMapWidth(e.target.value)} />
+                        </div>
+                      </div>
+                      <div className="col-12 col-md-2">
+                        <button className="btn btn-outline-success btn-sm btn-block my-1" onClick={ () => sendVillagesByAreaRequest() }><span role="img" aria-label="">🔎</span> Fetch Map</button>
+                      </div>
+                      {/* BATAS MENUS PER 12 */}
+                      <div className="col-12 col-md-3 py-1">
+                        <div className="input-group mb-2">
+                          <div className="input-group-prepend">
+                            <span className="input-group-text">Province X</span>
+                          </div>
+                          <input type="number" className="form-control" value={selectedProvinceX} onChange={(e) => setSelectedProvinceX(e.target.value)} />
+                        </div>
+                      </div>
+                      <div className="col-12 col-md-3 py-1">
+                        <div className="input-group mb-2">
+                          <div className="input-group-prepend">
+                            <span className="input-group-text">Province Y</span>
+                          </div>
+                          <input type="number" className="form-control" value={selectedProvinceY} onChange={(e) => setSelectedProvinceY(e.target.value)} />
+                        </div>
+                      </div>
+                      <div className="col-12 col-md-3 py-1">
+                        <div className="input-group mb-2">
+                          <div className="input-group-prepend">
+                            <span className="input-group-text">Name</span>
+                          </div>
+                          <input type="text" className="form-control" value={selectedProvinceName} disabled />
+                        </div>
+                      </div>
+                      <div className="col-12 col-md-3 py-1">
+                        <button className="btn btn-outline-success btn-sm btn-block my-1" onClick={ () => sendVillagesByProvinceRequest() }><span role="img" aria-label="">🔎</span> Fetch Province</button>
                       </div>
                     </div>
-                    <div className="col-12 col-lg-6">
-                      <div className="input-group mb-3">
-                        <div className="input-group-prepend">
-                          <span className="input-group-text">Time Elapsed</span>
+
+                    <ul className="nav nav-tabs" id="myTab" role="tablist">
+                      <li className="nav-item">
+                        <a className="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Barbarian Villages</a>
+                      </li>
+                      <li className="nav-item">
+                        <a className="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">My Villages</a>
+                      </li>
+                      <li className="nav-item">
+                        <a className="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Player Villages</a>
+                      </li>
+                      <li className="nav-item">
+                        <a className="nav-link" id="contact-tab" data-toggle="tab" href="#safeVillage" role="tab" aria-controls="contact" aria-selected="false">Low Point Player Villages</a>
+                      </li>
+                    </ul>
+
+                    <div className="tab-content overflow-auto" id="myTabContent" style={{maxHeight: "600px"}}>
+                      <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <table className="table table-bordered">
+                          <tbody>
+                            <tr>
+                              <td className="p-1" colSpan="2">
+                                <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => addAllVillageIds(nearbyBarbarianVillages)}>
+                                  Add All
+                                </button>
+                              </td>
+                              <td className="p-1" colSpan="2">
+                                <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyBarbarianVillages(sortIDAsc(nearbyBarbarianVillages))}>
+                                  ID Asc
+                                </button>
+                              </td>
+                              <td className="p-1"></td>
+                              <td className="p-1"></td>
+                              <td className="p-1" colSpan="5"  align="right">
+                                <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyBarbarianVillages(sortTimeAsc(nearbyBarbarianVillages))}>
+                                  Time Asc
+                                </button>
+                                <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyBarbarianVillages(sortTimeDesc(nearbyBarbarianVillages))}>
+                                  Time Desc
+                                </button>
+                                <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyBarbarianVillages(sortDistAsc(nearbyBarbarianVillages))}>
+                                  Dist Asc
+                                </button>
+                                <button className="btn btn-sm btn-rounded btn-primary" onClick={(e) => setNearbyBarbarianVillages(sortDistDesc(nearbyBarbarianVillages))}>
+                                  Dist Desc
+                                </button>
+                              </td>
+                            </tr>
+                            <tr>
+                              <th className="p-1">ID</th>
+                              <th className="p-1">No</th>
+                              <th className="p-1">X</th>
+                              <th className="p-1">Y</th>
+                              <th className="p-1">Village Name</th>
+                              <th className="p-1">Points</th>
+                              <th className="p-1">Report</th>
+                              <th className="p-1">Time</th>
+                              <th className="p-1">Province</th>
+                              <th className="p-1">Dist</th>
+                            </tr>
+                            {nearbyBarbarianVillages.map ((village, idx) => (
+                              <tr key={`barbarian-${idx}`}>
+                                <td className="p-1">
+                                  <button className="btn btn-sm btn-rounded btn-primary" onClick={(e) => addVillageToTargets(village.id, e)}>
+                                    {village.id}
+                                  </button>
+                                </td>
+                                <td className="p-1">{idx+1}</td>
+                                <td className="p-1">{village.x}</td>
+                                <td className="p-1">{village.y}</td>
+                                <td className="p-1">{village.name}</td>
+                                <td className="p-1">{village.points}</td>
+                                <td className="p-1">{village.report_title}</td>
+                                <td className="p-1">{new Date(village.report_time_created * 1000).toLocaleString('en-GB', { hour12: false })}</td>
+                                <td className="p-1">{village.province_name}</td>
+                                <td className="p-1">{village.dist}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+
+                      <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <table className="table table-bordered">
+                          <tbody>
+                            <tr>
+                              <th className="p-1">ID</th>
+                              <th className="p-1">X</th>
+                              <th className="p-1">Y</th>
+                              <th className="p-1">Char ID</th>
+                              <th className="p-1">Char Name</th>
+                              <th className="p-1">Village Name</th>
+                              <th className="p-1">Tribe Name</th>
+                              <th className="p-1">Points</th>
+                            </tr>
+                            {nearbyMyVillages.map ((village, idx) => (
+                              <tr key={`my-${idx}`}>
+                                <td className="p-1">{village.id}</td>
+                                <td className="p-1">{village.x}</td>
+                                <td className="p-1">{village.y}</td>
+                                <td className="p-1">{village.character_id}</td>
+                                <td className="p-1">{village.character_name}</td>
+                                <td className="p-1">{village.name}</td>
+                                <td className="p-1">{village.tribe_name}</td>
+                                <td className="p-1">{village.points}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+
+                      <div className="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                        <table className="table table-bordered">
+                          <tbody>
+                            <tr>
+                              <td className="p-1" colSpan="2">
+                                <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => addAllVillageIds(nearbyPlayerVillages)}>
+                                  Add All
+                                </button>
+                              </td>
+                              <td className="p-1" colSpan="2">
+                                <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyPlayerVillages(sortIDAsc(nearbyPlayerVillages))}>
+                                  ID Asc
+                                </button>
+                              </td>
+                              <td className="p-1"></td>
+                              <td className="p-1"></td>
+                              <td className="p-1" colSpan="6"  align="right">
+                                <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyPlayerVillages(sortTimeAsc(nearbyPlayerVillages))}>
+                                  Time Asc
+                                </button>
+                                <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyPlayerVillages(sortTimeDesc(nearbyPlayerVillages))}>
+                                  Time Desc
+                                </button>
+                                <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyPlayerVillages(sortDistAsc(nearbyPlayerVillages))}>
+                                  Dist Asc
+                                </button>
+                                <button className="btn btn-sm btn-rounded btn-primary" onClick={(e) => setNearbyPlayerVillages(sortDistDesc(nearbyPlayerVillages))}>
+                                  Dist Desc
+                                </button>
+                              </td>
+                            </tr>
+                            <tr>
+                              <th className="p-1">ID</th>
+                              <th className="p-1">X</th>
+                              <th className="p-1">Y</th>
+                              <th className="p-1">Char ID</th>
+                              <th className="p-1">Char Name</th>
+                              <th className="p-1">Village Name</th>
+                              <th className="p-1">Tribe Name</th>
+                              <th className="p-1">Points</th>
+                              <th className="p-1">Report Title</th>
+                              <th className="p-1">Time</th>
+                              <th className="p-1">Province</th>
+                              <th className="p-1">Dist</th>
+                            </tr>
+                            {nearbyPlayerVillages.map ((village, idx) => (
+                              <tr key={`players-${idx}`}>
+                                <td className="p-1">
+                                  <button className="btn btn-sm btn-rounded btn-primary" onClick={(e) => addVillageToTargets(village.id, e)}>
+                                    {village.id}
+                                  </button>
+                                </td>
+                                <td className="p-1">{village.x}</td>
+                                <td className="p-1">{village.y}</td>
+                                <td className="p-1">{village.character_id}</td>
+                                <td className="p-1">{village.character_name}</td>
+                                <td className="p-1">{village.name}</td>
+                                <td className="p-1">{village.tribe_name}</td>
+                                <td className="p-1">{village.points}</td>
+                                <td className="p-1">{village.report_title}</td>
+                                <td className="p-1">{new Date(village.report_time_created * 1000).toLocaleString('en-GB', { hour12: false })}</td>
+                                <td className="p-1">{village.province_name}</td>
+                                <td className="p-1">{village.dist}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+
+                      <div className="tab-pane fade" id="safeVillage" role="tabpanel" aria-labelledby="safeVillage-tab">
+                        <table className="table table-bordered">
+                          <tbody>
+                            <tr>
+                              <td className="p-1" colSpan="2">
+                                <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => addAllVillageIds(nearbyPassivePlayerVillages)}>
+                                  Add All
+                                </button>
+                              </td>
+                              <td className="p-1" colSpan="2">
+                                <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyPassivePlayerVillages(sortIDAsc(nearbyPassivePlayerVillages))}>
+                                  ID Asc
+                                </button>
+                              </td>
+                              <td className="p-1"></td>
+                              <td className="p-1"></td>
+                              <td className="p-1" colSpan="6"  align="right">
+                                <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyPassivePlayerVillages(sortTimeAsc(nearbyPassivePlayerVillages))}>
+                                  Time Asc
+                                </button>
+                                <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyPassivePlayerVillages(sortTimeDesc(nearbyPassivePlayerVillages))}>
+                                  Time Desc
+                                </button>
+                                <button className="btn btn-sm btn-rounded btn-primary mr-1" onClick={(e) => setNearbyPassivePlayerVillages(sortDistAsc(nearbyPassivePlayerVillages))}>
+                                  Dist Asc
+                                </button>
+                                <button className="btn btn-sm btn-rounded btn-primary" onClick={(e) => setNearbyPassivePlayerVillages(sortDistDesc(nearbyPassivePlayerVillages))}>
+                                  Dist Desc
+                                </button>
+                              </td>
+                            </tr>
+                            <tr>
+                              <th className="p-1">ID</th>
+                              <th className="p-1">X</th>
+                              <th className="p-1">Y</th>
+                              <th className="p-1">Char ID</th>
+                              <th className="p-1">Char Name</th>
+                              <th className="p-1">Village Name</th>
+                              <th className="p-1">Tribe Name</th>
+                              <th className="p-1">Points</th>
+                              <th className="p-1">Report Title</th>
+                              <th className="p-1">Time</th>
+                              <th className="p-1">Province</th>
+                              <th className="p-1">Dist</th>
+                            </tr>
+                            {/* <tr>
+                              <td className="p-1">
+                                <button className="btn btn-sm btn-rounded btn-primary" onClick={(e) => addAllVillageIds(nearbyPassivePlayerVillages)}>
+                                  Add All
+                                </button>
+                              </td>
+                            </tr> */}
+                            {nearbyPassivePlayerVillages.map ((village, idx) => (
+                              <tr key={`players-${idx}`}>
+                                <td className="p-1">
+                                  <button className="btn btn-sm btn-rounded btn-primary" onClick={(e) => addVillageToTargets(village.id, e)}>
+                                    {village.id}
+                                  </button>
+                                </td>
+                                <td className="p-1">{village.x}</td>
+                                <td className="p-1">{village.y}</td>
+                                <td className="p-1">{village.character_id}</td>
+                                <td className="p-1">{village.character_name}</td>
+                                <td className="p-1">{village.name}</td>
+                                <td className="p-1">{village.tribe_name}</td>
+                                <td className="p-1">{village.points}</td>
+                                <td className="p-1">{village.report_title}</td>
+                                <td className="p-1">{new Date(village.report_time_created * 1000).toLocaleString('en-GB', { hour12: false })}</td>
+                                <td className="p-1">{village.province_name}</td>
+                                <td className="p-1">{village.dist}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="col-12 col-lg-3">
+                        <div className="input-group mb-3">
+                          <div className="input-group-prepend">
+                            <span className="input-group-text">Village ID</span>
+                          </div>
+                          <input type="number" className="form-control" placeholder="" value={myActiveVillageID} onChange={(e) => setMyActiveVillageID(e.target.value)} />
                         </div>
-                        <input type="text" className="form-control" value={timeElapsed} disabled />
+                      </div>
+                      <div className="col-12 col-lg-3">
+                        <div className="input-group mb-3">
+                          <div className="input-group-prepend">
+                            <span className="input-group-text">Spear</span>
+                          </div>
+                          <input type="number" className="form-control" placeholder="0" value={spear} onChange={(e) => setSpear(e.target.value)} />
+                        </div>
+                      </div>
+                      <div className="col-12 col-lg-3">
+                        <div className="input-group mb-3">
+                          <div className="input-group-prepend">
+                            <span className="input-group-text">Sword</span>
+                          </div>
+                          <input type="number" className="form-control" placeholder="0" value={sword} onChange={(e) => setSword(e.target.value)} />
+                        </div>
+                      </div>
+                      <div className="col-12 col-lg-3">
+                        <div className="input-group mb-3">
+                          <div className="input-group-prepend">
+                            <span className="input-group-text">Axe</span>
+                          </div>
+                          <input type="number" className="form-control" placeholder="0" value={axe} onChange={(e) => setAxe(e.target.value)} />
+                        </div>
+                      </div>
+                      <div className="col-12 col-lg-3">
+                        <div className="input-group mb-3">
+                          <div className="input-group-prepend">
+                            <span className="input-group-text">Knight</span>
+                          </div>
+                          <input type="number" className="form-control" placeholder="0" value={knight} onChange={(e) => setKnight(e.target.value)} />
+                        </div>
+                      </div>
+                      <div className="col-12 col-lg-3">
+                        <div className="input-group mb-3">
+                          <div className="input-group-prepend">
+                            <span className="input-group-text">Light Caval</span>
+                          </div>
+                          <input type="number" className="form-control" placeholder="0" value={lightCavalry} onChange={(e) => setLightCavalry(e.target.value)} />
+                        </div>
+                      </div>
+                      <div className="col-12 col-lg-3">
+                        <div className="input-group mb-3">
+                          <div className="input-group-prepend">
+                            <span className="input-group-text">Mount Arch</span>
+                          </div>
+                          <input type="number" className="form-control" placeholder="0" value={mountedArcher} onChange={(e) => setMountedArcher(e.target.value)} />
+                        </div>
+                      </div>
+                      <div className="col-12 col-lg-3">
+                        <div className="input-group mb-3">
+                          <div className="input-group-prepend">
+                            <span className="input-group-text">Heavy Caval</span>
+                          </div>
+                          <input type="number" className="form-control" placeholder="0" value={heavyCavalry} onChange={(e) => setHeavyCavalry(e.target.value)} />
+                        </div>
+                      </div>
+                      <div className="col-12">
+                        <div className="form-group">
+                          <label>Target Village IDs</label><label className="float-right">{`Count: ${targetVillagesCount}`}</label>
+                          <textarea className="form-control" rows="4" placeholder="" value={targetVillageIDs} onChange={(e) => setTargetVillageIDs(e.target.value)}></textarea>
+                        </div>
+                      </div>
+                      <div className={"col-12 col-lg-2 border " + ((sendAttackWithRandomInterval) ? "border-success" : "border-danger")}>
+                        <div>
+                          <label>Random interval</label>
+                          <Form.Radio label=" On" checked={sendAttackWithRandomInterval === true} value={`true`} onClick={() => setSendAttackWithRandomInterval(true)} />
+                          <Form.Radio label=" Off" checked={sendAttackWithRandomInterval === false} value={`false`} onClick={() => setSendAttackWithRandomInterval(false)} />
+                        </div>
+                      </div>
+                      <div className={"col-12 col-lg-2 border " + ((sendAttackToAllNearbyRandomBarbarian) ? "border-success" : "border-danger")}>
+                        <div>
+                          <label>Send all even army to 45 random barbarian</label>
+                          <Form.Radio label=" On" checked={sendAttackToAllNearbyRandomBarbarian === true} value={`true`} onClick={() => setSendAttackToAllNearbyRandomBarbarian(true)} />
+                          <Form.Radio label=" Off" checked={sendAttackToAllNearbyRandomBarbarian === false} value={`false`} onClick={() => setSendAttackToAllNearbyRandomBarbarian(false)} />
+                        </div>
+                      </div>
+                      <div className={"col-12 col-lg-2 border " + ((enableAutoResourceCollector === "true") ? "border-success" : "border-danger")}>
+                        <div>
+                          <label>Auto resource collector</label>
+                          <Form.Radio
+                            name="enableAutoResourceCollector"
+                            label="On"
+                            value="true"
+                            checked={enableAutoResourceCollector === "true"}
+                            onClick={() => setEnableAutoResourceCollector("true")} />
+                          <Form.Radio
+                            name="enableAutoResourceCollector"
+                            label="Off"
+                            value="false"
+                            checked={enableAutoResourceCollector === "false"}
+                            onClick={() => setEnableAutoResourceCollector("false")} />
+                        </div>
+                      </div>
+                      <div className={"col-12 col-lg-2 border " + ((enableAutoArmySender === "true") ? "border-success" : "border-danger")}>
+                        <div>
+                          <label>Auto army sender</label>
+                          <Form.Radio
+                            name="enableAutoArmySender"
+                            label="On"
+                            value="true"
+                            checked={enableAutoArmySender === "true"}
+                            onClick={() => setEnableAutoArmySender("true")} />
+                          <Form.Radio
+                            name="enableAutoArmySender"
+                            label="Off"
+                            value="false"
+                            checked={enableAutoArmySender === "false"}
+                            onClick={() => setEnableAutoArmySender("false")} />
+                        </div>
+                      </div>
+                      <div className={"col-12 col-lg-2 border " + ((enableAutoBuildConstruction === "true") ? "border-success" : "border-danger")}>
+                        <div>
+                          <label>Auto build construction</label>
+                          <Form.Radio
+                            name="enableAutoBuildConstruction"
+                            label="On"
+                            value="true"
+                            checked={enableAutoBuildConstruction === "true"}
+                            onClick={() => setEnableAutoBuildConstruction("true")} />
+                          <Form.Radio
+                            name="enableAutoBuildConstruction"
+                            label="Off"
+                            value="false"
+                            checked={enableAutoBuildConstruction === "false"}
+                            onClick={() => setEnableAutoBuildConstruction("false")} />
+                        </div>
+                      </div>
+                      <div className="col-12 col-lg-2 border border-primary py-2">
+                        <div className="progress">
+                          <div className="progress-bar" role="progressbar" style={{width: `${raidPercentage}%`}} aria-valuenow={raidPercentage} aria-valuemin="0" aria-valuemax="100">{`${raidPercentage}`}%</div>
+                        </div>
+                        <hr/>
+                        <button className="btn btn-outline-success btn-lg btn-block" disabled={enableAutoArmySender === "true"} onClick={ () => executeBulkAttack() }><span role="img" aria-label="">👊</span> Start Raid!</button>
+                        <button className="btn btn-outline-success btn-sm btn-block" disabled={enableAutoArmySender === "true"} onClick={ () => saveAttackPreset() }>save preset</button>
                       </div>
                     </div>
                   </div>
-                  <table className="table table-bordered">
-                    <tbody>
-                      <tr>
-                        <th className="p-1">Total Cycle</th>
-                        <th className="p-1">Total Attack</th>
-                        <th className="p-1">Next IDx</th>
-                        <th className="p-1">Next Village</th>
-                        <th className="p-1">Target Cnt</th>
-                        <th className="p-1">Outgoing Cnt</th>
-                        <th className="p-1">Full</th>
-                        <th className="p-1">Partial</th>
-                        <th className="p-1">Wood</th>
-                        <th className="p-1">Clay</th>
-                        <th className="p-1">Iron</th>
-                      </tr>
-                    </tbody>
-                    <tbody>
-                      <tr>
-                        <td className="p-1">{autoArmyCycle}</td>
-                        <td className="p-1">{autoArmyTotalAttack}</td>
-                        <td className="p-1">{autoArmyNextAttackIndex}</td>
-                        <td className="p-1">{autoArmyNextAttackVillageID}</td>
-                        <td className="p-1">{targetVillagesCount}</td>
-                        <td className="p-1">{myActiveVillageOutgoingArmy}</td>
-                        <td className="p-1">{autoArmyWithFullHaul}</td>
-                        <td className="p-1">{autoArmyWithPartialHaul}</td>
-                        <td className="p-1">{autoArmyTotalWood}</td>
-                        <td className="p-1">{autoArmyTotalClay}</td>
-                        <td className="p-1">{autoArmyTotalIron}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <div className="progress">
-                    <div className="progress-bar" role="progressbar" style={{width: `${autoArmyPercentage}%`}} aria-valuenow={autoArmyPercentage} aria-valuemin="0" aria-valuemax="100">{`${autoArmyPercentage}`}%</div>
+                </div>
+                <div className="row">
+                  <div className="col-12 py-2 px-1">
+                    <label><b>Automated Army Progress</b></label>
+                    <div className="row">
+                      <div className="col-12 col-lg-6">
+                        <div className="input-group mb-3">
+                          <div className="input-group-prepend">
+                            <span className="input-group-text">Max Outgoing Cnt</span>
+                          </div>
+                          <input type="number" className="form-control" placeholder="0" value={autoArmyMaxOutgoing} onChange={(e) => setAutoArmyMaxOutgoing(e.target.value)} />
+                        </div>
+                      </div>
+                      <div className="col-12 col-lg-6">
+                        <div className="input-group mb-3">
+                          <div className="input-group-prepend">
+                            <span className="input-group-text">Time Elapsed</span>
+                          </div>
+                          <input type="text" className="form-control" value={timeElapsed} disabled />
+                        </div>
+                      </div>
+                    </div>
+                    <table className="table table-bordered">
+                      <tbody>
+                        <tr>
+                          <th className="p-1">Total Cycle</th>
+                          <th className="p-1">Total Attack</th>
+                          <th className="p-1">Next IDx</th>
+                          <th className="p-1">Next Village</th>
+                          <th className="p-1">Target Cnt</th>
+                          <th className="p-1">Outgoing Cnt</th>
+                          <th className="p-1">Full</th>
+                          <th className="p-1">Partial</th>
+                          <th className="p-1">Wood</th>
+                          <th className="p-1">Clay</th>
+                          <th className="p-1">Iron</th>
+                        </tr>
+                      </tbody>
+                      <tbody>
+                        <tr>
+                          <td className="p-1">{autoArmyCycle}</td>
+                          <td className="p-1">{autoArmyTotalAttack}</td>
+                          <td className="p-1">{autoArmyNextAttackIndex}</td>
+                          <td className="p-1">{autoArmyNextAttackVillageID}</td>
+                          <td className="p-1">{targetVillagesCount}</td>
+                          <td className="p-1">{myActiveVillageOutgoingArmy}</td>
+                          <td className="p-1">{autoArmyWithFullHaul}</td>
+                          <td className="p-1">{autoArmyWithPartialHaul}</td>
+                          <td className="p-1">{autoArmyTotalWood}</td>
+                          <td className="p-1">{autoArmyTotalClay}</td>
+                          <td className="p-1">{autoArmyTotalIron}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div className="progress">
+                      <div className="progress-bar" role="progressbar" style={{width: `${autoArmyPercentage}%`}} aria-valuenow={autoArmyPercentage} aria-valuemin="0" aria-valuemax="100">{`${autoArmyPercentage}`}%</div>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* AUTOMATED BUILDING */}
-              <div className="row">
-                <div className="col-12 py-2 px-1">
-                  <label><b>Automated Building Construction</b></label>
-                  <table className="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th className="p-1">headquarter</th>
-                        <th className="p-1">warehouse</th>
-                        <th className="p-1">timber_camp</th>
-                        <th className="p-1">clay_pit</th>
-                        <th className="p-1">iron_mine</th>
-                        <th className="p-1">farm</th>
-                        <th className="p-1">barracks</th>
-                        <th className="p-1">market</th>
-                        <th className="p-1">hospital</th>
-                        <th className="p-1">wall</th>
-                        <th className="p-1">rally_point</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td className="p-1">{myActiveVillageSimplifiedBuildingsLevel.headquarter}</td>
-                        <td className="p-1">{myActiveVillageSimplifiedBuildingsLevel.warehouse}</td>
-                        <td className="p-1">{myActiveVillageSimplifiedBuildingsLevel.timber_camp}</td>
-                        <td className="p-1">{myActiveVillageSimplifiedBuildingsLevel.clay_pit}</td>
-                        <td className="p-1">{myActiveVillageSimplifiedBuildingsLevel.iron_mine}</td>
-                        <td className="p-1">{myActiveVillageSimplifiedBuildingsLevel.farm}</td>
-                        <td className="p-1">{myActiveVillageSimplifiedBuildingsLevel.barracks}</td>
-                        <td className="p-1">{myActiveVillageSimplifiedBuildingsLevel.market}</td>
-                        <td className="p-1">{myActiveVillageSimplifiedBuildingsLevel.hospital}</td>
-                        <td className="p-1">{myActiveVillageSimplifiedBuildingsLevel.wall}</td>
-                        <td className="p-1">{myActiveVillageSimplifiedBuildingsLevel.rally_point}</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                {/* AUTOMATED BUILDING */}
+                <div className="row">
+                  <div className="col-12 py-2 px-1">
+                    <label><b>Automated Building Construction</b></label>
+                    <table className="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th className="p-1">headquarter</th>
+                          <th className="p-1">warehouse</th>
+                          <th className="p-1">timber_camp</th>
+                          <th className="p-1">clay_pit</th>
+                          <th className="p-1">iron_mine</th>
+                          <th className="p-1">farm</th>
+                          <th className="p-1">barracks</th>
+                          <th className="p-1">market</th>
+                          <th className="p-1">hospital</th>
+                          <th className="p-1">wall</th>
+                          <th className="p-1">rally_point</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td className="p-1">{myActiveVillageSimplifiedBuildingsLevel.headquarter}</td>
+                          <td className="p-1">{myActiveVillageSimplifiedBuildingsLevel.warehouse}</td>
+                          <td className="p-1">{myActiveVillageSimplifiedBuildingsLevel.timber_camp}</td>
+                          <td className="p-1">{myActiveVillageSimplifiedBuildingsLevel.clay_pit}</td>
+                          <td className="p-1">{myActiveVillageSimplifiedBuildingsLevel.iron_mine}</td>
+                          <td className="p-1">{myActiveVillageSimplifiedBuildingsLevel.farm}</td>
+                          <td className="p-1">{myActiveVillageSimplifiedBuildingsLevel.barracks}</td>
+                          <td className="p-1">{myActiveVillageSimplifiedBuildingsLevel.market}</td>
+                          <td className="p-1">{myActiveVillageSimplifiedBuildingsLevel.hospital}</td>
+                          <td className="p-1">{myActiveVillageSimplifiedBuildingsLevel.wall}</td>
+                          <td className="p-1">{myActiveVillageSimplifiedBuildingsLevel.rally_point}</td>
+                        </tr>
+                      </tbody>
+                    </table>
 
-                  <table className="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th className="p-1">Queue</th>
-                        <th className="p-1">Next Idx</th>
-                        <th className="p-1">Next Building</th>
-                        <th className="p-1">Next Level</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td className="p-1">{myActiveVillageOngoingQueueCount} / {myActiveVillageUnlockedQueue}</td>
-                        <td className="p-1">{autoBuildNextIndex}</td>
-                        <td className="p-1">{autoBuildNextBuilding}</td>
-                        <td className="p-1">{autoBuildNextLevel}</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                    <table className="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th className="p-1">Queue</th>
+                          <th className="p-1">Next Idx</th>
+                          <th className="p-1">Next Building</th>
+                          <th className="p-1">Next Level</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td className="p-1">{myActiveVillageOngoingQueueCount} / {myActiveVillageUnlockedQueue}</td>
+                          <td className="p-1">{autoBuildNextIndex}</td>
+                          <td className="p-1">{autoBuildNextBuilding}</td>
+                          <td className="p-1">{autoBuildNextLevel}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
+
+                {/* AUTOMATED TRUST ME ATTACK */}
+
               </div>
-
-              {/* AUTOMATED TRUST ME ATTACK */}
-
             </div>
           </div>
         </div>
-      </div>
 
-      <hr className="my-2" />
+        <hr className="my-2" />
 
-      <div className="row my-1">
-        <div className="col-12">
-          <label><span role="img" aria-label="">📌</span> <b>Quick Notes</b></label>
-          <button className="btn btn-primary btn-sm float-right" onClick={() => saveQuickNote()}><span role="img" aria-label="">💾</span> Save Quick Note</button>
+        <div className="row my-1">
+          <div className="col-12">
+            <label><span role="img" aria-label="">📌</span> <b>Quick Notes</b></label>
+            <button className="btn btn-primary btn-sm float-right" onClick={() => saveQuickNote()}><span role="img" aria-label="">💾</span> Save Quick Note</button>
+          </div>
         </div>
-      </div>
-      <div className="row my-1">
-        <div className="col-12">
-            <ReactQuill theme="snow" value={quickNotes} onChange={setQuickNotes} style={{height: "650px"}}/>
+        <div className="row my-1">
+          <div className="col-12">
+              <ReactQuill theme="snow" value={quickNotes} onChange={setQuickNotes} style={{height: "650px"}}/>
+          </div>
         </div>
-      </div>
 
-      <div className="row mb-5">
+        <div className="row mb-5">
+        </div>
       </div>
     </div>
   )

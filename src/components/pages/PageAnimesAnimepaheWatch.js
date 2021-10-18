@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from "react"
 
+import ScrollToTop from "../ui-components/ScrollToTop"
+
 var qs = require('qs')
 // function query_title() {
 //   return qs.parse(window.location.search, { ignoreQueryPrefix: true }).title
@@ -40,6 +42,8 @@ function PageAnimesAnimepaheWatch() {
         >
         </iframe>
       </div>
+
+      <ScrollToTop />
     </div>
   )
 }

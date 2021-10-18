@@ -122,9 +122,16 @@ class MangadexAPI {
 
   ExtractFileNameFromManga(manga) {
     try {
-      return manga.relationships.at(-1).attributes.fileName
+      var fileName = ""
+      manga.relationships.forEach((val) => {
+        if (val.attributes && val.attributes.fileName) {
+          fileName = val.attributes.fileName
+        }
+      })
+      // return manga.relationships.at(-1).attributes.fileName
+      return fileName
     } catch (e) {
-      console.log(`ERR: ${e}; ${JSON.stringify(manga.relationships.at(-1))}`)
+      // console.log(`ERR: ${e}; ${JSON.stringify(manga.relationships.at(-1))}`)
       return ""
     }
   }

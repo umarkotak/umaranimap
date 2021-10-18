@@ -164,8 +164,10 @@ function calculateWinner(squares) {
 
 function TicTacToe() {
   return (
-    <div className="content-wrapper wrapper">
-      <Game />
+    <div className="content-wrapper wrapper" style={{backgroundColor: "#454d55"}}>
+      <div className="p-4">
+        <Game />
+      </div>
     </div>
   )
 }

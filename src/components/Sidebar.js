@@ -10,10 +10,12 @@ function Sidebar() {
   useEffect(() => {
     history.listen(() => {
       setSideBarItems(RefreshSideBarItems())
+      setTreeSideBarItems(RefreshSideBarItems())
     })
   }, [history])
 
   const [sideBarItems, setSideBarItems] = useState(RefreshSideBarItems())
+  const [treeSideBarItems, setTreeSideBarItems] = useState(RefreshSideBarItems())
 
   var activeName = cookies.get("GO_ANIMAPU_USERNAME") || "Guest"
 
@@ -24,6 +26,7 @@ function Sidebar() {
     else if (window.location.href.includes("netlify")) { tempSideBarItems.server_netlify = "active" }
 
     if (window.location.pathname === "/") { tempSideBarItems.home = "active" }
+
     if (window.location.pathname === "/home") { tempSideBarItems.home = "active" }
     else if (window.location.pathname.startsWith("/animes/seasons")) { tempSideBarItems.animes_seasons = "active" }
     else if (window.location.pathname.startsWith("/animes/animepahe/watch")) { tempSideBarItems.animes_animepahe_watch = "active" }
@@ -31,6 +34,17 @@ function Sidebar() {
     else if (window.location.pathname.startsWith("/mangas/library")) { tempSideBarItems.mangas_library = "active" }
     else if (window.location.pathname.startsWith("/mangas/search")) { tempSideBarItems.mangas_search = "active" }
     else if (window.location.pathname.startsWith("/original_sources")) { tempSideBarItems.original_sources = "active" }
+    else if (window.location.pathname.startsWith("/stats/manga_hit_counts")) { tempSideBarItems.stats_manga_hit_counts = "active" }
+    else if (window.location.pathname.startsWith("/experiments/tic-tac-toe")) { tempSideBarItems.experiments_tic_tac_toe = "active" }
+    else if (window.location.pathname.startsWith("/experiments/global-clipboard-v1")) { tempSideBarItems.experiments_global_clipboard = "active" }
+    else if (window.location.pathname.startsWith("/experiments/chatto-v1")) { tempSideBarItems.experiments_chatto = "active" }
+    else if (window.location.pathname.startsWith("/experiments/socket-game-v1")) { tempSideBarItems.experiments_socket_game = "active" }
+    else if (window.location.pathname.startsWith("/experiments/tw-bot-v2")) { tempSideBarItems.experiments_tw_bot_v2 = "active" }
+    else if (window.location.pathname.startsWith("/experiments/repack-games-v2")) { tempSideBarItems.experiments_repack_games = "active" }
+
+    if (window.location.pathname.startsWith("/stats")) { tempSideBarItems.tree_stats = "menu-open" }
+    if (window.location.pathname.startsWith("/experiments")) { tempSideBarItems.tree_experiments = "menu-open" }
+
     return tempSideBarItems
   }
 
@@ -110,11 +124,12 @@ function Sidebar() {
         </li>
 
         <li className="nav-header py-2">DEV</li>
-        <li className="nav-item">
+
+        <li className={`nav-item ${treeSideBarItems["tree_stats"] || ""}`}>
           <Link to="#" className="nav-link"><i className="nav-icon fa fa-chart-bar"></i><p>STATS<i className="right fas fa-angle-left"></i></p></Link>
           <ul className="nav nav-treeview">
             <li className="nav-item">
-              <Link to="/statistics-v1" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Statistics</p></Link>
+              <Link to="/stats/manga_hit_counts" className={`nav-link ${sideBarItems["stats_manga_hit_counts"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Statistics</p></Link>
             </li>
             <li className="nav-item">
               <a href="https://app.panelbear.com/sites/2g1FkT5VVgY/overview" target="_blank" rel="noopener noreferrer" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Traffic</p></a>
@@ -122,26 +137,26 @@ function Sidebar() {
           </ul>
         </li>
 
-        <li className="nav-item">
+        <li className={`nav-item ${treeSideBarItems["tree_experiments"] || ""}`}>
           <Link to="#" className="nav-link"><i className="nav-icon fa fa-flask"></i><p>EXPERIMENTAL<i className="right fas fa-angle-left"></i></p></Link>
           <ul className="nav nav-treeview">
             <li className="nav-item">
-              <Link to="/tic-tac-toe" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Tic Tac Toe</p></Link>
+              <Link to="/experiments/tic-tac-toe" className={`nav-link ${sideBarItems["experiments_tic_tac_toe"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Tic Tac Toe</p></Link>
             </li>
             <li className="nav-item">
-              <Link to="/global-clipboard-v1" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Online Clipboard</p></Link>
+              <Link to="/experiments/global-clipboard-v1" className={`nav-link ${sideBarItems["experiments_global_clipboard"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Online Clipboard</p></Link>
             </li>
             <li className="nav-item">
-              <Link to="/chatto-v1" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Chats</p></Link>
+              <Link to="/experiments/chatto-v1" className={`nav-link ${sideBarItems["experiments_chatto"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Chats</p></Link>
             </li>
             <li className="nav-item">
-              <Link to="/socket-game-v1" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>WebSocket Game</p></Link>
+              <Link to="/experiments/socket-game-v1" className={`nav-link ${sideBarItems["experiments_socket_game"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>WebSocket Game</p></Link>
             </li>
             <li className="nav-item">
-              <Link to="/tw-bot-v2" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Tribal War 2 Bot</p></Link>
+              <Link to="/experiments/tw-bot-v2" className={`nav-link ${sideBarItems["experiments_tw_bot_v2"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Tribal War 2 Bot</p></Link>
             </li>
             <li className="nav-item">
-              <Link to="/repack-games-v2" className={`nav-link ${sideBarItems["transactions"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Repack Games</p></Link>
+              <Link to="/experiments/repack-games-v2" className={`nav-link ${sideBarItems["experiments_repack_games"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Repack Games</p></Link>
             </li>
           </ul>
         </li>
