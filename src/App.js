@@ -44,10 +44,10 @@ import PageSocketGameV1 from "./components/pages/PageSocketGameV1"
 import PageTWBotV2 from "./components/pages/PageTWBotV2"
 import PageRepackGamesV1 from "./components/pages/PageRepackGamesV1"
 import PageRepackGamesV2 from "./components/pages/PageRepackGamesV2"
+import PageOriginalSources from "./components/pages/PageOriginalSources"
+import PagePlayground from "./components/pages/PagePlayground"
 
 import PageNotFound from "./components/pages/PageNotFound"
-
-import PageOriginalSources from "./components/pages/PageOriginalSources"
 
 function App() {
   return (
@@ -100,6 +100,7 @@ function App() {
             <Route path="/experiments/socket-game-v1" exact component={PageSocketGameV1} />
             <Route path="/experiments/tw-bot-v2" exact component={PageTWBotV2} />
             <Route path="/experiments/repack-games-v2" exact component={PageRepackGamesV2} />
+            <Route path="/experiments/playground" exact component={PagePlayground} />
 
             <Route path="/learn-react" exact component={PageLearnReact} />
             <Route path="/repack-games-v1" exact component={PageRepackGamesV1} />

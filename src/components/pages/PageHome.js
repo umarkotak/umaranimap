@@ -1,6 +1,8 @@
 import React from "react"
 
 function PageHome() {
+  var version = 2.7
+
   return (
     <div>
       <div className="content-wrapper pt-2 px-2" style={{backgroundColor: "#454d55"}}>
@@ -32,7 +34,7 @@ function PageHome() {
       <footer className="main-footer bg-dark">
         <div className="float-right">
           <span className="badge badge-pill badge-primary mr-2">ANIMAPU 2021</span>
-          <span className="badge badge-pill badge-primary">Version: 2.6</span>
+          <span className="badge badge-pill badge-primary">Version: {version}</span>
         </div>
       </footer>
     </div>

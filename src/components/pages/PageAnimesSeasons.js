@@ -115,10 +115,10 @@ function PageAnimesSeasons() {
       <div className="content-wrapper px-2" style={{backgroundColor: "#454d55"}}>
         <div className="row">
           <div className="col-12 col-lg-9">
-            <div className="sticky-top pt-4 px-2">
+            <div className="sticky-top pt-4 pb-2 overflow-auto" style={{maxHeight: window.innerHeight}}>
               <RenderYouTube anime={item} />
-              <div className="text-white">
-                <h1>{item.title}</h1>
+              <div className="text-white p-1">
+                <h1>{item.title}</h1> <a href={`#manga-anchor-${item.mal_id}`} className="float-right"><span className="fa fa-share"></span></a>
                 <hr className="my-1 bg-white" />
                 <span className="badge badge-pill badge-primary">{item.source}</span>
                 <span className="badge badge-pill badge-primary ml-2">{item.status}</span>
@@ -131,7 +131,7 @@ function PageAnimesSeasons() {
           <div className="col-12 col-lg-3">
             <div className="row">
               {items.map(item => (
-                <div className="col-12 px-1 py-0" key={item.mal_id}>
+                <div className="col-12 px-1 py-0" key={item.mal_id} id={`manga-anchor-${item.mal_id}`}>
                   <div className="border border-info rounded">
                     <table className="table" style={{backgroundColor: dataStoreCommon.GetActiveTemplate("#CBD2D9", "white")}}>
                       <tbody>
@@ -225,7 +225,7 @@ function RenderYouTube(props) {
         url={videoId}
         playing={true}
         width={'100%'}
-        height={window.innerHeight / 1.5 + "px"}
+        height={window.innerWidth / 2.5 + "px"}
         // height={'1000px'}
         config={{
           youtube: {

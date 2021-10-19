@@ -41,6 +41,7 @@ function Sidebar() {
     else if (window.location.pathname.startsWith("/experiments/socket-game-v1")) { tempSideBarItems.experiments_socket_game = "active" }
     else if (window.location.pathname.startsWith("/experiments/tw-bot-v2")) { tempSideBarItems.experiments_tw_bot_v2 = "active" }
     else if (window.location.pathname.startsWith("/experiments/repack-games-v2")) { tempSideBarItems.experiments_repack_games = "active" }
+    else if (window.location.pathname.startsWith("/experiments/playground")) { tempSideBarItems.experiments_playground = "active" }
 
     if (window.location.pathname.startsWith("/stats")) { tempSideBarItems.tree_stats = "menu-open" }
     if (window.location.pathname.startsWith("/experiments")) { tempSideBarItems.tree_experiments = "menu-open" }
@@ -157,6 +158,9 @@ function Sidebar() {
             </li>
             <li className="nav-item">
               <Link to="/experiments/repack-games-v2" className={`nav-link ${sideBarItems["experiments_repack_games"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Repack Games</p></Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/experiments/playground" className={`nav-link ${sideBarItems["experiments_playground"] || ""}`}><i className="nav-icon far fa-circle text-info"></i> <p>Playground</p></Link>
             </li>
           </ul>
         </li>
