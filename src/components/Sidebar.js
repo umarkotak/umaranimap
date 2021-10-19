@@ -97,9 +97,9 @@ function Sidebar() {
 
   function OnPublic() {
     return(
-      <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+      <ul className="nav nav-pills nav-sidebar flex-column nav-compact" data-widget="treeview" role="menu" data-accordion="false">
         <li className="nav-item">
-          <a target="_blank" href="https://trakteer.id/marumaru" rel="noopener noreferrer" className="nav-link bg-success"><i className="nav-icon fa fa-handshake"></i> <p><b>Support</b></p></a>
+          <a target="_blank" href="https://trakteer.id/marumaru" rel="noopener noreferrer" className="nav-link bg-success py-1"><i className="nav-icon fa fa-handshake"></i> <p><b>Support</b></p></a>
         </li>
         <li className="nav-item">
           <Link to="/" className={`nav-link ${sideBarItems["home"] || ""}`}><i className="nav-icon fas fa-home"></i> <p>Home</p></Link>
