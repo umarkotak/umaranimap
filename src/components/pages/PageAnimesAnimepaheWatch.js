@@ -17,7 +17,13 @@ function PageAnimesAnimepaheWatch() {
     window.scrollTo(0, 0);
 
     if (!query_raw_title()) { return }
-    setWebUrl(`https://samehadaku.vip/?s=${query_raw_title().substr(0, 10)}`)
+    var processedTitle = query_raw_title()
+    processedTitle = processedTitle.split(" ")
+    processedTitle = processedTitle[0]
+    processedTitle = encodeURIComponent(processedTitle)
+    var targetUrl = `https://animekisa.tv/search?q=${processedTitle}`
+    console.log(targetUrl)
+    setWebUrl(targetUrl)
 
   }, [])
 

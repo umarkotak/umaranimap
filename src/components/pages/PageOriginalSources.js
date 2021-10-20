@@ -1,6 +1,8 @@
 import React, {useState, useEffect, useCallback} from "react"
 import Select from 'react-select'
 
+import ScrollToTop from "../ui-components/ScrollToTop"
+
 var y_pos = 0
 
 const defaultIndex = 0
@@ -10,7 +12,8 @@ const SOURCE_OPTIONS = [
   {idx: 1, value: "manga_komikid", view_port: "850vh", source: "https://www.komikid.com/", label: "Manga | ID | KomikID"},
   {idx: 2, value: "manga_maidmy", view_port: "550vh", source: "https://www.maid.my.id/", label: "Manga | ID | MaidMy"},
   {idx: 3, value: "manga_mangahere", view_port: "550vh", source: "http://mangahere.today/", label: "Manga | EN | MangaHere"},
-  {idx: 4, value: "anime_animepahe", view_port: "200vh", source: "https://animepahe.com/", label: "Anime | EN | Animepahe"}
+  {idx: 4, value: "anime_animepahe", view_port: "200vh", source: "https://animepahe.com/", label: "Anime | EN | Animepahe"},
+  {idx: 5, value: "anime_animekisa", view_port: "400vh", source: "https://animekisa.tv/", label: "Anime | EN | Animekisa"},
 ]
 
 function PageOriginalSources() {
@@ -79,6 +82,7 @@ function PageOriginalSources() {
       </div>
 
       <RenderFooter />
+      <ScrollToTop show={showMangaNav} />
     </div>
   )
 

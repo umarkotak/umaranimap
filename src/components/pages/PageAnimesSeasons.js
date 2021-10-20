@@ -165,7 +165,7 @@ function PageAnimesSeasons() {
                           </td>
                           <td className="p-1">
                             <Link
-                              to={`#`}
+                              to={`/animes/animepahe/watch?raw_title=${item.title}`}
                               className={ "btn btn-block btn-sm btn-outline-primary" }
                             >
                               { "▶︎ Watch" }
