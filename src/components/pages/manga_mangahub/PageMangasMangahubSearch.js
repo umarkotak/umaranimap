@@ -14,7 +14,7 @@ const cookies = new Cookies()
 
 function PageSearchManga() {
   var baseMangaDB = mangaDB.GetMangaDB()
-  var baseMangaDBKeys = Array.from(baseMangaDB.keys())
+  var baseMangaDBKeys = Array.from(baseMangaDB.keys()).sort()
 
   const [searching_state, set_searching_state] = useState("finished")
   const [search_query, set_search_query] = useState("")
@@ -41,21 +41,21 @@ function PageSearchManga() {
   }
 
   function generateThumbnailFromTitle(title) {
-    if (search_result_db.get(title).image_url !== "") {
+    if (search_result_db.get(title) && search_result_db.get(title).image_url !== "") {
       return `url(${search_result_db.get(title).image_url})`
     }
-    return mangahubAPI.GenerateBackgroundThumbnailFromTitle(title)
+    return mangahubAPI.GenerateM4LBackgroundThumbnailFromTitle(title)
   }
 
-  useEffect(() => {
-    var manga_title_list = []
-    search_result_db.forEach((num, key) => {
-      manga_title_list.push({title: key, order: num.new_added, weight: num.weight})
-    })
-    manga_title_list.sort((a, b) => b.weight - a.weight)
+  // useEffect(() => {
+  //   var manga_title_list = []
+  //   search_result_db.forEach((num, key) => {
+  //     manga_title_list.push({title: key, order: num.new_added, weight: num.weight})
+  //   })
+  //   manga_title_list.sort((a, b) => b.weight - a.weight)
 
-    set_result_titles(manga_title_list.map(val => val.title))
-  }, [search_result_db])
+  //   set_result_titles(manga_title_list.map(val => val.title))
+  // }, [search_result_db])
 
   async function fetchTopMangaDB() {
     const response = await goAnimapuApi.GetGlobalMangaFromFirebase()
@@ -63,7 +63,8 @@ function PageSearchManga() {
     var converted_manga_db = new Map(Object.entries(results.manga_db))
     console.log("fetchTopMangaDB", converted_manga_db)
     set_search_result_db(converted_manga_db)
-    set_result_titles(converted_manga_db.keys())
+    const temp_result_titles = [ ...converted_manga_db.keys() ].sort()
+    set_result_titles(temp_result_titles)
     set_searching_state("finished")
   }
   useEffect(() => {
@@ -88,15 +89,11 @@ function PageSearchManga() {
       <div className="content-wrapper p-2" style={{backgroundColor: "#454d55"}}>
         <h1 className="text-white">Search</h1>
         <div className="row">
-          <div className="col-12"><input
-            type="text" name="search_text" className="form-control"
-            value={search_query}
-            onChange={(e) => set_search_query(e.target.value)}
-          ></input></div>
+          <RenderSearchInput />
         </div>
 
         <div className="row mb-5">
-          <RenderSearchSection />
+          <RenderSearchSection result_title_list={result_titles} />
         </div>
       </div>
 
@@ -120,23 +117,33 @@ function PageSearchManga() {
     </div>
   )
 
-  function RenderSearchSection() {
+  function RenderSearchInput() {
+    return(
+      <div className="col-12"><input
+        type="text" name="search_text" className="form-control"
+        value={search_query}
+        onChange={(e) => set_search_query(e.target.value)}
+      ></input></div>
+    )
+  }
+
+  function RenderSearchSection(props) {
     if (searching_state === "searching") {
       return(<RenderLoadingBar />)
     } else if (searching_state === "finished") {
-      return(<div className="col-12"><RenderSearchResults /></div>)
+      return(<div className="col-12"><RenderSearchResults result_title_list={props.result_title_list} /></div>)
     }
     return(<div></div>)
   }
 
-  function RenderSearchResults() {
+  function RenderSearchResults(props) {
     return(
       <div>
         <hr/>
         <h1 className="text-white">{searchLabel}</h1>
         <div className="row">
-          {result_titles && result_titles.map(((value, index) => (
-            <div className="col-4 col-md-2 mb-4" key={index+value}>
+          {props.result_title_list.map((value) => (
+            <div className="col-4 col-md-2 mb-4" key={"manga-card-"+value}>
               <div className="rounded">
                 <div style={{
                     height: (helper.GenerateImageCardHeightByWidth(window.innerWidth) + "px"),
@@ -180,7 +187,7 @@ function PageSearchManga() {
                 </table>
               </div>
             </div>
-          )))}
+          ))}
         </div>
       </div>
     )

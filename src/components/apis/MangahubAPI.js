@@ -12,6 +12,12 @@ class MangahubAPI {
     sources.push(`url(/default-book.png)`)
     return sources.join(",")
   }
+
+  GenerateM4LBackgroundThumbnailFromTitle(title) {
+    var sources = []
+    sources.push(`url(${`https://thumb.mghubcdn.com/mn/${title}.jpg`})`)
+    return sources.join(",")
+  }
 }
 
 const mangahubApi = new MangahubAPI()

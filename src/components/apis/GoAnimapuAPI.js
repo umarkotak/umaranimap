@@ -261,7 +261,7 @@ class GoAnimapuAPI {
     return response
   }
 
-  async GetGlobalMangaFromFirebase(params) {
+  async GetGlobalMangaFromFirebase() {
     var uri = `${this.GoAnimapuAPIHOST}/mangas/firebase`
     const response = await fetch(uri, {
       method: 'GET',
