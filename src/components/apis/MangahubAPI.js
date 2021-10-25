@@ -3,6 +3,10 @@ class MangahubAPI {
 
   // }
 
+  BeautifyTitle(title) {
+    return title.replaceAll("-", " ")
+  }
+
   GenerateBackgroundThumbnailFromTitle(title) {
     var sources = []
     sources.push(`url(${`https://thumb.mghubcdn.com/m4l/${title}.jpg`})`)

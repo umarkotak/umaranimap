@@ -25,8 +25,11 @@ function PageSearchManga() {
   function handleSearchManga(event) {
     event.preventDefault()
 
+    var temp_search_query = document.getElementById('search-input').value
+    console.log("getid", temp_search_query)
     set_searching_state("searching")
-    execute_search_manga(search_query)
+    // execute_search_manga(search_query)
+    execute_search_manga(temp_search_query)
   }
 
   async function execute_search_manga(search_query) {
@@ -35,6 +38,8 @@ function PageSearchManga() {
     var converted_search_result_db = new Map(Object.entries(results.manga_db))
     setSearchLabel("Results")
     set_search_result_db(converted_search_result_db)
+    const temp_result_titles = [ ...converted_search_result_db.keys() ].sort()
+    set_result_titles(temp_result_titles)
     set_searching_state("finished")
 
     console.log("SEARCH RESULT", results)
@@ -120,9 +125,10 @@ function PageSearchManga() {
   function RenderSearchInput() {
     return(
       <div className="col-12"><input
+        id="search-input"
         type="text" name="search_text" className="form-control"
-        value={search_query}
-        onChange={(e) => set_search_query(e.target.value)}
+        // value={search_query}
+        // onChange={(e) => set_search_query(e.target.value)}
       ></input></div>
     )
   }
@@ -157,7 +163,7 @@ function PageSearchManga() {
                   }}
                 >
                   <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
-                    <small>{findLatestReadChapter(value)} / {search_result_db.get(value).manga_last_chapter || "-"}</small>
+                    <small>{findLatestReadChapter(value)} / {(search_result_db.get(value) && search_result_db.get(value).manga_last_chapter) || "-"}</small>
                     <Link
                       to={`/mangas/read/mangahub/${findLatestReadChapter(value)}`}
                       className="btn btn-sm btn-light float-right"
@@ -167,20 +173,20 @@ function PageSearchManga() {
                     </Link>
                   </div>
                   <div className="text-white card-text overflow-auto" style={{"height": "35px", "width": "100%", backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
-                    <small>{value}</small>
+                    <small>{mangahubAPI.BeautifyTitle(value)}</small>
                   </div>
                 </div>
                 <table style={{width: "100%"}}>
                   <thead>
                     <tr>
                       <th width="10%">
-                        <Link type="button" className="btn btn-block btn-sm btn-outline-light" to={`/mangas/detail/mangahub/${search_result_db.get(value).manga_updates_id}`}><i className={`fa fa-info-circle`}></i></Link>
+                        <Link type="button" className="btn btn-block btn-sm btn-outline-light" to={`/mangas/detail/mangahub/${((search_result_db.get(value) && search_result_db.get(value).manga_updates_id) || 0)}`}><i className={`fa fa-info-circle`}></i></Link>
                       </th>
                       <th width="35%">
                         <Link className="btn btn-block btn-sm btn-outline-light" to={`/mangas/read/mangahub/${value}/1`}>1</Link>
                       </th>
                       <th width="55%">
-                        <Link className="btn btn-block btn-sm btn-outline-light" to={`/mangas/read/mangahub/${value}/${search_result_db.get(value).manga_last_chapter || 1}`}>{search_result_db.get(value).manga_last_chapter || "-"}</Link>
+                        <Link className="btn btn-block btn-sm btn-outline-light" to={`/mangas/read/mangahub/${value}/${(search_result_db.get(value) && search_result_db.get(value).manga_last_chapter) || 1}`}>{(search_result_db.get(value) && search_result_db.get(value).manga_last_chapter) || "-"}</Link>
                       </th>
                     </tr>
                   </thead>
