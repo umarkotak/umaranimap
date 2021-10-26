@@ -1,7 +1,7 @@
 import React from "react"
 
 function PageHome() {
-  var version = 2.8
+  var version = 2.9
 
   return (
     <div>
@@ -88,7 +88,7 @@ function PageHome() {
           </tr>
           <tr className="bg-dark">
             <td className="p-1"><a href="https://mangabuddy.com/"><span className="badge badge-pill badge-primary">Manga Buddy</span></a></td>
-            <td className="p-1"><i className="fa text-danger fa-times"></i></td>
+            <td className="p-1"><i className="fa text-success fa-check"></i></td>
             <td className="p-1"><i className="fa text-danger fa-times"></i></td>
             <td className="p-1"><i className="fa text-danger fa-times"></i></td>
             <td className="p-1"><i className="fa text-danger fa-times"></i></td>

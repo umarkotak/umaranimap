@@ -17,7 +17,7 @@ function PageSearchManga() {
   var baseMangaDBKeys = Array.from(baseMangaDB.keys()).sort()
 
   const [searching_state, set_searching_state] = useState("finished")
-  const [search_query, set_search_query] = useState("")
+  // const [search_query, set_search_query] = useState("")
   const [search_result_db, set_search_result_db] = useState(baseMangaDB)
   const [result_titles, set_result_titles] = useState(baseMangaDBKeys)
   const [searchLabel, setSearchLabel] = useState("Recomendations")
