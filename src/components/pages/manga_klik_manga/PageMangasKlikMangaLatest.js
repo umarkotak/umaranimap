@@ -7,6 +7,8 @@ import mangahubApi from "../../apis/MangahubAPI"
 import LoadingBar from "../../ui-components/LoadingBar"
 import ScrollToTop from "../../ui-components/ScrollToTop"
 
+var currentLength = 0
+
 function PageMangasLatestKlikManga() {
   const [isLoading, setIsLoading] = useState(true)
   const [mangaDB, setMangaDB] = useState({})
@@ -41,6 +43,7 @@ function PageMangasLatestKlikManga() {
         setMangaDB({...mangaDB, ...body.manga_db})
         setMangaList(mangaList.concat(body.manga_data_keys))
         setIsLoading(false)
+
         nextPage++
       }
     } catch(e) {
@@ -54,8 +57,10 @@ function PageMangasLatestKlikManga() {
   }, [])
 
   useEffect(() => {
-    if (mangaList.length <= 0) { return }
-    if (mangaList.length >= 90) { return }
+    currentLength += mangaList.length
+    console.log("currentLength", currentLength)
+    if (currentLength <= 0) { return }
+    if (currentLength >= 90) { return }
     fetchMangaListNextPage()
   // eslint-disable-next-line
   }, [mangaList])
@@ -94,7 +99,7 @@ function PageMangasLatestKlikManga() {
             justifyContent: "space-between",
             display: "flex",
             flexDirection: "column",
-            backgroundImage: mangahubApi.GenerateBackgroundThumbnailFromTitle(props.manga.title)
+            backgroundImage: mangahubApi.GenerateBackgroundThumbnailFromTitleWithBaseLink(props.manga.title, props.manga.image_url)
           }}
         >
           <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
