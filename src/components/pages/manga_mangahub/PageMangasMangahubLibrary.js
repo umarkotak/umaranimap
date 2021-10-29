@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid'
 import mangaDB from "../../utils/MangaDB"
 import helper from "../../utils/Helper"
 import goAnimapuApi from "../../apis/GoAnimapuAPI"
+import mangahubAPI from "../../apis/MangahubAPI"
 
 const cookies = new Cookies()
 
@@ -184,12 +185,12 @@ function PageMangaLibraryV1() {
   function generateThumbnailFromTitle(title) {
     if (manga_db.get(title)) {
       if (manga_db.get(title).image_url !== "") {
-        return manga_db.get(title).image_url
+        return `url(${manga_db.get(title).image_url})`
       } else {
-        return `https://thumb.mghubcdn.com/mn/${title}.jpg`
+        return mangahubAPI.GenerateBackgroundThumbnailFromTitle(title)
       }
     }
-    return `https://thumb.mghubcdn.com/mn/${title}.jpg`
+    return mangahubAPI.GenerateBackgroundThumbnailFromTitle(title)
   }
 
   function generateHistoriesSection() {
@@ -258,7 +259,7 @@ function PageMangaLibraryV1() {
             justifyContent: "space-between",
             display: "flex",
             flexDirection: "column",
-            backgroundImage: `url(${generateThumbnailFromTitle(props.title)}), url(${'/default-book.png'})`
+            backgroundImage: `${generateThumbnailFromTitle(props.title)}`
           }}
         >
           <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>

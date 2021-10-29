@@ -282,6 +282,19 @@ class GoAnimapuAPI {
     })
     return response
   }
+
+  async GetProxy(url) {
+    var uri = `${this.GoAnimapuAPIHOST}/proxy/${url}`
+    const response = await fetch(uri, {
+      method: 'GET'
+    })
+    return response
+  }
+
+  async GenerateProxyUrl(url) {
+    console.log("PROXY",`${this.GoAnimapuAPIHOST}/proxy/${url}`)
+    return `${this.GoAnimapuAPIHOST}/proxy/${url}`
+  }
 }
 
 const goAnimapuApi = new GoAnimapuAPI()

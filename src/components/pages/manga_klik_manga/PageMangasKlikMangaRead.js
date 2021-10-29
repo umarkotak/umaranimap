@@ -146,6 +146,21 @@ function PageMangasReadKlikManga() {
   return(
     <div>
       <div className="content-wrapper py-2" style={{backgroundColor: "#454d55"}}>
+        <a className="btn btn-block btn-xs btn-primary" target="_blank" rel="noopener noreferrer" href={`https://klikmanga.id/manga/${manga_title}/${chapter_title}/?style=list`}>Original Source</a>
+        <div style={{
+          display: "none",
+          width: "100%"
+        }}>
+          {/* https://klikmanga.id/manga/detective-conan/chapter-1054/ */}
+          <iframe
+            target='_top'
+            style={{
+              width: "100%"
+            }}
+            title="klikmanga"
+            src={`http://localhost:4000/proxy/https://klikmanga.id/manga/${manga_title}/${chapter_title}/?style=list`}
+          />
+        </div>
         {chapterPages.map(((pageFileName, index) => (
           <div className="bg-dark border-left border-right border-dark rounded" key={`MANGA-CHAPTER-IMAGE-${index}`}>
             <img
