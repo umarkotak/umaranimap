@@ -10,7 +10,7 @@ function PagePlayground() {
         <h2 className="text-white">Playground</h2>
         <div className="row">
           <div className="col-3">
-            <Link to="/?disable_panelbear" className="btn btn-block btn-primary">Disable Panel Bear</Link>
+            <Link to="/?panelbear_disable" className="btn btn-block btn-primary">Disable Panel Bear</Link>
           </div>
         </div>
       </div>
