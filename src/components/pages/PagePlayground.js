@@ -8,6 +8,7 @@ import wordDB from '../utils/WordDB'
 // https://www.npmjs.com/package/react-speech
 // https://www.npmjs.com/package/tesseract.js/v/2.0.0
 // https://mdn.github.io/web-speech-api/speak-easy-synthesis/
+// https://github.com/johnoneil/MangaTextDetection
 
 function PagePlayground() {
   var version = 0.0
