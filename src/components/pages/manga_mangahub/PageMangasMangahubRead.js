@@ -417,6 +417,10 @@ function PageReadMangaOnlyV1() {
                   src={generateImageURL(value)}
                   alt=""
                   onError={(e) => handleImageFallback(value, e)}
+                  style={{
+                    width: "100%",
+                    maxWidth: "700px"
+                  }}
                 />
               </div>
             )))}
