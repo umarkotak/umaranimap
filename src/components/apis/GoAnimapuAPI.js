@@ -4,8 +4,8 @@ class GoAnimapuAPI {
       this.GoAnimapuAPIHOST = "https://go-animapu.herokuapp.com"
       // this.GoAnimapuAPIHOST = "https://go-animapu2.herokuapp.com"
     } else {
-      this.GoAnimapuAPIHOST = "http://localhost:4000"
       this.GoAnimapuAPIHOST = "https://go-animapu.herokuapp.com"
+      this.GoAnimapuAPIHOST = "http://localhost:4000"
     }
   }
 

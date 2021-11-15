@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react"
+import {Link} from "react-router-dom"
 
 import ScrollToTop from "../ui-components/ScrollToTop"
 
@@ -22,7 +23,6 @@ function PageAnimesAnimepaheWatch() {
     processedTitle = processedTitle[0]
     processedTitle = encodeURIComponent(processedTitle)
     var targetUrl = `https://animekisa.tv/search?q=${processedTitle}`
-    console.log(targetUrl)
     setWebUrl(targetUrl)
 
   }, [])
@@ -50,6 +50,23 @@ function PageAnimesAnimepaheWatch() {
       </div>
 
       <ScrollToTop />
+
+      <a
+        href={web_url}
+        className="bg-primary"
+        style={{
+          position:"fixed",
+          width:"50px",
+          height:"50px",
+          bottom:"70px",
+          right:"30px",
+          color:"#FFF",
+          borderRadius:"50px",
+          textAlign:"center"
+        }}
+      >
+        <i className="fa fa-globe my-float" style={{marginTop:"17px"}}></i>
+      </a>
     </div>
   )
 }

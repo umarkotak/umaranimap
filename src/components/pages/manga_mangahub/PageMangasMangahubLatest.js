@@ -83,6 +83,28 @@ function PageMangasLatestMangahub() {
     }
   }
 
+  function nextPageDecider(mangaTitle) {
+    var key, chapter
+    
+    if (cookies.get("GO_ANIMAPU_LOGGED_IN") === "true") {
+      key = `${mangaTitle}/last_read_chapter_logged_in`
+      chapter = localStorage.getItem(key)
+  
+      if (chapter) {
+        return parseInt(chapter)
+      }
+    }
+    
+    key = `${mangaTitle}/last_read_chapter`
+    chapter = localStorage.getItem(key)
+
+    if (chapter) {
+      return parseInt(chapter)
+    }
+
+    return 1
+  }
+
   return (
     <div>
       <div className="content-wrapper" style={{backgroundColor: "#454d55"}}>
@@ -102,26 +124,29 @@ function PageMangasLatestMangahub() {
           {todays_manga_titles && todays_manga_titles.slice(0, 6*80).map(((value, index) => (
             <div className="col-4 col-md-2 mb-4" key={index+value}>
               <div className="rounded">
-                <div style={{
-                  height: (helper.GenerateImageCardHeightByWidth(window.innerWidth) + "px"),
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  backgroundRepeat: 'repeat',
-                  justifyContent: "space-between",
-                  display: "flex",
-                  flexDirection: "column",
-                  backgroundImage: `${generateThumbnailFromTitle(value)}`}}
+                <div
+                  style={{
+                    height: (helper.GenerateImageCardHeightByWidth(window.innerWidth) + "px"),
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'repeat',
+                    justifyContent: "space-between",
+                    display: "flex",
+                    flexDirection: "column",
+                    backgroundImage: `${generateThumbnailFromTitle(value)}`
+                  }}
                 >
                   <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
-                    <small>{`${todays_manga_db.get(value).manga_last_chapter} / ${todays_manga_db.get(value).manga_last_chapter}`}</small>
-                    <button
-                      className="btn btn-xs btn-outline-danger float-right"
+                    <small>{`${nextPageDecider(value)} / ${todays_manga_db.get(value).manga_last_chapter}`}</small>
+                    <Link
+                      to={`/mangas/read/mangahub/${value}/${nextPageDecider(value)}?last_chapter=${todays_manga_db.get(value).manga_last_chapter}`}
+                      className="btn btn-sm btn-light float-right"
                       style={{ paddingTop: "1px", paddingBottom: "1px", paddingLeft: "3px", paddingRight: "3px" }}
-                      onClick={(e) => putToMyLibrary(value, todays_manga_db.get(value).manga_last_chapter)}
                     >
-                      ♥︎
-                    </button>
+                      <i className={`fa fa-share`}></i>
+                    </Link>
                   </div>
+                  {/* <img src={`https://thumb.mghubcdn.com/m4l/${value}.jpg`} style={{width: "100%", height: "80%", objectFit: "cover", objectPosition: "center", display: "block"}} className="float" /> */}
                   <div className="text-white card-text overflow-auto" style={{"height": "35px", "width": "100%", backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
                     <small>{todays_manga_db.get(value).compact_title}</small>
                   </div>

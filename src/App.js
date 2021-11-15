@@ -54,7 +54,7 @@ import PageNotFound from "./components/pages/PageNotFound"
 function App() {
   return (
     <Router>
-      <div className="sidebar-mini layout-fixed layout-footer-fixed">
+      <div>
         <div className="wrapper" style={{backgroundColor: "#454d55"}}>
           <Navbar />
           <Sidebar />
