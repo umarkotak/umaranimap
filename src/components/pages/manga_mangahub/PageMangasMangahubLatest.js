@@ -7,7 +7,7 @@ import {Link} from "react-router-dom"
 
 import helper from "../../utils/Helper"
 import goAnimapuApi from "../../apis/GoAnimapuAPI"
-import mangahubAPI from "../../apis/MangahubAPI"
+// import mangahubAPI from "../../apis/MangahubAPI"
 import ScrollToTop from "../../ui-components/ScrollToTop"
 
 function PageMangasLatestMangahub() {
@@ -16,17 +16,17 @@ function PageMangasLatestMangahub() {
   const [todays_manga_db, set_todays_manga_db] = useState(new Map())
   const [todays_manga_titles, set_todays_manga_titles] = useState([])
 
-  function generateThumbnailFromTitle(title) {
-    try {
-      if (todays_manga_db.get(title).image_url !== "") {
-        return todays_manga_db.get(title).image_url
-      } else {
-        return mangahubAPI.GenerateBackgroundThumbnailFromTitle(title)
-      }
-    } catch {
-      return mangahubAPI.GenerateBackgroundThumbnailFromTitle(title)
-    }
-  }
+  // function generateThumbnailFromTitle(title) {
+  //   try {
+  //     if (todays_manga_db.get(title).image_url !== "") {
+  //       return todays_manga_db.get(title).image_url
+  //     } else {
+  //       return mangahubAPI.GenerateBackgroundThumbnailFromTitle(title)
+  //     }
+  //   } catch {
+  //     return mangahubAPI.GenerateBackgroundThumbnailFromTitle(title)
+  //   }
+  // }
 
   async function fetchTodayMangaData() {
     try {
@@ -56,32 +56,32 @@ function PageMangasLatestMangahub() {
   // eslint-disable-next-line
   }, [])
 
-  async function putToMyLibrary(manga_title, manga_last_chapter) {
-    if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") {
-      return
-    }
+  // async function putToMyLibrary(manga_title, manga_last_chapter) {
+  //   if (cookies.get("GO_ANIMAPU_LOGGED_IN") !== "true") {
+  //     return
+  //   }
 
-    try {
-      const response = await goAnimapuApi.UserAddMangaToLibrary(cookies.get("GO_ANIMAPU_LOGIN_TOKEN"), {
-        manga_title: manga_title,
-        manga_last_chapter: manga_last_chapter,
-        image_url: ''
-      })
-      const results = await response.json()
-      const status = await response.status
+  //   try {
+  //     const response = await goAnimapuApi.UserAddMangaToLibrary(cookies.get("GO_ANIMAPU_LOGIN_TOKEN"), {
+  //       manga_title: manga_title,
+  //       manga_last_chapter: manga_last_chapter,
+  //       image_url: ''
+  //     })
+  //     const results = await response.json()
+  //     const status = await response.status
 
-      if (status === 200) {
-        alert("manga successfully added to library!")
-      } else {
-        alert(results.message)
-      }
+  //     if (status === 200) {
+  //       alert("manga successfully added to library!")
+  //     } else {
+  //       alert(results.message)
+  //     }
 
-      console.log("PUT MANGA TO MY LIBRARY", status, results)
+  //     console.log("PUT MANGA TO MY LIBRARY", status, results)
 
-    } catch (e) {
-      alert(e.message)
-    }
-  }
+  //   } catch (e) {
+  //     alert(e.message)
+  //   }
+  // }
 
   function nextPageDecider(mangaTitle) {
     var key, chapter
@@ -168,7 +168,7 @@ function PageMangasLatestMangahub() {
                     <small>{`${nextPageDecider(value)} / ${todays_manga_db.get(value).manga_last_chapter}`}</small>
                     <Link
                       to={`/mangas/read/mangahub/${value}/${nextPageDecider(value)}?last_chapter=${todays_manga_db.get(value).manga_last_chapter}`}
-                      className="btn btn-sm btn-light float-right"
+                      className={`btn btn-sm float-right ${(nextPageDecider(value) === 1 ? "btn-light" : "btn-success")}`}
                       style={{ paddingTop: "1px", paddingBottom: "1px", paddingLeft: "3px", paddingRight: "3px" }}
                     >
                       <i className={`fa fa-share`}></i>
