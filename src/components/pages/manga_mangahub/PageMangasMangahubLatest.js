@@ -85,16 +85,16 @@ function PageMangasLatestMangahub() {
 
   function nextPageDecider(mangaTitle) {
     var key, chapter
-    
+
     if (cookies.get("GO_ANIMAPU_LOGGED_IN") === "true") {
       key = `${mangaTitle}/last_read_chapter_logged_in`
       chapter = localStorage.getItem(key)
-  
+
       if (chapter) {
         return parseInt(chapter)
       }
     }
-    
+
     key = `${mangaTitle}/last_read_chapter`
     chapter = localStorage.getItem(key)
 
@@ -103,6 +103,27 @@ function PageMangasLatestMangahub() {
     }
 
     return 1
+  }
+
+  var hist = {}
+  var unsupportedTitles = []
+  function handleImageFallback(val, e) {
+    if (!hist[val]) { hist[val] = {} }
+
+    if (hist[val] && !hist[val]["mn"]) {
+      hist[val]["mn"] = "tried"
+      e.target.src = `https://thumb.mghubcdn.com/mn/${val}.jpg`
+    } else if (hist[val] && !hist[val]["md"]) {
+      hist[val]["md"] = "tried"
+      e.target.src = `https://thumb.mghubcdn.com/md/${val}.jpg`
+    } else if (hist[val] && !hist[val]["m4l"]) {
+      hist[val]["m4l"] = "tried"
+      e.target.src = `https://thumb.mghubcdn.com/m4l/${val}.jpg`
+    } else {
+      e.target.src = window.location.origin + "/default-image.png"
+      unsupportedTitles.push(val)
+      localStorage.setItem(`unsupported-titles-${val}`, "true")
+    }
   }
 
   return (
@@ -122,7 +143,14 @@ function PageMangasLatestMangahub() {
       return(
         <div className="row">
           {todays_manga_titles && todays_manga_titles.slice(0, 6*80).map(((value, index) => (
-            <div className="col-4 col-md-2 mb-4" key={index+value}>
+            <div
+              className="col-4 col-md-2 mb-4"
+              key={index+value}
+              id={`manga-card-${value}`}
+              style={{
+                display: (localStorage.getItem(`unsupported-titles-${value}`) ? "none" : "block")
+              }}
+            >
               <div className="rounded">
                 <div
                   style={{
@@ -133,7 +161,7 @@ function PageMangasLatestMangahub() {
                     justifyContent: "space-between",
                     display: "flex",
                     flexDirection: "column",
-                    backgroundImage: `${generateThumbnailFromTitle(value)}`
+                    // backgroundImage: `${generateThumbnailFromTitle(value)}`
                   }}
                 >
                   <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
@@ -146,8 +174,29 @@ function PageMangasLatestMangahub() {
                       <i className={`fa fa-share`}></i>
                     </Link>
                   </div>
-                  {/* <img src={`https://thumb.mghubcdn.com/m4l/${value}.jpg`} style={{width: "100%", height: "80%", objectFit: "cover", objectPosition: "center", display: "block"}} className="float" /> */}
-                  <div className="text-white card-text overflow-auto" style={{"height": "35px", "width": "100%", backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
+                  <img
+                    src={`https://thumb.mghubcdn.com/none/${value}.jpg`}
+                    style={{
+                      width: "100%",
+                      height: ((helper.GenerateImageCardHeightByWidth(window.innerWidth)-30) + "px"),
+                      objectFit: "cover",
+                      objectPosition: "center",
+                      display: "block",
+                      zIndex: "0"
+                    }}
+                    onError={(e) => handleImageFallback(value, e)}
+                    alt="thumb"
+                  />
+                  <div
+                    className="text-white card-text overflow-auto"
+                    style={{
+                      "height": "55px",
+                      "width": "100%",
+                      "backgroundColor": "rgba(0, 0, 0, 0.7)",
+                      "marginTop": "-35px",
+                      "zIndex": "1"
+                    }}
+                  >
                     <small>{todays_manga_db.get(value).compact_title}</small>
                   </div>
                 </div>
