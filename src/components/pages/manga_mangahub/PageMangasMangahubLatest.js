@@ -15,6 +15,7 @@ function PageMangasLatestMangahub() {
   const [fetch_todays_manga_state, set_fetch_todays_manga_state] = useState("finding")
   const [todays_manga_db, set_todays_manga_db] = useState(new Map())
   const [todays_manga_titles, set_todays_manga_titles] = useState([])
+  const [animapuMangas, setAnimapuMangas] = useState([{title: "", manga_last_chapter: "", manga_updates_id: ""}])
 
   // function generateThumbnailFromTitle(title) {
   //   try {
@@ -30,20 +31,10 @@ function PageMangasLatestMangahub() {
 
   async function fetchTodayMangaData() {
     try {
-      const response = await goAnimapuApi.MangaupdatesReleases()
+      const response = await goAnimapuApi.MangaupdatesReleasesV2()
       const results = await response.json()
-
-      var converted_manga_db = new Map(Object.entries(results.manga_db))
-      console.log("INCOMING DATA", converted_manga_db)
-      set_todays_manga_db(converted_manga_db)
-
-      var new_mangas = []
-      converted_manga_db.forEach((num, key) => {
-        new_mangas.push({title: key, order: num.new_added, weight: num.weight})
-      })
-      new_mangas.sort((a, b) => b.weight - a.weight)
-
-      set_todays_manga_titles(new_mangas.map(val => val.title))
+      console.log(results)
+      setAnimapuMangas(results)
       set_fetch_todays_manga_state("finished")
     } catch (e) {
       console.log("fetchTodayMangaData", e)
@@ -142,13 +133,13 @@ function PageMangasLatestMangahub() {
     if (fetch_todays_manga_state === "finished") {
       return(
         <div className="row">
-          {todays_manga_titles && todays_manga_titles.slice(0, 6*80).map(((value, index) => (
+          {animapuMangas.slice(0, 6*80).map(((mangaObj, index) => (
             <div
               className="col-4 col-md-2 mb-4"
-              key={index+value}
-              id={`manga-card-${value}`}
+              key={index+mangaObj.title}
+              id={`manga-card-${mangaObj.title}`}
               style={{
-                display: (localStorage.getItem(`unsupported-titles-${value}`) ? "none" : "block")
+                display: (localStorage.getItem(`unsupported-titles-${mangaObj.title}`) ? "none" : "block")
               }}
             >
               <div className="rounded">
@@ -161,21 +152,21 @@ function PageMangasLatestMangahub() {
                     justifyContent: "space-between",
                     display: "flex",
                     flexDirection: "column",
-                    // backgroundImage: `${generateThumbnailFromTitle(value)}`
+                    // backgroundImage: `${generateThumbnailFromTitle(mangaObj.title)}`
                   }}
                 >
                   <div className="text-white" style={{backgroundColor: "rgba(0, 0, 0, 0.4)"}}>
-                    <small>{`${nextPageDecider(value)} / ${todays_manga_db.get(value).manga_last_chapter}`}</small>
+                    <small>{`${nextPageDecider(mangaObj.title)} / ${mangaObj.manga_last_chapter}`}</small>
                     <Link
-                      to={`/mangas/read/mangahub/${value}/${nextPageDecider(value)}?last_chapter=${todays_manga_db.get(value).manga_last_chapter}`}
-                      className={`btn btn-sm float-right ${(nextPageDecider(value) === 1 ? "btn-light" : "btn-success")}`}
+                      to={`/mangas/read/mangahub/${mangaObj.title}/${nextPageDecider(mangaObj.title)}?last_chapter=${mangaObj.manga_last_chapter}`}
+                      className={`btn btn-sm float-right ${(nextPageDecider(mangaObj.title) === 1 ? "btn-light" : "btn-success")}`}
                       style={{ paddingTop: "1px", paddingBottom: "1px", paddingLeft: "3px", paddingRight: "3px" }}
                     >
                       <i className={`fa fa-share`}></i>
                     </Link>
                   </div>
                   <img
-                    src={`https://thumb.mghubcdn.com/none/${value}.jpg`}
+                    src={`https://thumb.mghubcdn.com/none/${mangaObj.title}.jpg`}
                     style={{
                       width: "100%",
                       height: ((helper.GenerateImageCardHeightByWidth(window.innerWidth)-30) + "px"),
@@ -184,7 +175,7 @@ function PageMangasLatestMangahub() {
                       display: "block",
                       zIndex: "0"
                     }}
-                    onError={(e) => handleImageFallback(value, e)}
+                    onError={(e) => handleImageFallback(mangaObj.title, e)}
                     alt="thumb"
                   />
                   <div
@@ -197,20 +188,20 @@ function PageMangasLatestMangahub() {
                       "zIndex": "1"
                     }}
                   >
-                    <small>{todays_manga_db.get(value).compact_title}</small>
+                    <small>{mangaObj.compact_title}</small>
                   </div>
                 </div>
                 <table style={{width: "100%"}}>
                   <thead>
                     <tr>
                       <th width="10%">
-                        <Link type="button" className="btn btn-block btn-sm btn-outline-light" to={`/mangas/detail/mangahub/${todays_manga_db.get(value).manga_updates_id}`}><i className={`fa fa-info-circle`}></i></Link>
+                        <Link type="button" className="btn btn-block btn-sm btn-outline-light" to={`/mangas/detail/mangahub/${mangaObj.manga_updates_id}`}><i className={`fa fa-info-circle`}></i></Link>
                       </th>
                       <th width="35%">
-                        <Link className="btn btn-block btn-sm btn-outline-light" to={`/mangas/read/mangahub/${value}/1?last_chapter=${todays_manga_db.get(value).manga_last_chapter}&chapter_size=75`}>1</Link>
+                        <Link className="btn btn-block btn-sm btn-outline-light" to={`/mangas/read/mangahub/${mangaObj.title}/1?last_chapter=${mangaObj.manga_last_chapter}&chapter_size=75`}>1</Link>
                       </th>
                       <th width="55%">
-                        <Link className="btn btn-block btn-sm btn-outline-light" to={`/mangas/read/mangahub/${value}/${todays_manga_db.get(value).manga_last_chapter}?last_chapter=${todays_manga_db.get(value).manga_last_chapter}&chapter_size=75`}>{todays_manga_db.get(value).manga_last_chapter}</Link>
+                        <Link className="btn btn-block btn-sm btn-outline-light" to={`/mangas/read/mangahub/${mangaObj.title}/${mangaObj.manga_last_chapter}?last_chapter=${mangaObj.manga_last_chapter}&chapter_size=75`}>{mangaObj.manga_last_chapter}</Link>
                       </th>
                     </tr>
                   </thead>

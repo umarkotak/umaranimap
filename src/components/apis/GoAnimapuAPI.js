@@ -117,6 +117,17 @@ class GoAnimapuAPI {
     return response
   }
 
+  async MangaupdatesReleasesV2() {
+    var uri = `${this.GoAnimapuAPIHOST}/mangaupdates/releases/v2`
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    return response
+  }
+
   async MangaupdatesSearch(title) {
     var uri = `${this.GoAnimapuAPIHOST}/mangaupdates/search?title=${title}`
     const response = await fetch(uri, {

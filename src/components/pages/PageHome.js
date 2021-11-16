@@ -7,7 +7,7 @@ function PageHome() {
     <div>
       <div className="content-wrapper pt-2 px-2" style={{backgroundColor: "#454d55"}}>
         <div className="position-relative">
-          <img src="/dashboard.png" alt="welcome" style={{width: "100%", maxHeight: "270px", objectFit: "cover"}} />
+          <img src="/images/dashboard.png" alt="welcome" style={{width: "100%", maxHeight: "270px", objectFit: "cover"}} />
 
           <div className="ribbon-wrapper ribbon-lg">
             <div className="ribbon bg-primary text-lg">
