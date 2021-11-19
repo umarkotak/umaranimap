@@ -16,7 +16,6 @@ function PageMangasReadMangaRead() {
     Image: []
   })
   const [currentChapterIDX, setCurrentChapterIDX] = useState(0)
-  const [chapterPages, setChapterPages] = useState([])
   const [chapterOptions, setChapterOptions] = useState([
     { value: 'N/A', label: 'Loading...' }
   ])

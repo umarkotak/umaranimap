@@ -35,9 +35,9 @@ import PageMangasReadKlikManga from "./components/pages/manga_klik_manga/PageMan
 import PageMangasSearchKlikManga from "./components/pages/manga_klik_manga/PageMangasKlikMangaSearch"
 import PageMangasLibraryKlikManga from "./components/pages/manga_klik_manga/PageMangasKlikMangaLibrary"
 
-import PageMangasLatestMangaRead from "./components/pages/manga_mangaread/PageMangasMangaReadLatest"
 import PageMangasDetailMangaRead from "./components/pages/manga_mangaread/PageMangasMangaReadDetail"
 import PageMangasReadMangaRead from "./components/pages/manga_mangaread/PageMangasMangaReadRead"
+import PageMangasLibraryMangaRead from "./components/pages/manga_mangaread/PageMangasMangaReadLibrary"
 
 import PageTicTacToe from "./components/pages/PageTicTacToe"
 import PageLearnReact from "./components/pages/PageLearnReact"
@@ -95,8 +95,9 @@ function App() {
             <Route path="/mangas/library/klik_manga" exact component={PageMangasLibraryKlikManga} />
 
             <Route path="/mangas/read/mangaread/:manga_title/:chapter_title" exact component={PageMangasReadMangaRead} />
-            <Route path="/mangas/latest/mangaread" exact component={PageMangasLatestMangaRead} />
+            <Route path="/mangas/latest/mangaread" exact component={PageMangasLibraryMangaRead} />
             <Route path="/mangas/detail/mangaread/:manga_title" exact component={PageMangasDetailMangaRead} />
+            <Route path="/mangas/library/mangaread" exact component={PageMangasLibraryMangaRead} />
 
             <Route path="/original_sources" exact component={PageOriginalSources} />
 

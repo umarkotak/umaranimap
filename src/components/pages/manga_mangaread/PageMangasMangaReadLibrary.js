@@ -8,7 +8,7 @@ import ScrollToTop from "../../ui-components/ScrollToTop"
 
 var currPageNumber = 1
 
-function PageMangasLatestMangaRead() {
+function PageMangasLibraryMangaRead() {
   const [isLoading, setIsLoading] = useState(true)
   const [mangaList, setMangaList] = useState([])
 
@@ -122,4 +122,4 @@ function PageMangasLatestMangaRead() {
   }
 }
 
-export default PageMangasLatestMangaRead
+export default PageMangasLibraryMangaRead

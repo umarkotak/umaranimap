@@ -13,8 +13,8 @@ import ScrollToTop from "../../ui-components/ScrollToTop"
 function PageMangasLatestMangahub() {
   const cookies = new Cookies()
   const [fetch_todays_manga_state, set_fetch_todays_manga_state] = useState("finding")
-  const [todays_manga_db, set_todays_manga_db] = useState(new Map())
-  const [todays_manga_titles, set_todays_manga_titles] = useState([])
+  // const [todays_manga_db, set_todays_manga_db] = useState(new Map())
+  // const [todays_manga_titles, set_todays_manga_titles] = useState([])
   const [animapuMangas, setAnimapuMangas] = useState([{title: "", manga_last_chapter: "", manga_updates_id: ""}])
 
   // function generateThumbnailFromTitle(title) {
