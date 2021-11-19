@@ -7,7 +7,7 @@ class MangameeAPI {
     }
   }
 
-  async MangabuddyGetPopularMangas(pageNumber) {
+  async MangareadGetPopularMangas(pageNumber) {
     var uri = `${this.MangameeHost}/browse?pageNumber=${pageNumber}`
     const response = await fetch(uri, {
       method: 'GET',
@@ -18,8 +18,19 @@ class MangameeAPI {
     return response
   }
 
-  async MangabuddyGetMangaDetail(mangaTitle) {
-    var uri = `${this.MangameeHost}/manga?mangaTitle=${mangaTitle}`
+  async MangareadGetMangaDetail(src, mangaTitle) {
+    var uri = `${this.MangameeHost}/manga?src=${src}&mangaTitle=${mangaTitle}`
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    return response
+  }
+
+  async MangareadGetMangaRead(src, mangaTitle, chapter) {
+    var uri = `${this.MangameeHost}/page?src=${src}&mangaTitle=${mangaTitle}&chapter=${chapter}`
     const response = await fetch(uri, {
       method: 'GET',
       headers: {

@@ -2,17 +2,19 @@ import React, {useState, useEffect, useCallback} from "react"
 import {useParams, useHistory} from "react-router-dom"
 import Select from 'react-select'
 
-import mangadexApi from "../../apis/MangadexAPI"
+import mangameeApi from "../../apis/MangameeAPI"
 
 var y_pos = 0
 
-function PageMangasReadMangadex() {
+function PageMangasReadMangaRead() {
   const history = useHistory()
 
-  let { manga_id } = useParams()
-  let { chapter_id } = useParams()
-  let { chapter_hash } = useParams()
+  let { manga_title } = useParams()
+  let { chapter_title } = useParams()
 
+  const [manga, setManga] = useState({
+    Image: []
+  })
   const [currentChapterIDX, setCurrentChapterIDX] = useState(0)
   const [chapterPages, setChapterPages] = useState([])
   const [chapterOptions, setChapterOptions] = useState([
@@ -20,46 +22,37 @@ function PageMangasReadMangadex() {
   ])
   const [showMangaNav, setShowMangaNav] = useState(true)
 
-  async function fetchMangaChapters() {
+  async function fetchMangaChapterImages() {
     try {
-      var response = await mangadexApi.GetMangaChapters(manga_id)
+      var response = await mangameeApi.MangareadGetMangaRead("en", manga_title, chapter_title)
       var status = await response.status
       var body = await response.json()
 
       console.log("CHAPTERS", status, body)
 
       if (status === 200) {
-        var tempResults = body.data
-        tempResults = tempResults.sort((a,b) => (parseFloat(a.attributes.chapter) > parseFloat(b.attributes.chapter)) ? 1 : ((parseFloat(b.attributes.chapter) > parseFloat(a.attributes.chapter)) ? -1 : 0))
-
-        tempResults = tempResults.map((val, idx) => {
-          if (val.id === chapter_id) {
-            setCurrentChapterIDX(idx)
-          }
-          return { value: `${val.id}/${val.attributes.hash}`, label: val.attributes.chapter }
-        })
-        setChapterOptions(tempResults)
+        setManga(body.MangaData)
       }
     } catch(e) {
       console.log(e)
     }
   }
 
-  async function fetchChapterPages() {
+  async function fetchMangaChapters() {
     try {
-      if (!chapter_id) {return}
-
-      var params = {
-        chapterID: chapter_id
-      }
-      var response = await mangadexApi.GetMangaChapterDetail(params)
+      var response = await mangameeApi.MangareadGetMangaDetail("en", manga_title)
       var status = await response.status
       var body = await response.json()
 
       console.log("PAGES", status, body)
 
       if (status === 200) {
-        setChapterPages(body.data.attributes.data)
+        setChapterOptions(body.MangaData.Chapter.map((mangaChapter, idx) => {
+          if (mangaChapter.ChapterLink === chapter_title) {
+            setCurrentChapterIDX(idx)
+          }
+          return { value: mangaChapter.ChapterLink, label: mangaChapter.ChapterName }
+        }))
       }
     } catch(e) {
       console.log(e)
@@ -67,22 +60,22 @@ function PageMangasReadMangadex() {
   }
 
   function handleSelectChapter(e) {
-    history.push(`/mangas/read/mangadex/${manga_id}/${e.value}`)
+    history.push(`/mangas/read/mangaread/${manga_title}/${e.value}`)
   }
 
   function toPrevChapter() {
     if (!chapterOptions[currentChapterIDX-1]) { return }
-    history.push(`/mangas/read/mangadex/${manga_id}/${chapterOptions[currentChapterIDX-1].value}`)
+    history.push(`/mangas/read/mangaread/${manga_title}/${chapterOptions[currentChapterIDX+1].value}`)
   }
 
   function toNextChapter() {
     if (!chapterOptions[currentChapterIDX+1]) { return }
-    history.push(`/mangas/read/mangadex/${manga_id}/${chapterOptions[currentChapterIDX+1].value}`)
+    history.push(`/mangas/read/mangaread/${manga_title}/${chapterOptions[currentChapterIDX-1].value}`)
   }
 
   useEffect(() => {
+    fetchMangaChapterImages()
     fetchMangaChapters()
-    fetchChapterPages()
   // eslint-disable-next-line
   }, [])
 
@@ -125,11 +118,11 @@ function PageMangasReadMangadex() {
   return(
     <div>
       <div className="content-wrapper py-2" style={{backgroundColor: "#454d55"}}>
-        {chapterPages.map(((pageFileName, index) => (
+        {manga.Image.map(((imageObj, index) => (
           <div className="bg-dark border-left border-right border-dark rounded" key={`MANGA-CHAPTER-IMAGE-${index}`}>
             <img
               className="bd-placeholder-img mx-auto d-block img-fluid"
-              src={mangadexApi.ConstructChapterPage("", "", chapter_hash, pageFileName)}
+              src={imageObj.Image}
               alt={`page-${index}`}
             />
           </div>
@@ -173,4 +166,4 @@ function PageMangasReadMangadex() {
 
 }
 
-export default PageMangasReadMangadex
+export default PageMangasReadMangaRead

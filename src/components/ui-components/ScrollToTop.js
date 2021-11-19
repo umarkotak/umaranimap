@@ -15,7 +15,8 @@ function ScrollToTop(props) {
         color:"#FFF",
         borderRadius:"50px",
         paddingBottom: "30px",
-        textAlign:"center"
+        textAlign:"center",
+        zIndex: "100"
       }}
     >
       <i className="fa fa-arrow-up" style={{marginTop:"17px"}}></i>

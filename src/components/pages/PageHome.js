@@ -87,7 +87,7 @@ function PageHome() {
             <td className="p-1"><i className="fa text-success fa-check"></i></td>
           </tr>
           <tr className="bg-dark">
-            <td className="p-1"><a href="https://mangabuddy.com/"><span className="badge badge-pill badge-primary">Manga Buddy</span></a></td>
+            <td className="p-1"><a href="https://www.mangaread.org/"><span className="badge badge-pill badge-primary">Manga Read Org</span></a></td>
             <td className="p-1"><i className="fa text-success fa-check"></i></td>
             <td className="p-1"><i className="fa text-danger fa-times"></i></td>
             <td className="p-1"><i className="fa text-danger fa-times"></i></td>

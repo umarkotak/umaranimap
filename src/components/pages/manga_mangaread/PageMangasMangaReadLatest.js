@@ -6,19 +6,21 @@ import mangameeApi from "../../apis/MangameeAPI"
 import LoadingBar from "../../ui-components/LoadingBar"
 import ScrollToTop from "../../ui-components/ScrollToTop"
 
-function PageMangasMangaBuddyLatest() {
+var currPageNumber = 1
+
+function PageMangasLatestMangaRead() {
   const [isLoading, setIsLoading] = useState(true)
   const [mangaList, setMangaList] = useState([])
 
-  async function fetchMangaList() {
+  async function fetchMangaList(pageNumber) {
     try {
-      var response = await mangameeApi.MangabuddyGetPopularMangas(1)
+      var response = await mangameeApi.MangareadGetPopularMangas(pageNumber)
       var status = await response.status
       var body = await response.json()
 
       if (status === 200) {
         console.log("MANGA LIST", body)
-        setMangaList(body)
+        setMangaList(mangaList.concat(body.MangaData))
         setIsLoading(false)
       }
     } catch(e) {
@@ -26,8 +28,15 @@ function PageMangasMangaBuddyLatest() {
     }
   }
 
+  async function handleNextSection() {
+    currPageNumber = currPageNumber + 1
+    console.log("PGN", currPageNumber)
+    fetchMangaList(currPageNumber)
+    window.scrollTo(0,document.body.scrollHeight)
+  }
+
   useEffect(() => {
-    fetchMangaList()
+    fetchMangaList(currPageNumber)
   // eslint-disable-next-line
   }, [])
 
@@ -52,6 +61,23 @@ function PageMangasMangaBuddyLatest() {
       </div>
 
       <ScrollToTop show={true} />
+      <Link
+        to="#"
+        className="bg-primary"
+        onClick={() => {handleNextSection()}}
+        style={{
+          position:"fixed",
+          width:"50px",
+          height:"50px",
+          bottom:"70px",
+          right:"30px",
+          color:"#FFF",
+          borderRadius:"50px",
+          textAlign:"center"
+        }}
+      >
+        <i className="fa fa-angle-double-down my-float" style={{marginTop:"17px"}}></i>
+      </Link>
     </div>
   )
 
@@ -86,7 +112,7 @@ function PageMangasMangaBuddyLatest() {
           <thead>
             <tr>
               <th width="100%">
-                <Link type="button" className="btn btn-block btn-sm btn-outline-light" to={`/mangas/detail/mangabuddy/${props.manga.MangaLink}`}><i className="fa fa-info-circle"></i></Link>
+                <Link type="button" className="btn btn-block btn-sm btn-outline-light" to={`/mangas/detail/mangaread/${props.manga.MangaLink}`}><i className="fa fa-info-circle"></i></Link>
               </th>
             </tr>
           </thead>
@@ -96,4 +122,4 @@ function PageMangasMangaBuddyLatest() {
   }
 }
 
-export default PageMangasMangaBuddyLatest
+export default PageMangasLatestMangaRead
