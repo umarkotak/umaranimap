@@ -2,6 +2,8 @@ import React, {useState, useEffect} from "react"
 import {Link, useHistory} from "react-router-dom"
 import Cookies from 'universal-cookie'
 import { GoogleLogin, GoogleLogout } from 'react-google-login'
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
+import AppleLogin from 'react-apple-login'
 
 const cookies = new Cookies()
 
@@ -55,6 +57,14 @@ function Sidebar() {
 
   function handleGoogleLogoutCallback(response) {
     console.log("GOOGLE LOGOUT", response)
+  }
+
+  function responseFacebook(response) {
+    console.log(response)
+  }
+
+  function responseTwitter(err, data) {
+    console.log(err, data)
   }
 
   return (
@@ -202,6 +212,30 @@ function Sidebar() {
             )}
           >
           </GoogleLogout>
+        </li>
+        <li className="nav-item">
+          <FacebookLogin
+            appId="1050889079041740"
+            autoLoad={true}
+            fields="name,email,picture"
+            scope="public_profile,email"
+            callback={responseFacebook}
+            render={renderProps => (
+              <a href="." className="nav-link" onClick={renderProps.onClick}>
+                <i className="nav-icon fab fa-facebook text-primary"></i> Login With FaceBook
+              </a>
+            )}
+          />
+        </li>
+        <li className="nav-item">
+          {/* <div id="appleid-signin" data-color="black" data-border="true" data-type="sign in"></div> */}
+          <AppleLogin
+            clientId="goplay.apple.login.test"
+            redirectURI="https://animapu.netlify.app/goplay/apple/account/return"
+            scope="name%20email"
+            responseType="code%20id_token"
+            responseMode="form_post"
+          />
         </li>
         <li className="nav-header"></li>
         <li className="nav-header"></li>
