@@ -69,7 +69,7 @@ function PageMangasDetailMangadex() {
             <div className="col-12 col-lg-9">
               <div className="row">
                 {mangaChapters.map(((mangaChapter, index) => (
-                  <div className="col-2 px-1" key={`MANGA-CHAPTER-${index}`}>
+                  <div className="col-2 px-1" key={`MANGA-CHAPTER-${index}`} style={{display: (mangaChapter.attributes.hash && mangaChapter.attributes.hash !== "") ? "block" : "none"}}>
                     <Link
                       to={`/mangas/read/mangadex/${mangaDetail.id}/${mangaChapter.id}/${mangaChapter.attributes.hash}`}
                       className="btn btn-primary btn-block mb-1"

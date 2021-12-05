@@ -93,23 +93,23 @@ function PageMangasReadMangadex() {
 
   // HIDING MANGA NAV START
   const escFunction = useCallback((event) => {
-    console.log("SCROLLER START", window.scrollY, y_pos)
+    // console.log("SCROLLER START", window.scrollY, y_pos)
 
     if (window.scrollY === 0) {
-      console.log("SCROLLER-1")
+      // console.log("SCROLLER-1")
       setShowMangaNav(true)
       // eslint-disable-next-line
       y_pos = window.scrollY
     } else if (window.scrollY > y_pos + 75) {
-      console.log("SCROLLER-2")
+      // console.log("SCROLLER-2")
       setShowMangaNav(false)
       y_pos = window.scrollY
     } else if (window.scrollY <= y_pos) {
-      console.log("SCROLLER-3")
+      // console.log("SCROLLER-3")
       setShowMangaNav(true)
       y_pos = window.scrollY
     }
-    console.log("SCROLLER END", window.scrollY, y_pos)
+    // console.log("SCROLLER END", window.scrollY, y_pos)
 
     // eslint-disable-next-line
   }, [showMangaNav])
@@ -122,6 +122,10 @@ function PageMangasReadMangadex() {
   }, [escFunction])
   // HIDING MANGA NAV END
 
+  function handleImageFallback(pageFileName, e) {
+    e.target.src = mangadexApi.ConstructChapterPage("", "", chapter_hash, pageFileName)
+  }
+
   return(
     <div>
       <div className="content-wrapper py-2" style={{backgroundColor: "#454d55"}}>
@@ -131,6 +135,7 @@ function PageMangasReadMangadex() {
               className="bd-placeholder-img mx-auto d-block img-fluid"
               src={mangadexApi.ConstructChapterPage("", "", chapter_hash, pageFileName)}
               alt={`page-${index}`}
+              onError={(e) => handleImageFallback(pageFileName, e)}
             />
           </div>
         )))}

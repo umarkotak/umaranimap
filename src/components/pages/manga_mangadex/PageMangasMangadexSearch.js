@@ -1,13 +1,18 @@
-import React, {useState} from "react"
+import React, {useState,useEffect} from "react"
 import {Link} from "react-router-dom"
 import Select from 'react-select'
+import {useHistory} from "react-router-dom"
 
 import mangadexApi from "../../apis/MangadexAPI"
 import helper from "../../utils/Helper"
 import LoadingBar from "../../ui-components/LoadingBar"
 
-function PageMangasSearchMangadex() {
+var qs = require('qs')
+var queryParams = qs.parse(window.location.search, { ignoreQueryPrefix: true })
 
+function PageMangasSearchMangadex() {
+  
+  const history = useHistory()
   const [isLoading, setIsLoading] = useState(false)
   const [loadMoreDisabled, setLoadMoreDisabled] = useState(true)
   const [mangaList, setMangaList] = useState([])
@@ -15,9 +20,9 @@ function PageMangasSearchMangadex() {
   var offset = 0
 
   const [searchParams, setSearchParams] = useState({
-    "title": "",
-    "originalLanguage": "any",
-    "status": "any"
+    "title": (queryParams.title || ""),
+    "originalLanguage": (queryParams.original_language || "any"),
+    "status": (queryParams.status || "any")
   })
   function handleSearchParamsChanges(e) {
     try {
@@ -56,6 +61,11 @@ function PageMangasSearchMangadex() {
       console.log(e)
     }
   }
+
+  useEffect(() => {
+    fetchMangaListWithQuery(false)
+    // eslint-disable-next-line
+  }, [])
 
   async function submitSearch() {
     setIsLoading(true)
@@ -141,7 +151,7 @@ function PageMangasSearchMangadex() {
       </div>
 
       <Link
-        to="#"
+        to={`/mangas/search/mangadex?title=${searchParams.title}&original_language=${searchParams.originalLanguage}&status=${searchParams.status}`}
         className="bg-primary"
         onClick={() => submitSearch()}
         style={{
