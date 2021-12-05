@@ -15,7 +15,18 @@ class MangadexAPI {
   }
 
   async GetMangaList(params) {
-    var uri = `${this.MangadexApiHost}/manga?limit=90&offset=${params.offset}&includes[]=cover_art&includes[]=chapter&availableTranslatedLanguage[]=${this.LanguageMode}`
+    var queries = []
+
+    queries.push(`limit=90`)
+    queries.push(`offset=${params.offset}`)
+    queries.push(`includes[]=cover_art&includes[]=chapter`)
+    queries.push(`availableTranslatedLanguage[]=${this.LanguageMode}`)
+
+    if (params.originalLanguage && params.originalLanguage !== "" && params.originalLanguage !== "any") {
+      queries.push(`originalLanguage[]=${params.originalLanguage}`)
+    }
+
+    var uri = `${this.MangadexApiHost}/manga?${queries.join("&")}`
     const response = await fetch(uri, {
       method: 'GET',
       headers: {
@@ -29,6 +40,11 @@ class MangadexAPI {
   async GetMangaListWithQuery(params) {
     var queries = []
 
+    queries.push(`limit=90`)
+    queries.push(`offset=${params.offset}`)
+    queries.push(`includes[]=cover_art&includes[]=chapter`)
+    queries.push(`availableTranslatedLanguage[]=${this.LanguageMode}`)
+
     if (params.title !== "") {
       queries.push(`title=${params.title}`)
     }
@@ -41,7 +57,7 @@ class MangadexAPI {
       queries.push(`status[]=${params.status}`)
     }
 
-    var uri = `${this.MangadexApiHost}/manga?limit=90&offset=${params.offset}&includes[]=cover_art&includes[]=chapter&availableTranslatedLanguage[]=${this.LanguageMode}&${queries.join("&")}`
+    var uri = `${this.MangadexApiHost}/manga?${queries.join("&")}`
 
     console.log("CALLING PARAMS", params)
     console.log("CALLING QUERIES", queries)
