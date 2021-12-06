@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react"
 import {Link, useHistory} from "react-router-dom"
 import Cookies from 'universal-cookie'
-import { GoogleLogin, GoogleLogout } from 'react-google-login'
+
 
 const cookies = new Cookies()
 
@@ -47,14 +47,6 @@ function Sidebar() {
     if (window.location.pathname.startsWith("/experiments")) { tempSideBarItems.tree_experiments = "menu-open" }
 
     return tempSideBarItems
-  }
-
-  function handleGoogleCallback(response) {
-    console.log("GOOGLE LOGIN", response)
-  }
-
-  function handleGoogleLogoutCallback(response) {
-    console.log("GOOGLE LOGOUT", response)
   }
 
   return (
@@ -174,34 +166,6 @@ function Sidebar() {
         </li>
         <li className="nav-item">
           <a href="https://animapu.netlify.app/" className={`nav-link ${sideBarItems["server_netlify"] || ""}`}><i className="nav-icon fa fa-server"></i> <p>Netlify</p></a>
-        </li>
-        <li className="nav-item">
-          <GoogleLogin
-            clientId="334886517586-djci4jil803sqjk042f6nne3016bngni.apps.googleusercontent.com"
-            buttonText="Login"
-            onSuccess={handleGoogleCallback}
-            onFailure={handleGoogleCallback}
-            cookiePolicy={'single_host_origin'}
-            render={renderProps => (
-              <a href="." className="nav-link" onClick={renderProps.onClick} disabled={renderProps.disabled}>
-                <i className="nav-icon fab fa-google text-primary"></i> Login With Google
-              </a>
-            )}
-          />
-        </li>
-        <li className="nav-item">
-          <GoogleLogout
-            clientId="334886517586-djci4jil803sqjk042f6nne3016bngni.apps.googleusercontent.com"
-            buttonText="Logout"
-            onLogoutSuccess={handleGoogleLogoutCallback}
-            onFailure={handleGoogleLogoutCallback}
-            render={renderProps => (
-              <a href="." className="nav-link" onClick={renderProps.onClick} disabled={renderProps.disabled}>
-                <i className="nav-icon fab fa-google text-danger"></i> Logout From Google
-              </a>
-            )}
-          >
-          </GoogleLogout>
         </li>
         <li className="nav-header"></li>
         <li className="nav-header"></li>
