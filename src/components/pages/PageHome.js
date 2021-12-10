@@ -1,7 +1,7 @@
 import React from "react"
 
 function PageHome() {
-  var version = "2.10.0"
+  var version = "2.11.0"
 
   return (
     <div>
