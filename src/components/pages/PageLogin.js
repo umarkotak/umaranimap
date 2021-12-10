@@ -107,7 +107,7 @@ function PageLogin() {
                   />
                   <AppleLogin
                     clientId="goplay.apple.login.test"
-                    redirectURI="https://go-animapu.herokuapp.com/goplay/account/apple/callback"
+                    redirectURI="https://go-animapu.herokuapp.com/goplay/account/apple/callback/redirect"
                     scope="name%20email"
                     responseType="code%20id_token"
                     responseMode="form_post"
