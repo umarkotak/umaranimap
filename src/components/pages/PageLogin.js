@@ -95,13 +95,25 @@ function PageLogin() {
                   {/* <div id="appleid-signin" data-color="black" data-border="true" data-type="sign in"></div> */}
                   <AppleLogin
                     clientId="goplay.apple.login.test"
-                    redirectURI="https://animapu.netlify.app/goplay/apple/account/return"
+                    redirectURI="https://go-animapu.herokuapp.com/goplay/account/apple/callback"
                     scope="name%20email"
                     responseType="code%20id_token"
                     responseMode="form_post"
                     render={renderProps => (
                       <button className="btn btn-block btn-light" onClick={renderProps.onClick}>
                         <i className="fab fa-apple text-primary"></i> Login With Apple
+                      </button>
+                    )}
+                  />
+                  <AppleLogin
+                    clientId="goplay.apple.login.test"
+                    redirectURI="https://go-animapu.herokuapp.com/goplay/account/apple/callback"
+                    scope="name%20email"
+                    responseType="code%20id_token"
+                    responseMode="form_post"
+                    render={renderProps => (
+                      <button className="btn btn-block btn-light" onClick={renderProps.onClick}>
+                        <i className="fab fa-apple text-primary"></i> Login With Apple With Redir
                       </button>
                     )}
                   />
