@@ -36,6 +36,7 @@ function PageMangasLatestMangahub() {
       console.log(results)
       setAnimapuMangas(results)
       set_fetch_todays_manga_state("finished")
+      goAnimapuApi.GetGlobalMangaFromFirebase()
     } catch (e) {
       console.log("fetchTodayMangaData", e)
       set_fetch_todays_manga_state("failed")

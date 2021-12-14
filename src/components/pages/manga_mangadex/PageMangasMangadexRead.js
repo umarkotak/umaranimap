@@ -3,6 +3,7 @@ import {useParams, useHistory} from "react-router-dom"
 import Select from 'react-select'
 
 import mangadexApi from "../../apis/MangadexAPI"
+import ScrollToTop from "../../ui-components/ScrollToTop"
 
 var y_pos = 0
 
@@ -143,6 +144,7 @@ function PageMangasReadMangadex() {
         <hr className="my-2" />
       </div>
 
+      <ScrollToTop show={showMangaNav} />
       <RenderFooter />
     </div>
   )

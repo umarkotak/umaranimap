@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react"
-import {Link} from "react-router-dom"
+import {Link,useHistory} from "react-router-dom"
 import InfiniteScroll from 'react-infinite-scroll-component'
 
 import mangadexApi from "../../apis/MangadexAPI"
@@ -7,7 +7,11 @@ import helper from "../../utils/Helper"
 import LoadingBar from "../../ui-components/LoadingBar"
 import ScrollToTop from "../../ui-components/ScrollToTop"
 
+var qs = require('qs')
+var queryParams = qs.parse(window.location.search, { ignoreQueryPrefix: true })
+
 function PageMangasLatestMangadex() {
+  const history = useHistory()
 
   const [isLoading, setIsLoading] = useState(true)
   const [mangaList, setMangaList] = useState([])
@@ -17,7 +21,8 @@ function PageMangasLatestMangadex() {
   async function fetchMangaList() {
     try {
       var params = {
-        offset: offset
+        offset: offset,
+        originalLanguage: queryParams.originalLanguage
       }
       var response = await mangadexApi.GetMangaList(params)
       var status = await response.status
@@ -52,11 +57,24 @@ function PageMangasLatestMangadex() {
   // eslint-disable-next-line
   }, [])
 
+  function changeUrlAndRefresh(lang) {
+    history.push(`/mangas/latest/mangadex?originalLanguage=${lang}`)
+    history.go()
+  }
+
   return(
     <div>
       <div className="content-wrapper p-2" style={{backgroundColor: "#454d55"}}>
         <div className="mt-2 mx-2">
-          <LoadingBar isLoading={isLoading} />
+          <div className="mb-4">
+            <LoadingBar isLoading={isLoading} />
+          </div>
+          <div className="row mb-4">
+            <div className="col-3"><button onClick={() => {changeUrlAndRefresh("")}} className="btn btn-block btn-sm btn-success">All</button></div>
+            <div className="col-3"><button onClick={() => {changeUrlAndRefresh("ja")}} className="btn btn-block btn-sm btn-success">Japan</button></div>
+            <div className="col-3"><button onClick={() => {changeUrlAndRefresh("ko")}} className="btn btn-block btn-sm btn-success">Korea</button></div>
+            <div className="col-3"><button onClick={() => {changeUrlAndRefresh("zh")}} className="btn btn-block btn-sm btn-success">China</button></div>
+          </div>
           <div>
             <InfiniteScroll
               dataLength={mangaList.length}

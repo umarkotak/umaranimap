@@ -1,7 +1,6 @@
 import React, {useState,useEffect} from "react"
 import {Link} from "react-router-dom"
 import Select from 'react-select'
-import {useHistory} from "react-router-dom"
 
 import mangadexApi from "../../apis/MangadexAPI"
 import helper from "../../utils/Helper"
@@ -11,8 +10,6 @@ var qs = require('qs')
 var queryParams = qs.parse(window.location.search, { ignoreQueryPrefix: true })
 
 function PageMangasSearchMangadex() {
-  
-  const history = useHistory()
   const [isLoading, setIsLoading] = useState(false)
   const [loadMoreDisabled, setLoadMoreDisabled] = useState(true)
   const [mangaList, setMangaList] = useState([])

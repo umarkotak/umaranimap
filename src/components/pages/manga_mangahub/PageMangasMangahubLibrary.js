@@ -27,6 +27,7 @@ function PageMangaLibraryV1() {
   // const [manga_source, set_manga_source] = useState(localStorage.getItem("MANGA_SOURCE"))
 
   async function fetchData() {
+    await goAnimapuApi.MangaupdatesReleasesV2()
     const response = await goAnimapuApi.GetGlobalMangaFromFirebase()
     const results = await response.json()
     var converted_manga_db = new Map(Object.entries(results.manga_db))
