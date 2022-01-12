@@ -69,6 +69,18 @@ function PageLogin() {
                       </button>
                     )}
                   />
+                  <GoogleLogin
+                    clientId="1001397782757-5f0dh37iqlpv484fn1qn7qqgl94124ug.apps.googleusercontent.com"
+                    buttonText="Login Goplay"
+                    onSuccess={handleGoogleCallback}
+                    onFailure={handleGoogleCallback}
+                    cookiePolicy={'single_host_origin'}
+                    render={renderProps => (
+                      <button className="btn btn-block btn-light" onClick={renderProps.onClick} disabled={renderProps.disabled}>
+                        <i className="fab fa-google text-primary"></i> Login With Google Goplay
+                      </button>
+                    )}
+                  />
                   <GoogleLogout
                     clientId="334886517586-djci4jil803sqjk042f6nne3016bngni.apps.googleusercontent.com"
                     buttonText="Logout"
