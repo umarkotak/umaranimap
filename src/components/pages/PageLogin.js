@@ -71,13 +71,13 @@ function PageLogin() {
                   />
                   <GoogleLogin
                     clientId="1001397782757-5f0dh37iqlpv484fn1qn7qqgl94124ug.apps.googleusercontent.com"
-                    buttonText="Login Goplay"
+                    buttonText="Login 2"
                     onSuccess={handleGoogleCallback}
                     onFailure={handleGoogleCallback}
                     cookiePolicy={'single_host_origin'}
                     render={renderProps => (
                       <button className="btn btn-block btn-light" onClick={renderProps.onClick} disabled={renderProps.disabled}>
-                        <i className="fab fa-google text-primary"></i> Login With Google Goplay
+                        <i className="fab fa-google text-primary"></i> Login With Google 2
                       </button>
                     )}
                   />
@@ -89,6 +89,17 @@ function PageLogin() {
                     render={renderProps => (
                       <button className="btn btn-block btn-light" onClick={renderProps.onClick} disabled={renderProps.disabled}>
                         <i className="fab fa-google text-danger"></i> Logout From Google
+                      </button>
+                    )}
+                  />
+                  <GoogleLogout
+                    clientId="1001397782757-5f0dh37iqlpv484fn1qn7qqgl94124ug.apps.googleusercontent.com"
+                    buttonText="Logout 2"
+                    onLogoutSuccess={handleGoogleLogoutCallback}
+                    onFailure={handleGoogleLogoutCallback}
+                    render={renderProps => (
+                      <button className="btn btn-block btn-light" onClick={renderProps.onClick} disabled={renderProps.disabled}>
+                        <i className="fab fa-google text-danger"></i> Logout From Google 2
                       </button>
                     )}
                   />
@@ -106,8 +117,8 @@ function PageLogin() {
                   />
                   {/* <div id="appleid-signin" data-color="black" data-border="true" data-type="sign in"></div> */}
                   <AppleLogin
-                    clientId="goplay.apple.login.test"
-                    redirectURI="https://go-animapu.herokuapp.com/goplay/account/apple/callback"
+                    clientId="2.apple.login.test"
+                    redirectURI="https://go-animapu.herokuapp.com/2/account/apple/callback"
                     scope="name%20email"
                     responseType="code%20id_token"
                     responseMode="form_post"
@@ -118,8 +129,8 @@ function PageLogin() {
                     )}
                   />
                   <AppleLogin
-                    clientId="goplay.apple.login.test"
-                    redirectURI="https://go-animapu.herokuapp.com/goplay/account/apple/callback/redirect"
+                    clientId="2.apple.login.test"
+                    redirectURI="https://go-animapu.herokuapp.com/2/account/apple/callback/redirect"
                     scope="name%20email"
                     responseType="code%20id_token"
                     responseMode="form_post"
