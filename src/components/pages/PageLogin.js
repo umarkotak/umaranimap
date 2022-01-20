@@ -117,8 +117,8 @@ function PageLogin() {
                   />
                   {/* <div id="appleid-signin" data-color="black" data-border="true" data-type="sign in"></div> */}
                   <AppleLogin
-                    clientId="2.apple.login.test"
-                    redirectURI="https://go-animapu.herokuapp.com/2/account/apple/callback"
+                    clientId="goplay.apple.login.test"
+                    redirectURI="https://go-animapu.herokuapp.com/goplay/account/apple/callback"
                     scope="name%20email"
                     responseType="code%20id_token"
                     responseMode="form_post"
@@ -129,8 +129,8 @@ function PageLogin() {
                     )}
                   />
                   <AppleLogin
-                    clientId="2.apple.login.test"
-                    redirectURI="https://go-animapu.herokuapp.com/2/account/apple/callback/redirect"
+                    clientId="goplay.apple.login.test"
+                    redirectURI="https://go-animapu.herokuapp.com/goplay/account/apple/callback/redirect"
                     scope="name%20email"
                     responseType="code%20id_token"
                     responseMode="form_post"
