@@ -48,6 +48,7 @@ function PageMangasReadMangabat() {
       if (status === 200) {
         setChapterOptions(body.chapter_objs.map((mangaChapter, idx) => {
           if (mangaChapter.link === chapter_id) {
+            console.log(idx)
             setCurrentChapterIDX(idx)
           }
           return { value: mangaChapter.link, label: mangaChapter.title }
@@ -63,12 +64,12 @@ function PageMangasReadMangabat() {
   }
 
   function toPrevChapter() {
-    if (!chapterOptions[currentChapterIDX-1]) { return }
+    if (!chapterOptions[currentChapterIDX+1]) { return }
     history.push(`/mangas/read/mangabat/${manga_id}/${chapterOptions[currentChapterIDX+1].value}`)
   }
 
   function toNextChapter() {
-    if (!chapterOptions[currentChapterIDX+1]) { return }
+    if (!chapterOptions[currentChapterIDX-1]) { return }
     history.push(`/mangas/read/mangabat/${manga_id}/${chapterOptions[currentChapterIDX-1].value}`)
   }
 
@@ -113,11 +114,15 @@ function PageMangasReadMangabat() {
     <div>
       <div className="content-wrapper py-2" style={{backgroundColor: "#454d55"}}>
         {manga.images.map(((imageObj, index) => (
-          <div className="bg-dark border-left border-right border-dark rounded" key={`MANGA-CHAPTER-IMAGE-${index}`}>
+          <div className="bg-dark border-left border-right border-dark rounded pb-1" key={`MANGA-CHAPTER-IMAGE-${index}`}>
             <img
               className="bd-placeholder-img mx-auto d-block img-fluid"
               src={imageObj}
               alt={`page-${index}`}
+              style={{
+                width: "100%",
+                maxWidth: "900px"
+              }}
             />
           </div>
         )))}
