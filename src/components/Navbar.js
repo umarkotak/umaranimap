@@ -32,6 +32,10 @@ function Navbar() {
       localStorage.setItem("ANIMAPU_ACTIVE_MANGA_SOURCE", "mangaread")
       window.location.href = "/mangas/latest/mangaread"
 
+    } else if (source === "mangabat") {
+      localStorage.setItem("ANIMAPU_ACTIVE_MANGA_SOURCE", "mangabat")
+      window.location.href = "/mangas/latest/mangabat"
+
     } else {
       localStorage.setItem("ANIMAPU_ACTIVE_MANGA_SOURCE", "mangahub")
       window.location.href = "/"
@@ -116,6 +120,7 @@ function Navbar() {
         <option key="mangadex" value="mangadex"> (EN) MangaDex </option>
         <option key="mangahub" value="mangahub"> (EN) MangaHub </option>
         <option key="mangaread" value="mangaread"> (EN) Manga Read </option>
+        <option key="mangabat" value="mangabat"> (EN) Mangabat </option>
         <option key="mangadex_id" value="mangadex_id"> (ID) MangaDex </option>
         <option key="maid_my" value="maid_my"> (ID) Maid My </option>
         <option key="klik_manga" value="klik_manga"> (ID) Klik Manga </option>

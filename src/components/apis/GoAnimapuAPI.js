@@ -4,8 +4,8 @@ class GoAnimapuAPI {
       this.GoAnimapuAPIHOST = "https://go-animapu.herokuapp.com"
       // this.GoAnimapuAPIHOST = "https://go-animapu2.herokuapp.com"
     } else {
-      this.GoAnimapuAPIHOST = "http://localhost:4000"
       this.GoAnimapuAPIHOST = "https://go-animapu.herokuapp.com"
+      this.GoAnimapuAPIHOST = "http://localhost:4000"
     }
   }
 
@@ -306,6 +306,40 @@ class GoAnimapuAPI {
     console.log("PROXY",`${this.GoAnimapuAPIHOST}/proxy/${url}`)
     return `${this.GoAnimapuAPIHOST}/proxy/${url}`
   }
+
+  async MangabatHome(params) {
+    var uri = `${this.GoAnimapuAPIHOST}/mangabat/home?page=${params.page}`
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    return response
+  }
+
+  async MangabatMangaDetail(params) {
+    var uri = `${this.GoAnimapuAPIHOST}/mangabat/manga/${params.manga_id}`
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    return response
+  }
+
+  async MangabatMangaChapterDetail(params) {
+    var uri = `${this.GoAnimapuAPIHOST}/mangabat/read/${params.manga_id}/${params.chapter_id}`
+    const response = await fetch(uri, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    return response
+  }
+
 }
 
 const goAnimapuApi = new GoAnimapuAPI()
